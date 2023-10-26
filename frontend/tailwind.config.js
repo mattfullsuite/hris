@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [require("daisyui")],
+  plugins: [require("tailgrids/plugin","daisyui")],
   daisyui: {
     themes: true,
     styled: true,
