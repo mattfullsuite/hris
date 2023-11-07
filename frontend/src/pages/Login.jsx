@@ -1,7 +1,6 @@
 import React, {useState, useEffect, Layout} from "react";
 import { useNavigate } from "react-router-dom"
 import Axios from "axios"
-import ClientSideBar from "../components/client/ClientSideBar";
 
 const Login = () => {
 
