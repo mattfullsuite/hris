@@ -26,9 +26,13 @@ const EmployeesList = () => {
 
 
     return (
+       
         <div className='p-5'>
-            <h1 className='text-3xl font-bold '>Employees</h1>
+            <h1 className='text-3xl font-bold pb-7'>Employees</h1>
+            <div className='padding-left: 1rem;'>
+            <input type="text" placeholder="Search" className="input input-bordered h-8" />
 
+            </div>
             <div className="overflow-x-auto">
             <table className="table">
                 {/* head */}

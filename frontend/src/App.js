@@ -6,7 +6,7 @@ import Login from "./pages/Login.jsx"
 import EmployeeProfile from "./pages/EmployeeProfile.jsx"
 import EmployeesList from "./pages/admin/EmployeesList.jsx"
 import AddEmployee from "./pages/admin/AddEmployee.jsx"
-
+import ClientDashboard from "./pages/client/ClientDashboard";
 import Announcements from "./pages/hr/Announcements.jsx"
 import AddAnnouncements from "./pages/hr/AddAnnouncements.jsx"
 
@@ -32,6 +32,8 @@ function App() {
           <Route path="/employees" element={<EmployeesList />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/employeeProfile" element={<EmployeeProfile />} />
+
+          <Route path="/clientDashboard" element={<ClientDashboard />} />
 
         </Routes>
       </BrowserRouter>
