@@ -26,10 +26,13 @@ const EmployeesList = () => {
 
 
     return (
+       
+        <div className='p-5'>
+            <h1 className='text-3xl font-bold pb-7'>Employees</h1>
+            <div className='padding-left: 1rem;'>
+            <input type="text" placeholder="Search" className="input input-bordered h-8" />
 
-        <div>
-            <h1>Table of Employees</h1>
-
+            </div>
             <div className="overflow-x-auto">
             <table className="table">
                 {/* head */}
@@ -61,12 +64,14 @@ const EmployeesList = () => {
                         <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
                             
-                            <img src={employee.emp_photo} alt="Avatar Tailwind CSS Component" />
+                            <img src={employee.emp_photo} />
                         </div>
                         </div>
                         <div>
                         <div className="font-bold">{employee.s_name + ", " + employee.f_name + " " + employee.m_name} </div>
+                        
                         <div className="text-sm opacity-50">{employee.c_address}</div>
+                        
                         </div>
                     </div>
                     </td>
@@ -101,5 +106,6 @@ const EmployeesList = () => {
         </div>
     )
 }
+
 
 export default EmployeesList
