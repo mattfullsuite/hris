@@ -1,6 +1,19 @@
 import React, {useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom"
+import Axios from "axios"
 
 const ClientDashboard = () =>{
+
+   const navigate = useNavigate()
+
+   useEffect(() => {
+      Axios.get("http://localhost:6197/login").then((response) => {
+         if (response.data.loggedIn == false) {
+            navigate("/login")
+         }
+      })
+   }, [])
+
     return (
         <>
 <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">

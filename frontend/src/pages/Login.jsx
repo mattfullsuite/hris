@@ -49,16 +49,16 @@ const Login = () => {
                 navigate("/adminDashboard")
                 console.log("The user is an admin.")
               } else if (response.data.user[0].emp_role == 1){
-                  console.log("The user is an HR.")
-                  navigate("/hrDashboard")
+                console.log("The user is an HR.")
+                navigate("/hrDashboard")
               } else if (response.data.user[0].emp_role == 2){
-                  console.log("The user is an employee,")
-                  navigate("/clientDashboard")
+                console.log("The user is an employee,")
+                navigate("/clientDashboard")
               } else if (response.data.user[0].emp_role == 3){
-                  console.log("The user is a team lead,")
-                  navigate("/leadDashboard")
+                console.log("The user is a team lead,")
+                navigate("/leadDashboard")
               } else {
-                  console.log("The user is not authorized to log in to the system!")
+                console.log("The user is not authorized to log in to the system!")
               }
                 console.log(response.data.user[0].work_email + " is logged in.")
             }
