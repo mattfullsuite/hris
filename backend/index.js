@@ -108,7 +108,7 @@ app.post("/logout", function(req, res, next) {
 // -------------------- ADMIN METHODS --------------------------//
 
 app.get("/employeeslist", (req, res) => {
-    const q = "SELECT * FROM emp"
+    const q = "SELECT * FROM emp ORDER BY s_name"
     db.query(q,(err,data)=> {
         if(err) return res.json(err)
         return res.json(data)
