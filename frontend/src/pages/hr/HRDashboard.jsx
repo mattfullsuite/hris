@@ -13,6 +13,7 @@ const HRDashboard = () => {
             navigate("/login")
          }
       })
+    
    }, [])
 
     return (

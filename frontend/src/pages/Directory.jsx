@@ -17,7 +17,7 @@ const Directory = () => {
 
     return (
         <div>
-            Bahala ka na sa frontend, Marco
+            
         </div>
     )
 }
