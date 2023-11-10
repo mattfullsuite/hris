@@ -3,6 +3,9 @@ import './App.css';
 import Dashboard from "./pages/Dashboard.jsx"
 import AddCompany from "./pages/AddCompany.jsx"
 import Login from "./pages/Login.jsx"
+import PendingLeaves from "./pages/PendingLeaves.jsx"
+import FileLeave from "./pages/FileLeave.jsx"
+
 import EmployeeProfile from "./pages/EmployeeProfile.jsx"
 import EmployeesList from "./pages/admin/EmployeesList.jsx"
 import AddEmployee from "./pages/admin/AddEmployee.jsx"
@@ -40,8 +43,10 @@ function App() {
           <Route path="/employees" element={<EmployeesList />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/employeeProfile" element={<EmployeeProfile />} />
-
           <Route path="/clientDashboard" element={<ClientDashboard />} />
+          <Route path="/showPendingLeaves" element={<PendingLeaves />} />
+          <Route path="/fileLeave" element={<FileLeave />} />
+
           
           {/* Team Lead Routes */}
           <Route path="/leadDashboard" element={<LeadDashboard />} /> 
