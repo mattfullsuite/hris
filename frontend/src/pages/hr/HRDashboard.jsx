@@ -5,16 +5,34 @@ import Axios from "axios"
 
 const HRDashboard = () => {
 
-    const navigate = useNavigate()
+   const navigate = useNavigate()
+
+   const [users, setUser] = useState([]);
 
    useEffect(() => {
       Axios.get("http://localhost:6197/login").then((response) => {
+
          if (response.data.loggedIn == false) {
             navigate("/login")
+         } else {
+            console.log(response.data.user[0].f_name)
          }
       })
     
    }, [])
+
+   useEffect(() => {
+      const fetchUserData = async ()=> {
+          try{
+              const res = await Axios.get("http://localhost:6197/login")
+              setUser(res.data.user)
+          } catch(err){
+              console.log(err)
+          }
+      };
+      fetchUserData();
+  }, []);
+
 
     return (
         <div>
@@ -25,6 +43,8 @@ const HRDashboard = () => {
    </svg>
 </button>
 
+
+
 <aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
    <div class="h-full px-3 py-4 overflow-y-auto bg-pink-200 dark:bg-gray-800">
       <ul class="space-y-2 font-medium">
@@ -34,9 +54,16 @@ const HRDashboard = () => {
                   <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z"/>
                   <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z"/>
                </svg>
-               <span class="ml-3">Profile</span>
+               { users.map((user) => (
+               <div>
+               <div class="ml-3"> { user.f_name + " " + user.s_name }</div>
+               <div class="ml-3">{ user.role }</div>
+               </div>
+               
+               ))}
             </a>
          </li>
+
 
          <br/> <br/> <br/> <br/> <br/> 
 
