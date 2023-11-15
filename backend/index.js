@@ -34,7 +34,7 @@ app.use(express.json());
 app.use(cors(
     {
     origin: ["http://localhost:3000"],
-    methods: ["GET", "POST", "DELETE"],
+    methods: ["GET", "POST", "DELETE", "LOGOUT"],
     credentials: true
 }
 ));
@@ -48,7 +48,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 60 * 60 * 24, //24 hours session
+        expires: 60 * 60 * 24, 
     }
 }))
 
@@ -60,10 +60,6 @@ app.listen(6197, ()=>{
 app.get("/", (req, res) => {
     res.json("Hi hmmm ano kaya dito?")
 })
-
-app.use("/logout", (req, res) => {
-    
-}) 
 
 // -------------------- GENERAL METHODS --------------------------//
 
@@ -98,10 +94,21 @@ app.post("/login", (req, res) => {
     )
 });
 
+app.post("/logout", function(req, res, next) {
+    req.logout(function(err) {
+      if (err) {
+        return next(err);
+      }
+      res.redirect('/');
+    });
+
+    console.log("logout called")
+  })
+
 // -------------------- ADMIN METHODS --------------------------//
 
 app.get("/employeeslist", (req, res) => {
-    const q = "SELECT * FROM emp"
+    const q = "SELECT * FROM emp ORDER BY s_name"
     db.query(q,(err,data)=> {
         if(err) return res.json(err)
         return res.json(data)
@@ -214,3 +221,37 @@ app.post("/addcompany", (req,res) => {
         return res.json("Company has been created successfully!")
     })
 })
+
+app.get("/showdirectory", (req, res) => {
+    const q = "SELECT * FROM department as d INNER JOIN department_employees AS de ON d.dept_id=de.dept_id INNER JOIN emp AS e ON de.emp_id = e.emp_id INNER JOIN title as t ON e.emp_id = t.emp_id"
+    db.query(q,(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+app.get("/showpendingleaves", (req, res) => {
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.emp_id=e.emp_id WHERE leave_status = 0"
+    db.query(q,(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+app.get("/showapprovedleaves", (req, res) => {
+    const q = "SELECT * FROM leaves WHERE leave_status = 1"
+    db.query(q,(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+app.get("/showrejectedleaves", (req, res) => {
+    const q = "SELECT * FROM leaves WHERE leave_status = 2"
+    db.query(q,(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+app.post("")
