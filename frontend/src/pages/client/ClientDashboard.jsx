@@ -129,111 +129,135 @@ const ClientDashboard = () =>{
          <p>Good Morning User!</p>
       </div>
 
-      <div class="grid grid-cols-3 gap-4 mb-4">
-         
-         <div class="border-solid flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
+      {/* <!-- Single Row --> */}
+<div class="grid grid-cols-[20%,80%] gap-4 my-4 mx-4">
+  {/* <!-- Remaining Offset Time --> */}
+  <div class="p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-col items-center justify-center">
+    <p class="text-l font-semibold">Remaining Offset Time</p>
+    <div class="flex flex-row items-center p-3">
+      <span class="text-5xl font-bold">5</span>
+      <span class="text-3xl font-bold"> hr/s</span>
+    </div>
+    <button class="bg-transparent hover:bg-blue-500 font-semibold hover:text-white py-2 px-2 border border-blue-500 hover:border-transparent rounded">
+      Reparation Request
+    </button>
+  </div>
 
-         <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
+  {/* <!-- PTO Notices (spanning until Number of PTOs) --> */}
+  <div class="p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 row-span-2">
+    <p class="text-xl font-semibold">PTO Notices</p>
+    <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+      <ul class="flex flex-wrap -mb-px">
+        <li class="me-2">
+          <a href="#" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">All</a>
+        </li>
+        <li class="me-2">
+          <a href="#" class="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500" aria-current="page">Approved</a>
+        </li>
+        <li class="me-2">
+          <a href="#" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Pending</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 
-         <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         
-      </div>
+  {/* <!-- Number of PTOs --> */}
+  <div class="p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-col items-center justify-center">
+    <p class="text-l font-semibold">Number of PTOs</p>
+    <span class="text-5xl font-bold">5</span><br />
+    <p class="text-l font-normal">Available until</p>
+    <p class="text-xl font-normal">March 25, 2023</p>
+  </div>
 
-      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-         <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-            </svg>
-         </p>
-      </div>
-      <div class="grid grid-cols-2 gap-4 mb-4">
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-      </div>
-      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
-         <p class="text-2xl text-gray-400 dark:text-gray-500">
-            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-            </svg>
-         </p>
-      </div>
-      <div class="grid grid-cols-2 gap-4">
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
-            <p class="text-2xl text-gray-400 dark:text-gray-500">
-               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-               </svg>
-            </p>
-         </div>
-      </div>
+  {/* <!-- Buttons below --> */}
+  <button class="bg-transparent hover:bg-blue-500 font-semibold hover:text-white py-2 px-2 border border-blue-500 hover:border-transparent rounded">
+    File A Leave
+  </button>
+
+  <div class="p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 row-span-2">
+    <p class="text-l font-semibold">Birthdays this Month</p>
+  </div>
+
+  <button class="bg-transparent hover:bg-blue-500 font-semibold hover:text-white py-2 px-2 border border-blue-500 hover:border-transparent rounded">
+    View Recent Payslip
+  </button>
 </div>
 
-        </>
+{/* Divider */}
+<div className="class=absolute bottom-0 left-0 w-full h-px bg-gray-300"></div>
+
+{/* Announcements */}
+<div>
+   <p className="text-xl font-semibold my-2 ml-2">Announcements</p>
+</div>
+
+<div class="grid grid-cols-3 gap-4 my-4 mx-4">
+
+  <div class="p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700">
+    <p class="text-xl font-bold">Title</p>
+    <p class="text-l font-semibold border p-1">Category</p>
+    <p class="text-l font-normal">Lorem ipsum dolor sit amet consectetur. Senectus ullamcorper sit sem feugiat. </p>
+    <p class="text-l font-normal mt-1">Admin</p>
+    <p class="text-l font-normal">11/03/2023</p>
+  </div>
+
+  <div class="p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700">
+    <p class="text-xl font-bold">Title</p>
+    <p class="text-l font-semibold border p-1">Category</p>
+    <p class="text-l font-normal">Lorem ipsum dolor sit amet consectetur. Senectus ullamcorper sit sem feugiat. </p>
+    <p class="text-l font-normal mt-1">Admin</p>
+    <p class="text-l font-normal">11/03/2023</p>
+  </div>
+
+  <div class="p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700">
+    <p class="text-xl font-bold">Title</p>
+    <p class="text-l font-semibold border p-1">Category</p>
+    <p class="text-l font-normal">Lorem ipsum dolor sit amet consectetur. Senectus ullamcorper sit sem feugiat. </p>
+    <p class="text-l font-normal mt-1">Admin</p>
+    <p class="text-l font-normal">11/03/2023</p>
+  </div>
+</div>
+
+{/* Divider */}
+<div className="class=absolute bottom-0 left-0 w-full h-px bg-gray-300"></div>
+
+{/* Training */}
+<div>
+   <p className="text-xl font-semibold my-2 ml-2">Training</p>
+</div>
+
+<div class="grid grid-cols-4 gap-4 my-4 mx-4">
+
+  <div class="p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700">
+    <p class="text-xl font-bold">Title</p>
+    <p class="text-l font-semibold border p-1">Category</p>
+    <p class="text-l font-normal">11/03/2023</p>
+    <p class="text-l font-normal mt-1">Speaker: Antoinette</p>
+  </div>
+
+  <div class="p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700">
+    <p class="text-xl font-bold">Title</p>
+    <p class="text-l font-semibold border p-1">Status</p>
+    <p class="text-l font-normal">11/03/2023</p>
+    <p class="text-l font-normal mt-1">Speaker: Antoinette</p>
+  </div>  
+  
+  <div class="p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700">
+    <p class="text-xl font-bold">Title</p>
+    <p class="text-l font-semibold border p-1">Status</p>
+    <p class="text-l font-normal">11/03/2023</p>
+    <p class="text-l font-normal mt-1">Speaker: Antoinette</p>
+  </div>  
+  
+  <div class="p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700">
+    <p class="text-xl font-bold">Title</p>
+    <p class="text-l font-semibold border p-1">Status</p>
+    <p class="text-l font-normal">11/03/2023</p>
+    <p class="text-l font-normal mt-1">Speaker: Antoinette</p>
+  </div>
+</div>
+</div>
+</>
     )
 }
 
