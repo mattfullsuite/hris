@@ -138,12 +138,12 @@ const ClientDashboard = () =>{
       <span class="text-5xl font-bold">5</span>
       <span class="text-3xl font-bold"> hr/s</span>
     </div>
-    <button class="bg-transparent hover:bg-blue-500 font-semibold hover:text-white py-2 px-2 border border-blue-500 hover:border-transparent rounded">
+    <button class="bg-transparent hover:bg-blue-500 font-semibold hover:text-white py-2 px-2 border border-blue-500 hover:border-transparent rounded-full">
       Reparation Request
     </button>
   </div>
 
-  {/* <!-- PTO Notices (spanning until Number of PTOs) --> */}
+  {/* PTO Notices (spanning until Number of PTOs)*/}
   <div class="p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 row-span-2">
     <p class="text-xl font-semibold">PTO Notices</p>
     <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
