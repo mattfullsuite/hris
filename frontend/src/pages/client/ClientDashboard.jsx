@@ -4,15 +4,15 @@ import Axios from "axios"
 
 const ClientDashboard = () =>{
 
-   // const navigate = useNavigate()
+   /**const navigate = useNavigate()
 
-   // useEffect(() => {
-   //    Axios.get("http://localhost:6197/login").then((response) => {
-   //       if (response.data.loggedIn == false) {
-   //          navigate("/login")
-   //       }
-   //    })
-   // }, [])
+   useEffect(() => {
+      Axios.get("http://localhost:6197/login").then((response) => {
+         if (response.data.loggedIn == false) {
+            navigate("/login")
+         }
+      })
+   }, [])**/
 
     return (
         <>

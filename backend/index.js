@@ -7,9 +7,21 @@ import session from "express-session"
 import bodyParser from "body-parser"
 
 
+/**import HomeHandler from "./handlers/home.cjs";
+import LoginHandler from "./handlers/login.cjs";
+import ProcessLoginHandler from './handlers/process-login.cjs';
+import LogoutHandler from './handlers/logout.cjs';**/
+
+
 dotenv.config({ path: './protected.env' })
 
 const app = express()
+
+
+/**app.get('/', HomeHandler);
+app.get('/login', LoginHandler);
+app.post('/process-login', ProcessLoginHandler);
+app.get('/logout', LogoutHandler);**/
 
 const db = mysql.createConnection({
     /**host:"localhost",
@@ -34,7 +46,7 @@ app.use(express.json());
 app.use(cors(
     {
     origin: ["http://localhost:3000"],
-    methods: ["GET", "POST", "DELETE", "LOGOUT"],
+    methods: ["GET", "POST", "DELETE"],
     credentials: true
 }
 ));
@@ -48,7 +60,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 60 * 60 * 24, //24 hours session
+        expires: 60 * 60 * 24, 
     }
 }))
 
@@ -94,16 +106,11 @@ app.post("/login", (req, res) => {
     )
 });
 
-app.post("/logout", function(req, res, next) {
-    req.logout(function(err) {
-      if (err) {
-        return next(err);
-      }
-      res.redirect('/');
-    });
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.redirect('/');
+})
 
-    console.log("logout called")
-  })
 
 // -------------------- ADMIN METHODS --------------------------//
 
@@ -165,7 +172,9 @@ app.delete("/announcements/:ann_id", (req, res) => {
     const ann_id = req.params.ann_id;
     const q = "DELETE FROM announcements WHERE ann_id = ?";
 
-    db.query(q, [ann_id], (err,data) => {
+    db.query(q, 
+        [ann_id], 
+        (err,data) => {
         if (err){
             console.log(err)
         } else {
@@ -230,13 +239,50 @@ app.get("/showdirectory", (req, res) => {
     })
 })
 
+//TL
+
+app.get("/showpendingdepartmentleaves", (req, res) => {
+    const uid = req.session.user[0].emp_id
+
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE leave_status = 0 AND approver_id = ?"
+    
+    db.query(q,
+        [uid],
+        (err,data)=> {
+        if(err) {
+            return res.json(err)
+        }
+
+        return res.json(data)
+    })
+})
+
+app.get("/showrejecteddepartmentleaves", (req, res) => {
+    const uid = req.session.user[0].emp_id
+
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE leave_status = 2 AND approver_id = ?"
+    
+    db.query(q,
+        [uid],
+        (err,data)=> {
+        if(err) {
+            return res.json(err)
+        }
+
+        return res.json(data)
+    })
+})
+
+//HR
 app.get("/showpendingleaves", (req, res) => {
-    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.emp_id=e.emp_id WHERE leave_status = 0"
+    const q = "SELECT * FROM leaves INNER JOIN emp ON requester_id=emp_id WHERE leave_status = 0"
     db.query(q,(err,data)=> {
         if(err) return res.json(err)
         return res.json(data)
     })
 })
+
+
 
 app.get("/showapprovedleaves", (req, res) => {
     const q = "SELECT * FROM leaves WHERE leave_status = 1"
@@ -254,4 +300,75 @@ app.get("/showrejectedleaves", (req, res) => {
     })
 })
 
-app.post("")
+//Approve
+app.post("/showpendingleaves/:leave_id", (req, res) => {
+    const leave_id = req.params.leave_id;
+    const q = "UPDATE leaves SET leave_status = ? WHERE leave_id = ?";
+
+    db.query(q, 
+        [1, leave_id], 
+        (err,data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json("Leave #" + leave_id + "has been updated successfully.")
+        }
+    })
+})
+
+//Reject
+
+app.post("/rejectleave/:leave_id", (req, res) => {
+    const leave_id = req.params.leave_id;
+    const q = "UPDATE leaves SET leave_status = ? WHERE leave_id = ?";
+
+    db.query(q, 
+        [2, leave_id], 
+        (err,data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json("Leave #" + leave_id + "has been updated successfully.")
+        }
+    })
+})
+
+
+//Check upcoming bdays
+
+app.get("/getupcomingbdays", (req, res) => {
+    const q = "SELECT * FROM emp ORDER BY DAYOFYEAR(dob) < DAYOFYEAR(CURDATE()) , DAYOFYEAR(dob);"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    }) 
+})
+
+app.get("getupcominganniversaries", (req, res) => {
+    const q = "SELECT * FROM emp ORDER BY DAYOFYEAR(date_hired) < DAYOFYEAR(CURDATE()) , DAYOFYEAR(date_hired);"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+//HR Dashboard
+app.get("countAllEmployees", (req, res) => {
+    const q = "SELECT COUNT(*) FROM emp WHERE date_separated IS NULL"
+
+    db.query(q, (err, count) => {
+        if (err){
+            res.json(err)
+        } else {
+            res.json(count)
+        }
+    })
+})
