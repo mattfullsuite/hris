@@ -19,6 +19,7 @@ import LeadDashboard from "./pages/leads/LeadDashboard.jsx"
 import HRDashboard from "./pages/hr/HRDashboard.jsx"
 import ClientDashboard from "./pages/client/ClientDashboard"
 
+import WidgetPending from "./pages/widgets/WidgetPending.jsx"
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
           
           {/* Team Lead Routes */}
           <Route path="/leadDashboard" element={<LeadDashboard />} /> 
+          <Route path="/widgetPending" element={<WidgetPending />} />
 
         </Routes>
       </BrowserRouter>

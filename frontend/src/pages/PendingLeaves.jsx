@@ -16,6 +16,24 @@ const PendingLeaves = () => {
         fetchAllPendingLeaves();
     }, []);
 
+    const handleApproval = async (leave_id) => {
+      try {
+          await axios.post("http://localhost:6197/showpendingleaves/" + leave_id);
+          window.location.reload()
+      } catch(err){
+          console.log(err)
+      }
+  }
+
+  const handleRejection = async (leave_id) => {
+    try {
+        await axios.post("http://localhost:6197/rejectleave/" + leave_id);
+        window.location.reload()
+    } catch(err){
+        console.log(err)
+    }
+}
+
     return (
         <div>Pending Leaves
 
@@ -72,8 +90,8 @@ const PendingLeaves = () => {
         
 
         <th>
-          <button className="btn btn-ghost btn-xs bg-accent">Approve</button>
-          <button className="btn btn-ghost btn-xs bg-secondary">Reject</button>
+          <button className="btn btn-ghost btn-xs bg-accent" onClick={() => handleApproval( leave.leave_id )} >Approve</button>
+          <button className="btn btn-ghost btn-xs bg-secondary" onClick={() => handleRejection( leave.leave_id )}>Reject</button>
         </th>
       </tr>
       ))}
