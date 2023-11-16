@@ -30,6 +30,7 @@ function App() {
 
           {/* General Routes */}
           <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           {/* Administrator Routes */}
           <Route path="/userLogs" element={<UserLogs />} /> 
           <Route path="/adminDashboard" element={<AdminDashboard />} /> 
@@ -48,7 +49,6 @@ function App() {
           <Route path="/showPendingLeaves" element={<PendingLeaves />} />
           <Route path="/fileLeave" element={<FileLeave />} />
 
-          
           {/* Team Lead Routes */}
           <Route path="/leadDashboard" element={<LeadDashboard />} /> 
           <Route path="/widgetPending" element={<WidgetPending />} />
