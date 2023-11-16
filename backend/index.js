@@ -163,7 +163,7 @@ app.post('/addEmployee', (req,res) => {
 // -------------------- ANNOUNCEMENT METHODS --------------------------//
 
 app.get("/announcements", (req, res) => {
-    const q = "SELECT * FROM announcements"
+    const q = "SELECT * FROM announcements AS a INNER JOIN emp AS e ON a.emp_id=e.emp_id LIMIT 3" 
     db.query(q,(err,data)=> {
         if(err) return res.json(err)
         return res.json(data)
@@ -283,8 +283,6 @@ app.get("/showpendingleaves", (req, res) => {
         return res.json(data)
     })
 })
-
-
 
 app.get("/showapprovedleaves", (req, res) => {
     const q = "SELECT * FROM leaves WHERE leave_status = 1"

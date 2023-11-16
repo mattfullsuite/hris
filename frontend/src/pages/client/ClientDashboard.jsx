@@ -14,6 +14,47 @@ const ClientDashboard = () =>{
       })
    }, [])**/
 
+   const [users, setUser] = useState([]);
+   const [announcements, setAnnouncements] = useState([]);
+
+   const [pleaves, setPendingLeaves] = useState([])
+
+    useEffect(() => {
+        const fetchAllPendingLeaves = async ()=> {
+            try{
+                const res = await Axios.get("http://localhost:6197/showpendingleaves")
+                setPendingLeaves(res.data)
+            } catch(err){
+                console.log(err)
+            }
+        };
+        fetchAllPendingLeaves();
+    }, []);
+
+   useEffect(() => {
+      const fetchAllAnnouncements = async ()=> {
+          try{
+              const res = await Axios.get("http://localhost:6197/announcements")
+              setAnnouncements(res.data);
+          } catch(err){
+              console.log(err)
+          }
+      }
+      fetchAllAnnouncements()
+  },[])
+
+   useEffect(() => {
+      const fetchUserData = async ()=> {
+          try{
+              const res = await Axios.get("http://localhost:6197/login")
+              setUser(res.data.user)
+          } catch(err){
+              console.log(err)
+          }
+      };
+      fetchUserData();
+  }, []);
+
     return (
         <>
 
@@ -32,11 +73,15 @@ const ClientDashboard = () =>{
       <img class="h-20 w-20 rounded-full ring-2 ring-white" src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt=""/>
       </div>
 
+      { users.map((user) => (
+
       <div class="flex items-center justify-center">        
          <span class="font-bold text-xl"> 
-         Matt Wilfred Salvador
+         { user.f_name + " " + user.s_name }
          </span>
       </div>
+
+      ))}
 
       <div class="flex items-center justify-center">        
          <span className="mb-4"> 
@@ -126,7 +171,9 @@ const ClientDashboard = () =>{
 
       {/* Greeting */}
       <div className="mb-5 text-3xl font-bold">
-         <p>Good Morning User!</p>
+      { users.map((user) => (
+         <p>Good Morning {user.f_name}!</p>
+      ))}
       </div>
 
       {/* <!-- Single Row --> */}
@@ -159,6 +206,63 @@ const ClientDashboard = () =>{
         </li>
       </ul>
     </div>
+    <div class="overflow-x-auto">
+      {/* Table for the PTO Notices */}
+      {/* Dialog for "Details Button" */}
+  <table class="table">
+    {/* <!-- head --> */}
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {/* <!-- row 1 --> */}
+      <tr>
+        <td>
+          <div class="flex items-center gap-3">
+            <div>
+              <div class="font-bold">Matteo Salvador</div>
+            </div>
+          </div>
+        </td>
+        <td>
+          Decemeber 01, 2023
+        </td>
+        <td>Sick Leave</td>
+        <td>Approved</td>
+        <th>
+        <button className="btn btn-ghost btn-xs" onClick={()=>document.getElementById('pto_notice_details').showModal()}>Details</button>
+
+        <dialog id="pto_notice_details" className="modal modal-bottom sm:modal-middle">
+  <div className="modal-box flex flex-col justify-center">
+    <h3 className="font-bold text-lg">PTO Information</h3>
+    <p className="pt-2 pb-2">Matteo Salvador</p>
+    <p className="font-semibold">Sick Leave</p>
+    <p className="font-normal pt-1">December 01, 2023</p>
+    <p className="font-normal pt-1">December 01, 2023</p>
+    <p className="font-normal pt-1 pb-1">Approved</p>
+    <p className="font-normal pt-1 pb-1">Jhex Chun</p>
+    <div className="modal-action p-1 m-1">
+      <form method="dialog">
+        {/* if there is a button in the form, it will close the modal */}
+        <button className="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+
+        </th>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
   </div>
 
   {/* <!-- Number of PTOs --> */}
@@ -192,30 +296,16 @@ const ClientDashboard = () =>{
 </div>
 
 <div class="grid grid-cols-3 gap-4 my-4 mx-4">
-
+   
+{ announcements.map((announcement) => (
   <div class="p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700">
-    <p class="text-xl font-bold">Title</p>
-    <p class="text-l font-semibold border p-1">Category</p>
-    <p class="text-l font-normal">Lorem ipsum dolor sit amet consectetur. Senectus ullamcorper sit sem feugiat. </p>
-    <p class="text-l font-normal mt-1">Admin</p>
-    <p class="text-l font-normal">11/03/2023</p>
+    <p class="text-xl font-bold">{ announcement.ann_title }</p>
+    <p class="text-l font-semibold border p-1">{ announcement.ann_category }</p>
+    <p class="text-l font-normal"> { announcement.ann_content } </p>
+    <p class="text-l font-normal mt-1"> { announcement.f_name } </p>
   </div>
+))}
 
-  <div class="p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700">
-    <p class="text-xl font-bold">Title</p>
-    <p class="text-l font-semibold border p-1">Category</p>
-    <p class="text-l font-normal">Lorem ipsum dolor sit amet consectetur. Senectus ullamcorper sit sem feugiat. </p>
-    <p class="text-l font-normal mt-1">Admin</p>
-    <p class="text-l font-normal">11/03/2023</p>
-  </div>
-
-  <div class="p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700">
-    <p class="text-xl font-bold">Title</p>
-    <p class="text-l font-semibold border p-1">Category</p>
-    <p class="text-l font-normal">Lorem ipsum dolor sit amet consectetur. Senectus ullamcorper sit sem feugiat. </p>
-    <p class="text-l font-normal mt-1">Admin</p>
-    <p class="text-l font-normal">11/03/2023</p>
-  </div>
 </div>
 
 {/* Divider */}
