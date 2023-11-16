@@ -14,7 +14,7 @@ const Login = () => {
     Axios.defaults.withCredentials = true;
 
     const loginEmployee = () => {
-        Axios.post("http://localhost:6197/login", {
+        Axios.post("http://localhost:6197/processlogin", {
             work_email: work_email,
             password: password,
 
@@ -47,15 +47,11 @@ const Login = () => {
             if (response.data.loggedIn == true) {
               if (response.data.user[0].emp_role == 0){
                 navigate("/adminDashboard")
-                console.log("The user is an admin.")
               } else if (response.data.user[0].emp_role == 1){
-                console.log("The user is an HR.")
                 navigate("/hrDashboard")
               } else if (response.data.user[0].emp_role == 2){
-                console.log("The user is an employee,")
                 navigate("/clientDashboard")
               } else if (response.data.user[0].emp_role == 3){
-                console.log("The user is a team lead,")
                 navigate("/leadDashboard")
               } else {
                 console.log("The user is not authorized to log in to the system!")

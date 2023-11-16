@@ -1,27 +1,31 @@
-import express from "express"
+/**import express from "express"
 import mysql from "mysql"
 import cors from "cors"
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser"
 import session from "express-session"
-import bodyParser from "body-parser"
+import bodyParser from "body-parser"**/
 
+var express = require("express")
+var mysql = require( "mysql")
+var cors = require("cors")
+var dotenv = require("dotenv")
+var cookieParser = require("cookie-parser")
+var session = require("express-session")
+var bodyParser = require("body-parser")
 
-/**import HomeHandler from "./handlers/home.cjs";
-import LoginHandler from "./handlers/login.cjs";
-import ProcessLoginHandler from './handlers/process-login.cjs';
-import LogoutHandler from './handlers/logout.cjs';**/
-
+var HomeHandler = require("./handlers/home.js");
+var LoginHandler = require( "./handlers/login.js");
+//var ProcessLoginHandler = require("./handlers/process-login.js")
+var LogoutHandler = require("./handlers/logout.js");
 
 dotenv.config({ path: './protected.env' })
 
 const app = express()
 
 
-/**app.get('/', HomeHandler);
-app.get('/login', LoginHandler);
-app.post('/process-login', ProcessLoginHandler);
-app.get('/logout', LogoutHandler);**/
+app.get('/', HomeHandler);
+app.get('/logout', LogoutHandler);
 
 const db = mysql.createConnection({
     /**host:"localhost",
@@ -56,7 +60,7 @@ app.use(bodyParser.urlencoded({ extended: true}));
 
 app.use(session({
     key: "userId",
-    secret: "subscribe",
+    secret: "kahitanomalagaydito",
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -69,21 +73,18 @@ app.listen(6197, ()=>{
     console.log("Connected to backend mysql database!");
 })
 
-app.get("/", (req, res) => {
+/**app.get("/", (req, res) => {
     res.json("Hi hmmm ano kaya dito?")
-})
+})**/
 
 // -------------------- GENERAL METHODS --------------------------//
 
-app.get("/login", (req, res) => {
-    if (req.session.user) {
-        res.send({ loggedIn: true, user: req.session.user });
-    } else {
-        res.send({ loggedIn: false });
-    }
-})
 
-app.post("/login", (req, res) => {
+app.get("/login", LoginHandler)
+
+//app.post("/processlogin", ProcessLoginHandler);
+
+app.post("/processlogin", (req, res) => {
     const work_email = req.body.work_email
     const password = req.body.password
 
@@ -107,7 +108,8 @@ app.post("/login", (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-    req.session.destroy();
+    req.logout();
+    req.session = null;
     res.redirect('/');
 })
 
@@ -371,4 +373,15 @@ app.get("countAllEmployees", (req, res) => {
             res.json(count)
         }
     })
+})
+
+app.post("/fileLeave", (req, res)=> {
+    const q = "INSERT * INTO leaves VALUES ?"
+    const values = req.body
+
+    db.query(q, values, (err, data => {
+        if (err) return (json.err)
+        console.log("Succesfully inserted into the table.")
+    })
+    )
 })
