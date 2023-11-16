@@ -146,19 +146,93 @@ const ClientDashboard = () =>{
   {/* PTO Notices (spanning until Number of PTOs)*/}
   <div class="p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 row-span-2">
     <p class="text-xl font-semibold">PTO Notices</p>
-    <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-      <ul class="flex flex-wrap -mb-px">
-        <li class="me-2">
-          <a href="#" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">All</a>
+
+
+<div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
+        <li class="me-2" role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">All</button>
         </li>
-        <li class="me-2">
-          <a href="#" class="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active dark:text-blue-500 dark:border-blue-500" aria-current="page">Approved</a>
+        <li class="me-2" role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Approved</button>
         </li>
-        <li class="me-2">
-          <a href="#" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300">Pending</a>
+        <li class="me-2" role="presentation">
+            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Pending</button>
         </li>
-      </ul>
+    </ul>
+    <div class="overflow-x-auto">
+      {/* Table for the PTO Notices */}
+      {/* Dialog for "Details Button" */}
+  <table class="table">
+    {/* <!-- head --> */}
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {/* <!-- row 1 --> */}
+      <tr>
+        <td>
+          <div class="flex items-center gap-3">
+            <div>
+              <div class="font-bold">Matteo Salvador</div>
+            </div>
+          </div>
+        </td>
+        <td>
+          Decemeber 01, 2023
+        </td>
+        <td>Sick Leave</td>
+        <td>Approved</td>
+        <th>
+        <button className="btn btn-ghost btn-xs" onClick={()=>document.getElementById('pto_notice_details').showModal()}>Details</button>
+
+        <dialog id="pto_notice_details" className="modal modal-bottom sm:modal-middle">
+  <div className="modal-box flex flex-col justify-center">
+    <h3 className="font-bold text-lg">PTO Information</h3>
+    <p className="pt-2 pb-2">Matteo Salvador</p>
+    <p className="font-semibold">Sick Leave</p>
+    <p className="font-normal pt-1">December 01, 2023</p>
+    <p className="font-normal pt-1">December 01, 2023</p>
+    <p className="font-normal pt-1 pb-1">Approved</p>
+    <p className="font-normal pt-1 pb-1">Jhex Chun</p>
+    <div className="modal-action p-1 m-1">
+      <form method="dialog">
+        {/* if there is a button in the form, it will close the modal */}
+        <button className="btn">Close</button>
+      </form>
     </div>
+  </div>
+</dialog>
+
+
+        </th>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+<div id="default-tab-content">
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+        <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Profile tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+    </div>
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+        <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Dashboard tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+    </div>
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+        <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Settings tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+    </div>
+    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
+        <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Contacts tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
+    </div>
+</div>
+
+
   </div>
 
   {/* <!-- Number of PTOs --> */}
@@ -170,9 +244,49 @@ const ClientDashboard = () =>{
   </div>
 
   {/* <!-- Buttons below --> */}
-  <button class="bg-transparent hover:bg-blue-500 font-semibold hover:text-white py-2 px-2 border border-blue-500 hover:border-transparent rounded">
+  <button class="btn bg-transparent hover:bg-blue-500 font-semibold hover:text-white py-2 px-2 border border-blue-500 hover:border-transparent rounded"
+  onClick={()=>document.getElementById('file_leave').showModal()}>
     File A Leave
   </button>
+  {/* Open the modal using document.getElementById('ID').showModal() method */}
+{/* <button className="btn" onClick={()=>document.getElementById('my_modal_5').showModal()}>open modal</button> */}
+<dialog id="file_leave" className="modal modal-bottom sm:modal-middle">
+  <div className="modal-box">
+    <h3 className="font-bold text-xl">File A Leave</h3>
+    <div>
+
+    <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Dropdown button <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+</svg>
+</button>
+
+{/* <!-- Dropdown menu --> */}
+<div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+      </li>
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Settings</a>
+      </li>
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Earnings</a>
+      </li>
+      <li>
+        <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Sign out</a>
+      </li>
+    </ul>
+</div>
+
+    </div>
+    <div className="modal-action">
+      <form method="dialog">
+        {/* if there is a button in form, it will close the modal */}
+        <button className="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
 
   <div class="p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 row-span-2">
     <p class="text-l font-semibold">Birthdays this Month</p>
