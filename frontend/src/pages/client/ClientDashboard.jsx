@@ -242,7 +242,7 @@ const ClientDashboard = () =>{
         <dialog id="pto_notice_details" className="modal modal-bottom sm:modal-middle">
   <div className="modal-box flex flex-col justify-center">
     <h3 className="font-bold text-lg">PTO Information</h3>
-    <p className="pt-2 pb-2">Matteo Salvador</p>
+    <p className="pt-2 pb-2">Matt Salvador</p>
     <p className="font-semibold">Sick Leave</p>
     <p className="font-normal pt-1">December 01, 2023</p>
     <p className="font-normal pt-1">December 01, 2023</p>

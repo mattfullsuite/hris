@@ -18,7 +18,6 @@ import AdminDashboard from "./pages/admin/AdminDashboard.jsx"
 import LeadDashboard from "./pages/leads/LeadDashboard.jsx"
 import HRDashboard from "./pages/hr/HRDashboard.jsx"
 import ClientDashboard from "./pages/client/ClientDashboard"
-
 import WidgetPending from "./pages/widgets/WidgetPending.jsx"
 
 

@@ -39,6 +39,8 @@ const HRDashboard = () => {
    Axios.get("http://localhost:6197/logout")
   }
 
+  
+
 
     return (
         <div>
