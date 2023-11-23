@@ -65,18 +65,20 @@ function ptoAccrual() {
         console.log("Tenured PTO accrual done.")
     })
 
-    const q4 = "UPDATE emp SET f_name = ? WHERE emp_id=1"
-    db.query(q4,["Matt"], (err,data)=> {
+    const q4 = "UPDATE emp e JOIN leave_credits l ON e.emp_id = l.emp_id " +
+    "SET leave_balance = leave_balance + 0.625 " +
+    "WHERE date_hired < DATE_SUB(NOW(),INTERVAL 1 YEAR) AND emp_status = 'WORKING_SCHOLAR' AND LAST_DAY(CURDATE()) = CURDATE()"
+    
+    db.query(q4,(err,data)=> {
         if(err) {
             return console.log(err)
         }
-        console.log("'Matteo' to 'Matt' done.")
+        console.log("Working Scholar accrual done.")
     })
 }
 
 
 app.get('/', HomeHandler);
-app.get('/logout', LogoutHandler);
 
 const db = mysql.createConnection({
     /**host:"localhost",
@@ -157,11 +159,13 @@ app.post("/processlogin", (req, res) => {
     )
 });
 
-app.get('/logout', (req, res) => {
-    req.logout();
-    req.session = null;
-    res.redirect('/');
-})
+app.get('/logout', (req, res)=> {
+    if (req.session.user) {
+            res.clearCookie('userId');
+            res.send({loggedIn: false})
+        }
+    }
+);
 
 
 // -------------------- ADMIN METHODS --------------------------//
