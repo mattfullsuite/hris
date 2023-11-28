@@ -24,8 +24,8 @@ const Login = () => {
                 setLoginStatus(response.data.message)
             } else {
               if (response.data.emp_role == 0){
-                navigate("/adminDashboard")
-                console.log("The user is an admin.")
+                  navigate("/adminDashboard")
+                  console.log("The user is an admin.")
               } else if (response.data.emp_role == 1){
                   console.log("The user is an HR.")
                   navigate("/hrDashboard")
