@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 
 import ClientSideBar from "../../components/client/ClientSideBar";
-import DashBRemainingOffset from "../../components/universal/DashBremainingOffset";
-import DashBremainingPTO from "../../components/universal/DashBremainingPTO";
-import DashBButtons from "../../components/universal/DashBbuttons";
+import DashBRemainingOffset from "../../components/universal/DashBRemainingOffset";
+import DashBremainingPTO from "../../components/universal/DashBRemainingPTO";
+import DashBButtons from "../../components/universal/DashBButtons";
 import DashBPTONotices from "../../components/universal/DashBPTONotices";
-import DashBBirthdays from "../../components/universal/DashBbirthdays";
-import DashBAnniversaries from "../../components/universal/DashBanniversaries";
+import DashBBirthdays from "../../components/universal/DashBBirthdays";
+import DashBAnniversaries from "../../components/universal/DashBAnniversaries";
 
 
 // const handleFormSubmit = () => {x
