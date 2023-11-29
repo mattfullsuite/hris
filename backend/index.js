@@ -241,6 +241,21 @@ app.get("/showdirectory", (req, res) => {
     })
 })
 
+app.get("/getUserPTO", (req, res) => {
+    const uid = req.session.user[0].emp_id
+    const q = "SELECT * FROM `leave_credits` AS l INNER JOIN `emp` AS e ON l.emp_id = e.emp_id WHERE e.emp_id = ?"
+
+    db.query(q,
+        [uid],
+        (err,data)=> {
+        if(err) {
+            return res.json(err)
+        }
+
+        return res.json(data)
+    })
+})
+
 
 //TL
 
@@ -286,7 +301,7 @@ app.get("/showpendingleaves", (req, res) => {
 })
 
 app.get("/showapprovedleaves", (req, res) => {
-    const q = "SELECT * FROM leaves WHERE leave_status = 1"
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE leave_status = 1"
     db.query(q,(err,data)=> {
         if(err) return res.json(err)
         return res.json(data)
@@ -316,6 +331,8 @@ app.post("/showpendingleaves/:leave_id", (req, res) => {
         }
     })
 })
+
+
 
 //ptoprobi
 
@@ -414,7 +431,7 @@ app.post("/rejectleave/:leave_id", (req, res) => {
 
 //Check Upcoming Bdays
 app.get("/getupcomingbdays", (req, res) => {
-    const q = "SELECT * FROM emp ORDER BY DAYOFYEAR(dob) < DAYOFYEAR(CURDATE()) , DAYOFYEAR(dob);"
+    const q = "SELECT * FROM emp ORDER BY DAYOFYEAR(dob) < DAYOFYEAR(CURDATE()) , DAYOFYEAR(dob) LIMIT 5;"
 
     db.query(q, (err, data) => {
         if (err){
@@ -425,8 +442,8 @@ app.get("/getupcomingbdays", (req, res) => {
     }) 
 })
 
-app.get("getupcominganniversaries", (req, res) => {
-    const q = "SELECT * FROM emp ORDER BY DAYOFYEAR(date_hired) < DAYOFYEAR(CURDATE()) , DAYOFYEAR(date_hired);"
+app.get("/getupcominganniversaries", (req, res) => {
+    const q = "SELECT * FROM emp ORDER BY DAYOFYEAR(date_hired) < DAYOFYEAR(CURDATE()) , DAYOFYEAR(date_hired) LIMIT 5;"
 
     db.query(q, (err, data) => {
         if (err){

@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Axios from "axios";
+import React from "react";
 import ManagerSideBar from "../../components/manager/ManagerSideBar";
 import DashBRemainingOffset from "../../components/universal/DashBRemainingOffset";
 import DashBremainingPTO from "../../components/universal/DashBRemainingPTO";
@@ -10,15 +8,6 @@ import DashBBirthdays from "../../components/universal/DashBBirthdays";
 import DashBAnniversaries from "../../components/universal/DashBAnniversaries";
 
 const LeadDashboard = () => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    Axios.get("http://localhost:6197/login").then((response) => {
-      if (response.data.loggedIn == false) {
-        navigate("/login");
-      }
-    });
-  }, []);
 
   return (
     <>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 import Layout from "../../components/Layout/Layout";
 import HRSideBar from "../../components/hr/HRSideBar";
@@ -33,10 +33,6 @@ const HRDashboard = () => {
     };
     fetchUserData();
   }, []);
-
-  const logoutEmployee = () => {
-    Axios.get("http://localhost:6197/logout");
-  };
 
   return (
     <>
