@@ -242,6 +242,7 @@ app.get("/showdirectory", (req, res) => {
 })
 
 app.get("/getUserPTO", (req, res) => {
+    // test
     const uid = req.session.user[0].emp_id
     const q = "SELECT * FROM `leave_credits` AS l INNER JOIN `emp` AS e ON l.emp_id = e.emp_id WHERE e.emp_id = ?"
 
