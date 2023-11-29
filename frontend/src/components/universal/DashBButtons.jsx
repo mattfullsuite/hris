@@ -98,9 +98,6 @@ const DashBButtons = () => {
           </div>
         </dialog>
 
-        <button className="my-2 btn btn-sm btn-active normal-case">
-          View Recent Payslip
-        </button>
       </div>
     </>
   );
