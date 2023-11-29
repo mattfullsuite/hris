@@ -81,10 +81,18 @@ const DashBButtons = () => {
                 </button>
 
                 {/* Cancel Button */}
-                <form method="dialog">
-                  {/* If there is a button in form, it will close the modal */}
-                  <button className="btn">Cancel</button>
-                </form>
+
+                {/* If there is a button in form, it will close the modal */}
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={() => {
+                    const modal = document.getElementById("file_a_leave_btn");
+                    modal.close();
+                  }}
+                >
+                  Cancel
+                </button>
               </div>
             </form>
           </div>
