@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Nov 08, 2023 at 08:26 AM
+-- Generation Time: Nov 29, 2023 at 05:31 AM
 -- Server version: 5.7.39
 -- PHP Version: 7.4.33
 
@@ -40,26 +40,8 @@ CREATE TABLE `announcements` (
 --
 
 INSERT INTO `announcements` (`ann_id`, `emp_id`, `ann_title`, `ann_content`, `ann_category`) VALUES
-(1, 2, 'Year End Party Announcement', 'Come and join us for our year end party on December 16, 2023', 'Urgent'),
-(2, 2, 'Christmas Party Announcement', 'Christmas Party, please wear festive costumes.', 'Urgent');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `approver`
---
-
-CREATE TABLE `approver` (
-  `approver_id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `approver`
---
-
-INSERT INTO `approver` (`approver_id`, `emp_id`) VALUES
-(1, 8);
+(2, 2, 'Christmas Party Announcement', 'Christmas Party, please wear festive costumes.', 'Urgent'),
+(3, 5, 'Christmas Party', 'AShdiahd', 'Urgent');
 
 -- --------------------------------------------------------
 
@@ -132,6 +114,24 @@ INSERT INTO `department_employees` (`dept_emp_id`, `dept_id`, `emp_id`, `from_da
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `department_manager`
+--
+
+CREATE TABLE `department_manager` (
+  `approver_id` int(11) NOT NULL,
+  `emp_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `department_manager`
+--
+
+INSERT INTO `department_manager` (`approver_id`, `emp_id`) VALUES
+(1, 8);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `emp`
 --
 
@@ -149,7 +149,9 @@ CREATE TABLE `emp` (
   `p_address` varchar(255) NOT NULL,
   `c_address` varchar(255) NOT NULL,
   `date_hired` date NOT NULL,
+  `date_regularization` date DEFAULT NULL,
   `date_separated` date DEFAULT NULL,
+  `emp_status` varchar(40) NOT NULL,
   `sex` varchar(6) NOT NULL,
   `gender` varchar(20) DEFAULT NULL,
   `civil_status` varchar(20) DEFAULT NULL,
@@ -165,15 +167,17 @@ CREATE TABLE `emp` (
 -- Dumping data for table `emp`
 --
 
-INSERT INTO `emp` (`emp_id`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`, `personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_separated`, `sex`, `gender`, `civil_status`, `emergency_contact_name`, `emergency_contact_num`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
-(1, 'matt@fullsuite.ph', 'mattmatt', 'Matt Wilfred', 'Cabunoc', 'Salvador', 1, 'smattwilfred01@gmail.com', '09667528054', '1997-06-01', 'Cabanatuan City, Nueva Ecija', 'Marcos Highway', '2023-09-01', NULL, 'Male', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 'july@fullsuite.ph', 'rhaerhae', 'July Anne Rhaemonette', 'Almoite', 'Rosal', 0, 'jarhaemonette@gmail.com', '09457552819', '2000-07-14', 'Amagbagan, Pozorrubio, Pangasinan', 'Engineer\'s Hill, Baguio City', '2023-10-02', NULL, 'Female', '', 'Single', NULL, NULL, NULL, NULL, NULL, NULL),
-(3, 'antoinette@fullsuite.ph', 'tonton', 'Antoinette', 'Garcia', 'Sanchez', 2, 'antoinette.g.sanchez@gmail.com', '09458239638', '2000-05-22', '62 Scout Barrio, Baguio City', '62 Scout Barrio, Baguio City', '2023-10-02', NULL, 'Female', NULL, 'Single', 'Andrea Mae G. Sanchez', '09173456781', NULL, NULL, NULL, NULL),
-(4, 'marco@fullsuite.ph', 'marco@fullsuite.ph', 'Marco', 'Eliseo', 'Antero', 2, 'marco.e.antero@gmail.com', '09089624586', '2001-02-02', 'Brookspoint Rd., Baguio City', 'Brookspoint Rd., Baguio City', '2023-09-01', NULL, 'Male', NULL, 'Single', 'Issa Antero', '09184960347', NULL, NULL, NULL, NULL),
-(5, 'hailie@fullsuite.com', 'joyjoy0409', 'Hailie Joy', 'Tolentino', 'Bejerano', 3, 'hailiebejerano@gmail.com', '09661786217', '2004-04-09', '119 B. Pinewood Street, Crystal Cave, Baguio City', '119 B. Pinewood Street, Crystal Cave, Baguio City', '2021-06-16', NULL, 'Female', NULL, 'Single', 'Maria Cristina Bejerano', '09302930186', NULL, NULL, NULL, NULL),
-(6, 'amiel@fullsuite.ph', 'pagmamahal', 'Amiel Jethro', 'Cabalquinto', 'Cortez', 0, 'amieljethrocortez@gmail.com', '09235974089', '1999-08-30', 'Holy Ghost Extension', 'Holy Ghost Extension', '2023-10-02', NULL, 'Male', 'Male', 'Single', 'Christine Cortez', '09223440168', NULL, NULL, NULL, NULL),
-(7, 'diana@fullsuite.ph', 'staff@password', 'Diana Nicole', 'De paz', 'Perez', 1, 'diananicole.perez@gmail.com', '09774079280', '2002-09-24', 'blk 2 lot 6, lauan st villa pozorrubio', '47 Paredes St. Middle Quezon Hill', '2021-09-23', NULL, 'Female', NULL, 'Single', 'Brigette Perez', '09162614305', NULL, NULL, NULL, NULL),
-(8, 'jhex@fullsuite.ph', 'jhexjhex', 'Jhexer', 'Tiongson', 'Chun', 3, 'jhexchun@gmail.com', '09302506992', '1997-06-28', '161-A Lower Pias St. Camp 7, Baguio City, Benguet 2600', '161-A Lower Pias St. Camp 7, Baguio City, Benguet 2600', '2023-05-03', NULL, 'Male', 'Male', 'Single', 'Juvelyn Chun', '09476002222', NULL, NULL, NULL, NULL);
+INSERT INTO `emp` (`emp_id`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`, `personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`, `date_separated`, `emp_status`, `sex`, `gender`, `civil_status`, `emergency_contact_name`, `emergency_contact_num`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
+(1, 'matt@fullsuite.ph', 'mattmatt', 'Matt', 'Cabunoc', 'Salvador', 1, 'smattwilfred01@gmail.com', '09667528054', '1997-06-01', 'Cabanatuan City, Nueva Ecija', 'Marcos Highway', '2023-09-01', '2024-02-29', NULL, 'PROBATIONARY', 'Male', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'july@fullsuite.ph', 'rhaerhae', 'July Anne Rhaemonette', 'Almoite', 'Rosal', 0, 'jarhaemonette@gmail.com', '09457552819', '2000-07-14', 'Amagbagan, Pozorrubio, Pangasinan', 'Engineer\'s Hill, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', '', 'Single', NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 'antoinette@fullsuite.ph', 'tonton', 'Antoinette', 'Garcia', 'Sanchez', 3, 'antoinette.g.sanchez@gmail.com', '09458239638', '2000-05-22', '62 Scout Barrio, Baguio City', '62 Scout Barrio, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', NULL, 'Single', 'Andrea Mae G. Sanchez', '09173456781', NULL, NULL, NULL, NULL),
+(4, 'marco@fullsuite.ph', 'marco@fullsuite.ph', 'Marco', 'Eliseo', 'Antero', 2, 'marco.e.antero@gmail.com', '09089624586', '2001-02-02', 'Brookspoint Rd., Baguio City', 'Brookspoint Rd., Baguio City', '2023-09-01', '2024-02-29', NULL, 'REGULAR', 'Male', NULL, 'Single', 'Issa Antero', '09184960347', NULL, NULL, NULL, NULL),
+(5, 'hailie@fullsuite.com', 'joyjoy0409', 'Hailie Joy', 'Tolentino', 'Bejerano', 3, 'hailiebejerano@gmail.com', '09661786217', '2004-04-09', '119 B. Pinewood Street, Crystal Cave, Baguio City', '119 B. Pinewood Street, Crystal Cave, Baguio City', '2021-06-16', '2023-11-23', NULL, 'REGULAR', 'Female', NULL, 'Single', 'Maria Cristina Bejerano', '09302930186', NULL, NULL, NULL, NULL),
+(6, 'amiel@fullsuite.ph', 'pagmamahal', 'Amiel Jethro', 'Cabalquinto', 'Cortez', 2, 'amieljethrocortez@gmail.com', '09235974089', '1999-08-30', 'Holy Ghost Extension', 'Holy Ghost Extension', '2023-10-02', '2023-04-02', NULL, 'PROBATIONARY', 'Male', 'Male', 'Single', 'Christine Cortez', '09223440168', NULL, NULL, NULL, NULL),
+(7, 'diana@fullsuite.ph', 'staff@password', 'Diana Nicole', 'De paz', 'Perez', 1, 'diananicole.perez@gmail.com', '09774079280', '2002-09-24', 'blk 2 lot 6, lauan st villa pozorrubio', '47 Paredes St. Middle Quezon Hill', '2021-09-23', NULL, NULL, 'REGULAR', 'Female', NULL, 'Single', 'Brigette Perez', '09162614305', NULL, NULL, NULL, NULL),
+(8, 'jhex@fullsuite.ph', 'jhexjhex', 'Jhexer', 'Tiongson', 'Chun', 3, 'jhexchun@gmail.com', '09302506992', '1997-06-28', '161-A Lower Pias St. Camp 7, Baguio City, Benguet 2600', '161-A Lower Pias St. Camp 7, Baguio City, Benguet 2600', '2023-05-03', '2023-10-30', NULL, 'REGULAR', 'Male', 'Male', 'Single', 'Juvelyn Chun', '09476002222', NULL, NULL, NULL, NULL),
+(9, 'alleza@fullsuite.ph', 'zaza', 'Alleza Czarina', 'Nonato', 'Castor', 2, 'allezaczarina@gmail.com', '09154353116', '2023-04-09', 'Quezon Hill, Baguio City', 'Quezon Hill, Baguio City', '2023-04-03', '2023-10-03', NULL, 'REGULAR', 'Female', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(10, 'ajessica@fullsuite.ph', 'jessjess', 'Jessica', 'Abarquez', 'Aguirre', 3, 'jeszicawongaguirre@gmail.com', '09386339392', '1993-10-05', '39 Military Cutoff Baguio City', '39 Military Cutoff Baguio City', '2022-07-18', '2023-01-18', NULL, 'REGULAR', 'Female', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -192,7 +196,11 @@ CREATE TABLE `emp_details` (
   `created_by` int(100) DEFAULT NULL,
   `created_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `updated_by` int(100) DEFAULT NULL,
-  `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
+  `updated_at` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `sss_contribution` decimal(6,0) NOT NULL,
+  `phic_contribution` decimal(6,0) NOT NULL,
+  `hdmc_contribution` decimal(6,0) NOT NULL,
+  `tin_contribution` decimal(6,0) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -223,24 +231,77 @@ CREATE TABLE `emp_salary` (
 
 CREATE TABLE `leaves` (
   `leave_id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
+  `requester_id` int(11) NOT NULL,
   `leave_type` varchar(20) NOT NULL,
   `leave_reason` varchar(255) NOT NULL,
   `leave_from` date NOT NULL,
   `leave_to` date NOT NULL,
   `leave_status` int(11) NOT NULL,
-  `approver_id` int(11) NOT NULL
+  `approver_id` int(11) NOT NULL,
+  `is_paid` tinyint(1) DEFAULT NULL,
+  `use_pto_count` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `leaves`
 --
 
-INSERT INTO `leaves` (`leave_id`, `emp_id`, `leave_type`, `leave_reason`, `leave_from`, `leave_to`, `leave_status`, `approver_id`) VALUES
-(1, 1, 'UNPAID', 'Secret lang', '2023-11-01', '2023-11-04', 0, 1),
-(2, 4, 'SICK LEAVE', 'I\'m Sick', '2023-11-08', '2023-11-10', 0, 1),
-(3, 3, 'SICK LEAVE', 'I have the flu', '2023-11-09', '2023-11-15', 1, 1),
-(4, 1, 'BEREAVEMENT', 'Broken Hearted ako', '2023-11-08', '2023-11-16', 2, 1);
+INSERT INTO `leaves` (`leave_id`, `requester_id`, `leave_type`, `leave_reason`, `leave_from`, `leave_to`, `leave_status`, `approver_id`, `is_paid`, `use_pto_count`) VALUES
+(1, 1, 'VACATION LEAVE', 'Going to Singapore', '2023-11-01', '2023-11-04', 1, 8, NULL, NULL),
+(2, 4, 'SICK LEAVE', 'I\'m Sick', '2023-11-08', '2023-11-10', 1, 3, NULL, NULL),
+(3, 3, 'SICK LEAVE', 'I have the flu', '2023-11-09', '2023-11-15', 0, 8, NULL, NULL),
+(4, 1, 'BEREAVEMENT', 'Broken Hearted ako', '2023-11-08', '2023-11-16', 0, 8, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `leave_credits`
+--
+
+CREATE TABLE `leave_credits` (
+  `leave_credits_id` int(100) NOT NULL,
+  `emp_id` int(100) NOT NULL,
+  `leave_balance` decimal(18,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `leave_credits`
+--
+
+INSERT INTO `leave_credits` (`leave_credits_id`, `emp_id`, `leave_balance`) VALUES
+(6, 8, '0.83'),
+(8, 4, '5.43'),
+(12, 3, '0.00'),
+(15, 10, '1.25'),
+(16, 5, '26.00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `offset`
+--
+
+CREATE TABLE `offset` (
+  `offset_id` int(11) NOT NULL,
+  `emp_id` int(11) NOT NULL,
+  `offset_start` datetime NOT NULL,
+  `offset_end` datetime NOT NULL,
+  `offset_status` varchar(100) NOT NULL,
+  `offset_reason` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payroll`
+--
+
+CREATE TABLE `payroll` (
+  `payroll_id` int(100) NOT NULL,
+  `emp_id` int(100) NOT NULL,
+  `deductions_id` int(100) NOT NULL,
+  `date_of_payout` datetime(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -377,13 +438,6 @@ ALTER TABLE `announcements`
   ADD KEY `emp_id` (`emp_id`);
 
 --
--- Indexes for table `approver`
---
-ALTER TABLE `approver`
-  ADD PRIMARY KEY (`approver_id`),
-  ADD KEY `approver_emp_id` (`emp_id`);
-
---
 -- Indexes for table `company`
 --
 ALTER TABLE `company`
@@ -402,6 +456,13 @@ ALTER TABLE `department_employees`
   ADD PRIMARY KEY (`dept_emp_id`),
   ADD KEY `dept_emp_dept_id` (`dept_id`),
   ADD KEY `dept_emp_emp_id` (`emp_id`);
+
+--
+-- Indexes for table `department_manager`
+--
+ALTER TABLE `department_manager`
+  ADD PRIMARY KEY (`approver_id`),
+  ADD KEY `approver_emp_id` (`emp_id`);
 
 --
 -- Indexes for table `emp`
@@ -428,8 +489,22 @@ ALTER TABLE `emp_salary`
 --
 ALTER TABLE `leaves`
   ADD PRIMARY KEY (`leave_id`),
-  ADD KEY `leave_emp_id` (`emp_id`),
+  ADD KEY `leave_emp_id` (`requester_id`),
   ADD KEY `leave_approver_id` (`approver_id`);
+
+--
+-- Indexes for table `leave_credits`
+--
+ALTER TABLE `leave_credits`
+  ADD PRIMARY KEY (`leave_credits_id`),
+  ADD KEY `emp_leave_id` (`emp_id`);
+
+--
+-- Indexes for table `offset`
+--
+ALTER TABLE `offset`
+  ADD PRIMARY KEY (`offset_id`),
+  ADD KEY `offset_emp_id` (`emp_id`);
 
 --
 -- Indexes for table `title`
@@ -459,13 +534,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `announcements`
 --
 ALTER TABLE `announcements`
-  MODIFY `ann_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `approver`
---
-ALTER TABLE `approver`
-  MODIFY `approver_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ann_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `company`
@@ -486,6 +555,12 @@ ALTER TABLE `department_employees`
   MODIFY `dept_emp_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `department_manager`
+--
+ALTER TABLE `department_manager`
+  MODIFY `approver_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `emp_details`
 --
 ALTER TABLE `emp_details`
@@ -501,7 +576,19 @@ ALTER TABLE `emp_salary`
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
-  MODIFY `leave_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `leave_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `leave_credits`
+--
+ALTER TABLE `leave_credits`
+  MODIFY `leave_credits_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `offset`
+--
+ALTER TABLE `offset`
+  MODIFY `offset_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `title`
@@ -532,17 +619,17 @@ ALTER TABLE `announcements`
   ADD CONSTRAINT `emp_id` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`emp_id`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `approver`
---
-ALTER TABLE `approver`
-  ADD CONSTRAINT `approver_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`emp_id`) ON UPDATE CASCADE;
-
---
 -- Constraints for table `department_employees`
 --
 ALTER TABLE `department_employees`
   ADD CONSTRAINT `dept_emp_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `department` (`dept_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `dept_emp_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`emp_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `department_manager`
+--
+ALTER TABLE `department_manager`
+  ADD CONSTRAINT `approver_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`emp_id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `emp_details`
@@ -560,8 +647,20 @@ ALTER TABLE `emp_salary`
 -- Constraints for table `leaves`
 --
 ALTER TABLE `leaves`
-  ADD CONSTRAINT `leave_approver_id` FOREIGN KEY (`approver_id`) REFERENCES `approver` (`approver_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `leave_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`emp_id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `leave_approver_id` FOREIGN KEY (`approver_id`) REFERENCES `emp` (`emp_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `leave_emp_id` FOREIGN KEY (`requester_id`) REFERENCES `emp` (`emp_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `leave_credits`
+--
+ALTER TABLE `leave_credits`
+  ADD CONSTRAINT `emp_leave_id` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`emp_id`);
+
+--
+-- Constraints for table `offset`
+--
+ALTER TABLE `offset`
+  ADD CONSTRAINT `offset_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`emp_id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `title`
