@@ -13,25 +13,21 @@ var dotenv = require("dotenv")
 var cookieParser = require("cookie-parser")
 var session = require("express-session")
 var bodyParser = require("body-parser")
+var cron = require('node-cron')
 
-var HomeHandler = require("./handlers/home.js");
-var LoginHandler = require( "./handlers/login.js");
+var HomeHandler = require("./handlers/authentication/home.js");
+//var LoginHandler = require( "./handlers/authentication/login.js");
 //var ProcessLoginHandler = require("./handlers/process-login.js")
-var LogoutHandler = require("./handlers/logout.js");
+var LogoutHandler = require("./handlers/authentication/logout.js");
+
+var DailyPTOAccrual = require("./handlers/utilities/cron-daily.js")
+
 
 dotenv.config({ path: './protected.env' })
 
 const app = express()
 
-
-app.get('/', HomeHandler);
-app.get('/logout', LogoutHandler);
-
 const db = mysql.createConnection({
-    /**host:"localhost",
-    user:"root",
-    password: "root",
-    database: "fs_hris_db"**/
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
@@ -79,8 +75,15 @@ app.listen(6197, ()=>{
 
 // -------------------- GENERAL METHODS --------------------------//
 
+app.get('/', HomeHandler);
 
-app.get("/login", LoginHandler)
+app.get("/login", (req, res) => {
+    if (req.session.user) {
+        res.send({ loggedIn: true, user: req.session.user });
+    } else {
+        res.send({ loggedIn: false });
+    }
+})
 
 //app.post("/processlogin", ProcessLoginHandler);
 
@@ -98,6 +101,7 @@ app.post("/processlogin", (req, res) => {
 
             if (result.length > 0) {
                 req.session.user = result
+                req.session.firstName = result.f_name
                 console.log(req.session.user)
                 res.send(result[0]);
             } else {
@@ -107,11 +111,7 @@ app.post("/processlogin", (req, res) => {
     )
 });
 
-app.get('/logout', (req, res) => {
-    req.logout();
-    req.session = null;
-    res.redirect('/');
-})
+app.get('/logout', LogoutHandler)
 
 
 // -------------------- ADMIN METHODS --------------------------//
@@ -163,7 +163,7 @@ app.post('/addEmployee', (req,res) => {
 // -------------------- ANNOUNCEMENT METHODS --------------------------//
 
 app.get("/announcements", (req, res) => {
-    const q = "SELECT * FROM announcements"
+    const q = "SELECT * FROM announcements AS a INNER JOIN emp AS e ON a.emp_id=e.emp_id LIMIT 3" 
     db.query(q,(err,data)=> {
         if(err) return res.json(err)
         return res.json(data)
@@ -241,6 +241,22 @@ app.get("/showdirectory", (req, res) => {
     })
 })
 
+app.get("/getUserPTO", (req, res) => {
+    const uid = req.session.user[0].emp_id
+    const q = "SELECT * FROM `leave_credits` AS l INNER JOIN `emp` AS e ON l.emp_id = e.emp_id WHERE e.emp_id = ?"
+
+    db.query(q,
+        [uid],
+        (err,data)=> {
+        if(err) {
+            return res.json(err)
+        }
+
+        return res.json(data)
+    })
+})
+
+
 //TL
 
 app.get("/showpendingdepartmentleaves", (req, res) => {
@@ -284,10 +300,8 @@ app.get("/showpendingleaves", (req, res) => {
     })
 })
 
-
-
 app.get("/showapprovedleaves", (req, res) => {
-    const q = "SELECT * FROM leaves WHERE leave_status = 1"
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE leave_status = 1"
     db.query(q,(err,data)=> {
         if(err) return res.json(err)
         return res.json(data)
@@ -318,8 +332,87 @@ app.post("/showpendingleaves/:leave_id", (req, res) => {
     })
 })
 
-//Reject
 
+
+//ptoprobi
+
+app.post("/ptoProbationary", (req, res) => {
+    var currDate = "2024-02-29";
+    const q = "UPDATE emp e JOIN leave_credits l ON e.emp_id = l.emp_id " +
+    "SET emp_status = 'REGULAR', leave_balance = leave_balance + 5 " +
+     "WHERE emp_status = 'PROBATIONARY' AND date_regularization = CURDATE()"
+    
+    db.query(q,(err,data)=> {
+        if(err) {
+            return res.json(err)
+        }
+        console.log("Rows affected")
+        return res.json(data)
+    })
+})
+
+//ptoRegular
+
+app.post("/ptoRegular", (req, res) => {
+    const q = "UPDATE emp e JOIN leave_credits l ON e.emp_id = l.emp_id " +
+    "SET leave_balance = leave_balance + 0.83 " +
+     "WHERE emp_status = 'REGULAR' AND LAST_DAY(CURDATE()) = CURDATE()"
+    
+    db.query(q,(err,data)=> {
+        if(err) {
+            return res.json(err)
+        }
+        console.log("Rows affected")
+        return res.json(data)
+    })
+})
+
+//pto1year
+app.post("/ptoTenure", (req, res) => {
+    const q = "UPDATE emp e JOIN leave_credits l ON e.emp_id = l.emp_id " +
+    "SET leave_balance = leave_balance + 1.25 " +
+    "WHERE date_hired < DATE_SUB(NOW(),INTERVAL 1 YEAR) AND emp_status = 'REGULAR' AND LAST_DAY(CURDATE()) = CURDATE()"
+    
+    db.query(q,(err,data)=> {
+        if(err) {
+            return res.json(err)
+        }
+        console.log("Rows affected")
+        return res.json(data)
+    })
+})
+
+//refreshPTOinMarch
+app.post("/ptoRefresh", (req, res) => {
+    const q = "UPDATE leave_credits" +
+    "SET leave_balance = 0 " +
+     "WHERE DAY(GetDate()) = 1 AND DAY(GetMonth()) = 3"
+    
+    db.query(q,(err,data)=> {
+        if(err) {
+            return res.json(err)
+        }
+        console.log("Rows affected")
+        return res.json(data)
+    })
+})
+
+//PTO working Student
+app.post("/ptoTenure", (req, res) => {
+    const q = "UPDATE emp e JOIN leave_credits l ON e.emp_id = l.emp_id " +
+    "SET leave_balance = leave_balance + 1.25 " +
+    "WHERE date_hired < DATE_SUB(NOW(),INTERVAL 1 YEAR) AND emp_status = 'REGULAR' AND LAST_DAY(CURDATE()) = CURDATE()"
+    
+    db.query(q,(err,data)=> {
+        if(err) {
+            return res.json(err)
+        }
+        console.log("Rows affected")
+        return res.json(data)
+    })
+})
+
+//Reject
 app.post("/rejectleave/:leave_id", (req, res) => {
     const leave_id = req.params.leave_id;
     const q = "UPDATE leaves SET leave_status = ? WHERE leave_id = ?";
@@ -336,10 +429,9 @@ app.post("/rejectleave/:leave_id", (req, res) => {
 })
 
 
-//Check upcoming bdays
-
+//Check Upcoming Bdays
 app.get("/getupcomingbdays", (req, res) => {
-    const q = "SELECT * FROM emp ORDER BY DAYOFYEAR(dob) < DAYOFYEAR(CURDATE()) , DAYOFYEAR(dob);"
+    const q = "SELECT * FROM emp ORDER BY DAYOFYEAR(dob) < DAYOFYEAR(CURDATE()) , DAYOFYEAR(dob) LIMIT 5;"
 
     db.query(q, (err, data) => {
         if (err){
@@ -350,8 +442,8 @@ app.get("/getupcomingbdays", (req, res) => {
     }) 
 })
 
-app.get("getupcominganniversaries", (req, res) => {
-    const q = "SELECT * FROM emp ORDER BY DAYOFYEAR(date_hired) < DAYOFYEAR(CURDATE()) , DAYOFYEAR(date_hired);"
+app.get("/getupcominganniversaries", (req, res) => {
+    const q = "SELECT * FROM emp ORDER BY DAYOFYEAR(date_hired) < DAYOFYEAR(CURDATE()) , DAYOFYEAR(date_hired) LIMIT 5;"
 
     db.query(q, (err, data) => {
         if (err){
@@ -375,13 +467,128 @@ app.get("countAllEmployees", (req, res) => {
     })
 })
 
-app.post("/fileLeave", (req, res)=> {
-    const q = "INSERT * INTO leaves VALUES ?"
-    const values = req.body
+app.get("/myDeclinedLeaves", (req, res) => {
+    const q = "SELECT * FROM leaves WHERE leave_status = 2 AND emp_id = ?"
 
-    db.query(q, values, (err, data => {
+    db.query(q, req.session.user[0].emp_id, (err, data => {
         if (err) return (json.err)
-        console.log("Succesfully inserted into the table.")
+        else {
+            return json(data)
+        }
+    }))
+})
+
+app.get("/myPendingLeaves", (req, res) => {
+    const q = "SELECT * FROM leaves WHERE leave_status = 0 AND emp_id = ?"
+
+    db.query(q, req.session.user[0].emp_id, (err, data => {
+        if (err) return (json.err)
+        else {
+            return json(data)
+        }
+    }))
+})
+
+app.get("/myApprovedLeaves", (req, res) => {
+    const q = "SELECT * FROM leaves WHERE leave_status = 1 AND emp_id = ?"
+
+    db.query(q, req.session.user[0].emp_id, (err, data => {
+        if (err) return (json.err)
+        else {
+            return json(data)
+        }
+    }))
+})
+
+app.get("/myDepartmentPendingLeaves", (req, res) => {
+
+})
+
+/** --------------------- CRON Jobs --------------------------- **/
+
+cron.schedule("0 0 * * *", function () {
+    dailyPtoAccrual();
+});
+
+cron.schedule("0 0 1 1 *", function() {
+    yearlyAccrual();
+})
+
+function yearlyAccrual() { 
+    const year_q = "UPDATE emp e JOIN leave_credits l ON e.emp_id = l.emp_id " +
+    "SET leave_balance = leave_balance + 6 " +
+    "WHERE date_hired < DATE_SUB(NOW(),INTERVAL 1 YEAR) AND emp_status = 'WORKING_SCHOLAR'"
+
+    db.query(year_q,(err,data)=> {
+        if(err) {
+            return console.log(err)
+        }
+        console.log("Working Scholar yearly accrual done.")
     })
-    )
+}
+
+function dailyPtoAccrual() {
+
+    const prob_q ="UPDATE emp e JOIN leave_credits l ON e.emp_id = l.emp_id " +
+        "SET emp_status = 'REGULAR', leave_balance = leave_balance + 5 " +
+        "WHERE emp_status = 'PROBATIONARY' AND date_regularization = CURDATE()";
+
+    const reg_q = "UPDATE emp e JOIN leave_credits l ON e.emp_id = l.emp_id " +
+        "SET leave_balance = leave_balance + 0.83 " +
+        "WHERE emp_status = 'REGULAR' AND LAST_DAY(CURDATE()) = CURDATE()"
+
+    const tenure_q = "UPDATE emp e JOIN leave_credits l ON e.emp_id = l.emp_id " +
+        "SET leave_balance = leave_balance + 1.25 " +
+        "WHERE date_hired < DATE_SUB(NOW(),INTERVAL 1 YEAR) AND emp_status = 'REGULAR' AND LAST_DAY(CURDATE()) = CURDATE()"
+
+    const scholar_q = "UPDATE emp e JOIN leave_credits l ON e.emp_id = l.emp_id " +
+        "SET leave_balance = leave_balance + 0.625 " +
+        "WHERE date_hired < DATE_SUB(NOW(),INTERVAL 1 YEAR) AND emp_status = 'WORKING_SCHOLAR' AND LAST_DAY(CURDATE()) = CURDATE()"
+    
+    db.query(prob_q,(err,data) => {
+        if(err) {
+            return console.log(err)
+        }
+        console.log("Probationary PTO accrual done.")
+    })
+    
+    db.query(reg_q,(err,data)=> {
+        if(err) {
+            return console.log(err)
+        }
+        console.log("Regular PTO accrual done.")
+    })
+    
+    db.query(tenure_q,(err,data)=> {
+        if(err) {
+            return console.log(err)
+        }
+        console.log("Tenured PTO accrual done.")
+    })
+    
+    db.query(scholar_q,(err,data)=> {
+        if(err) {
+            return console.log(err)
+        }
+        console.log("Working Scholar accrual done.")
+    })
+}
+
+app.post("/fileLeave", (req, res)=> {
+    const q = "INSERT INTO leaves (`requester_id`, `leave_type`, `leave_reason`, `leave_from`, `leave_to`, `leave_status`, `approver_id`) VALUES (?)"
+
+    const values = [
+        1, //1
+        req.body.leave_type,
+        req.body.leave_reason,
+        req.body.leave_from,
+        req.body.leave_to,
+        0,
+        8,
+    ]
+
+    db.query(q, [values], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    })
 })

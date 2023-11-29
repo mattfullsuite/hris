@@ -1,6 +1,23 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import Axios from 'axios';
+import moment from "moment";
 
 const DashBBirthdays = () => {
+
+  const [upcomingBdays, setUpcomingBdays] = useState([])
+
+  useEffect(() => {
+    const fetchAllBdays = async ()=> {
+        try{
+            const res = await Axios.get("http://localhost:6197/getupcomingbdays")
+            setUpcomingBdays(res.data)
+        } catch(err){
+            console.log(err)
+        }
+    };
+    fetchAllBdays();
+}, []);
+
     return(
         <>
         {/* Birthdays Table */}
@@ -17,10 +34,15 @@ const DashBBirthdays = () => {
                   </thead>
                   <tbody>
                     {/* row 1 */}
+
+
+                    { upcomingBdays.map((upcomingBday) => (
                     <tr>
-                      <td>John Doe</td>
-                      <td>Jan. 01</td>
+                      <td>{upcomingBday.f_name + " " + upcomingBday.s_name}</td>
+                      <td>{moment(upcomingBday.dob).format('MMM DD')}</td>
                     </tr>
+
+                    ))} 
                   </tbody>
                 </table>
               </div>

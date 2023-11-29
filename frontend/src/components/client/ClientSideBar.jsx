@@ -3,6 +3,39 @@ import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 
 const ClientSideBar = () => {
+  const navigate = useNavigate()
+
+  const [users, setUser] = useState([]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const res = await Axios.get("http://localhost:6197/login");
+        setUser(res.data.user);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUserData();
+  }, []);
+
+  useEffect(() => {
+    Axios.get("http://localhost:6197/login").then((response) => {
+       if (response.data.loggedIn == false) {
+          navigate("/login")
+       }
+    })
+ }, [])
+
+  const logoutEmployee = () => {
+    try { 
+      Axios.get("http://localhost:6197/logout");
+      navigate("/")
+    } catch(err){
+      console.log(err)
+    }
+  };
+
   return (
     <>
       <button
@@ -43,9 +76,10 @@ const ClientSideBar = () => {
               />
             </div>
 
+            { users.map((user) => (
             <div className="flex flex-col items-center justify-center">
               <div className="font-bold text-xl text-white">
-                Matt Wilfred Salvador
+                { user.f_name + " " + user.s_name}
               </div>
               <div className="mb-1 text-white">Senior Software Engineer</div>
               <div>
@@ -70,6 +104,8 @@ const ClientSideBar = () => {
                 </a>
               </div>
             </div>
+
+            ))}
 
             <div className="flex items-center justify-center"></div>
 
@@ -193,7 +229,8 @@ const ClientSideBar = () => {
             </li>
             <li>
               <a
-                href="#"
+                href="#" 
+                onClick={ logoutEmployee }
                 className="mt-12 flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700 group"
               >
                 <svg

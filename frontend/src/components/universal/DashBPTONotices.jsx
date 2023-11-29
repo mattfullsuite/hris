@@ -1,6 +1,22 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import Axios from 'axios';
 
 const DashBPTONotices = () => {
+
+  const [approved, setApproved] = useState([])
+
+  useEffect(() => {
+      const fetchAllApproved = async ()=> {
+          try{
+              const res = await Axios.get("http://localhost:6197/showapprovedleaves")
+              setApproved(res.data)
+          } catch(err){
+              console.log(err)
+          }
+      };
+      fetchAllApproved();
+  }, []);
+
   return (
     <>
       {/* PTO Notices */}
@@ -21,12 +37,14 @@ const DashBPTONotices = () => {
             </thead>
             <tbody>
               {/* row 1 */}
+
+              { approved.map((appr) => (
               <tr>
                 <th>1</th>
                 <td>Nov. 12, 2023</td>
-                <td>John Doe</td>
-                <td>Sick Leave</td>
-                <td>Pending</td>
+                <td>{ appr.f_name + " " + appr.s_name}</td>
+                <td>{ appr.leave_type }</td>
+                <td>{ appr.leave_status }</td>
                 <td className="text-center">
                   <button
                     className="btn btn-ghost btn-xs normal-case"
@@ -72,6 +90,7 @@ const DashBPTONotices = () => {
                   </dialog>
                 </td>{" "}
               </tr>
+              ))}
             </tbody>
           </table>
         </div>

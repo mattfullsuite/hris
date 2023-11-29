@@ -1,9 +1,26 @@
-import React from "react";
+import React, {useState, useEffect}  from "react";
+import Axios from 'axios';
 
 const DashBremainingPTO = () => {
+  const [ptos, setPtos] = useState([])
+
+  useEffect(() => {
+      const fetchUserPTO = async ()=> {
+          try{
+              const res = await Axios.get("http://localhost:6197/getUserPTO")
+              setPtos(res.data)
+          } catch(err){
+              console.log(err)
+          }
+      };
+      fetchUserPTO();
+  }, []);
+
   return (
     <>
       {/* Number of PTOs */}
+
+      { ptos.map((pto) => (
       <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col items-center justify-center text-center">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -21,11 +38,14 @@ const DashBremainingPTO = () => {
         </svg>
 
         <h1 className="text-lg font-semibold">Number of PTOs</h1>
-        <h1 className="my-1 text-3xl font-bold">2.30</h1>
+        <h1 className="my-1 text-3xl font-bold">{ pto.leave_balance }</h1>
         <h1 className="text-base font-normal">Available until</h1>
         <h1 className="text-base font-semibold">March 25, 2023</h1>
 
       </div>
+
+      ))}
+
     </>
   );
 };

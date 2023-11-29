@@ -1,45 +1,60 @@
-import React from 'react'
-import {useState} from 'react'
+import React, {useState} from 'react'
+
+import axios from 'axios'
 
 const FileLeave = () => {
-    const [filedLeaves, setFiledLeaves] = useState({
-        leave_id: "",
-        requester_id: "",
-        leave_type: "",
-        leave_reason: "",
-        leave_status: "",
-        approver_id: "",
-        is_paid: false,
-        use_pto_count: 0,
+
+    const [leaveInfo, setLeaveInfo] = useState({
+        leave_type: '',
+        leave_reason: '',
+        leave_from: '',
+        leave_to: '',
     })
 
-    const handleChange = (e) => {
-        setFiledLeaves((prev=>({...prev, [e.target.name]: e.target.value })))
-    };
-    const attemptFile = (e) => {
-        
+    const handleChange = (event) => {
+        setLeaveInfo({...leaveInfo, [event.target.name]:[event.target.value]})
     }
 
+    const handleSubmit = (event) => {
+        event.preventDefault()
+        axios.post('http://localhost:6197/fileLeave', leaveInfo)
+        .then(res => console.log("Registered Successfully"))
+        .catch(err => console.log(err));
+    }
     return (
         <div className='form'>
             <h1>File A Leave</h1>
-            <select onChange={handleChange}>
-                <option value="Sick Leave">Sick Leave</option>
-                <option value="Bereavement Leave">Bereavement Leave</option>
-                <option value="Maternity/Paternity Leave">Maternity/Paternity Leave</option>
-                <option value="Vacation Leave">Vacation Leave</option>
-                <option value="Adverse Weather Leave">Adverse Weather Leave</option>
-                <option value="Study Leave">Study Leave</option>
-                <option value="Other Leave">Other Leave</option>
-            </select>
-            <textbox onChange={handleChange} placeholder="State reason here."></textbox>
-            <input type="date">Date From</input>
-            <input type="date">Date To</input>
-            <input type="leave_type" onChange={handleChange} placeholder=" Name"/>
-            <br/>            
-            <input type="email" onChange={handleChange} placeholder="Company Address"/>
-            <br/>
-            <button className="btn btn-ghost btn-xs bg-accent">File</button>
+
+            <form onSubmit={handleSubmit}>
+                <div>
+
+                <select name='leave_type' className="select select-bordered w-full max-w-xs" onChange={handleChange}>
+                    <option disabled selected>Pick a reason for filing a leave</option>
+                    <option>Sick Leave</option>
+                    <option>Bereavement Leave</option>
+                    <option>Maternity/Paternity Leave</option>
+                    <option>Vacation Leave</option>
+                    <option>Adverse Weather Leave</option>
+                    <option>Study Leave</option>
+                    <option>Other Leave</option>
+                </select>
+
+                </div>
+                
+                <div>
+                    <textarea name='leave_reason' className="textarea textarea-bordered" placeholder="Reason here." onChange={handleChange}></textarea>
+                </div>
+
+                <br/>
+
+                <div>
+                    <input name='leave_from' type="date" placeholder="Date From" className="input input-bordered w-full max-w-xs" onChange={handleChange} />
+                    <input name='leave_to' type="date" placeholder="Date To" className="input input-bordered w-full max-w-xs" onChange={handleChange} />
+                </div>
+
+                <br/>
+                <button type="submit" className="btn btn-ghost btn-xs bg-accent">File</button>
+            </form>
         </div>
     )
 }

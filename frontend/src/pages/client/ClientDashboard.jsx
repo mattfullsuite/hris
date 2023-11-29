@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 
 import ClientSideBar from "../../components/client/ClientSideBar";
@@ -43,6 +42,47 @@ const ClientDashboard = () => {
          }
       })
    }, [])**/
+
+   const [users, setUser] = useState([]);
+   const [announcements, setAnnouncements] = useState([]);
+
+   const [pleaves, setPendingLeaves] = useState([])
+
+    useEffect(() => {
+        const fetchAllPendingLeaves = async ()=> {
+            try{
+                const res = await Axios.get("http://localhost:6197/showpendingleaves")
+                setPendingLeaves(res.data)
+            } catch(err){
+                console.log(err)
+            }
+        };
+        fetchAllPendingLeaves();
+    }, []);
+
+   useEffect(() => {
+      const fetchAllAnnouncements = async ()=> {
+          try{
+              const res = await Axios.get("http://localhost:6197/announcements")
+              setAnnouncements(res.data);
+          } catch(err){
+              console.log(err)
+          }
+      }
+      fetchAllAnnouncements()
+  },[])
+
+   useEffect(() => {
+      const fetchUserData = async ()=> {
+          try{
+              const res = await Axios.get("http://localhost:6197/login")
+              setUser(res.data.user)
+          } catch(err){
+              console.log(err)
+          }
+      };
+      fetchUserData();
+  }, []);
 
   return (
     <>
