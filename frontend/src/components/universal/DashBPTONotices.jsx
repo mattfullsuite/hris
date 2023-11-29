@@ -31,7 +31,6 @@ const DashBPTONotices = () => {
                 <th>Date Filed</th>
                 <th>Name</th>
                 <th>PTO</th>
-                <th>Status</th>
                 <th></th>
               </tr>
             </thead>
@@ -44,7 +43,6 @@ const DashBPTONotices = () => {
                 <td>Nov. 12, 2023</td>
                 <td>{ appr.f_name + " " + appr.s_name}</td>
                 <td>{ appr.leave_type }</td>
-                <td>{ appr.leave_status }</td>
                 <td className="text-center">
                   <button
                     className="btn btn-ghost btn-xs normal-case"

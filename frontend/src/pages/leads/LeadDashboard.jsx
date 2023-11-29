@@ -6,6 +6,7 @@ import DashBButtons from "../../components/universal/DashBButtons";
 import ManagerPTONotices from "../../components/manager/ManagerPTONotices";
 import DashBBirthdays from "../../components/universal/DashBBirthdays";
 import DashBAnniversaries from "../../components/universal/DashBAnniversaries";
+import DashBOwnPTO from "../../components/universal/DashBOwnPTO";
 
 const LeadDashboard = () => {
 
@@ -30,6 +31,7 @@ const LeadDashboard = () => {
             <DashBRemainingOffset></DashBRemainingOffset>
           </div>
           <DashBButtons></DashBButtons>
+          <DashBOwnPTO></DashBOwnPTO>
           <ManagerPTONotices></ManagerPTONotices>
           <div className="flex">
             <DashBBirthdays></DashBBirthdays>
