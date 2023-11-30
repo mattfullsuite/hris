@@ -6,22 +6,15 @@ import DashBButtons from "../../components/universal/DashBButtons";
 import ManagerPTONotices from "../../components/manager/ManagerPTONotices";
 import DashBBirthdays from "../../components/universal/DashBBirthdays";
 import DashBAnniversaries from "../../components/universal/DashBAnniversaries";
-
+import DashBOwnPTO from "../../components/universal/DashBOwnPTO";
+import DashBGreeting from "../../components/universal/DashBGreeting";
 const LeadDashboard = () => {
 
   return (
     <>
       <ManagerSideBar></ManagerSideBar>
       <div className="p-4 sm:ml-64 flex flex-col">
-        {/* Date */}
-        <div className="mb-1 text-xl">
-          <p>Friday, November 03, 2023</p>
-        </div>
-
-        {/* Greeting */}
-        <div className="m-2 text-3xl font-bold">
-          <p>Good Morning Manager User!</p>
-        </div>
+        <DashBGreeting></DashBGreeting>
 
         {/* Widget Container */}
         <div className="my-2 mx-2">
@@ -30,6 +23,7 @@ const LeadDashboard = () => {
             <DashBRemainingOffset></DashBRemainingOffset>
           </div>
           <DashBButtons></DashBButtons>
+          <DashBOwnPTO></DashBOwnPTO>
           <ManagerPTONotices></ManagerPTONotices>
           <div className="flex">
             <DashBBirthdays></DashBBirthdays>

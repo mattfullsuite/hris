@@ -37,7 +37,7 @@ const ManagerPTONotices = () => {
                     Details
                   </button>
                   {/* Modal - Details */}
-                  <dialog id="emp_pto_details_btn" class="modal text-left">
+                  <dialog id="emp_pto_details_btn" className="modal text-left">
                     <div className="modal-box">
                       <form method="dialog">
                         <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
@@ -82,15 +82,15 @@ const ManagerPTONotices = () => {
                       </div>
 
                       <div className="flex justify-end">
-                        <button class="btn bg-green-600 text-white hover:bg-green-800 mr-2 normal-case">
+                        <button className="btn bg-green-600 text-white hover:bg-green-800 mr-2 normal-case">
                           Approve
                         </button>
-                        <button class="btn bg-red-600 text-white hover:bg-red-800 normal-case">
+                        <button className="btn bg-red-600 text-white hover:bg-red-800 normal-case">
                           Decline
                         </button>
                       </div>
 
-                      <div class="modal-action"></div>
+                      <div className="modal-action"></div>
                     </div>
                   </dialog>
                 </td>{" "}
