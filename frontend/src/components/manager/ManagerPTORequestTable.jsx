@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from 'axios'
+import moment from "moment"
 
 const ManagerPTORequestTable = () => {
   const [leaves, setPendingLeaves] = useState([])
@@ -49,7 +50,6 @@ const ManagerPTORequestTable = () => {
                 <th>PTO Type</th>
                 <th>Date From</th>
                 <th>Date To</th>
-                <th>Status</th>
                 <th></th>
                 <th></th>
               </tr>
@@ -62,11 +62,9 @@ const ManagerPTORequestTable = () => {
                 <td>Nov. 12, 2023</td>
                 <td>{ leave.s_name + ", " + leave.f_name + " " + leave.m_name }</td>
                 <td>{ leave.leave_type }</td>
-                <td>{ leave.leave_from }</td>
-                <td>{leave.leave_to }</td>
-                <td>
-                  <div className="badge badge-warning gap-2">{leave.leave_status }</div>
-                </td>
+                <td>{ moment(leave.leave_from).format('MMM DD YYYY') }</td>
+                <td>{ moment(leave.leave_to).format('MMM DD YYYY') }</td>
+    
                 <td className="text-center">
                   <button
                     className="btn btn-ghost btn-xs normal-case"
@@ -99,11 +97,11 @@ const ManagerPTORequestTable = () => {
                       <div className="flex">
                         <div className="flex-1">
                           <h3 className="font-base">Date From:</h3>
-                          <h3 className="font-semibold mb-2">{ leave.leave_from }</h3>
+                          <h3 className="font-semibold mb-2">{ moment(leave.leave_from).format('MMM DD YYYY') }</h3>
                         </div>
                         <div className="flex-1">
                           <h3 className="font-base">Date To:</h3>
-                          <h3 className="font-semibold mb-2">{ leave.leave_to }</h3>
+                          <h3 className="font-semibold mb-2">{ moment(leave.leave_to).format('MMM DD YYYY') }</h3>
                         </div>
                       </div>
                       <div>

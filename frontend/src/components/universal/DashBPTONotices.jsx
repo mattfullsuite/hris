@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import Axios from 'axios';
+import moment from "moment"
 
 const DashBPTONotices = () => {
 
@@ -45,8 +46,8 @@ const DashBPTONotices = () => {
                 <td>Nov. 12, 2023</td>
                 <td>{ appr.f_name + " " + appr.s_name}</td>
                 <td>{ appr.leave_type }</td>
-                <td>{ appr.leave_from }</td>
-                <td>{ appr.leave_to }</td>
+                <td>{ moment(appr.leave_from).format('MMM DD YYYY') }</td>
+                <td>{ moment(appr.leave_to).format('MMM DD YYYY') }</td>
                 <td className="text-center">
                   <button
                     className="btn btn-ghost btn-xs normal-case"

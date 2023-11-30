@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
+import moment from "moment"
 
 const DashBOwnPTO = () => {
 
@@ -53,8 +54,8 @@ function checkStatus(status){
                   <td>Nov. 12, 2023</td>
                   <td>{ml.f_name + " " + ml.s_name}</td>
                   <td>{ml.leave_type}</td>
-                  <td>{ml.leave_from}</td>
-                  <td>{ml.leave_to}</td>
+                  <td>{ moment(ml.leave_from).format('MMM DD YYYY') }</td>
+                  <td>{ moment(ml.leave_to).format('MMM DD YYYY') }</td>
                   <td>
                     {" "}
                     <div>
