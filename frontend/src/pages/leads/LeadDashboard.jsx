@@ -27,8 +27,9 @@ const LeadDashboard = () => {
           </div>
           <DashBButtons></DashBButtons>
           <ManagerPTORequestTable></ManagerPTORequestTable>
-          <DashBOwnPTO></DashBOwnPTO>
           <ManagerPTONotices></ManagerPTONotices>
+          <DashBOwnPTO></DashBOwnPTO>
+
           <div className="flex">
             <DashBBirthdays></DashBBirthdays>
             <DashBAnniversaries></DashBAnniversaries>

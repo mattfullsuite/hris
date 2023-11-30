@@ -300,6 +300,38 @@ app.get("/showpendingleaves", (req, res) => {
     })
 })
 
+app.get("/showallmyleaves", (req, res) => {
+    const uid = req.session.user[0].emp_id
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE requester_id = ?"
+    
+    db.query(q,[uid],(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+app.get("/showalldeptleaves", (req, res) => {
+    const uid = req.session.user[0].emp_id
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE approver_id = ? AND leave_status != 0"
+    
+    db.query(q,[uid],(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+app.get("showselectedleave/:leave_id", (req, res) => {
+    const uid = req.session.user[0].emp_id
+    const leaveid = req.param.leave_id
+
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE requester_id = ? AND leave_id = ?"
+    
+    db.query(q,[uid, leave_id],(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
 app.get("/showapprovedleaves", (req, res) => {
     const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE leave_status = 1"
     db.query(q,(err,data)=> {
@@ -317,12 +349,28 @@ app.get("/showrejectedleaves", (req, res) => {
 })
 
 //Approve
-app.post("/showpendingleaves/:leave_id", (req, res) => {
+app.post("/approveleave/:leave_id", (req, res) => {
     const leave_id = req.params.leave_id;
     const q = "UPDATE leaves SET leave_status = ? WHERE leave_id = ?";
 
     db.query(q, 
         [1, leave_id], 
+        (err,data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json("Leave #" + leave_id + "has been updated successfully.")
+        }
+    })
+})
+
+//Reject
+app.post("/rejectleave/:leave_id", (req, res) => {
+    const leave_id = req.params.leave_id;
+    const q = "UPDATE leaves SET leave_status = ? WHERE leave_id = ?";
+
+    db.query(q, 
+        [2, leave_id], 
         (err,data) => {
         if (err){
             console.log(err)
@@ -412,22 +460,6 @@ app.post("/ptoTenure", (req, res) => {
     })
 })
 
-//Reject
-app.post("/rejectleave/:leave_id", (req, res) => {
-    const leave_id = req.params.leave_id;
-    const q = "UPDATE leaves SET leave_status = ? WHERE leave_id = ?";
-
-    db.query(q, 
-        [2, leave_id], 
-        (err,data) => {
-        if (err){
-            console.log(err)
-        } else {
-            res.json("Leave #" + leave_id + "has been updated successfully.")
-        }
-    })
-})
-
 
 //Check Upcoming Bdays
 app.get("/getupcomingbdays", (req, res) => {
@@ -499,6 +531,7 @@ app.get("/myApprovedLeaves", (req, res) => {
         }
     }))
 })
+
 
 app.get("/myDepartmentPendingLeaves", (req, res) => {
 
