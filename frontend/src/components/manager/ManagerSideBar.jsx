@@ -3,6 +3,40 @@ import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 
 const ManagerSideBar = () => {
+
+const navigate = useNavigate()
+
+const [users, setUser] = useState([]);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const res = await Axios.get("http://localhost:6197/login");
+        setUser(res.data.user);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUserData();
+  }, []);
+
+  useEffect(() => {
+    Axios.get("http://localhost:6197/login").then((response) => {
+       if (response.data.loggedIn == false) {
+          navigate("/login")
+       }
+    })
+ }, [])
+
+  const logoutEmployee = () => {
+    try { 
+      Axios.get("http://localhost:6197/logout");
+      navigate("/")
+    } catch(err){
+      console.log(err)
+    }
+  };
+
   return (
     <>
       <button
@@ -44,18 +78,21 @@ const ManagerSideBar = () => {
               />
             </div>
 
+            { users.map((user) => (
             <div className="flex flex-col items-center justify-center">
-              <div className="font-bold text-xl">Matt Wilfred Salvador</div>
-              <div className="mb-1">Senior Software Engineer</div>
+              <div className="font-bold text-xl text-white">
+                { user.f_name + " " + user.s_name}
+              </div>
+              <div className="mb-1 text-white">Senior Software Engineer</div>
               <div>
                 <a
                   href="#"
-                  className="mb-12 flex items-center p-1 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  className="mb-12 flex items-center p-1 text-gray-900 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700 group"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    fill="currentColor"
+                    fill="white"
                     className="w-5 h-5"
                   >
                     <path
@@ -65,10 +102,12 @@ const ManagerSideBar = () => {
                     />
                   </svg>
 
-                  <span className="ml-3">Profile</span>
+                  <span className="ml-3 text-white">Profile</span>
                 </a>
               </div>
             </div>
+
+            ))}
 
             <div className="flex items-center justify-center"></div>
 
@@ -210,7 +249,8 @@ const ManagerSideBar = () => {
             </li>
             <li>
               <a
-                href="#"
+                href="/"
+                onClick={ logoutEmployee }
                 className="mt-12 flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg

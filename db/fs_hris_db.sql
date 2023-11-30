@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Nov 29, 2023 at 05:31 AM
+-- Generation Time: Nov 30, 2023 at 06:39 AM
 -- Server version: 5.7.39
 -- PHP Version: 7.4.33
 
@@ -71,18 +71,19 @@ INSERT INTO `company` (`company_id`, `company_name`, `company_loc`) VALUES
 
 CREATE TABLE `department` (
   `dept_id` int(100) NOT NULL,
-  `dept_name` varchar(255) NOT NULL
+  `dept_name` varchar(255) NOT NULL,
+  `manager_id` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `department`
 --
 
-INSERT INTO `department` (`dept_id`, `dept_name`) VALUES
-(1, 'Engineering'),
-(2, 'Human Resources'),
-(3, 'Information Security'),
-(4, 'Corporate Strategy');
+INSERT INTO `department` (`dept_id`, `dept_name`, `manager_id`) VALUES
+(1, 'Engineering', 8),
+(2, 'Human Resources', 3),
+(4, 'Corporate Strategy', 6),
+(10, 'Information Security', 10);
 
 -- --------------------------------------------------------
 
@@ -104,12 +105,13 @@ CREATE TABLE `department_employees` (
 
 INSERT INTO `department_employees` (`dept_emp_id`, `dept_id`, `emp_id`, `from_date`, `to_date`) VALUES
 (1, 1, 1, '2023-09-01', NULL),
-(3, 3, 2, '2023-10-01', NULL),
+(3, 10, 2, '2023-10-01', NULL),
 (5, 4, 6, '2023-10-02', NULL),
 (6, 1, 3, '2023-10-02', NULL),
 (7, 1, 4, '2023-09-01', NULL),
 (8, 4, 5, '2023-01-21', NULL),
-(9, 2, 7, '2021-02-26', NULL);
+(9, 2, 7, '2021-02-26', NULL),
+(10, 1, 8, '2023-11-14', NULL);
 
 -- --------------------------------------------------------
 
@@ -168,7 +170,7 @@ CREATE TABLE `emp` (
 --
 
 INSERT INTO `emp` (`emp_id`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`, `personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`, `date_separated`, `emp_status`, `sex`, `gender`, `civil_status`, `emergency_contact_name`, `emergency_contact_num`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
-(1, 'matt@fullsuite.ph', 'mattmatt', 'Matt', 'Cabunoc', 'Salvador', 1, 'smattwilfred01@gmail.com', '09667528054', '1997-06-01', 'Cabanatuan City, Nueva Ecija', 'Marcos Highway', '2023-09-01', '2024-02-29', NULL, 'PROBATIONARY', 'Male', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(1, 'matt@fullsuite.ph', 'mattmatt', 'Matt Wilfred', 'Cabunoc', 'Salvador', 1, 'smattwilfred01@gmail.com', '09667528054', '1997-06-01', 'Cabanatuan City, Nueva Ecija', 'Marcos Highway', '2023-09-01', '2024-02-29', NULL, 'PROBATIONARY', 'Male', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (2, 'july@fullsuite.ph', 'rhaerhae', 'July Anne Rhaemonette', 'Almoite', 'Rosal', 0, 'jarhaemonette@gmail.com', '09457552819', '2000-07-14', 'Amagbagan, Pozorrubio, Pangasinan', 'Engineer\'s Hill, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', '', 'Single', NULL, NULL, NULL, NULL, NULL, NULL),
 (3, 'antoinette@fullsuite.ph', 'tonton', 'Antoinette', 'Garcia', 'Sanchez', 3, 'antoinette.g.sanchez@gmail.com', '09458239638', '2000-05-22', '62 Scout Barrio, Baguio City', '62 Scout Barrio, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', NULL, 'Single', 'Andrea Mae G. Sanchez', '09173456781', NULL, NULL, NULL, NULL),
 (4, 'marco@fullsuite.ph', 'marco@fullsuite.ph', 'Marco', 'Eliseo', 'Antero', 2, 'marco.e.antero@gmail.com', '09089624586', '2001-02-02', 'Brookspoint Rd., Baguio City', 'Brookspoint Rd., Baguio City', '2023-09-01', '2024-02-29', NULL, 'REGULAR', 'Male', NULL, 'Single', 'Issa Antero', '09184960347', NULL, NULL, NULL, NULL),
@@ -231,7 +233,7 @@ CREATE TABLE `emp_salary` (
 
 CREATE TABLE `leaves` (
   `leave_id` int(11) NOT NULL,
-  `requester_id` int(11) NOT NULL,
+  `requester_id` int(255) NOT NULL,
   `leave_type` varchar(20) NOT NULL,
   `leave_reason` varchar(255) NOT NULL,
   `leave_from` date NOT NULL,
@@ -250,7 +252,8 @@ INSERT INTO `leaves` (`leave_id`, `requester_id`, `leave_type`, `leave_reason`, 
 (1, 1, 'VACATION LEAVE', 'Going to Singapore', '2023-11-01', '2023-11-04', 1, 8, NULL, NULL),
 (2, 4, 'SICK LEAVE', 'I\'m Sick', '2023-11-08', '2023-11-10', 1, 3, NULL, NULL),
 (3, 3, 'SICK LEAVE', 'I have the flu', '2023-11-09', '2023-11-15', 0, 8, NULL, NULL),
-(4, 1, 'BEREAVEMENT', 'Broken Hearted ako', '2023-11-08', '2023-11-16', 0, 8, NULL, NULL);
+(4, 1, 'BEREAVEMENT', 'Broken Hearted ako', '2023-11-08', '2023-11-16', 0, 8, NULL, NULL),
+(17, 4, 'Bereavement Leave', 'asd', '2023-11-10', '2023-11-18', 0, 5, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -273,7 +276,12 @@ INSERT INTO `leave_credits` (`leave_credits_id`, `emp_id`, `leave_balance`) VALU
 (8, 4, '5.43'),
 (12, 3, '0.00'),
 (15, 10, '1.25'),
-(16, 5, '26.00');
+(16, 5, '26.00'),
+(18, 1, '5.00'),
+(19, 2, '5.00'),
+(20, 6, '3.45'),
+(21, 7, '0.85'),
+(22, 9, '0.56');
 
 -- --------------------------------------------------------
 
@@ -447,7 +455,8 @@ ALTER TABLE `company`
 -- Indexes for table `department`
 --
 ALTER TABLE `department`
-  ADD PRIMARY KEY (`dept_id`);
+  ADD PRIMARY KEY (`dept_id`),
+  ADD KEY `manager_id_fk` (`manager_id`);
 
 --
 -- Indexes for table `department_employees`
@@ -552,7 +561,7 @@ ALTER TABLE `department`
 -- AUTO_INCREMENT for table `department_employees`
 --
 ALTER TABLE `department_employees`
-  MODIFY `dept_emp_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `dept_emp_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `department_manager`
@@ -576,13 +585,13 @@ ALTER TABLE `emp_salary`
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
-  MODIFY `leave_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `leave_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `leave_credits`
 --
 ALTER TABLE `leave_credits`
-  MODIFY `leave_credits_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `leave_credits_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `offset`
@@ -617,6 +626,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `announcements`
   ADD CONSTRAINT `emp_id` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`emp_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `department`
+--
+ALTER TABLE `department`
+  ADD CONSTRAINT `manager_id_fk` FOREIGN KEY (`manager_id`) REFERENCES `emp` (`emp_id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `department_employees`
