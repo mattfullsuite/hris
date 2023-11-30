@@ -1,13 +1,28 @@
-import React, {useState, useEffect } from "react";
+import React, {useRef, useState, useEffect } from "react";
 import axios from "axios"
 
 const DashBButtons = () => {
+
+  const [approvers, setApprover] = useState([])
+
+    useEffect(() => {
+        const fetchApprover = async () => {
+            try{
+                const res = await axios.get("http://localhost:6197/getAllApprovers")
+                setApprover(res.data)
+            } catch(err){
+                console.log(err)
+            }
+        };
+        fetchApprover();
+    }, []);
 
   const [leaveInfo, setLeaveInfo] = useState({
     leave_type: '',
     leave_reason: '',
     leave_from: '',
     leave_to: '',
+    approver_id: '',
   })
 
   const handleChange = (event) => {
@@ -16,8 +31,11 @@ const DashBButtons = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+
+    //setLeaveInfo({...leaveInfo, approver_id: appField.current })
+
     axios.post('http://localhost:6197/fileLeave', leaveInfo)
-    .then(res => console.log("Registered Successfully"))
+    .then(res => console.log(JSON.stringify(leaveInfo)))
     .catch(err => console.log(err));
   }
 
@@ -89,6 +107,19 @@ const DashBButtons = () => {
                 onChange={handleChange}
                 required
               ></textarea>
+
+              <select
+                name='approver_id'
+                className="select select-bordered w-full max-w-xs mb-2"
+                onChange={handleChange} require>
+
+                <option disabled selected>Choose your approver</option>
+
+                { approvers.map((appr) => (
+                <option value={appr.emp_id} >{appr.f_name + " " + appr.s_name + " (" + appr.dept_name + ")"}</option>
+                ))}
+              </select>
+              
 
               {/* Current PTO Points */}
               <h1 className="text-base">Current PTO Points</h1>
