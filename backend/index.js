@@ -242,8 +242,6 @@ app.get("/showdirectory", (req, res) => {
 })
 
 app.get("/getUserPTO", (req, res) => {
-    // test
-    // test
     const uid = req.session.user[0].emp_id
     const q = "SELECT * FROM `leave_credits` AS l INNER JOIN `emp` AS e ON l.emp_id = e.emp_id WHERE e.emp_id = ?"
 
@@ -576,31 +574,52 @@ function dailyPtoAccrual() {
     })
 }
 
+app.get("/getAllApprovers", (req, res) => {
+    const q = "SELECT * FROM emp JOIN department ON emp_id = manager_id WHERE emp_role = 3"
+
+    db.query(q,
+        (err,data)=> {
+        if(err) { return res.json(err) }
+        return res.json(data)
+    })
+})
+
+
 app.get("/getApprover", (req, res) => {
     const uid = req.session.user[0].emp_id
-    const a = "SELECT manager_id FROM department AS d INNER JOIN department_employees AS de ON d.dept_id=de.dept_id WHERE emp_id = ?"
+    const q = "SELECT manager_id FROM department AS d INNER JOIN department_employees AS de ON d.dept_id=de.dept_id WHERE emp_id = ?"
 
-    db.query(a, [uid], (err, data) => {
-        if (err) return res.json(err);
-        return res.json(data);
+    db.query(q,
+        [uid],
+        (err,data)=> {
+        if(err) { return res.json(err) }
+        return res.json(data)
     })
 })
 
 app.post("/fileLeave", (req, res)=> {
+
     const uid = req.session.user[0].emp_id
 
-    const q = "INSERT INTO leaves (`requester_id`, `leave_type`, `leave_reason`, `leave_from`, `leave_to`, `leave_status`, `approver_id`) VALUES (?)"
+    const a = "SELECT manager_id FROM department AS d INNER JOIN department_employees AS de ON d.dept_id=de.dept_id WHERE emp_id = " + uid
 
+    /**const approverID = db.query(a, [uid], (err, data) => {
+        if (err) return res.json(err);
+        const manager_id = JSON.parse(JSON.stringify(data))
+        return JSON.stringify(manager_id[0].manager_id)
+    })**/
+
+    //const q = "INSERT INTO leaves (`requester_id`, `leave_type`, `leave_reason`, `leave_from`, `leave_to`, `leave_status`, `approver_id`) VALUES (?)"
+
+    const q = "INSERT INTO leaves (`requester_id`, `leave_type`, `leave_reason`, `leave_from`, `leave_to`, `leave_status`, `approver_id`) VALUES (?)" 
     const values = [
         uid, //1
         req.body.leave_type,
         req.body.leave_reason,
         req.body.leave_from,
         req.body.leave_to,
-        0,
-        8, //Jhex
-
-        
+        0, //pending
+        req.body.approver_id, //JHex
     ]
 
     db.query(q, [values], (err, data) => {
@@ -608,3 +627,4 @@ app.post("/fileLeave", (req, res)=> {
         return res.json(data);
     })
 })
+ 
