@@ -4,6 +4,8 @@ import moment from "moment"
 
 const DashBPTONotices = () => {
 
+  var count = 1
+
   const [approved, setApproved] = useState([])
 
   useEffect(() => {
@@ -42,7 +44,7 @@ const DashBPTONotices = () => {
 
               { approved.map((appr) => (
               <tr>
-                <th>1</th>
+                <th>{count ++ }</th>
                 <td>Nov. 12, 2023</td>
                 <td>{ appr.f_name + " " + appr.s_name}</td>
                 <td>{ appr.leave_type }</td>

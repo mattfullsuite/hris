@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import axios from "axios"
 
 const ManagerPTONotices = () => {
+  var count = 1
   const [deptLeaves, setDeptLeaves] = useState([])
 
   useEffect(() => {
@@ -46,7 +47,7 @@ function checkStatus(status){
 
               { deptLeaves.map((dl) => (
               <tr>
-                <th>1</th>
+                <th>{count++}</th>
                 <td>Nov. 12, 2023</td>
                 <td>{dl.f_name + " " + dl.s_name}</td>
                 <td>{dl.leave_type}</td>

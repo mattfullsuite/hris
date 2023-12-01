@@ -3,6 +3,7 @@ import axios from 'axios'
 import moment from "moment"
 
 const ManagerPTORequestTable = () => {
+  var count = 1
   const [leaves, setPendingLeaves] = useState([])
 
     useEffect(() => {
@@ -29,6 +30,7 @@ const ManagerPTORequestTable = () => {
   const handleRejection = async (leave_id) => {
     try {
         await axios.post("http://localhost:6197/rejectleave/" + leave_id);
+        await axios.post("http://localhost:6197/returnTempPTO/" + leave_id);
         window.location.reload()
     } catch(err){
         console.log(err)
@@ -58,7 +60,7 @@ const ManagerPTORequestTable = () => {
               {/* row 1 */}
               { leaves.map((leave) => (
               <tr>
-                <th>1</th>
+                <th>{count++}</th>
                 <td>Nov. 12, 2023</td>
                 <td>{ leave.s_name + ", " + leave.f_name + " " + leave.m_name }</td>
                 <td>{ leave.leave_type }</td>

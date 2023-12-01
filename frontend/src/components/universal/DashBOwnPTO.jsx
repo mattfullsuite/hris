@@ -4,6 +4,8 @@ import moment from "moment"
 
 const DashBOwnPTO = () => {
 
+  var count = 1
+
   const [myLeaves, setMyLeaves] = useState([])
 
   useEffect(() => {
@@ -48,10 +50,13 @@ function checkStatus(status){
               </thead>
               <tbody>
                 {/* row 1 */}
+
+                
                 { myLeaves.map((ml) => (
+
                 <tr>
-                  <th>1</th>
-                  <td>Nov. 12, 2023</td>
+                  <th>{count++}</th>
+                  <td>{moment(ml.date_filed).format('MM DD YYYY')}</td>
                   <td>{ml.f_name + " " + ml.s_name}</td>
                   <td>{ml.leave_type}</td>
                   <td>{ moment(ml.leave_from).format('MMM DD YYYY') }</td>
