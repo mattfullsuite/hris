@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 
+
 import ClientSideBar from "../../components/client/ClientSideBar";
 import DashBRemainingOffset from "../../components/universal/DashBRemainingOffset";
 import DashBremainingPTO from "../../components/universal/DashBRemainingPTO";
@@ -10,6 +11,13 @@ import DashBBirthdays from "../../components/universal/DashBBirthdays";
 import DashBAnniversaries from "../../components/universal/DashBAnniversaries";
 import DashBGreeting from "../../components/universal/DashBGreeting";
 import DashBOwnPTO from "../../components/universal/DashBOwnPTO";
+
+import DataTable from 'datatables.net-dt';
+import 'datatables.net-responsive-dt';
+ 
+let table = new DataTable('#myTable', {
+    responsive: true
+});
 
 
 // const handleFormSubmit = () => {x
