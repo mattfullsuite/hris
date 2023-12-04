@@ -1,7 +1,10 @@
 import React, {useState, useEffect} from "react";
 import Axios from 'axios';
+import moment from "moment"
 
 const DashBPTONotices = () => {
+
+  var count = 1
 
   const [approved, setApproved] = useState([])
 
@@ -41,12 +44,12 @@ const DashBPTONotices = () => {
 
               { approved.map((appr) => (
               <tr>
-                <th>1</th>
+                <th>{count ++ }</th>
                 <td>Nov. 12, 2023</td>
                 <td>{ appr.f_name + " " + appr.s_name}</td>
                 <td>{ appr.leave_type }</td>
-                <td>Nov. 12, 2023 date from</td>
-                <td>Nov. 12, 2023 date to</td>
+                <td>{ moment(appr.leave_from).format('MMM DD YYYY') }</td>
+                <td>{ moment(appr.leave_to).format('MMM DD YYYY') }</td>
                 <td className="text-center">
                   <button
                     className="btn btn-ghost btn-xs normal-case"
@@ -60,7 +63,7 @@ const DashBPTONotices = () => {
                   <dialog id="emp_pto_details_btn" className="modal text-left">
                     <div className="modal-box">
                       <h3 className="font-bold text-lg mb-5">PTO Details</h3>
-                      <h3 className="font-bold text-lg mb-2">John Doe</h3>
+                      <h3 className="font-bold text-lg mb-2">{ appr.f_name + " " + appr.m_name + " "+ appr.s_name}</h3>
                       <div className="flex">
                         <div className="flex-1">
                           <h3 className="font-base">Date Filed:</h3>
@@ -68,21 +71,21 @@ const DashBPTONotices = () => {
                         </div>
                         <div className="flex-1">
                           <h3 className="font-base">PTO Type:</h3>
-                          <h3 className="font-semibold mb-2">Sick Leave</h3>
+                          <h3 className="font-semibold mb-2">{ appr.leave_type }</h3>
                         </div>
                       </div>
                       <div className="flex">
                         <div className="flex-1">
                           <h3 className="font-base">Date From:</h3>
-                          <h3 className="font-semibold mb-2">Nov. 23, 2023</h3>
+                          <h3 className="font-semibold mb-2">{ appr.leave_from }</h3>
                         </div>
                         <div className="flex-1">
                           <h3 className="font-base">Date To:</h3>
-                          <h3 className="font-semibold mb-2">Nov. 24, 2023</h3>
+                          <h3 className="font-semibold mb-2">{ appr.leave_to }</h3>
                         </div>
                       </div>
                       <h3 className="font-base">Status:</h3>
-                      <div className="badge badge-warning gap-1">Pending</div>
+                      <div className="badge badge-warning gap-1">{ appr.leave_status }</div>
                       <div className="modal-action">
                         <form method="dialog">
                           <button className="btn">Close</button>

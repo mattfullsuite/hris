@@ -14,6 +14,7 @@ var cookieParser = require("cookie-parser")
 var session = require("express-session")
 var bodyParser = require("body-parser")
 var cron = require('node-cron')
+var moment = require('moment')
 
 var HomeHandler = require("./handlers/authentication/home.js");
 //var LoginHandler = require( "./handlers/authentication/login.js");
@@ -293,15 +294,47 @@ app.get("/showrejecteddepartmentleaves", (req, res) => {
 
 //HR
 app.get("/showpendingleaves", (req, res) => {
-    const q = "SELECT * FROM leaves INNER JOIN emp ON requester_id=emp_id WHERE leave_status = 0"
+    const q = "SELECT * FROM leaves INNER JOIN emp ON requester_id=emp_id WHERE leave_status = 0 ORDER BY date_filed DESC LIMIT 10"
     db.query(q,(err,data)=> {
         if(err) return res.json(err)
         return res.json(data)
     })
 })
 
+app.get("/showallmyleaves", (req, res) => {
+    const uid = req.session.user[0].emp_id
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE requester_id = ? ORDER BY date_filed DESC LIMIT 10"
+    
+    db.query(q,[uid],(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+app.get("/showalldeptleaves", (req, res) => {
+    const uid = req.session.user[0].emp_id
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE approver_id = ? AND leave_status != 0 ORDER BY date_filed DESC LIMIT 10"
+    
+    db.query(q,[uid],(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+app.get("showselectedleave/:leave_id", (req, res) => {
+    const uid = req.session.user[0].emp_id
+    const leaveid = req.param.leave_id
+
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE requester_id = ? AND leave_id = ?"
+    
+    db.query(q,[uid, leave_id],(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
 app.get("/showapprovedleaves", (req, res) => {
-    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE leave_status = 1"
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE leave_status = 1 ORDER BY date_filed DESC LIMIT 10"
     db.query(q,(err,data)=> {
         if(err) return res.json(err)
         return res.json(data)
@@ -309,7 +342,7 @@ app.get("/showapprovedleaves", (req, res) => {
 })
 
 app.get("/showrejectedleaves", (req, res) => {
-    const q = "SELECT * FROM leaves WHERE leave_status = 2"
+    const q = "SELECT * FROM leaves WHERE leave_status = 2 ORDER BY date_filed DESC LIMIT 10"
     db.query(q,(err,data)=> {
         if(err) return res.json(err)
         return res.json(data)
@@ -317,7 +350,7 @@ app.get("/showrejectedleaves", (req, res) => {
 })
 
 //Approve
-app.post("/showpendingleaves/:leave_id", (req, res) => {
+app.post("/approveleave/:leave_id", (req, res) => {
     const leave_id = req.params.leave_id;
     const q = "UPDATE leaves SET leave_status = ? WHERE leave_id = ?";
 
@@ -328,6 +361,38 @@ app.post("/showpendingleaves/:leave_id", (req, res) => {
             console.log(err)
         } else {
             res.json("Leave #" + leave_id + "has been updated successfully.")
+        }
+    })
+})
+
+//Reject
+app.post("/rejectleave/:leave_id", (req, res) => {
+    const leave_id = req.params.leave_id;
+    const q = "UPDATE leaves SET leave_status = ? WHERE leave_id = ?";
+
+    db.query(q, 
+        [2, leave_id], 
+        (err,data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json("Leave #" + leave_id + "has been updated successfully.")
+        }
+    })
+})
+
+app.post("/returnTempPTO/:leave_id", (req, res) => {
+    const leave_id = req.params.leave_id;
+
+    const q = "UPDATE leaves AS l JOIN leave_credits AS lc ON l.requester_id=lc.emp_id SET leave_balance = leave_balance + use_pto_points WHERE leave_id = ?";
+
+    db.query(q, 
+        [leave_id], 
+        (err,data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json("Ptos have been returned for " + leave_id + "")
         }
     })
 })
@@ -412,22 +477,6 @@ app.post("/ptoTenure", (req, res) => {
     })
 })
 
-//Reject
-app.post("/rejectleave/:leave_id", (req, res) => {
-    const leave_id = req.params.leave_id;
-    const q = "UPDATE leaves SET leave_status = ? WHERE leave_id = ?";
-
-    db.query(q, 
-        [2, leave_id], 
-        (err,data) => {
-        if (err){
-            console.log(err)
-        } else {
-            res.json("Leave #" + leave_id + "has been updated successfully.")
-        }
-    })
-})
-
 
 //Check Upcoming Bdays
 app.get("/getupcomingbdays", (req, res) => {
@@ -499,6 +548,7 @@ app.get("/myApprovedLeaves", (req, res) => {
         }
     }))
 })
+
 
 app.get("/myDepartmentPendingLeaves", (req, res) => {
 
@@ -601,17 +651,7 @@ app.post("/fileLeave", (req, res)=> {
 
     const uid = req.session.user[0].emp_id
 
-    const a = "SELECT manager_id FROM department AS d INNER JOIN department_employees AS de ON d.dept_id=de.dept_id WHERE emp_id = " + uid
-
-    /**const approverID = db.query(a, [uid], (err, data) => {
-        if (err) return res.json(err);
-        const manager_id = JSON.parse(JSON.stringify(data))
-        return JSON.stringify(manager_id[0].manager_id)
-    })**/
-
-    //const q = "INSERT INTO leaves (`requester_id`, `leave_type`, `leave_reason`, `leave_from`, `leave_to`, `leave_status`, `approver_id`) VALUES (?)"
-
-    const q = "INSERT INTO leaves (`requester_id`, `leave_type`, `leave_reason`, `leave_from`, `leave_to`, `leave_status`, `approver_id`) VALUES (?)" 
+    const q = "INSERT INTO leaves (`requester_id`, `leave_type`, `leave_reason`, `leave_from`, `leave_to`, `leave_status`, `approver_id`, `use_pto_points`) VALUES (?)" 
     const values = [
         uid, //1
         req.body.leave_type,
@@ -619,11 +659,31 @@ app.post("/fileLeave", (req, res)=> {
         req.body.leave_from,
         req.body.leave_to,
         0, //pending
-        req.body.approver_id, //JHex
+        req.body.approver_id,//JHex
+        req.body.use_pto_points,
     ]
 
     db.query(q, [values], (err, data) => {
         if (err) return res.json(err);
+        return res.json(data);
+    })
+
+    /**const q1 = "UPDATE emp AS e JOIN leave_credits l ON e.emp_id = l.emp_id SET leave_balance = leave_balance - " + req.body.use_pto_points + " WHERE l.emp_id = ?"
+
+    const values2 = [uid]
+    db.query(q1, [values2], (err, data) => {
+        if (err) return res.json(err); 
+        return res.json(data);
+    })**/
+})
+
+app.post("/subtractPTO", (req,res) => {
+    const uid = req.session.user[0].emp_id
+
+    const q = "UPDATE emp AS e JOIN leave_credits l ON e.emp_id = l.emp_id SET leave_balance = leave_balance - " + req.body.use_pto_points + " WHERE l.emp_id = ?"
+
+    db.query(q, [uid], (err, data) => {
+        if (err) return res.json(err); 
         return res.json(data);
     })
 })

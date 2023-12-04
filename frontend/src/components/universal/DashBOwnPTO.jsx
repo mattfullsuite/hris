@@ -1,6 +1,32 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
+import moment from "moment"
 
 const DashBOwnPTO = () => {
+
+  var count = 1
+
+  const [myLeaves, setMyLeaves] = useState([])
+
+  useEffect(() => {
+    const fetchAllMyLeaves = async ()=> {
+        try{
+            const res = await axios.get("http://localhost:6197/showallmyleaves")
+            setMyLeaves(res.data)
+        } catch(err){
+            console.log(err)
+        }
+    };
+    fetchAllMyLeaves();
+}, [])
+
+
+function checkStatus(status){
+  if(status == 0){ return <div className="badge badge-warning">Pending</div>}
+  if(status == 1){ return <div className="badge badge-success">Approved</div>}
+  if(status == 2){ return <div className="badge badge-error">Rejected</div>}
+}
+
   return (
     <>
       <>
@@ -25,91 +51,36 @@ const DashBOwnPTO = () => {
               <tbody>
                 {/* row 1 */}
 
+                
+                { myLeaves.map((ml) => (
+
                 <tr>
-                  <th>1</th>
-                  <td>Nov. 12, 2023</td>
-                  <td>Matt Wil Salvador</td>
-                  <td>MENTAL HEALTH BREAK</td>
-                  <td>Nov. 12, 2023 date from</td>
-                  <td>Nov. 12, 2023 date to</td>
+                  <th>{count++}</th>
+                  <td>{moment(ml.date_filed).format('MM DD YYYY')}</td>
+                  <td>{ml.f_name + " " + ml.s_name}</td>
+                  <td>{ml.leave_type}</td>
+                  <td>{ moment(ml.leave_from).format('MMM DD YYYY') }</td>
+                  <td>{ moment(ml.leave_to).format('MMM DD YYYY') }</td>
                   <td>
                     {" "}
-                    <div className="badge badge-warning gap-1">Pending</div>
+                    <div>
+                      {checkStatus(ml.leave_status)}
+                    </div>
                   </td>
                   <td className="text-center">
-                    <button
-                      className="btn btn-ghost btn-xs normal-case"
-                      onClick={() =>
-                        document
-                          .getElementById("emp_pto_details_btn")
-                          .showModal()
-                      }
-                    >
-                      Details
-                    </button>
-                    {/* Modal - Details */}
-                    <dialog
-                      id="emp_pto_details_btn"
-                      className="modal text-left"
-                    >
-                      <div className="modal-box">
-                        <h3 className="font-bold text-lg mb-5">PTO Details</h3>
-                        <h3 className="font-bold text-lg mb-2">John Doe</h3>
-                        <div className="flex">
-                          <div className="flex-1">
-                            <h3 className="font-base">Date Filed:</h3>
-                            <h3 className="font-semibold mb-2">
-                              Nov. 12, 2023
-                            </h3>
-                          </div>
-                          <div className="flex-1">
-                            <h3 className="font-base">PTO Type:</h3>
-                            <h3 className="font-semibold mb-2">Sick Leave</h3>
-                          </div>
-                        </div>
-                        <div className="flex">
-                          <div className="flex-1">
-                            <h3 className="font-base">Date From:</h3>
-                            <h3 className="font-semibold mb-2">
-                              Nov. 23, 2023
-                            </h3>
-                          </div>
-                          <div className="flex-1">
-                            <h3 className="font-base">Date To:</h3>
-                            <h3 className="font-semibold mb-2">
-                              Nov. 24, 2023
-                            </h3>
-                          </div>
-                        </div>
-                        <div>
-                          <h1 className="font-base">Reason:</h1>
-                          <p className="font-semibold mb-4">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis
-                            nostrud exercitation ullamco laboris nisi ut aliquip
-                            ex ea commodo consequat. Duis aute irure dolor in
-                            reprehenderit in voluptate
-                          </p>
-                        </div>
-                        <div className="badge badge-warning gap-1">Pending</div>
-
-                        <div className="modal-action">
-                          <form method="dialog">
-                            <button className="btn">Close</button>
-                          </form>
-                        </div>
-                      </div>
-                    </dialog>
                   </td>{" "}
                 </tr>
+                ))}
               </tbody>
             </table>
           </div>
         </div>
+
+
       </>
     </>
   );
 };
+
 
 export default DashBOwnPTO;
