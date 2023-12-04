@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Nov 30, 2023 at 06:39 AM
+-- Generation Time: Dec 04, 2023 at 03:09 AM
 -- Server version: 5.7.39
 -- PHP Version: 7.4.33
 
@@ -240,20 +240,53 @@ CREATE TABLE `leaves` (
   `leave_to` date NOT NULL,
   `leave_status` int(11) NOT NULL,
   `approver_id` int(11) NOT NULL,
+  `date_filed` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `is_paid` tinyint(1) DEFAULT NULL,
-  `use_pto_count` int(10) DEFAULT NULL
+  `use_pto_points` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `leaves`
 --
 
-INSERT INTO `leaves` (`leave_id`, `requester_id`, `leave_type`, `leave_reason`, `leave_from`, `leave_to`, `leave_status`, `approver_id`, `is_paid`, `use_pto_count`) VALUES
-(1, 1, 'VACATION LEAVE', 'Going to Singapore', '2023-11-01', '2023-11-04', 1, 8, NULL, NULL),
-(2, 4, 'SICK LEAVE', 'I\'m Sick', '2023-11-08', '2023-11-10', 1, 3, NULL, NULL),
-(3, 3, 'SICK LEAVE', 'I have the flu', '2023-11-09', '2023-11-15', 0, 8, NULL, NULL),
-(4, 1, 'BEREAVEMENT', 'Broken Hearted ako', '2023-11-08', '2023-11-16', 0, 8, NULL, NULL),
-(17, 4, 'Bereavement Leave', 'asd', '2023-11-10', '2023-11-18', 0, 5, NULL, NULL);
+INSERT INTO `leaves` (`leave_id`, `requester_id`, `leave_type`, `leave_reason`, `leave_from`, `leave_to`, `leave_status`, `approver_id`, `date_filed`, `is_paid`, `use_pto_points`) VALUES
+(1, 1, 'Vacation Leave', 'Going to Singapore', '2023-11-01', '2023-11-04', 1, 8, '2023-11-30 16:00:00', NULL, NULL),
+(2, 4, 'Sick Leave', 'I\'m Sick', '2023-11-08', '2023-11-10', 1, 3, '2023-11-29 16:00:00', NULL, NULL),
+(3, 3, 'Sick Leave', 'I have the flu', '2023-11-09', '2023-11-15', 1, 8, '2023-11-15 16:00:00', NULL, NULL),
+(4, 4, 'Bereavement Leave', 'Broken Hearted ako', '2023-11-08', '2023-11-16', 2, 8, '2023-11-07 16:00:00', NULL, NULL),
+(17, 4, 'Bereavement Leave', 'asd', '2023-11-10', '2023-11-18', 0, 5, '2023-11-21 16:00:00', NULL, NULL),
+(18, 4, 'Study Leave', 'asda', '2023-11-18', '2023-11-11', 2, 8, '2023-11-08 05:58:55', NULL, NULL),
+(19, 9, 'Emergency Leave', 'asda', '2023-11-04', '2023-11-11', 2, 8, '2023-11-16 05:59:09', NULL, NULL),
+(20, 4, 'Study Leave', 'Study leave', '2023-11-30', '2023-12-01', 0, 10, '2023-11-14 05:59:22', NULL, NULL),
+(21, 4, 'Emergency Leave', 'July\'s birthday', '2023-12-14', '2023-12-15', 2, 8, '2023-11-09 05:59:42', NULL, NULL),
+(22, 4, 'Emergency Leave', 'July\'s birthday', '2023-12-14', '2023-12-15', 1, 8, '2023-11-09 05:59:52', NULL, NULL),
+(23, 4, 'Vacation Leave', 'asda', '2023-12-02', '2023-12-09', 2, 8, '2023-11-30 16:00:00', NULL, NULL),
+(24, 4, 'Sick Leave', 'asd', '2023-12-16', '2023-12-23', 2, 8, '2023-12-01 05:55:48', NULL, NULL),
+(25, 4, 'Sick Leave', 'as', '2023-12-16', '2023-12-21', 0, 10, '2023-12-01 08:48:57', NULL, NULL),
+(26, 4, 'Vacation Leave', 'sad', '2023-12-16', '2023-12-23', 0, 10, '2023-12-01 08:57:19', NULL, NULL),
+(27, 4, 'Bereavement Leave', 'asd', '2023-12-15', '2023-12-16', 0, 10, '2023-12-01 09:05:09', NULL, 1),
+(28, 4, 'Bereavement Leave', 'asd', '2023-12-15', '2023-12-16', 0, 10, '2023-12-01 09:07:12', NULL, 2),
+(29, 4, 'Bereavement Leave', 'asd', '2023-12-15', '2023-12-16', 0, 10, '2023-12-01 09:07:15', NULL, 0),
+(30, 4, 'Sick Leave', 'asd', '2023-12-07', '2023-12-08', 1, 8, '2023-12-01 09:16:50', NULL, 2),
+(31, 4, 'Bereavement Leave', 'asd', '2023-12-08', '2023-12-08', 0, 3, '2023-12-01 09:18:38', NULL, 1),
+(32, 4, 'Sick Leave', 'asd', '2023-12-02', '2023-12-02', 0, 3, '2023-12-01 09:21:37', NULL, 1),
+(33, 4, 'Sick Leave', 'asd', '2023-12-08', '2023-12-08', 0, 3, '2023-12-01 09:37:17', NULL, 1),
+(34, 4, 'Bereavement Leave', 'sad', '2023-12-13', '2023-12-15', 0, 10, '2023-12-01 09:47:28', NULL, 0),
+(35, 4, 'Vacation Leave', 'asdasdasfasdasf', '2023-12-01', '2023-12-01', 1, 8, '2023-12-01 10:08:32', NULL, 1),
+(36, 4, 'Study Leave', 'STUDY', '2023-12-01', '2023-12-01', 2, 8, '2023-12-01 10:15:25', NULL, 1),
+(37, 4, '', 'asdasd', '2023-12-01', '2023-12-01', 2, 8, '2023-12-01 10:17:15', NULL, 1),
+(38, 4, 'Bereavement Leave', 'sada', '2023-12-01', '2023-12-02', 2, 8, '2023-12-01 10:18:00', NULL, 2),
+(39, 4, 'Bereavement Leave', 'kafkasjd', '2023-12-01', '2023-12-03', 2, 8, '2023-12-01 10:20:45', NULL, 3),
+(40, 4, 'Vacation Leave', 'Punta ako SIngapore', '2023-12-01', '2023-12-04', 2, 8, '2023-12-01 10:23:56', NULL, 4),
+(41, 4, 'Vacation Leave', 'nbbc', '2023-12-05', '2023-12-06', 1, 8, '2023-12-04 02:52:41', NULL, 0),
+(42, 4, 'Vacation Leave', 'nbbc', '2023-12-05', '2023-12-06', 1, 8, '2023-12-04 02:52:57', NULL, 0),
+(43, 4, 'Vacation Leave', 'nbbc', '2023-12-05', '2023-12-06', 2, 8, '2023-12-04 02:52:58', NULL, 0),
+(44, 4, 'Vacation Leave', 'nbbc', '2023-12-05', '2023-12-06', 0, 8, '2023-12-04 02:52:58', NULL, 0),
+(45, 4, 'Vacation Leave', 'nbbc', '2023-12-05', '2023-12-06', 0, 8, '2023-12-04 02:52:59', NULL, 0),
+(46, 4, 'Vacation Leave', 'nbbc', '2023-12-05', '2023-12-06', 0, 8, '2023-12-04 02:52:59', NULL, 0),
+(47, 4, 'Vacation Leave', 'nbbc', '2023-12-05', '2023-12-06', 0, 8, '2023-12-04 02:53:01', NULL, 0),
+(48, 4, 'Vacation Leave', 'nbbc', '2023-12-05', '2023-12-06', 0, 8, '2023-12-04 02:53:01', NULL, 0),
+(49, 4, 'Vacation Leave', 'nbbc', '2023-12-05', '2023-12-06', 0, 8, '2023-12-04 02:53:01', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -273,7 +306,7 @@ CREATE TABLE `leave_credits` (
 
 INSERT INTO `leave_credits` (`leave_credits_id`, `emp_id`, `leave_balance`) VALUES
 (6, 8, '0.83'),
-(8, 4, '5.43'),
+(8, 4, '6.43'),
 (12, 3, '0.00'),
 (15, 10, '1.25'),
 (16, 5, '26.00'),
@@ -585,7 +618,7 @@ ALTER TABLE `emp_salary`
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
-  MODIFY `leave_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `leave_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `leave_credits`
