@@ -103,7 +103,7 @@ const DashBButtons = () => {
               <select
                 name='leave_type'
                 className="select select-bordered w-full max-w-xs mb-2"
-                onChange={handleChange} require>
+                onChange={handleChange} required>
 
                 <option disabled selected>Pick a reason for filing a leave</option>
                 <option>Sick Leave</option>
