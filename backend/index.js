@@ -349,6 +349,15 @@ app.get("/showrejectedleaves", (req, res) => {
     })
 })
 
+app.get("/showTitles", (req, res) => {
+    const uid = req.session.user[0].emp_id
+    const q = "SELECT * FROM emp AS e INNER JOIN title AS t ON e.emp_id=t.emp_id where e.emp_id=?"
+    db.query(q,[uid],(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
 //Approve
 app.post("/approveleave/:leave_id", (req, res) => {
     const leave_id = req.params.leave_id;
