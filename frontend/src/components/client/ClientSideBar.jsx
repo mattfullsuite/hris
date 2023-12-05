@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
+import { Link } from "react-router-dom";
 
 const ClientSideBar = () => {
   const navigate = useNavigate()
@@ -101,8 +102,8 @@ const ClientSideBar = () => {
               <div className="mb-1 text-white">{title.title}</div>
               ))}
               <div>
+                <Link to="/ClientUserProfile">
                 <a
-                  href="#"
                   className="mb-12 flex items-center p-1 text-gray-900 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700 group"
                 >
                   <svg
@@ -120,6 +121,7 @@ const ClientSideBar = () => {
 
                   <span className="ml-3 text-white">Profile</span>
                 </a>
+                </Link>
               </div>
             </div>
 
@@ -129,8 +131,8 @@ const ClientSideBar = () => {
 
             <li></li>
             <li>
+              <Link to="/clientDashboard">
               <a
-                href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -153,6 +155,9 @@ const ClientSideBar = () => {
 
                 <span className="ml-3 text-white">Dashboard</span>
               </a>
+
+              </Link>
+              
             </li>
 
             <li>

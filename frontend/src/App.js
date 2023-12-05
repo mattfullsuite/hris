@@ -11,6 +11,7 @@ import EmployeesList from "./pages/admin/EmployeesList.jsx"
 import AddEmployee from "./pages/admin/AddEmployee.jsx"
 import Announcements from "./pages/hr/Announcements.jsx"
 import AddAnnouncements from "./pages/hr/AddAnnouncements.jsx"
+import ClientUserProfile from "./pages/client/ClientUserProfile.jsx";
 
 import UserLogs from "./pages/admin/UserLogs.jsx"
 
@@ -48,6 +49,8 @@ function App() {
           <Route path="/clientDashboard" element={<ClientDashboard />} />
           <Route path="/showPendingLeaves" element={<PendingLeaves />} />
           <Route path="/fileLeave" element={<FileLeave />} />
+          <Route path="/clientUserProfile" element={<ClientUserProfile />} />
+
 
           {/* Team Lead Routes */}
           <Route path="/leadDashboard" element={<LeadDashboard />} /> 
