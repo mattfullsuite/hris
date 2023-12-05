@@ -1,4 +1,6 @@
-import React, {useRef, useState, useEffect } from "react";
+import React, {useState, useEffect } from "react";
+//import { confirmAlert } from 'react-confirm-alert';
+//import 'react-confirm-alert/src/react-confirm-alert.css'
 import axios from "axios"
 import moment from "moment"
 
@@ -39,6 +41,20 @@ const DashBButtons = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+
+    /**confirmAlert({
+      title: 'Confirm to submit',
+      message: 'Are you sure to do this.',
+      buttons: [
+        {
+          label: 'Yes',
+        },
+        {
+          label: 'No',
+          //onClick: () => alert('Click No')
+        }
+      ]
+    });**/
 
     //setLeaveInfo({...leaveInfo, approver_id: appField.current })
 

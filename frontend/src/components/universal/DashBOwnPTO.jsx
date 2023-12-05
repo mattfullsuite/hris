@@ -24,7 +24,7 @@ const DashBOwnPTO = () => {
 function checkStatus(status){
   if(status == 0){ return <div className="badge badge-warning">Pending</div>}
   if(status == 1){ return <div className="badge badge-success">Approved</div>}
-  if(status == 2){ return <div className="badge badge-error">Rejected</div>}
+  if(status == 2){ return <div className="badge badge-error">Declined</div>}
 }
 
   return (
@@ -40,10 +40,9 @@ function checkStatus(status){
                 <tr>
                   <th>#</th>
                   <th>Date Filed</th>
-                  <th>Name</th>
+                  {/*<th>Name</th>*/}
                   <th>PTO Type</th>
-                  <th>Date From</th>
-                  <th>Date To</th>
+                  <th>Date(/s)</th>
                   <th>Status</th>
                   <th></th>
                 </tr>
@@ -56,11 +55,10 @@ function checkStatus(status){
 
                 <tr>
                   <th>{count++}</th>
-                  <td>{moment(ml.date_filed).format('MM DD YYYY')}</td>
-                  <td>{ml.f_name + " " + ml.s_name}</td>
+                  <td>{moment(ml.date_filed).format('MMM. DD, YYYY')}</td>
+                  {/*<td>{ml.f_name + " " + ml.s_name}</td>*/}
                   <td>{ml.leave_type}</td>
-                  <td>{ moment(ml.leave_from).format('MMM DD YYYY') }</td>
-                  <td>{ moment(ml.leave_to).format('MMM DD YYYY') }</td>
+                  <td>{ml.leave_from === ml.leave_to ? moment(ml.leave_from).format('MMM. DD, YYYY') : moment(ml.leave_from).format('MMM. DD, YYYY') + "  to  "+ moment(ml.leave_to).format('MMM. DD, YYYY')}</td>
                   <td>
                     {" "}
                     <div>

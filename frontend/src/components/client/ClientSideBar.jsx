@@ -6,6 +6,19 @@ const ClientSideBar = () => {
   const navigate = useNavigate()
 
   const [users, setUser] = useState([]);
+  const [titles, setTitle] = useState([]);
+
+  useEffect(() => {
+    const fetchUserTitles = async () => {
+      try {
+        const res = await Axios.get("http://localhost:6197/showTitles");
+        setTitle(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUserTitles();
+  }, []);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -76,12 +89,17 @@ const ClientSideBar = () => {
               />
             </div>
 
-            { users.map((user) => (
             <div className="flex flex-col items-center justify-center">
+             
+              { users.map((user) => (
               <div className="font-bold text-xl text-white">
                 { user.f_name + " " + user.s_name}
               </div>
-              <div className="mb-1 text-white">Senior Software Engineer</div>
+              ))}
+
+              { titles.map((title) => (
+              <div className="mb-1 text-white">{title.title}</div>
+              ))}
               <div>
                 <a
                   href="#"
@@ -105,7 +123,7 @@ const ClientSideBar = () => {
               </div>
             </div>
 
-            ))}
+            
 
             <div className="flex items-center justify-center"></div>
 
