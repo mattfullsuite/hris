@@ -35,7 +35,6 @@ const DashBPTONotices = () => {
                 <th>PTO Type</th>
                 <th>Date From</th>
                 <th>Date To</th>
-                <th>Approved By</th>
               </tr>
             </thead>
             <tbody>
@@ -43,11 +42,11 @@ const DashBPTONotices = () => {
               {approved.map((appr) => (
                 <tr key={appr.id}>
                   <th>{count++}</th>
-                  <td>Nov. 12, 2023</td>
+                  <td>{moment(appr.date_filed).format("MMM. DD, YYYY")}</td>
                   <td>{appr.f_name + " " + appr.s_name}</td>
                   <td>{appr.leave_type}</td>
                   <td>{moment(appr.leave_from).format("MMM DD YYYY")}</td>
-                  <td>{appr.approver_id}</td>
+                  <td>{moment(appr.leave_to).format("MMM DD YYYY")}</td>
                 </tr>
               ))}
             </tbody>
