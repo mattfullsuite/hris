@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Axios from "axios";
+
 
 import ClientSideBar from "../../components/client/ClientSideBar";
 import DashBRemainingOffset from "../../components/universal/DashBRemainingOffset";
@@ -9,6 +9,15 @@ import DashBButtons from "../../components/universal/DashBButtons";
 import DashBPTONotices from "../../components/universal/DashBPTONotices";
 import DashBBirthdays from "../../components/universal/DashBBirthdays";
 import DashBAnniversaries from "../../components/universal/DashBAnniversaries";
+import DashBGreeting from "../../components/universal/DashBGreeting";
+import DashBOwnPTO from "../../components/universal/DashBOwnPTO";
+
+// import DataTable from 'datatables.net-dt';
+// import 'datatables.net-responsive-dt';
+ 
+// let table = new DataTable('#myTable', {
+//     responsive: true
+// });
 
 
 // const handleFormSubmit = () => {x
@@ -89,16 +98,7 @@ const ClientDashboard = () => {
     <>
       <ClientSideBar></ClientSideBar>
       <div className="p-4 sm:ml-64 flex flex-col">
-        {/* Date */}
-        <div className="mb-1 text-xl">
-          <p>Friday, November 03, 2023</p>
-        </div>
-
-        {/* Greeting */}
-        <div className="m-2 text-3xl font-bold">
-          <p>Good Morning User!</p>
-        </div>
-
+        <DashBGreeting></DashBGreeting>
         {/* Widget Container */}
         <div className="my-2 mx-2">
 
@@ -107,6 +107,7 @@ const ClientDashboard = () => {
             <DashBRemainingOffset></DashBRemainingOffset>
           </div>
           <DashBButtons></DashBButtons>
+          <DashBOwnPTO></DashBOwnPTO>
           <DashBPTONotices></DashBPTONotices>
 
           <div className="flex">

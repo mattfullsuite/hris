@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Axios from "axios";
-import Layout from "../../components/Layout/Layout";
 import HRSideBar from "../../components/hr/HRSideBar";
+import DashBGreeting from "../../components/universal/DashBGreeting";
+import DashBRemainingPTO from "../../components/universal/DashBRemainingPTO";
+import DashBRemainingOffset from "../../components/universal/DashBRemainingOffset";
 
 
 const HRDashboard = () => {
@@ -34,45 +36,18 @@ const HRDashboard = () => {
     fetchUserData();
   }, []);
 
-  const logoutEmployee = () => {
-    Axios.get("http://localhost:6197/logout");
-  };
-
   return (
     <>
-      <Layout>
         <HRSideBar></HRSideBar>
-      </Layout>
-
       <div className="p-4 sm:ml-64 flex flex-col">
-        {/* Date */}
-        <div className="mb-1 text-xl">
-          <p>Friday, November 03, 2023</p>
-        </div>
-
-        {/* Greeting */}
-        <div className="m-2 text-3xl font-bold">
-          <p>Good Morning User!</p>
-        </div>
+        <DashBGreeting></DashBGreeting>
 
         {/* Widget Container */}
         <div className="my-2 mx-2">
           <div className="flex">
-            {/* Remaining Offset Time */}
-            <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col items-center justify-center text-center">
-              <h1 className="text-lg font-semibold">Remaining Offset Time</h1>
-              <h1 className="my-1 text-3xl font-bold">5 hr/s</h1>
-              <button className="btn btn-sm btn-active normal-case">
-                Reparation Request
-              </button>
-            </div>
-            {/* Number of PTOs */}
-            <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col items-center justify-center text-center">
-              <h1 className="text-lg font-semibold">Number of PTOs</h1>
-              <h1 className="my-1 text-3xl font-bold">2.30</h1>
-              <h1 className="text-base font-normal">Available until</h1>
-              <h1 className="text-base font-semibold">March 25, 2023</h1>
-            </div>
+            <DashBRemainingPTO></DashBRemainingPTO>
+            <DashBRemainingOffset></DashBRemainingOffset>
+            
           </div>
 
           {/* Buttons */}
