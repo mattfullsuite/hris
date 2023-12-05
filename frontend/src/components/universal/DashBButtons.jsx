@@ -197,7 +197,6 @@ const DashBButtons = () => {
                 {/* Cancel Button */}
                   {/* If there is a button in form, it will close the modal */}
                   <button className="btn">Cancel</button>
-  
               </div>
             </form>
           </div>

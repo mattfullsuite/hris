@@ -12,12 +12,12 @@ import DashBAnniversaries from "../../components/universal/DashBAnniversaries";
 import DashBGreeting from "../../components/universal/DashBGreeting";
 import DashBOwnPTO from "../../components/universal/DashBOwnPTO";
 
-import DataTable from 'datatables.net-dt';
-import 'datatables.net-responsive-dt';
+// import DataTable from 'datatables.net-dt';
+// import 'datatables.net-responsive-dt';
  
-let table = new DataTable('#myTable', {
-    responsive: true
-});
+// let table = new DataTable('#myTable', {
+//     responsive: true
+// });
 
 
 // const handleFormSubmit = () => {x
