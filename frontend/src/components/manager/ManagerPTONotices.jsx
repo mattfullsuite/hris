@@ -48,7 +48,7 @@ function checkStatus(status){
               { deptLeaves.map((dl) => (
               <tr>
                 <th>{count++}</th>
-                <td>Nov. 12, 2023</td>
+                <td>{dl.date_filed}</td>
                 <td>{dl.f_name + " " + dl.s_name}</td>
                 <td>{dl.leave_type}</td>
                 <td>{checkStatus(dl.leave_status)}</td>
