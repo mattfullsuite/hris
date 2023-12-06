@@ -1,17 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ClientSideBar from "../../components/client/ClientSideBar";
+import Axios from "axios";
 
 
 const ClientUserProfile = () => {  
 
+  const[profile, setProfile] = useState([])
+
+  useEffect(()  => {
+    const fetchUserProfile = async () => {
+      try {
+        const res = await Axios.get("http://localhost:6197/myProfile");
+        setProfile(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUserProfile();
+
+  }, []);
+
   return (
     <>
       <ClientSideBar></ClientSideBar>
+      {profile.map((p) => (
       <div className="p-4 sm:ml-64 flex flex-col">
         {/* Name, Primary */}
         <div className="m-2 p-3">
           <h1 className="text-4xl font-bold tracking-wide">
-            Marco Eliseo Antero
+            {/* Marco Eliseo Antero */}
+            {p.f_name + " " +p.m_name + " " + p.s_name}
           </h1>
           <h1>marco@fullsuite.ph</h1>
           <h1>Software Engineer</h1>
@@ -219,7 +237,9 @@ const ClientUserProfile = () => {
           </div>
         </div>
       </div>
+      ))}
     </>
+      
   );
 };
 
