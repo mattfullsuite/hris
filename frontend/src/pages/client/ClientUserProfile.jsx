@@ -1,7 +1,9 @@
 import React from "react";
 import ClientSideBar from "../../components/client/ClientSideBar";
 
-const ClientUserProfile = () => {
+
+const ClientUserProfile = () => {  
+
   return (
     <>
       <ClientSideBar></ClientSideBar>

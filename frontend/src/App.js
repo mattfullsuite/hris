@@ -49,7 +49,7 @@ function App() {
           <Route path="/clientDashboard" element={<ClientDashboard />} />
           <Route path="/showPendingLeaves" element={<PendingLeaves />} />
           <Route path="/fileLeave" element={<FileLeave />} />
-          <Route path="/clientUserProfile" element={<ClientUserProfile />} />
+          <Route path="/profile" element={<ClientUserProfile />} />
 
 
           {/* Team Lead Routes */}
