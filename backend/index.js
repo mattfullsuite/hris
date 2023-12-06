@@ -689,4 +689,15 @@ app.post("/subtractPTO", (req,res) => {
         return res.json(data);
     })
 })
+
+app.get("/getUserAvatar", (req, res) => {
+    const uid = req.session.user[0].emp_id
+    const q = "SELECT emp_pic FROM emp WHERE emp_id = 4"
+
+    db.query(q,
+        (err,data)=> {
+        if(err) { return res.json(err) }
+        return res.json(data)
+    })
+})
  
