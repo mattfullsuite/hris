@@ -677,13 +677,6 @@ app.post("/fileLeave", (req, res)=> {
         return res.json(data);
     })
 
-    /**const q1 = "UPDATE emp AS e JOIN leave_credits l ON e.emp_id = l.emp_id SET leave_balance = leave_balance - " + req.body.use_pto_points + " WHERE l.emp_id = ?"
-
-    const values2 = [uid]
-    db.query(q1, [values2], (err, data) => {
-        if (err) return res.json(err); 
-        return res.json(data);
-    })**/
 })
 
 app.post("/subtractPTO", (req,res) => {
