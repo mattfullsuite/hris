@@ -117,6 +117,16 @@ app.get('/logout', LogoutHandler)
 
 // -------------------- ADMIN METHODS --------------------------//
 
+app.get("/myProfile", (req, res) => {
+    const uid = req.session.user[0].id
+    const q = "SELECT * FROM emp WHERE emp_id = ?"
+    db.query(q,[uid],(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+});
+
+
 app.get("/employeeslist", (req, res) => {
     const q = "SELECT * FROM emp ORDER BY s_name"
     db.query(q,(err,data)=> {
