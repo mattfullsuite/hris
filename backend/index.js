@@ -118,8 +118,8 @@ app.get('/logout', LogoutHandler)
 // -------------------- ADMIN METHODS --------------------------//
 
 app.get("/myProfile", (req, res) => {
-    const uid = req.session.user[0].id
-    const q = "SELECT * FROM emp WHERE emp_id = ?"
+    const uid = req.session.user[0].emp_id
+    const q = "SELECT * FROM emp AS e INNER JOIN title AS t ON e.emp_id = t.emp_id WHERE emp_id = ?"
     db.query(q,[uid],(err,data)=> {
         if(err) return res.json(err)
         return res.json(data)
