@@ -36,7 +36,7 @@ const DashBPTONotices = () => {
                 <th>PTO Type</th>
                 <th>Date From</th>
                 <th>Date To</th>
-                <th></th>
+                <th></th> 
               </tr>
             </thead>
             <tbody>
