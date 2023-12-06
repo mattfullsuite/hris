@@ -35,14 +35,14 @@ const ClientSideBar = () => {
   useEffect(() => {
     Axios.get("http://localhost:6197/login").then((response) => {
        if (response.data.loggedIn == false) {
-        alert("Session has expired. You'll be redirected to the login.")  
-        window.location.reload()
         navigate("/login")
+        window.location.reload()
        }
     })
  }, [])
 
  setTimeout(function () {
+  alert("Session has expired. You'll be redirected to the login.")
   window.location.reload()
 }, 60 * 60 * 24)
 
