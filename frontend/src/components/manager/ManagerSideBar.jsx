@@ -105,7 +105,7 @@ const [titles, setTitle] = useState([]);
               ))}
 
             { titles.map((t) => (
-              <div className="mb-1 text-white">{t.title}</div>
+              <div className="mb-1 text-black">{t.title}</div>
             ))}
               <div>
               <Link to="/manProfile">
