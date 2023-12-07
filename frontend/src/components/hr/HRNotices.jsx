@@ -13,8 +13,8 @@ const HRNotices = () => {
         <>
             <div className="grow p-2 flex flex-col">
                 <div className="flex flex-row justify-center items-center">
-                    <DashBRemainingOffset></DashBRemainingOffset>
                     <DashBremainingPTO></DashBremainingPTO>
+                    <DashBRemainingOffset></DashBRemainingOffset>
                 </div>
 
                 <HRPTONotices></HRPTONotices>

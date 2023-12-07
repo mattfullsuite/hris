@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 import HRSideBar from "../../components/hr/HRSideBar";
 import DashBGreeting from "../../components/universal/DashBGreeting";
-import TitleSample from "../../components/hr/TitleSample";
 import HRNumEmployees from "../../components/hr/HRNumOfEmployees";
 import HRNotices from "../../components/hr/HRNotices";
 
@@ -42,8 +41,6 @@ const HRDashboard = () => {
 
         <div className="p-4 sm:ml-64 flex flex-col">
           <DashBGreeting></DashBGreeting>
-
-          <TitleSample></TitleSample>
 
           <HRNumEmployees></HRNumEmployees>
 

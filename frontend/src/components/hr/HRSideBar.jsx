@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 
 const HRSideBar = () => {
+
+  const navigate = useNavigate()
   const [users, setUser] = useState([]);
   const [titles, setTitle] = useState([]);
 
@@ -30,6 +33,29 @@ const HRSideBar = () => {
     };
     fetchUserData();
   }, []);
+
+  const logoutEmployee = () => {
+    try { 
+      Axios.get("http://localhost:6197/logout");
+      navigate("/")
+    } catch(err){
+      console.log(err)
+    }
+  };
+
+  useEffect(() => {
+    Axios.get("http://localhost:6197/login").then((response) => {
+       if (response.data.loggedIn == false) {
+        navigate("/login")
+        window.location.reload()
+       }
+    })
+ }, [])
+
+ setTimeout(function () {
+  alert("Session has expired. You'll be redirected to the login.")
+  window.location.reload()
+}, 60 * 60 * 24 * 1000)
 
   return (
     <>
@@ -105,6 +131,7 @@ const HRSideBar = () => {
               </div>
             </div>
             <li>
+            
             <Link to="/hrDashboard">
               <a
                 href="#"
@@ -132,7 +159,9 @@ const HRSideBar = () => {
               </a>
               </Link>
             </li>
+            
             <li>
+            <Link to="/employees">
               <a
                 href="#"
                 class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700 group"
@@ -156,6 +185,7 @@ const HRSideBar = () => {
                 </span>
                 <span class="inline-flex items-center justify-center px-2 ml-3 text-sm font-medium text-gray-800 bg-gray-800 rounded-full dark:bg-gray-700 dark:text-gray-300"></span>
               </a>
+              </Link>
             </li>
 
             <li>
@@ -251,6 +281,7 @@ const HRSideBar = () => {
             <li>
               <a
                 href="#"
+                onClick={ logoutEmployee }
                 class="mt-12 flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700 group"
               >
                 <svg
