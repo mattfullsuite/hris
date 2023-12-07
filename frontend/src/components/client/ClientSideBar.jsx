@@ -8,7 +8,6 @@ const ClientSideBar = () => {
 
   const [users, setUser] = useState([]);
   const [titles, setTitle] = useState([]);
-
   
 
   useEffect(() => {
@@ -48,15 +47,15 @@ useEffect(() => {
     Axios.get("http://localhost:6197/login").then((response) => {
        if (response.data.loggedIn == false) {
         navigate("/login")
-        //window.location.reload()
+        window.location.reload()
        }
     })
 }, [])
 
 setTimeout(function () {
   alert("Session has expired. You'll be redirected to the login.")
-  //navigate("/login")
-  //window.location.reload()
+  navigate("/login")
+  window.location.reload()
 }, 60 * 60 * 24 * 1000)
 
   return (
@@ -261,7 +260,7 @@ setTimeout(function () {
             </li>
             <li>
               <a
-                href="/" 
+                //href="/" 
                 onClick={ logoutEmployee }
                 className="mt-12 flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700 group"
               >
