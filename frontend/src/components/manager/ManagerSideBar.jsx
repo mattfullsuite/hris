@@ -7,6 +7,19 @@ const ManagerSideBar = () => {
 const navigate = useNavigate()
 
 const [users, setUser] = useState([]);
+const [titles, setTitle] = useState([]);
+
+  useEffect(() => {
+    const fetchUserTitles = async () => {
+      try {
+        const res = await Axios.get("http://localhost:6197/showTitles");
+        setTitle(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUserTitles();
+  }, []);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -19,14 +32,6 @@ const [users, setUser] = useState([]);
     };
     fetchUserData();
   }, []);
-
-  useEffect(() => {
-    Axios.get("http://localhost:6197/login").then((response) => {
-       if (response.data.loggedIn == false) {
-          navigate("/login")
-       }
-    })
- }, [])
 
   const logoutEmployee = () => {
     try { 
@@ -92,12 +97,16 @@ const [users, setUser] = useState([]);
               />
             </div>
 
-            { users.map((user) => (
             <div className="flex flex-col items-center justify-center">
+              { users.map((user) => (
               <div className="font-bold text-xl text-white">
                 { user.f_name + " " + user.s_name}
               </div>
-              <div className="mb-1 text-white">Senior Software Engineer</div>
+              ))}
+
+            { titles.map((t) => (
+              <div className="mb-1 text-white">{t.title}</div>
+            ))}
               <div>
                 <a
                   href="#"
@@ -121,7 +130,6 @@ const [users, setUser] = useState([]);
               </div>
             </div>
 
-            ))}
 
             <div className="flex items-center justify-center"></div>
 

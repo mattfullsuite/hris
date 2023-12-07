@@ -9,6 +9,8 @@ const ClientSideBar = () => {
   const [users, setUser] = useState([]);
   const [titles, setTitle] = useState([]);
 
+  
+
   useEffect(() => {
     const fetchUserTitles = async () => {
       try {
@@ -33,20 +35,6 @@ const ClientSideBar = () => {
     fetchUserData();
   }, []);
 
-  useEffect(() => {
-    Axios.get("http://localhost:6197/login").then((response) => {
-       if (response.data.loggedIn == false) {
-        navigate("/login")
-        window.location.reload()
-       }
-    })
- }, [])
-
- setTimeout(function () {
-  alert("Session has expired. You'll be redirected to the login.")
-  window.location.reload()
-}, 60 * 60 * 24)
-
   const logoutEmployee = () => {
     try { 
       Axios.get("http://localhost:6197/logout");
@@ -54,7 +42,22 @@ const ClientSideBar = () => {
     } catch(err){
       console.log(err)
     }
-  };
+};
+
+useEffect(() => {
+    Axios.get("http://localhost:6197/login").then((response) => {
+       if (response.data.loggedIn == false) {
+        navigate("/login")
+        //window.location.reload()
+       }
+    })
+}, [])
+
+setTimeout(function () {
+  alert("Session has expired. You'll be redirected to the login.")
+  navigate("/login")
+  //window.location.reload()
+}, 60 * 60 * 24)
 
   return (
     <>
