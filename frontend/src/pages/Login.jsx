@@ -42,6 +42,7 @@ const Login = () => {
         });
     };
 
+    /** 
     useEffect(() => {
         Axios.get("http://localhost:6197/login").then((response) => {
             if (response.data.loggedIn == true) {
@@ -60,6 +61,7 @@ const Login = () => {
             }
         })
     }, [])
+    **/
 
     const handleKeyPress = (event) => {
       if (event.key === 'Enter') {
