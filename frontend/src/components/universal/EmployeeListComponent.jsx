@@ -37,13 +37,13 @@ const EmployeeListComponent = () => {
         },
 
         {
-            name: "Address",
-            selector: row => row.p_address,
+            name: "Present address",
+            selector: row => row.c_address,
             sortable: true
         },
 
         {
-            name: "Email",
+            name: "Work email",
             selector: row => row.work_email,
             sortable: true
         },
@@ -56,19 +56,14 @@ const EmployeeListComponent = () => {
 
         {
             name: "Actions",
-            selector: (row) => <button className="btn btn-active btn-xs">View</button>
+            selector: (row) => <a className="btn btn-active btn-sm" href="#">View</a>
         }
     ]
 
     const [records, setRecords] = useState(employees)
 
     function handleFilter(event) {
-        const newData = employees.filter(row => {
-
-            if(event == "") {
-                return row.f_name;
-            }
-
+        const newData = employees.filter(row => {       
             return row.f_name.toLowerCase().includes(event.target.value.toLowerCase())
         })
 
