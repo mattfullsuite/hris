@@ -22,6 +22,7 @@ import ClientDashboard from "./pages/client/ClientDashboard"
 import WidgetPending from "./pages/widgets/WidgetPending.jsx"
 import LeadPTORequest from "./pages/leads/LeadPTORequests";
 import HRProfile from "./pages/hr/HRProfile.jsx";
+import ManagerProfile from "./pages/leads/ManagerProfile.jsx";
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
           <Route path="/leadDashboard" element={<LeadDashboard />} /> 
           <Route path="/widgetPending" element={<WidgetPending />} />
           <Route path="/leadPTORequests" element={<LeadPTORequest />} />
+          <Route path="/manProfile" element={<ManagerProfile />} />
 
 
 
