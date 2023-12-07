@@ -644,9 +644,10 @@ function dailyPtoAccrual() {
 }
 
 app.get("/getAllApprovers", (req, res) => {
-    const q = "SELECT * FROM emp JOIN department ON emp_id = manager_id WHERE emp_role = 3"
+    const uid = req.session.user[0].emp_id
+    const q = "SELECT * FROM emp JOIN department ON emp_id = manager_id WHERE emp_role = 3 AND emp_id != ?"
 
-    db.query(q,
+    db.query(q,[uid],
         (err,data)=> {
         if(err) { return res.json(err) }
         return res.json(data)
