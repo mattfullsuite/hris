@@ -5,13 +5,26 @@ import DataTable from "react-data-table-component"
 import { useNavigate, Link } from "react-router-dom"
 
 const EmployeeListComponent = () => {
+    // const handleDelete = async (user_id) => {
+    //     try {
+    //         await axios.delete("http://localhost:6197/employeeslist/" + user_id)
+    //     } catch(err){
+    //         console.log(err)
+    //     }
+    // }
+
     const [employees, setEmployees] = useState([])
+    const [filter, setFilter] = useState([]);
+    const[query, setQuery] = useState('');
 
     useEffect(() => {
         const fetchAllEmployees = async ()=> {
             try{
                 const res = await axios.get("http://localhost:6197/employeeslist")
                 setEmployees(res.data)
+                setFilter(res)
+                
+
             } catch(err){
                 console.log(err)
             }
@@ -19,14 +32,7 @@ const EmployeeListComponent = () => {
 
         fetchAllEmployees();
     }, []);
-
-    const handleDelete = async (user_id) => {
-        try {
-            await axios.delete("http://localhost:6197/employeeslist/" + user_id)
-        } catch(err){
-            console.log(err)
-        }
-    }
+    
 
     const columns = [
         {
@@ -55,7 +61,7 @@ const EmployeeListComponent = () => {
 
         {
             name: "Actions",
-            selector: (row) => <a className="btn btn-active btn-sm" href="#">View</a>
+            selector: (row) => <a className="btn btn-active btn-xs btn-info" href="#">View</a>
         }
     ]
 
@@ -72,13 +78,14 @@ const EmployeeListComponent = () => {
     return (
         <div>
             <div className="text-end mb-5">
-                <input type="text" className="input input-bordered" onChange={handleFilter} placeholder="Search by name..." />
+                <input type="text" className="input input-bordered" placeholder="Search by name..." onChange={ handleFilter }/>
             </div>
 
             <DataTable
                 columns = {columns}
-                data = {records}
+                data = { records }
                 pagination
+                highlightOnHover
             ></DataTable>
         </div>
     )

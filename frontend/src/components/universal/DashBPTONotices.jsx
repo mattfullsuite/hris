@@ -17,6 +17,7 @@ const DashBPTONotices = () => {
         console.log(err);
       }
     };
+
     fetchAllApproved();
   }, []);
 
@@ -29,52 +30,40 @@ const DashBPTONotices = () => {
 
     {
       name: "Date filed",
-      selector: row => moment(row.date_filed).format('MMM DD YYYY')
-    }
+      selector: row => moment(row.date_filed).format('MMM DD YYYY'),
+      sortable: true
+    },
+
+    {
+      name: "Name",
+      selector: row => row.s_name + ", " + row.f_name + " " + row.m_name
+    },
+
+    {
+      name: "PTO type",
+      selector: row => row.leave_type
+    },
+
+    {
+      name: "Date(s)",
+        selector: (row) => row.leave_from === row.leave_to ? moment(row.leave_from).format('MMM. DD, YYYY') : moment(row.leave_from).format('MMM. DD, YYYY') + "  to  "+ moment(row.leave_to).format('MMM. DD, YYYY'),
+        sortable: true
+    },
   ]
 
   return (
     <>
       {/* PTO Notices */}
       <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-col items-center justify-center">
-        <h1 className="text-lg font-semibold">Approved PTO Notices</h1>
+        <h1 className="text-lg font-semibold mb-4">Approved PTO Notices</h1>
 
 
         <DataTable
-          column = {columns}
+          columns = {columns}
           data = {approved}
           pagination
+          highlightOnHover
         ></DataTable>
-
-        <div className="overflow-x-auto max-w-full">
-          <table className="table">
-            {/* head */}
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Date Filed</th>
-                <th>Name</th>
-                <th>PTO Type</th>
-                <th>Date From</th>
-                <th>Date To</th>
-                <th></th> 
-              </tr>
-            </thead>
-            <tbody>
-              {/* row 1 */}
-              {approved.map((appr) => (
-                <tr key={appr.id}>
-                  <th>{count++}</th>
-                  <td>{moment(appr.date_filed).format("MMM. DD, YYYY")}</td>
-                  <td>{appr.f_name + " " + appr.s_name}</td>
-                  <td>{appr.leave_type}</td>
-                  <td>{moment(appr.leave_from).format("MMM DD YYYY")}</td>
-                  <td>{moment(appr.leave_to).format("MMM DD YYYY")}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       </div>
     </>
   );
