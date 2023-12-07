@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
-
+import { Link } from "react-router-dom";
 const ManagerSideBar = () => {
 
 const navigate = useNavigate()
@@ -99,23 +99,24 @@ const [titles, setTitle] = useState([]);
 
             <div className="flex flex-col items-center justify-center">
               { users.map((user) => (
-              <div className="font-bold text-xl text-white">
+              <div className="font-bold text-xl text-black">
                 { user.f_name + " " + user.s_name}
               </div>
               ))}
 
             { titles.map((t) => (
-              <div className="mb-1 text-white">{t.title}</div>
+              <div className="mb-1 text-black">{t.title}</div>
             ))}
               <div>
+              <Link to="/manProfile">
                 <a
                   href="#"
-                  className="mb-12 flex items-center p-1 text-gray-900 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700 group"
+                  className="mb-12 flex items-center p-1 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
-                    fill="white"
+                    fill="black"
                     className="w-5 h-5"
                   >
                     <path
@@ -125,8 +126,9 @@ const [titles, setTitle] = useState([]);
                     />
                   </svg>
 
-                  <span className="ml-3 text-white">Profile</span>
+                  <span className="ml-3 text-black">Profile</span>
                 </a>
+                </Link>
               </div>
             </div>
 
@@ -135,6 +137,8 @@ const [titles, setTitle] = useState([]);
 
             <li></li>
             <li>
+            <Link to="/leadDashboard">
+
               <a
                 href="leadDashboard"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -162,6 +166,7 @@ const [titles, setTitle] = useState([]);
 
                 <span className="ml-3">Dashboard</span>
               </a>
+              </Link>
             </li>
 
             <li>

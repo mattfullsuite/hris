@@ -61,7 +61,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: {
-        expires: 60 * 60 * 24, 
+        expires: 60 * 60 * 24 * 1000, 
     }
 }))
 
@@ -709,6 +709,53 @@ app.get("/getUserAvatar", (req, res) => {
         (err,data)=> {
         if(err) { return res.json(err) }
         return res.json(data)
+    })
+})
+
+app.get("/getCurrentEmployees", (req, res) => {
+    const q = "SELECT * FROM emp"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+app.get("/getRegularEmployees", (req, res) => {
+    const q = "SELECT * FROM emp WHERE emp_status = 'REGULAR'"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+app.get("/getProbationaryEmployees", (req, res) => {
+    const q = "SELECT * FROM emp WHERE emp_status = 'PROBATIONARY'"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+app.get("/getPartTimeEmployees", (req, res) => {
+    const q = "SELECT * FROM emp WHERE emp_status = 'PARTTIME'"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
     })
 })
  
