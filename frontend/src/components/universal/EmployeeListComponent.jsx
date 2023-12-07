@@ -29,7 +29,6 @@ const EmployeeListComponent = () => {
     }
 
     const columns = [
-
         {
             name: "Name",
             selector: row => row.s_name + ", " + row.f_name + " " + row.m_name,

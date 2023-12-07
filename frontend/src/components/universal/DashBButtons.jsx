@@ -200,6 +200,7 @@ const DashBButtons = () => {
                 className="textarea textarea-bordered w-full max-w-lg mb-2"
                 placeholder="Reason for Leave..."
                 onChange={handleChange}
+                maxLength="255"
                 required
               ></textarea>
               
