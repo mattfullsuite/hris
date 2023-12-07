@@ -1,11 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
+import { Link } from "react-router-dom";
 
 const ClientSideBar = () => {
   const navigate = useNavigate()
 
   const [users, setUser] = useState([]);
+  const [titles, setTitle] = useState([]);
+
+  useEffect(() => {
+    const fetchUserTitles = async () => {
+      try {
+        const res = await Axios.get("http://localhost:6197/showTitles");
+        setTitle(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUserTitles();
+  }, []);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -22,10 +36,16 @@ const ClientSideBar = () => {
   useEffect(() => {
     Axios.get("http://localhost:6197/login").then((response) => {
        if (response.data.loggedIn == false) {
-          navigate("/login")
+        navigate("/login")
+        window.location.reload()
        }
     })
  }, [])
+
+ setTimeout(function () {
+  alert("Session has expired. You'll be redirected to the login.")
+  window.location.reload()
+}, 60 * 60 * 24)
 
   const logoutEmployee = () => {
     try { 
@@ -35,6 +55,10 @@ const ClientSideBar = () => {
       console.log(err)
     }
   };
+
+  useEffect(() => {
+    
+  })
 
   return (
     <>
@@ -76,15 +100,20 @@ const ClientSideBar = () => {
               />
             </div>
 
-            { users.map((user) => (
             <div className="flex flex-col items-center justify-center">
+             
+              { users.map((user) => (
               <div className="font-bold text-xl text-white">
                 { user.f_name + " " + user.s_name}
               </div>
-              <div className="mb-1 text-white">Senior Software Engineer</div>
+              ))}
+
+              { titles.map((title) => (
+              <div className="mb-1 text-white">{title.title}</div>
+              ))}
               <div>
+                <Link to="/profile">
                 <a
-                  href="#"
                   className="mb-12 flex items-center p-1 text-gray-900 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700 group"
                 >
                   <svg
@@ -102,17 +131,18 @@ const ClientSideBar = () => {
 
                   <span className="ml-3 text-white">Profile</span>
                 </a>
+                </Link>
               </div>
             </div>
 
-            ))}
+            
 
             <div className="flex items-center justify-center"></div>
 
             <li></li>
             <li>
+              <Link to="/clientDashboard">
               <a
-                href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -135,6 +165,9 @@ const ClientSideBar = () => {
 
                 <span className="ml-3 text-white">Dashboard</span>
               </a>
+
+              </Link>
+              
             </li>
 
             <li>

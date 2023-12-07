@@ -117,6 +117,16 @@ app.get('/logout', LogoutHandler)
 
 // -------------------- ADMIN METHODS --------------------------//
 
+app.get("/myProfile", (req, res) => {
+    const uid = req.session.user[0].emp_id
+    const q = "SELECT * FROM emp AS e INNER JOIN title AS t ON e.emp_id = t.emp_id WHERE emp_id = ?"
+    db.query(q,[uid],(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+});
+
+
 app.get("/employeeslist", (req, res) => {
     const q = "SELECT * FROM emp ORDER BY s_name"
     db.query(q,(err,data)=> {
@@ -344,6 +354,15 @@ app.get("/showapprovedleaves", (req, res) => {
 app.get("/showrejectedleaves", (req, res) => {
     const q = "SELECT * FROM leaves WHERE leave_status = 2 ORDER BY date_filed DESC LIMIT 10"
     db.query(q,(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+app.get("/showTitles", (req, res) => {
+    const uid = req.session.user[0].emp_id
+    const q = "SELECT * FROM emp AS e INNER JOIN title AS t ON e.emp_id=t.emp_id where e.emp_id=?"
+    db.query(q,[uid],(err,data)=> {
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -668,13 +687,6 @@ app.post("/fileLeave", (req, res)=> {
         return res.json(data);
     })
 
-    /**const q1 = "UPDATE emp AS e JOIN leave_credits l ON e.emp_id = l.emp_id SET leave_balance = leave_balance - " + req.body.use_pto_points + " WHERE l.emp_id = ?"
-
-    const values2 = [uid]
-    db.query(q1, [values2], (err, data) => {
-        if (err) return res.json(err); 
-        return res.json(data);
-    })**/
 })
 
 app.post("/subtractPTO", (req,res) => {
@@ -685,6 +697,17 @@ app.post("/subtractPTO", (req,res) => {
     db.query(q, [uid], (err, data) => {
         if (err) return res.json(err); 
         return res.json(data);
+    })
+})
+
+app.get("/getUserAvatar", (req, res) => {
+    const uid = req.session.user[0].emp_id
+    const q = "SELECT emp_pic FROM emp WHERE emp_id = 4"
+
+    db.query(q,
+        (err,data)=> {
+        if(err) { return res.json(err) }
+        return res.json(data)
     })
 })
  
