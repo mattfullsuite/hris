@@ -21,6 +21,7 @@ import HRDashboard from "./pages/hr/HRDashboard.jsx"
 import ClientDashboard from "./pages/client/ClientDashboard"
 import WidgetPending from "./pages/widgets/WidgetPending.jsx"
 import LeadPTORequest from "./pages/leads/LeadPTORequests";
+import HRProfile from "./pages/hr/HRProfile.jsx";
 
 
 function App() {
@@ -41,6 +42,9 @@ function App() {
           <Route path="/addAnnouncements" element={<AddAnnouncements />} />
           <Route path="/addEmployee" element={<AddEmployee />} />
           <Route path="/addCompany" element={<AddCompany />} />
+          <Route path="/hrProfile" element={<HRProfile />} />
+
+
 
           {/* Employee Routes */}
           <Route path="/employees" element={<EmployeesList />} />
@@ -49,7 +53,7 @@ function App() {
           <Route path="/clientDashboard" element={<ClientDashboard />} />
           <Route path="/showPendingLeaves" element={<PendingLeaves />} />
           <Route path="/fileLeave" element={<FileLeave />} />
-          <Route path="/profile" element={<ClientUserProfile />} />
+          <Route path="/empProfile" element={<ClientUserProfile />} />
 
 
           {/* Team Lead Routes */}
