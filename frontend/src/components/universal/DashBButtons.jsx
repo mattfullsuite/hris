@@ -49,8 +49,23 @@ const DashBButtons = () => {
     setLeaveInfo({...leaveInfo, [event.target.name]:[event.target.value]})
 
     ptoLabelChange()
+    taLabelChange()
   }
+  
+  const taLabelChange = () => {
+    
+    const ta = document.getElementById('leave_reason')
+    const maxLength = ta.getAttribute('maxlength');
 
+    ta.addEventListener('input', function (e) {
+      const target = e.target;
+      const currentLength = target.value.length;
+      document.getElementById('textarea-label').innerHTML = currentLength + '/' + maxLength;
+      if(currentLength == maxLength){
+        document.getElementById('textarea-label').style.color = "red";
+      }
+    });
+  }
   const ptoLabelChange = () => {
     var dateTo = moment(document.getElementById("leave_to").value).format("YYYY-MM-DD")
     var dateFrom = moment(document.getElementById("leave_from").value).format("YYYY-MM-DD")
@@ -194,8 +209,9 @@ const DashBButtons = () => {
               />
 
               {/* Reason for Leave */}
-              <h1>Reason for Leave<span className="text-red-500"> *</span></h1>
+              <h1>Reason for Leave<span className="text-red-500"> *</span> <span id="textarea-label">0</span> </h1>
               <textarea
+                id='leave_reason'
                 name='leave_reason'
                 className="textarea textarea-bordered w-full max-w-lg mb-2"
                 placeholder="Reason for Leave..."
