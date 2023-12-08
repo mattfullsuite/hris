@@ -303,6 +303,15 @@ app.get("/showrejecteddepartmentleaves", (req, res) => {
 })
 
 //HR
+app.get("/showallleaves", (req, res) => {
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id ORDER BY date_filed DESC"
+    
+    db.query(q,(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
 app.get("/showpendingleaves", (req, res) => {
     const q = "SELECT * FROM leaves INNER JOIN emp ON requester_id=emp_id WHERE leave_status = 0 ORDER BY date_filed DESC"
     db.query(q,(err,data)=> {
