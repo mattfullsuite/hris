@@ -1,0 +1,299 @@
+import React from "react";
+
+const HRFormAddEmployee = () => {
+  return (
+    <>
+      <>
+        <div className="p-4 sm:ml-64 flex flex-col">
+          <div className="m-2">
+            <h1 className="text-3xl font-bold tracking-wide">
+              Add New Employee
+            </h1>
+          </div>
+          <form>
+            {/* Personal Information */}
+            <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
+              <h1 className="font-bold">Personal Information</h1>
+
+              <div className="flex flex-col md:flex-row">
+                {/* First Name */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">First Name</span>
+                  </div>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full max-w-xs"
+                    required
+                  />
+                </label>
+
+                {/* Middle Name */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Middle Name</span>
+                  </div>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full max-w-xs"
+                    required
+                  />
+                </label>
+
+                {/* Surname */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Surname</span>
+                  </div>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full max-w-xs"
+                    required
+                  />
+                </label>
+              </div>
+
+              <div className="flex flex-col md:flex-row">
+                {/* Date of Birth */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Date of Birth</span>
+                  </div>
+                  <input
+                    type="date"
+                    className="input input-bordered w-full max-w-xs"
+                    required
+                  />
+                </label>
+
+                {/* Sex */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Sex</span>
+                  </div>
+                  <select
+                    name="sex"
+                    className="select select-bordered w-full max-w-xs"
+                    required
+                  >
+                    <option disabled selected>
+                      Select Employee's Sex
+                    </option>
+                    <option>Male</option>
+                    <option>Female</option>
+                  </select>
+                </label>
+
+                {/* Civil Status */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Civil Status</span>
+                  </div>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+              </div>
+
+              <div className="flex flex-col md:flex-row">
+                {/* Permanent Address */}
+                <label className="form-control w-full max-w-5xl md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Permanent Address</span>
+                  </div>
+                  <input type="text" className="input input-bordered w-full" />
+                </label>
+              </div>
+
+              <div className="flex flex-col md:flex-row">
+                {/* Current Address */}
+                <label className="form-control w-full max-w-5xl md:mb-0 md:mr-4">
+                  <div className="label pb-0">
+                    <span className="label-text">Current Address</span>
+                  </div>
+                  <div className="flex items-center ">
+                    {" "}
+                    <label className="label cursor-pointer">
+                      <input type="checkbox" className="checkbox checkbox-sm" />
+                      <span className="label-text ml-2">
+                        {" "}
+                        Same as Permanent Address
+                      </span>
+                    </label>
+                  </div>
+                  <input type="text" className="input input-bordered w-full" />
+                </label>
+              </div>
+            </div>
+
+            {/* Contact Information */}
+            <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
+              <h1 className="font-bold">Contact Information</h1>
+
+              <div className="flex flex-col md:flex-row">
+                {/* Personal Email */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Personal Email</span>
+                  </div>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+
+                {/* Contact Number */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Contact Number</span>
+                  </div>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+                <div></div>
+              </div>
+              <div className="divider"></div>
+              <p className="font-semibold text-red-500 text-sm">
+                Emergency Contact Information
+              </p>
+              <div className="flex flex-col md:flex-row">
+                {/* Name */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Name</span>
+                  </div>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+
+                {/* Number */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Number</span>
+                  </div>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+              </div>
+            </div>
+
+            {/* Employee Information */}
+            <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
+              <h1 className="font-bold mb-2">Employee Information</h1>
+
+              <div className="flex flex-col md:flex-row">
+                {/* Employee ID */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Employee ID</span>
+                  </div>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+
+                {/* Date Hired */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Date Hired</span>
+                  </div>
+                  <input
+                    type="date"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+              </div>
+
+              <div className="flex flex-col md:flex-row">
+                {/* Date of Regularization */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Date of Regularization</span>
+                  </div>
+                  <input
+                    type="date"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+
+                {/* Employee ID */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Employment Status</span>
+                  </div>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+              </div>
+
+              <div className="divider"></div>
+
+              <div className="flex flex-col md:flex-row">
+                {/* SSS Number */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">SSS Number</span>
+                  </div>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+
+                {/* PHIC Number */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">SSS Number</span>
+                  </div>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+              </div>
+
+              <div className="flex flex-col md:flex-row">
+                {/* HDMC Number */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">HDMC Number</span>
+                  </div>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+
+                {/* TIN Number */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">TIN Number</span>
+                  </div>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                </label>
+              </div>
+            </div>
+            <div className="flex justify-end m-2">
+              <input type="submit" value="Submit" className="btn" />
+            </div>
+          </form>
+        </div>
+      </>
+    </>
+  );
+};
+
+export default HRFormAddEmployee;

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import axios from "axios"
 
-const AddEmployee = () => {
+const AddEmployeeAdmin = () => {
 
     const navigate = useNavigate()
 
@@ -75,4 +75,4 @@ const AddEmployee = () => {
     ) 
 }
 
-export default AddEmployee
+export default AddEmployeeAdmin
