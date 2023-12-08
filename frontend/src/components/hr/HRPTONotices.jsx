@@ -9,6 +9,7 @@ const HRPTONotices = () => {
 
   const [approved, setApproved] = useState([])
 
+
   useEffect(() => {
       const fetchAllApproved = async ()=> {
           try{

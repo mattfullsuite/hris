@@ -77,9 +77,10 @@ const EmployeeListComponent = () => {
 
     return (
         <div>
-            <div className="text-end mb-5">
-                <input type="text" className="input input-bordered" placeholder="Search by name..." onChange={ handleFilter }/>
+            <div className="mb-5">
+                <input type="text" className="input input-bordered w-full md:w-1/3" placeholder="Search by name..." onChange={ handleFilter }/>
             </div>
+
 
             <DataTable
                 columns = {columns}
