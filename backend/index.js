@@ -1,39 +1,31 @@
-/**import express from "express"
-import mysql from "mysql"
-import cors from "cors"
-import dotenv from "dotenv"
-import cookieParser from "cookie-parser"
-import session from "express-session"
-import bodyParser from "body-parser"**/
-
 var express = require("express")
-var mysql = require( "mysql")
+//var mysql = require( "mysql")
 var cors = require("cors")
-var dotenv = require("dotenv")
+//var dotenv = require("dotenv")
 var cookieParser = require("cookie-parser")
 var session = require("express-session")
 var bodyParser = require("body-parser")
 var cron = require('node-cron')
-var moment = require('moment')
 
 var HomeHandler = require("./handlers/authentication/home.js");
 //var LoginHandler = require( "./handlers/authentication/login.js");
-//var ProcessLoginHandler = require("./handlers/process-login.js")
+var ProcessLoginHandler = require("./handlers/authentication/process_login.js")
 var LogoutHandler = require("./handlers/authentication/logout.js");
 
 var DailyPTOAccrual = require("./handlers/utilities/cron-daily.js")
+var db = require("./config.js");
 
 
-dotenv.config({ path: './protected.env' })
+//dotenv.config({ path: './protected.env' })
 
 const app = express()
 
-const db = mysql.createConnection({
+/**const db = mysql.createConnection({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE,
-})
+})**/
 
 db.connect ( (error) => {
     if (error) {
@@ -44,12 +36,15 @@ db.connect ( (error) => {
 })
 
 app.use(express.json());
+
+//app.use(cors())
 app.use(cors(
     {
     origin: ["http://localhost:3000"],
-    methods: ["GET", "POST", "DELETE"],
+    //origin: "*",
+    methods: ["GET", "POST", "DELETE", "OPTIONS"],
     credentials: true
-}
+    }
 ));
 
 app.use(cookieParser())
@@ -76,6 +71,8 @@ app.listen(6197, ()=>{
 
 // -------------------- GENERAL METHODS --------------------------//
 
+
+
 app.get('/', HomeHandler);
 
 app.get("/login", (req, res) => {
@@ -86,32 +83,7 @@ app.get("/login", (req, res) => {
     }
 })
 
-//app.post("/processlogin", ProcessLoginHandler);
-
-app.post("/processlogin", (req, res) => {
-    const work_email = req.body.work_email
-    const password = req.body.password
-
-    db.query(
-        "SELECT * FROM emp WHERE work_email = ? AND password = ?",
-        [work_email, password], 
-        (err, result) => {
-            if (err) {
-                res.send({err: err});
-            }
-
-            if (result.length > 0) {
-                req.session.user = result
-                req.session.firstName = result.f_name
-                console.log(req.session.user)
-                res.send(result[0]);
-            } else {
-                res.send({ message: "Wrong username/password combination"})
-            }
-        }
-    )
-});
-
+app.post("/processlogin", ProcessLoginHandler);
 app.get('/logout', LogoutHandler)
 
 

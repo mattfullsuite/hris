@@ -4,6 +4,8 @@ import Axios from "axios"
 
 const Login = () => {
 
+   const BASE_URL = process.env.REACT_APP_BASE_URL;
+
     const navigate = useNavigate()
 
     const [work_email, setEmail] = useState("")
@@ -14,7 +16,7 @@ const Login = () => {
     Axios.defaults.withCredentials = true;
 
     const loginEmployee = () => {
-        Axios.post("http://localhost:6197/processlogin", {
+        Axios.post(BASE_URL + ":6197/processlogin", {
             work_email: work_email,
             password: password,
 
@@ -44,7 +46,7 @@ const Login = () => {
 
      
     useEffect(() => {
-        Axios.get("http://localhost:6197/login").then((response) => {
+        Axios.get(BASE_URL + ":6197/login").then((response) => {
             if (response.data.loggedIn == true) {
               if (response.data.user[0].emp_role == 0){
                 navigate("/adminDashboard")
