@@ -1,6 +1,36 @@
-import React from "react";
+import React, {useState} from "react";
 
 const HRFormAddEmployee = () => {
+
+  const [employeeInfo, setEmployeeInfo] = useState({
+    emp_num: "",
+    work_email: "",
+    password: "",
+    f_name: "",
+    m_name: "",
+    s_name: "",
+    emp_role: "",
+    emp_pic: "",
+    personal_email: "",
+    contact_num: "",
+    dob: "",
+    p_address: "",
+    c_address: "",
+    date_hired: "",
+    date_regularization: "",
+    date_separated: "",
+    emp_status: "",
+    sex: "",
+    gender: "",
+    civil_status: "",
+    emergency_contact_name: "",
+    emergency_contact_num: "",
+    created_by: "",
+    created_at: "",
+    updated_by: "",
+    updated_at: "",
+  });
+
   return (
     <>
       <>
