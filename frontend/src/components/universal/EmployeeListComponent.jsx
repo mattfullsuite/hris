@@ -88,6 +88,7 @@ const EmployeeListComponent = () => {
                 pagination
                 highlightOnHover
             ></DataTable>
+            
         </div>
     )
 
