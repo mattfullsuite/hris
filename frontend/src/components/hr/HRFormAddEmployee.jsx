@@ -23,7 +23,7 @@ const HRFormAddEmployee = () => {
                   </div>
                   <input
                     type="text"
-                    className="input input-bordered w-full max-w-xs"
+                    className="input input-bordered w-full "
                     required
                   />
                 </label>
@@ -35,7 +35,7 @@ const HRFormAddEmployee = () => {
                   </div>
                   <input
                     type="text"
-                    className="input input-bordered w-full max-w-xs"
+                    className="input input-bordered w-full "
                     required
                   />
                 </label>
@@ -47,7 +47,7 @@ const HRFormAddEmployee = () => {
                   </div>
                   <input
                     type="text"
-                    className="input input-bordered w-full max-w-xs"
+                    className="input input-bordered w-full "
                     required
                   />
                 </label>
@@ -61,9 +61,28 @@ const HRFormAddEmployee = () => {
                   </div>
                   <input
                     type="date"
-                    className="input input-bordered w-full max-w-xs"
+                    className="input w-full input-bordered w-full"
                     required
                   />
+                </label>
+
+                {/* Civil Status */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Civil Status</span>
+                  </div>
+                  <select
+                    name="civil-status"
+                    className="select select-bordered w-full"
+                    required
+                  >
+                    <option disabled selected>
+                      Select Civil Status
+                    </option>
+                    <option>Single</option>
+                    <option>Married</option>
+                    <option>Widowed</option>
+                  </select>
                 </label>
 
                 {/* Sex */}
@@ -73,7 +92,7 @@ const HRFormAddEmployee = () => {
                   </div>
                   <select
                     name="sex"
-                    className="select select-bordered w-full max-w-xs"
+                    className="select select-bordered w-full"
                     required
                   >
                     <option disabled selected>
@@ -84,15 +103,12 @@ const HRFormAddEmployee = () => {
                   </select>
                 </label>
 
-                {/* Civil Status */}
+                {/* Gender */}
                 <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
                   <div className="label">
-                    <span className="label-text">Civil Status</span>
+                    <span className="label-text">Gender</span>
                   </div>
-                  <input
-                    type="text"
-                    className="input input-bordered w-full max-w-xs"
-                  />
+                  <input type="text" className="input input-bordered w-full" />
                 </label>
               </div>
 
@@ -137,10 +153,7 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">Personal Email</span>
                   </div>
-                  <input
-                    type="text"
-                    className="input input-bordered w-full max-w-xs"
-                  />
+                  <input type="text" className="input input-bordered w-full " />
                 </label>
 
                 {/* Contact Number */}
@@ -149,8 +162,8 @@ const HRFormAddEmployee = () => {
                     <span className="label-text">Contact Number</span>
                   </div>
                   <input
-                    type="text"
-                    className="input input-bordered w-full max-w-xs"
+                    type="number"
+                    className="input input-bordered w-full "
                   />
                 </label>
                 <div></div>
@@ -165,10 +178,7 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">Name</span>
                   </div>
-                  <input
-                    type="text"
-                    className="input input-bordered w-full max-w-xs"
-                  />
+                  <input type="text" className="input input-bordered w-full " />
                 </label>
 
                 {/* Number */}
@@ -177,8 +187,8 @@ const HRFormAddEmployee = () => {
                     <span className="label-text">Number</span>
                   </div>
                   <input
-                    type="text"
-                    className="input input-bordered w-full max-w-xs"
+                    type="number"
+                    className="input input-bordered w-full "
                   />
                 </label>
               </div>
@@ -188,51 +198,70 @@ const HRFormAddEmployee = () => {
             <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
               <h1 className="font-bold mb-2">Employee Information</h1>
 
-              <div className="flex flex-col md:flex-row">
+              <div className="flex flex-col w-full md:flex-row">
                 {/* Employee ID */}
                 <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
                   <div className="label">
                     <span className="label-text">Employee ID</span>
                   </div>
-                  <input
-                    type="text"
-                    className="input input-bordered w-full max-w-xs"
-                  />
+                  <input type="text" className="input input-bordered w-full " />
                 </label>
 
+                {/* Employment Status */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Employment Status</span>
+                  </div>
+                  <select
+                    name="emp-status"
+                    className="select select-bordered w-full "
+                    required
+                  >
+                    <option disabled selected>
+                      Select Employment Status
+                    </option>
+                    <option>Probationary</option>
+                    <option>Regular</option>
+                    <option>Part-time</option>
+                  </select>
+                </label>
+              </div>
+
+              <div className="flex flex-col md:flex-row">
                 {/* Date Hired */}
                 <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
                   <div className="label">
                     <span className="label-text">Date Hired</span>
                   </div>
-                  <input
-                    type="date"
-                    className="input input-bordered w-full max-w-xs"
-                  />
+                  <input type="date" className="input input-bordered w-full " />
                 </label>
-              </div>
 
-              <div className="flex flex-col md:flex-row">
                 {/* Date of Regularization */}
                 <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
                   <div className="label">
                     <span className="label-text">Date of Regularization</span>
                   </div>
-                  <input
-                    type="date"
-                    className="input input-bordered w-full max-w-xs"
-                  />
+                  <input type="date" className="input input-bordered w-full " />
                 </label>
 
-                {/* Employee ID */}
+                {/* Date Separated*/}
                 <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
                   <div className="label">
-                    <span className="label-text">Employment Status</span>
+                    <span className="label-text">Date Separated</span>
                   </div>
-                  <input
-                    type="text"
-                    className="input input-bordered w-full max-w-xs"
-                  />
+                  <input type="date" className="input input-bordered w-full " />
+                </label>
+              </div>
+
+              <div className="divider"></div>
+
+
+              <div className="flex flex-col md:flex-row">
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Upload Profile Picture</span>
+                  </div>
+                  <input type="file" className="file-input w-full max-w-xs" />
                 </label>
               </div>
 
@@ -244,10 +273,7 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">SSS Number</span>
                   </div>
-                  <input
-                    type="text"
-                    className="input input-bordered w-full max-w-xs"
-                  />
+                  <input type="text" className="input input-bordered w-full " />
                 </label>
 
                 {/* PHIC Number */}
@@ -255,10 +281,7 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">SSS Number</span>
                   </div>
-                  <input
-                    type="text"
-                    className="input input-bordered w-full max-w-xs"
-                  />
+                  <input type="text" className="input input-bordered w-full" />
                 </label>
               </div>
 
@@ -268,10 +291,7 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">HDMC Number</span>
                   </div>
-                  <input
-                    type="text"
-                    className="input input-bordered w-full max-w-xs"
-                  />
+                  <input type="text" className="input input-bordered w-full " />
                 </label>
 
                 {/* TIN Number */}
@@ -279,10 +299,7 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">TIN Number</span>
                   </div>
-                  <input
-                    type="text"
-                    className="input input-bordered w-full max-w-xs"
-                  />
+                  <input type="text" className="input input-bordered w-full " />
                 </label>
               </div>
             </div>
