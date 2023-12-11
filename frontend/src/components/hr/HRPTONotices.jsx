@@ -24,6 +24,7 @@ const HRPTONotices = () => {
               setApproved(res1.data)
               setPending(res2.data)
               setDeclined(res3.data)
+              setData(res.data) //initialize database
           } catch(err){
               console.log(err)
           }
@@ -31,7 +32,19 @@ const HRPTONotices = () => {
       fetchAllApproved();
   }, []);
 
-    document.getElementById("all").addEventListener("click",function() {
+  const handleClick = (e) => {
+    if (e.currentTarget.id === "all") {
+      setData(all)
+    } else if (e.currentTarget.id === "app") {
+      setData(approved)
+    }else if (e.currentTarget.id === "pen") {
+      setData(pending)
+    } else if (e.currentTarget.id === "dec") {
+      setData(declined)
+    }
+  };
+
+    /**document.getElementById("all").addEventListener("click",function() {
       setData(all)
       console.log("all is clicked")
       console.log(data)
@@ -41,7 +54,7 @@ const HRPTONotices = () => {
       setData(approved)
       console.log("app is clicked")
       console.log(data)
-    })
+    })**/
    
  
 
@@ -96,22 +109,11 @@ const HRPTONotices = () => {
       <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-col justify-center align-middle">
         <h1 className="text-lg font-semibold text-center mb-4">PTO Notices</h1>
 
-        {/* <div className="flex flex-row flex-wrap gap-3 mt-4 justify-center">
-
-          <div className="badge badge-neutral">All</div>
-
-          <div className="badge badge-success">Approved</div>
-
-          <div className="badge badge-warning">Pending</div>
-
-          <div className="badge badge-error">Declined</div>
-        </div> */}
-
         <div role="tablist" className="tabs tabs-lifted tabs-lg flex flex-row justify-center">
-          <button role="tab" id="all"  className="tab tab-active">All</button>
-          <button role="tab" id="app"  className="tab">Approved</button>
-          <button role="tab" id="pen"  className="tab">Pending</button>
-          <button role="tab" id="dec"  className="tab">Declined</button>
+          <button role="tab" id="all" onClick={handleClick} className="tab">All</button>
+          <button role="tab" id="app" onClick={handleClick} className="tab">Approved</button>
+          <button role="tab" id="pen" onClick={handleClick} className="tab">Pending</button>
+          <button role="tab" id="dec" onClick={handleClick} className="tab">Declined</button>
         </div>
 
         <hr></hr>
