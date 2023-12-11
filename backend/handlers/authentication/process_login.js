@@ -1,3 +1,5 @@
+var db = require("../../config.js");
+
 module.exports = function processLogin(req, res) {
   const work_email = req.body.work_email
   const password = req.body.password
