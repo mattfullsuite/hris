@@ -29,7 +29,7 @@ const Profile = () => {
             </h1>
             <h1>{p.work_email}</h1>
             <h1>{p.title}</h1>
-            <h1>OCCI - 001</h1>
+            <h1>{p.emp_num}</h1>
           </div>
 
           {/* Contact Information */}

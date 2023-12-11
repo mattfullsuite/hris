@@ -48,19 +48,19 @@ const EmployeeListComponent = () => {
         },
 
         {
-            name: "Present address",
+            name: "Present Address",
             selector: row => row.c_address,
             sortable: true
         },
 
         {
-            name: "Work email",
+            name: "Work Email",
             selector: row => row.work_email,
             sortable: true
         },
 
         {
-            name: "Contact number",
+            name: "Contact Number",
             selector: row => row.contact_num,
             sortable: true
         },
