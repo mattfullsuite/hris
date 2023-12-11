@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import axios from 'axios'
 import DataTable from "react-data-table-component"
 
-import { useNavigate, Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 
 const EmployeeListComponent = () => {
     // const handleDelete = async (user_id) => {
@@ -14,6 +14,7 @@ const EmployeeListComponent = () => {
     // }
 
     const [employees, setEmployees] = useState([])
+    const [records, setRecords] = useState(employees)
     const [filter, setFilter] = useState([]);
     const[query, setQuery] = useState('');
 
@@ -23,15 +24,20 @@ const EmployeeListComponent = () => {
                 const res = await axios.get("http://localhost:6197/employeeslist")
                 setEmployees(res.data)
                 setFilter(res)
-                
-
+                setRecords(res.data)
             } catch(err){
                 console.log(err)
             }
         };
-
         fetchAllEmployees();
     }, []);
+
+    function handleFilter(event) {
+        const newData = employees.filter(row => {       
+            return row.f_name.toLowerCase().includes(event.target.value.toLowerCase())
+        })
+        setRecords(newData)
+    }
     
 
     const columns = [
@@ -65,22 +71,11 @@ const EmployeeListComponent = () => {
         }
     ]
 
-    const [records, setRecords] = useState(employees)
-
-    function handleFilter(event) {
-        const newData = employees.filter(row => {       
-            return row.f_name.toLowerCase().includes(event.target.value.toLowerCase())
-        })
-
-        setRecords(newData)
-    }
-
     return (
         <div>
             <div className="mb-5">
                 <input type="text" className="input input-bordered w-full md:w-1/3" placeholder="Search by name..." onChange={ handleFilter }/>
             </div>
-
 
             <DataTable
                 columns = {columns}
