@@ -322,7 +322,7 @@ app.get("/showpendingleaves", (req, res) => {
 
 app.get("/showallmyleaves", (req, res) => {
     const uid = req.session.user[0].emp_id
-    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE requester_id = ? ORDER BY date_filed DESC"
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE requester_id = ? ORDER BY date_filed DESC LIMIT 5"
     
     db.query(q,[uid],(err,data)=> {
         if(err) return res.json(err)

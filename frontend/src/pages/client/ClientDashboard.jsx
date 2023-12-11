@@ -100,17 +100,27 @@ const ClientDashboard = () => {
       <div className="p-4 sm:ml-64 flex flex-col">
         <DashBGreeting></DashBGreeting>
         {/* Widget Container */}
-        <div className="my-2 mx-2">
+        <div className="my-2 mx-2 flex flex-col md:flex-row">
+          <div className="grow">
+            <div className="flex flex-col lg:flex-row">
+              <div className="flex flex-col">
+                <DashBremainingPTO></DashBremainingPTO>
+                <DashBButtons></DashBButtons>
+              </div>
 
-          <div className="flex">
-            <DashBremainingPTO></DashBremainingPTO>
-            <DashBRemainingOffset></DashBRemainingOffset>
+              <div className="flex grow">
+                <DashBOwnPTO></DashBOwnPTO>
+              </div>
+            </div>
+
+            <div className="mt-4">
+            <DashBPTONotices></DashBPTONotices>
+            </div>
           </div>
-          <DashBButtons></DashBButtons>
-          <DashBOwnPTO></DashBOwnPTO>
-          <DashBPTONotices></DashBPTONotices>
 
-          <div className="flex">
+          <div className=" divider divider-horizontal"></div>
+
+          <div className="flex flex-col">
             <DashBBirthdays></DashBBirthdays>
             <DashBAnniversaries></DashBAnniversaries>
           </div>

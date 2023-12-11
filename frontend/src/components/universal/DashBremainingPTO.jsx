@@ -21,7 +21,7 @@ const DashBremainingPTO = () => {
       {/* Number of PTOs */}
 
       { ptos.map((pto) => (
-      <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col items-center justify-center text-center">
+      <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col items-center justify-center text-center md:w-56">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -38,7 +38,7 @@ const DashBremainingPTO = () => {
         </svg>
 
         <h1 className="text-lg font-semibold">Number of PTOs</h1>
-        <h1 className="my-1 text-3xl font-bold">{ pto.leave_balance }</h1>
+        <h1 className="my-1 text-5xl font-bold">{ pto.leave_balance }</h1>
         <h1 className="text-base font-normal">Available until</h1>
         <h1 className="text-base font-semibold">March 25, 2023</h1>
 
