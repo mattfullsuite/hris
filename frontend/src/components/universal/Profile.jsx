@@ -47,6 +47,7 @@ const Profile = () => {
                   type="text"
                   className="input input-bordered w-full max-w-xs"
                   disabled
+                  readonly
                 />
               </label>
 

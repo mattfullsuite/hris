@@ -90,13 +90,16 @@ setTimeout(function () {
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-[#0097B2] dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
+          { users.map((user) => (
             <div className="flex justify-center mt-10">
               <img
                 className="h-20 w-20 rounded-full ring-2 ring-white"
-                src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                src={user.emp_pic}
+          
                 alt=""
               />
             </div>
+            ))}
 
             <div className="flex flex-col items-center justify-center">
              
