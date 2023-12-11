@@ -19,6 +19,7 @@ const HRPTONotices = () => {
               const res1 = await Axios.get("http://localhost:6197/showapprovedleaves")
               const res2 = await Axios.get("http://localhost:6197/showpendingleaves")
               const res3 = await Axios.get("http://localhost:6197/showrejectedleaves")
+              // test
               setAll(res.data)
               setApproved(res1.data)
               setPending(res2.data)
