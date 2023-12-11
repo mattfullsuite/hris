@@ -150,14 +150,14 @@ const ManagerPTORequestTable = () => {
 
           <button
             className="btn btn-xs bg-lime-600 text-white hover:bg-green-800 normal-case"
-            onClick={() => handleApproval(leaves.leave_id)}
+            onClick={() => handleApproval(row.leave_id)}
           >
             Approve
           </button>
 
           <button
             className="btn btn-xs bg-red-600 text-white hover:bg-red-800 normal-case"
-            onClick={() => handleRejection(leaves.leave_id)}
+            onClick={() => handleRejection(row.leave_id)}
           >
             Decline
           </button>
@@ -273,7 +273,7 @@ const ManagerPTORequestTable = () => {
                 <td>
                   <div className="flex justify-end">
                     <button 
-                    ççç
+                    onClick={() => handleApproval( leave.leave_id )}
                     className="btn btn-sm bg-green-600 text-white hover:bg-green-800 mr-2 normal-case">
                       Approve
                     </button>

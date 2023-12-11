@@ -11,6 +11,7 @@ import DashBBirthdays from "../../components/universal/DashBBirthdays";
 import DashBAnniversaries from "../../components/universal/DashBAnniversaries";
 import DashBGreeting from "../../components/universal/DashBGreeting";
 import DashBOwnPTO from "../../components/universal/DashBOwnPTO";
+import DashBPTOApprovedAndOwned from "../../components/universal/DashBPTOApprovedAndOwned";
 
 // import DataTable from 'datatables.net-dt';
 // import 'datatables.net-responsive-dt';
@@ -99,29 +100,27 @@ const ClientDashboard = () => {
       <ClientSideBar></ClientSideBar>
       <div className="p-4 sm:ml-64 flex flex-col">
         <DashBGreeting></DashBGreeting>
-        {/* Widget Container */}
-        <div className="my-2 mx-2 flex flex-col md:flex-row">
-          <div className="grow">
-            <div className="flex flex-col lg:flex-row">
-              <div className="flex flex-col">
-                <DashBremainingPTO></DashBremainingPTO>
-                <DashBButtons></DashBButtons>
-              </div>
 
-              <div className="flex grow">
-                <DashBOwnPTO></DashBOwnPTO>
-              </div>
+        <div className="my-2 mx-2 flex flex-col xl:flex-row">
+          <div className="grow">
+            <div className="flex flex-col md:flex-row">
+                <div>
+                  <DashBButtons></DashBButtons>
+                </div>
+
+                <div>
+                  <DashBremainingPTO></DashBremainingPTO>
+                </div>
             </div>
 
             <div className="mt-4">
-            <DashBPTONotices></DashBPTONotices>
-            {/* hjsahs */}
+              <DashBPTOApprovedAndOwned></DashBPTOApprovedAndOwned>
             </div>
           </div>
 
-          <div className=" divider divider-horizontal"></div>
+          <div className="divider divider-horizontal"></div>
 
-          <div className="flex flex-col">
+          <div className="flex flex-col md:flex-row xl:flex-col">
             <DashBBirthdays></DashBBirthdays>
             <DashBAnniversaries></DashBAnniversaries>
           </div>

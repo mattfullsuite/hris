@@ -155,14 +155,38 @@ const DashBButtons = () => {
     <>
       {/* Buttons */}
       <div className="m-2 flex flex-col">
-        <button
+        {/* <button
           className="my-2 btn btn-sm btn-active normal-case"
           onClick={() =>
             document.getElementById("file_a_leave_btn").showModal()
           }
         >
           File a Leave
-        </button>
+        </button> */}
+
+        <div
+          className="border-2 border-dashed border-gray-200 p-4 flex flex-col justify-center items-center gap-2 h-56 w-full rounded-lg md:w-56"
+          onClick={() =>
+            document.getElementById("file_a_leave_btn").showModal()
+          }
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-14 h-14"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z"
+            />
+          </svg>
+
+          <span>File a leave</span>
+        </div>
 
         {/* Modal - File A Leave   */}
         <dialog id="file_a_leave_btn" className="modal">
@@ -196,7 +220,7 @@ const DashBButtons = () => {
                   </option>
                   <option>Sick Leave</option>
                   <option>Bereavement Leave</option>
-                  <option>Maternity/Paternity Leave</option>
+                  <option>Maternity or Paternity Leave</option>
                   <option>Vacation Leave</option>
                   <option>Adverse Weather Leave</option>
                   <option>Study Leave</option>
@@ -206,54 +230,50 @@ const DashBButtons = () => {
               </label>
 
               <div className="flex">
-                 {/* Date From */}
-                 <div className="flex-1 mx-1">
-                 <label>
-                <div className="label">
-                  <h1 className="label-text">
-                    Date From <span className="text-red-500"> *</span>
-                  </h1>
-                </div>
-                <input
-                  id="leave_from"
-                  name="leave_from"
-                  type="date"
-                  placeholder="Type here"
-                  className="input input-bordered w-full max-w-xs mb-2"
-                  onChange={handleChange}
-                  onInput={disableNext}
-                  min={moment().format("YYYY-MM-DD")}
-                  required
-                />
-              </label>
-                 </div>
-              
+                {/* Date From */}
                 <div className="flex-1 mx-1">
-                {/* Date To */}
-
-              <label className="form-control">
-                <div className="label">
-                  <h1 className="label-text">
-                    Date To <span className="text-red-500"> *</span>
-                  </h1>
+                  <label>
+                    <div className="label">
+                      <h1 className="label-text">
+                        Date From <span className="text-red-500"> *</span>
+                      </h1>
+                    </div>
+                    <input
+                      id="leave_from"
+                      name="leave_from"
+                      type="date"
+                      placeholder="Type here"
+                      className="input input-bordered w-full max-w-xs mb-2"
+                      onChange={handleChange}
+                      onInput={disableNext}
+                      min={moment().format("YYYY-MM-DD")}
+                      required
+                    />
+                  </label>
                 </div>
-                <input
-                  id="leave_to"
-                  name="leave_to"
-                  type="date"
-                  placeholder="Type here"
-                  className="input input-bordered w-full max-w-xs mb-2"
-                  min={moment().format("YYYY-MM-DD")}
-                  onChange={handleChange}
-                  required
-                />
-              </label>
-                </div>
-              
 
+                <div className="flex-1 mx-1">
+                  {/* Date To */}
+
+                  <label className="form-control">
+                    <div className="label">
+                      <h1 className="label-text">
+                        Date To <span className="text-red-500"> *</span>
+                      </h1>
+                    </div>
+                    <input
+                      id="leave_to"
+                      name="leave_to"
+                      type="date"
+                      placeholder="Type here"
+                      className="input input-bordered w-full max-w-xs mb-2"
+                      min={moment().format("YYYY-MM-DD")}
+                      onChange={handleChange}
+                      required
+                    />
+                  </label>
+                </div>
               </div>
-
-             
 
               {/* Reason for Leave */}
               <label className="form-control">
@@ -272,9 +292,7 @@ const DashBButtons = () => {
                   required
                 ></textarea>
                 <div className="label py-0">
-                  <span className="label-text-alt">
-                     
-                  </span>
+                  <span className="label-text-alt"></span>
                   <span id="textarea-label" className="label-text-alt">
                     0
                   </span>

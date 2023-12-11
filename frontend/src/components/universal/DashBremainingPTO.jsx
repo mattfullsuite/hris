@@ -21,7 +21,7 @@ const DashBremainingPTO = () => {
       {/* Number of PTOs */}
 
       { ptos.map((pto) => (
-      <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col items-center justify-center text-center md:w-56">
+      <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col items-center justify-center text-center md:w-56 h-56">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
