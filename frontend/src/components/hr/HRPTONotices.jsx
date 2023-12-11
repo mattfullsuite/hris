@@ -5,16 +5,24 @@ import DataTable from "react-data-table-component";
 
 const HRPTONotices = () => {
 
-  var count = 1
-
+  const [data, setData] = useState([])
+  const [all, setAll] = useState([])
   const [approved, setApproved] = useState([])
+  const [pending, setPending] = useState([])
+  const [declined, setDeclined] = useState([])
 
 
   useEffect(() => {
       const fetchAllApproved = async ()=> {
           try{
               const res = await Axios.get("http://localhost:6197/showallleaves")
-              setApproved(res.data)
+              const res1 = await Axios.get("http://localhost:6197/showapprovedleaves")
+              const res2 = await Axios.get("http://localhost:6197/showpendingleaves")
+              const res3 = await Axios.get("http://localhost:6197/showrejectedleaves")
+              setAll(res.data)
+              setApproved(res1.data)
+              setPending(res2.data)
+              setDeclined(res3.data)
           } catch(err){
               console.log(err)
           }
@@ -22,11 +30,29 @@ const HRPTONotices = () => {
       fetchAllApproved();
   }, []);
 
+    document.getElementById("all").addEventListener("click",function() {
+      setData(all)
+      console.log("all is clicked")
+      console.log(data)
+    })
+
+    document.getElementById("app").addEventListener("click",function() {
+      setData(approved)
+      console.log("app is clicked")
+      console.log(data)
+    })
+   
+ 
+
+    
+
   function checkStatus(status){
     if(status == 0){ return <div className="badge badge-warning">Pending</div>}
     if(status == 1){ return <div className="badge badge-success">Approved</div>}
     if(status == 2){ return <div className="badge badge-error">Rejected</div>}
   }
+
+  
 
   const columns = [
       {
@@ -81,17 +107,17 @@ const HRPTONotices = () => {
         </div> */}
 
         <div role="tablist" className="tabs tabs-lifted tabs-lg flex flex-row justify-center">
-          <a role="tab" className="tab tab-active">All</a>
-          <a role="tab" className="tab">Approved</a>
-          <a role="tab" className="tab">Pending</a>
-          <a role="tab" className="tab">Declined</a>
+          <button role="tab" id="all"  className="tab tab-active">All</button>
+          <button role="tab" id="app"  className="tab">Approved</button>
+          <button role="tab" id="pen"  className="tab">Pending</button>
+          <button role="tab" id="dec"  className="tab">Declined</button>
         </div>
 
         <hr></hr>
       
         <DataTable
           columns = {columns}
-          data={ approved }
+          data={ data }
           pagination
           highlightOnHover
         />
