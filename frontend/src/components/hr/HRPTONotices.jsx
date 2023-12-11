@@ -44,29 +44,11 @@ const HRPTONotices = () => {
     }
   };
 
-    /**document.getElementById("all").addEventListener("click",function() {
-      setData(all)
-      console.log("all is clicked")
-      console.log(data)
-    })
-
-    document.getElementById("app").addEventListener("click",function() {
-      setData(approved)
-      console.log("app is clicked")
-      console.log(data)
-    })**/
-   
- 
-
-    
-
   function checkStatus(status){
     if(status == 0){ return <div className="badge badge-warning">Pending</div>}
     if(status == 1){ return <div className="badge badge-success">Approved</div>}
-    if(status == 2){ return <div className="badge badge-error">Rejected</div>}
+    if(status == 2){ return <div className="badge badge-error">Declined</div>}
   }
-
-  
 
   const columns = [
       {
@@ -99,7 +81,6 @@ const HRPTONotices = () => {
        {
         name: "Status",
         selector: row => checkStatus(row.leave_status),
-
        }
   ]
 

@@ -1,8 +1,8 @@
 import React, {useState, useEffect}  from "react";
 import axios from "axios";
+import {Link } from "react-router-dom";
 
 const HRNumEmployees = () => {
-
   const [employees, setEmployees] = useState([])
 
   const [countInfo, setCountInfo] = useState({
@@ -19,9 +19,7 @@ const HRNumEmployees = () => {
             const res2 = await axios.get("http://localhost:6197/getRegularEmployees")
             const res3 = await axios.get("http://localhost:6197/getProbationaryEmployees")
             const res4 = await axios.get("http://localhost:6197/getPartTimeEmployees")
-            //setEmployees(res2.data)
             setCountInfo({...countInfo, cc: res1.data.length, rc: res2.data.length, pc: res3.data.length, ptc: res4.data.length})
-            //setCountInfo({...countInfo, cc: res2.data.length + res3.data.length + res4.data.length})
             console.log(setEmployees.length)
         } catch(err){
             console.log(err)
@@ -29,26 +27,6 @@ const HRNumEmployees = () => {
     };
     fetchAllEmployees();
 }, []);
-
-
-
-/**useEffect(() => {
-  const countEmployees = async ()=> {
-    employees.map((emp) => (
-      if (emp.emp_status === "REGULAR"){
-          regularCount += 1;
-          currentCount +=1;
-        } else if (emp.emp_status === "PROBATIONARY"){
-          probationaryCount += 1;
-          currentCount +=1;
-        } else if (emp.emp_status === "PARTTIME"){
-          parttimeCount +=1;
-          currentCount += 1;
-        }}
-    ))
-  }
-  countEmployees();
-}, [])**/
 
   return (
     <>
@@ -59,7 +37,9 @@ const HRNumEmployees = () => {
                 <h1 className="my-16 text-7xl font-extrabold">{countInfo.cc} </h1>
               </div>
 
-              <button className="m-2 btn btn-sm btn-outline normal-case btn-wide">Add New Employee</button>
+              <Link to="/addEmployee">
+                <button className="m-2 btn btn-sm btn-outline normal-case btn-wide">Add New Employee</button>
+              </Link>
             </div>
 
           <div className="flex-initial w-30">
