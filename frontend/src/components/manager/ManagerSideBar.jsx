@@ -54,7 +54,7 @@ const [titles, setTitle] = useState([]);
  setTimeout(function () {
   alert("Session has expired. You'll be redirected to the login.")
   window.location.reload()
-}, 60 * 60 * 24)
+}, 60 * 60 * 24 * 1000)
 
   return (
     <>
@@ -276,7 +276,7 @@ const [titles, setTitle] = useState([]);
             </li>
             <li>
               <a
-                href="/"
+                //href="/"
                 onClick={ logoutEmployee }
                 className="mt-12 flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >

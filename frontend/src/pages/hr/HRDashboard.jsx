@@ -7,6 +7,8 @@ import HRNumEmployees from "../../components/hr/HRNumOfEmployees";
 import HRNotices from "../../components/hr/HRNotices";
 
 const HRDashboard = () => {
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  
   Axios.defaults.withCredentials = true;
 
   const navigate = useNavigate();
@@ -14,7 +16,7 @@ const HRDashboard = () => {
   const [users, setUser] = useState([]);
 
   useEffect(() => {
-    Axios.get("http://localhost:6197/login").then((response) => {
+    Axios.get(BASE_URL + ":6197/login").then((response) => {
       if (response.data.loggedIn == false) {
         navigate("/login");
       } else {
@@ -26,7 +28,7 @@ const HRDashboard = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const res = await Axios.get("http://localhost:6197/login");
+        const res = await Axios.get(BASE_URL+":6197/login");
         setUser(res.data.user);
       } catch (err) {
         console.log(err);

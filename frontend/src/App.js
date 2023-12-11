@@ -8,10 +8,11 @@ import FileLeave from "./pages/FileLeave.jsx"
 
 import EmployeeProfile from "./pages/EmployeeProfile.jsx"
 import EmployeesList from "./pages/admin/EmployeesList.jsx"
-import AddEmployee from "./pages/admin/AddEmployee.jsx"
+// import AddEmployee from "./pages/admin/AddEmployee.jsx"
 import Announcements from "./pages/hr/Announcements.jsx"
 import AddAnnouncements from "./pages/hr/AddAnnouncements.jsx"
 import ClientUserProfile from "./pages/client/ClientUserProfile.jsx";
+import AddEmployee from "./pages/hr/AddEmployee.jsx";
 
 import UserLogs from "./pages/admin/UserLogs.jsx"
 
