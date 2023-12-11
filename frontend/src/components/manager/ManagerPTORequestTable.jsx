@@ -96,7 +96,7 @@ const ManagerPTORequestTable = () => {
               <div className="flex">
                 <div className="flex-1">
                   <h3 className="font-base">Date Filed:</h3>
-                  <h3 className="font-semibold mb-2">Nov. 12, 2023</h3>
+                  <h3 className="font-semibold mb-2">{leaves.date_filed}</h3>
                 </div>
 
                 <div className="flex-1">
@@ -130,10 +130,16 @@ const ManagerPTORequestTable = () => {
                 {leaves.leave_status}
               </div>
               <div className="flex justify-end gap-2">
-                <button className="btn bg-green-600 text-white hover:bg-green-800 normal-case">
+                <button 
+                className="btn bg-green-600 text-white hover:bg-green-800 normal-case"
+                onClick={() => handleApproval( leaves.leave_id )}
+                >
                   Approve
                 </button>
-                <button className="btn bg-red-600 text-white hover:bg-red-800 normal-case">
+                <button 
+                className="btn bg-red-600 text-white hover:bg-red-800 normal-case"
+                onClick={() => handleRejection( leaves.leave_id )}
+                >
                   Decline
                 </button>
               </div>
@@ -144,7 +150,7 @@ const ManagerPTORequestTable = () => {
 
           <button
             className="btn btn-xs bg-lime-600 text-white hover:bg-green-800 normal-case"
-            onClick={() => handleRejection(leaves.leave_id)}
+            onClick={() => handleApproval(leaves.leave_id)}
           >
             Approve
           </button>
@@ -167,7 +173,7 @@ const ManagerPTORequestTable = () => {
         <div className="flex flex-row justify-between mb-4 md:mx-7">
           <h1 className="text-lg font-semibold">PTO Requests</h1>
 
-          <button className="btn btn-accent-active btn-sm">See all...</button>
+          <button className="btn btn-accent-active btn-sm">See All</button>
         </div>
 
         <div className="overflow-x-auto max-w-full">
@@ -274,7 +280,7 @@ const ManagerPTORequestTable = () => {
                     <button 
                     onClick={() => handleRejection( leave.leave_id )}
                     className="btn btn-sm bg-red-600 text-white hover:bg-red-800 normal-case">
-                      Decline
+                    Decline
                     </button>
                   </div>
                 </td>

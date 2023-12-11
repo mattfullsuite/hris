@@ -54,7 +54,7 @@ const [titles, setTitle] = useState([]);
  setTimeout(function () {
   alert("Session has expired. You'll be redirected to the login.")
   window.location.reload()
-}, 60 * 60 * 24)
+}, 60 * 60 * 24 * 1000)
 
   return (
     <>
