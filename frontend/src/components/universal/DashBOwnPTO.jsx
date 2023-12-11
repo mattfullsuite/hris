@@ -60,7 +60,6 @@ const DashBOwnPTO = () => {
     {
         name: "Status",
         selector: row => checkStatus(row.leave_status),
-        sortable: true
     },
 
 ]
@@ -76,6 +75,7 @@ const DashBOwnPTO = () => {
             columns = {columns}
             data = {myLeaves}
             pagination
+            highlightOnHover
           >
           </DataTable>
 
