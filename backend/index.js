@@ -648,6 +648,65 @@ app.get("/getApprover", (req, res) => {
     })
 })
 
+app.post("/addNewEmployee", (req, res)=> {
+
+    const q = "INSERT INTO `emp`(`emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`) VALUES (?)";
+    const values = 
+        [
+        req.body.emp_num,
+        req.body.work_email,
+        req.body.password,
+        req.body.f_name,
+        req.body.m_name, 
+        req.body.s_name,
+        req.body.emp_role,
+        req.body.personal_email,
+        req.body.contact_num,
+        req.body.dob,
+        req.body.p_address,
+        req.body.c_address,
+        req.body.date_hired,
+        req.body.date_regularization,
+        req.body.emp_status,
+        req.body.sex,
+        req.body.gender,
+        req.body.civil_status,
+        ]
+
+    //     emp_num: "",
+    // work_email: "",
+    // password: "",
+    // f_name: "",
+    // m_name: "",
+    // s_name: "",
+    // emp_role: "",
+    // emp_pic: "",
+    // personal_email: "",
+    // contact_num: "",
+    // dob: "",
+    // p_address: "",
+    // c_address: "",
+    // date_hired: "",
+    // date_regularization: "",
+    // date_separated: "",
+    // emp_status: "",
+    // sex: "",
+    // gender: "",
+    // civil_status: "",
+    // emergency_contact_name: "",
+    // emergency_contact_num: "",
+    // created_by: "",
+    // created_at: "",
+    // updated_by: "",
+    // updated_at: "",
+
+    db.query(q, [values], (err, data) => {
+        if (err) console.log(err);
+        return res.json(data);
+    })
+
+})
+
 app.post("/fileLeave", (req, res)=> {
 
     const uid = req.session.user[0].emp_id

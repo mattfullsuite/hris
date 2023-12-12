@@ -1,11 +1,12 @@
 import React, {useState} from "react";
+import axios from 'axios'
 
 const HRFormAddEmployee = () => {
 
   const [employeeInfo, setEmployeeInfo] = useState({
     emp_num: "",
     work_email: "",
-    password: "",
+    password: [document.getElementById("emp_num").value],
     f_name: "",
     m_name: "",
     s_name: "",
@@ -18,18 +19,30 @@ const HRFormAddEmployee = () => {
     c_address: "",
     date_hired: "",
     date_regularization: "",
-    date_separated: "",
     emp_status: "",
     sex: "",
     gender: "",
     civil_status: "",
-    emergency_contact_name: "",
-    emergency_contact_num: "",
-    created_by: "",
-    created_at: "",
-    updated_by: "",
-    updated_at: "",
   });
+
+  const handleChange = (event) => {
+    setEmployeeInfo({ ...employeeInfo, [event.target.name]: [event.target.value],  });
+
+    console.log(employeeInfo)
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    axios
+      .post("http://localhost:6197/addNewEmployee", employeeInfo)
+      .then((res) => console.log(JSON.stringify(employeeInfo)))
+      .catch((err) => console.log(err));
+
+    // document.getElementById("file_a_leave_btn").close();
+    // document.getElementById("leaveForm").reset();
+    // window.location.reload();
+  };
 
   return (
     <>
@@ -40,7 +53,9 @@ const HRFormAddEmployee = () => {
               Add New Employee
             </h1>
           </div>
-          <form>
+          <form 
+          onSubmit={handleSubmit}
+          >
             {/* Personal Information */}
             <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
               <h1 className="font-bold">Personal Information</h1>
@@ -52,6 +67,8 @@ const HRFormAddEmployee = () => {
                     <span className="label-text">First Name</span>
                   </div>
                   <input
+                    name="f_name"
+                    onChange={handleChange}
                     type="text"
                     className="input input-bordered w-full "
                     required
@@ -64,6 +81,8 @@ const HRFormAddEmployee = () => {
                     <span className="label-text">Middle Name</span>
                   </div>
                   <input
+                    name="m_name"
+                    onChange={handleChange}
                     type="text"
                     className="input input-bordered w-full "
                     required
@@ -76,6 +95,8 @@ const HRFormAddEmployee = () => {
                     <span className="label-text">Surname</span>
                   </div>
                   <input
+                    name="s_name"
+                    onChange={handleChange}
                     type="text"
                     className="input input-bordered w-full "
                     required
@@ -90,6 +111,8 @@ const HRFormAddEmployee = () => {
                     <span className="label-text">Date of Birth</span>
                   </div>
                   <input
+                    name="dob"
+                    onChange={handleChange}
                     type="date"
                     className="input w-full input-bordered w-full"
                     required
@@ -102,7 +125,8 @@ const HRFormAddEmployee = () => {
                     <span className="label-text">Civil Status</span>
                   </div>
                   <select
-                    name="civil-status"
+                    name="civil_status"
+                    onChange={handleChange}
                     className="select select-bordered w-full"
                     required
                   >
@@ -122,6 +146,7 @@ const HRFormAddEmployee = () => {
                   </div>
                   <select
                     name="sex"
+                    onChange={handleChange}
                     className="select select-bordered w-full"
                     required
                   >
@@ -138,7 +163,11 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">Gender</span>
                   </div>
-                  <input type="text" className="input input-bordered w-full" />
+                  <input
+                  name="gender" 
+                  onChange={handleChange}
+                  type="text" 
+                  className="input input-bordered w-full" />
                 </label>
               </div>
 
@@ -148,7 +177,11 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">Permanent Address</span>
                   </div>
-                  <input type="text" className="input input-bordered w-full" />
+                  <input 
+                  name="p_address"
+                  onChange={handleChange}
+                  type="text" 
+                  className="input input-bordered w-full" />
                 </label>
               </div>
 
@@ -161,14 +194,20 @@ const HRFormAddEmployee = () => {
                   <div className="flex items-center ">
                     {" "}
                     <label className="label cursor-pointer">
-                      <input type="checkbox" className="checkbox checkbox-sm" />
+                      <input 
+                      type="checkbox" 
+                      className="checkbox checkbox-sm" />
                       <span className="label-text ml-2">
                         {" "}
                         Same as Permanent Address
                       </span>
                     </label>
                   </div>
-                  <input type="text" className="input input-bordered w-full" />
+                  <input 
+                  name="c_address"
+                  onChange={handleChange}
+                  type="text" 
+                  className="input input-bordered w-full" />
                 </label>
               </div>
             </div>
@@ -183,7 +222,11 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">Personal Email</span>
                   </div>
-                  <input type="email" className="input input-bordered w-full " />
+                  <input 
+                  name="personal_email"
+                  onChange={handleChange}
+                  type="email" 
+                  className="input input-bordered w-full " />
                 </label>
                 {/* Contact Number */}
                 <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
@@ -191,6 +234,8 @@ const HRFormAddEmployee = () => {
                     <span className="label-text">Contact Number</span>
                   </div>
                   <input
+                    name="contact_num"
+                    onChange={handleChange}
                     type="number"
                     className="input input-bordered w-full "
                   />
@@ -207,7 +252,11 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">Name</span>
                   </div>
-                  <input type="text" className="input input-bordered w-full " />
+                  <input 
+                  name="emergency_contact_name"
+                  onChange={handleChange}
+                  type="text" 
+                  className="input input-bordered w-full " />
                 </label>
 
                 {/* Number */}
@@ -216,6 +265,8 @@ const HRFormAddEmployee = () => {
                     <span className="label-text">Number</span>
                   </div>
                   <input
+                    name="emergency_contact_num"
+                    onChange={handleChange}
                     type="number"
                     className="input input-bordered w-full "
                   />
@@ -233,7 +284,12 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">Employee ID</span>
                   </div>
-                  <input type="text" className="input input-bordered w-full " required />
+                  <input 
+                  id="emp_num"
+                  name="emp_num"
+                  onChange={handleChange}
+                  type="text" 
+                  className="input input-bordered w-full " required />
                 </label>
 
                 {/* Work Email */}
@@ -241,7 +297,11 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">Work E-mail</span>
                   </div>
-                  <input type="email" className="input input-bordered w-full " required />
+                  <input 
+                  name="work_email"
+                  onChange={handleChange}
+                  type="email" 
+                  className="input input-bordered w-full " required />
                 </label>
 
               </div>
@@ -253,7 +313,8 @@ const HRFormAddEmployee = () => {
                     <span className="label-text">Employment Status</span>
                   </div>
                   <select
-                    name="emp-status"
+                    name="emp_status"
+                    onChange={handleChange}
                     className="select select-bordered w-full "
                     required
                   >
@@ -272,15 +333,17 @@ const HRFormAddEmployee = () => {
                     <span className="label-text">Employment Role</span>
                   </div>
                   <select
-                    name="emp-status"
+                    name="emp_role"
+                    onChange={handleChange}
                     className="select select-bordered w-full "
                     required
                   >
                     <option disabled selected>
                       Select Employment Role
                     </option>
-                    <option>Manager</option>
-                    <option>Employee</option>
+                    <option value="2">Manager</option>
+                    <option value="3">Regular Employee</option>
+                    <option value="1">HR</option>
                     <option>Administrator</option>
                   </select>
                 </label>
@@ -292,7 +355,11 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">Date Hired</span>
                   </div>
-                  <input type="date" className="input input-bordered w-full " />
+                  <input 
+                  name="date_hired"
+                  onChange={handleChange}
+                  type="date" 
+                  className="input input-bordered w-full " />
                 </label>
 
                 {/* Date of Regularization */}
@@ -300,7 +367,11 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">Date of Regularization</span>
                   </div>
-                  <input type="date" className="input input-bordered w-full " />
+                  <input 
+                  name="date_regularization"
+                  onChange={handleChange}
+                  type="date" 
+                  className="input input-bordered w-full " />
                 </label>
 
                 {/* Date Separated*/}
@@ -308,7 +379,11 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">Date Separated</span>
                   </div>
-                  <input type="date" className="input input-bordered w-full " />
+                  <input 
+                  name="date_separated"
+                  onChange={handleChange}
+                  type="date" 
+                  className="input input-bordered w-full " />
                 </label>
               </div>
 
@@ -319,7 +394,11 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">Upload Profile Picture</span>
                   </div>
-                  <input type="file" className="file-input w-full max-w-xs" />
+                  <input 
+                  name="emp_pic"
+                  onChange={handleChange}
+                  type="file" 
+                  className="file-input w-full max-w-xs" />
                 </label>
               </div>
 
