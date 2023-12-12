@@ -117,7 +117,7 @@ const HRFormAddEmployee = () => {
                     name="dob"
                     onChange={handleChange}
                     type="date"
-                    className="input w-full input-bordered w-full"
+                    className="input input-bordered w-full"
                     required
                   />
                 </label>
