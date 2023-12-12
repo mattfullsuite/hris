@@ -651,7 +651,7 @@ app.get("/getApprover", (req, res) => {
 app.post("/addNewEmployee", (req, res)=> {
     const tempPassword = req.body.emp_num
 
-    const q = "INSERT INTO `emp`(`emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`) VALUES (?)";
+    const q = "INSERT INTO `emp` (`emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`) VALUES (?)";
     const values = 
         [
         req.body.emp_num,
@@ -674,38 +674,26 @@ app.post("/addNewEmployee", (req, res)=> {
         req.body.civil_status,
         ]
 
-    //     emp_num: "",
-    // work_email: "",
-    // password: "",
-    // f_name: "",
-    // m_name: "",
-    // s_name: "",
-    // emp_role: "",
-    // emp_pic: "",
-    // personal_email: "",
-    // contact_num: "",
-    // dob: "",
-    // p_address: "",
-    // c_address: "",
-    // date_hired: "",
-    // date_regularization: "",
-    // date_separated: "",
-    // emp_status: "",
-    // sex: "",
-    // gender: "",
-    // civil_status: "",
-    // emergency_contact_name: "",
-    // emergency_contact_num: "",
-    // created_by: "",
-    // created_at: "",
-    // updated_by: "",
-    // updated_at: "",
-
     db.query(q, [values], (err, data) => {
         if (err) console.log(err);
         return res.json(data);
     })
 
+})
+
+app.post("/createNewLeaveCredit", (req, res)=> {
+    const newID = LAST_INSERT_ID()
+    const q2 = "INSERT INTO `leave_credits` (`emp_id`, `leave_balance`) VALUES (?)"
+
+    const values2 = [
+        newID,
+        0,
+    ]
+
+    db.query(q2, [values2], (err, data2) => {
+    if (err) console.log(err);
+    return res.json(data2);
+    })
 })
 
 app.post("/fileLeave", (req, res)=> {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Dec 11, 2023 at 08:00 AM
+-- Generation Time: Dec 12, 2023 at 06:44 AM
 -- Server version: 5.7.39
 -- PHP Version: 7.4.33
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `announcements` (
   `ann_id` int(100) NOT NULL,
-  `emp_id` int(100) NOT NULL,
+  `emp_id` int(255) NOT NULL,
   `ann_title` varchar(255) NOT NULL,
   `ann_content` varchar(500) NOT NULL,
   `ann_category` varchar(50) DEFAULT NULL
@@ -69,7 +69,7 @@ INSERT INTO `company` (`company_id`, `company_name`, `company_loc`) VALUES
 --
 
 CREATE TABLE `department` (
-  `dept_id` int(100) NOT NULL,
+  `dept_id` int(255) NOT NULL,
   `dept_name` varchar(255) NOT NULL,
   `manager_id` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -91,9 +91,9 @@ INSERT INTO `department` (`dept_id`, `dept_name`, `manager_id`) VALUES
 --
 
 CREATE TABLE `department_employees` (
-  `dept_emp_id` int(100) NOT NULL,
+  `dept_emp_id` int(255) NOT NULL,
   `dept_id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
+  `emp_id` int(255) NOT NULL,
   `from_date` date NOT NULL,
   `to_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -121,8 +121,8 @@ INSERT INTO `department_employees` (`dept_emp_id`, `dept_id`, `emp_id`, `from_da
 --
 
 CREATE TABLE `department_manager` (
-  `approver_id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL
+  `approver_id` int(255) NOT NULL,
+  `emp_id` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -149,9 +149,9 @@ CREATE TABLE `emp` (
   `m_name` varchar(30) NOT NULL,
   `s_name` varchar(30) NOT NULL,
   `emp_role` int(1) NOT NULL,
-  `emp_pic` varchar(1000) NOT NULL,
+  `emp_pic` varchar(1000) DEFAULT NULL,
   `personal_email` varchar(100) NOT NULL,
-  `contact_num` varchar(22) NOT NULL,
+  `contact_num` varchar(100) NOT NULL,
   `dob` date NOT NULL,
   `p_address` varchar(255) NOT NULL,
   `c_address` varchar(255) NOT NULL,
@@ -163,28 +163,25 @@ CREATE TABLE `emp` (
   `gender` varchar(20) DEFAULT NULL,
   `civil_status` varchar(20) DEFAULT NULL,
   `emergency_contact_name` varchar(100) DEFAULT NULL,
-  `emergency_contact_num` varchar(22) DEFAULT NULL,
-  `created_by` int(100) DEFAULT NULL,
-  `created_at` timestamp(6) NULL DEFAULT CURRENT_TIMESTAMP(6),
-  `updated_by` int(100) DEFAULT NULL,
-  `updated_at` timestamp(6) NULL DEFAULT CURRENT_TIMESTAMP(6)
+  `emergency_contact_num` varchar(22) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `emp`
 --
 
-INSERT INTO `emp` (`emp_id`, `emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`, `emp_pic`, `personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`, `date_separated`, `emp_status`, `sex`, `gender`, `civil_status`, `emergency_contact_name`, `emergency_contact_num`, `created_by`, `created_at`, `updated_by`, `updated_at`) VALUES
-(1, 'OCCI-0297', 'matt@fullsuite.ph', 'mattmatt', 'Matt Wilfred', 'Cabunoc', 'Salvador', 1, '../photos/matt.png', 'smattwilfred01@gmail.com', '09667528054', '1997-06-01', 'Cabanatuan City, Nueva Ecija', 'Marcos Highway', '2023-09-01', '2024-02-29', NULL, 'PROBATIONARY', 'Male', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(2, 'OCCI-0306', 'july@fullsuite.ph', 'rhaerhae', 'July Anne Rhaemonette', 'Almoite', 'Rosal', 0, '../photos/july.png', 'jarhaemonette@gmail.com', '09457552819', '2000-07-14', 'Amagbagan, Pozorrubio, Pangasinan', 'Engineer\'s Hill, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', '', 'Single', NULL, NULL, NULL, NULL, NULL, NULL),
-(3, 'OCCI-0309', 'antoinette@fullsuite.ph', 'tonton', 'Antoinette', 'Garcia', 'Sanchez', 3, '../photos/antoinette.png\r\n', 'antoinette.g.sanchez@gmail.com', '09458239638', '2000-05-22', '62 Scout Barrio, Baguio City', '62 Scout Barrio, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', NULL, 'Single', 'Andrea Mae G. Sanchez', '09173456781', NULL, NULL, NULL, NULL),
-(4, 'OCCI-0298', 'marco@fullsuite.ph', 'marco@fullsuite.ph', 'Marco', 'Eliseo', 'Antero', 2, '../photos/marco.png', 'marco.e.antero@gmail.com', '09089624586', '2001-02-02', 'Brookspoint Rd., Baguio City', 'Brookspoint Rd., Baguio City', '2023-09-01', '2024-02-29', NULL, 'REGULAR', 'Male', NULL, 'Single', 'Issa Antero', '09184960347', NULL, NULL, NULL, NULL),
-(5, 'TEE-0026', 'hailie@fullsuite.ph', 'joyjoy0409', 'Hailie Joy', 'Tolentino', 'Bejerano', 2, '../photos/hailie.png', 'hailiebejerano@gmail.com', '09661786217', '2004-04-09', '119 B. Pinewood Street, Crystal Cave, Baguio City', '119 B. Pinewood Street, Crystal Cave, Baguio City', '2021-06-16', '2023-11-23', NULL, 'PARTTIME', 'Female', NULL, 'Single', 'Maria Cristina Bejerano', '09302930186', NULL, NULL, NULL, NULL),
-(6, 'OCCI-0307', 'amiel@fullsuite.ph', 'pagmamahal', 'Amiel Jethro', 'Cabalquinto', 'Cortez', 2, '../photos/amiel.png', 'amieljethrocortez@gmail.com', '09235974089', '1999-08-30', 'Holy Ghost Extension', 'Holy Ghost Extension', '2023-10-02', '2023-04-02', NULL, 'PROBATIONARY', 'Male', 'Male', 'Single', 'Christine Cortez', '09223440168', NULL, NULL, NULL, NULL),
-(7, 'OCCI-0192', 'diana@fullsuite.ph', 'staff@password', 'Diana Nicole', 'De paz', 'Perez', 1, '', 'diananicole.perez@gmail.com', '09774079280', '2002-09-24', 'blk 2 lot 6, lauan st villa pozorrubio', '47 Paredes St. Middle Quezon Hill', '2021-09-23', NULL, NULL, 'REGULAR', 'Female', NULL, 'Single', 'Brigette Perez', '09162614305', NULL, NULL, NULL, NULL),
-(8, 'OCCI-0278', 'jhex@fullsuite.ph', 'jhexjhex', 'Jhexer', 'Tiongson', 'Chun', 3, '../photos/jhex.png', 'jhexchun@gmail.com', '09302506992', '1997-06-28', '161-A Lower Pias St. Camp 7, Baguio City, Benguet 2600', '161-A Lower Pias St. Camp 7, Baguio City, Benguet 2600', '2023-05-03', '2023-10-30', NULL, 'REGULAR', 'Male', 'Male', 'Single', 'Juvelyn Chun', '09476002222', NULL, NULL, NULL, NULL),
-(9, 'OCCI-0273', 'alleza@fullsuite.ph', 'zaza', 'Alleza Czarina', 'Nonato', 'Castor', 2, '', 'allezaczarina@gmail.com', '09154353116', '2023-04-09', 'Quezon Hill, Baguio City', 'Quezon Hill, Baguio City', '2023-04-03', '2023-10-03', NULL, 'REGULAR', 'Female', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(10, NULL, 'ajessica@fullsuite.ph', 'jessjess', 'Jessica', 'Abarquez', 'Aguirre', 3, '', 'jeszicawongaguirre@gmail.com', '09386339392', '1993-10-05', '39 Military Cutoff Baguio City', '39 Military Cutoff Baguio City', '2022-07-18', '2023-01-18', NULL, 'REGULAR', 'Female', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `emp` (`emp_id`, `emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`, `emp_pic`, `personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`, `date_separated`, `emp_status`, `sex`, `gender`, `civil_status`, `emergency_contact_name`, `emergency_contact_num`) VALUES
+(1, 'OCCI-0297', 'matt@fullsuite.ph', 'mattmatt', 'Matt Wilfred', 'Cabunoc', 'Salvador', 1, '../photos/matt.png', 'smattwilfred01@gmail.com', '09667528054', '1997-06-01', 'Cabanatuan City, Nueva Ecija', 'Marcos Highway', '2023-09-01', '2024-02-29', NULL, 'PROBATIONARY', 'Male', NULL, NULL, NULL, NULL),
+(2, 'OCCI-0306', 'july@fullsuite.ph', 'rhaerhae', 'July Anne Rhaemonette', 'Almoite', 'Rosal', 0, '../photos/july.png', 'jarhaemonette@gmail.com', '09457552819', '2000-07-14', 'Amagbagan, Pozorrubio, Pangasinan', 'Engineer\'s Hill, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', '', 'Single', NULL, NULL),
+(3, 'OCCI-0309', 'antoinette@fullsuite.ph', 'tonton', 'Antoinette', 'Garcia', 'Sanchez', 3, '../photos/antoinette.png\r\n', 'antoinette.g.sanchez@gmail.com', '09458239638', '2000-05-22', '62 Scout Barrio, Baguio City', '62 Scout Barrio, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', NULL, 'Single', 'Andrea Mae G. Sanchez', '09173456781'),
+(4, 'OCCI-0298', 'marco@fullsuite.ph', 'marco@fullsuite.ph', 'Marco', 'Eliseo', 'Antero', 2, '../photos/marco.png', 'marco.e.antero@gmail.com', '09089624586', '2001-02-02', 'Brookspoint Rd., Baguio City', 'Brookspoint Rd., Baguio City', '2023-09-01', '2024-02-29', NULL, 'REGULAR', 'Male', NULL, 'Single', 'Issa Antero', '09184960347'),
+(5, 'TEE-0026', 'hailie@fullsuite.ph', 'joyjoy0409', 'Hailie Joy', 'Tolentino', 'Bejerano', 2, '../photos/hailie.png', 'hailiebejerano@gmail.com', '09661786217', '2004-04-09', '119 B. Pinewood Street, Crystal Cave, Baguio City', '119 B. Pinewood Street, Crystal Cave, Baguio City', '2021-06-16', '2023-11-23', NULL, 'PARTTIME', 'Female', NULL, 'Single', 'Maria Cristina Bejerano', '09302930186'),
+(6, 'OCCI-0307', 'amiel@fullsuite.ph', 'pagmamahal', 'Amiel Jethro', 'Cabalquinto', 'Cortez', 2, '../photos/amiel.png', 'amieljethrocortez@gmail.com', '09235974089', '1999-08-30', 'Holy Ghost Extension', 'Holy Ghost Extension', '2023-10-02', '2023-04-02', NULL, 'PROBATIONARY', 'Male', 'Male', 'Single', 'Christine Cortez', '09223440168'),
+(7, 'OCCI-0192', 'diana@fullsuite.ph', 'staff@password', 'Diana Nicole', 'De paz', 'Perez', 1, '', 'diananicole.perez@gmail.com', '09774079280', '2002-09-24', 'blk 2 lot 6, lauan st villa pozorrubio', '47 Paredes St. Middle Quezon Hill', '2021-09-23', NULL, NULL, 'REGULAR', 'Female', NULL, 'Single', 'Brigette Perez', '09162614305'),
+(8, 'OCCI-0278', 'jhex@fullsuite.ph', 'jhexjhex', 'Jhexer', 'Tiongson', 'Chun', 3, '../photos/jhex.png', 'jhexchun@gmail.com', '09302506992', '1997-06-28', '161-A Lower Pias St. Camp 7, Baguio City, Benguet 2600', '161-A Lower Pias St. Camp 7, Baguio City, Benguet 2600', '2023-05-03', '2023-10-30', NULL, 'REGULAR', 'Male', 'Male', 'Single', 'Juvelyn Chun', '09476002222'),
+(9, 'OCCI-0273', 'alleza@fullsuite.ph', 'zaza', 'Alleza Czarina', 'Nonato', 'Castor', 2, '', 'allezaczarina@gmail.com', '09154353116', '2023-04-09', 'Quezon Hill, Baguio City', 'Quezon Hill, Baguio City', '2023-04-03', '2023-10-03', NULL, 'REGULAR', 'Female', NULL, NULL, NULL, NULL),
+(10, NULL, 'ajessica@fullsuite.ph', 'jessjess', 'Jessica', 'Abarquez', 'Aguirre', 3, '', 'jeszicawongaguirre@gmail.com', '09386339392', '1993-10-05', '39 Military Cutoff Baguio City', '39 Military Cutoff Baguio City', '2022-07-18', '2023-01-18', NULL, 'REGULAR', 'Female', NULL, NULL, NULL, NULL),
+(20, 'OCCI-0700', 'marvin@fullsuite.ph', 'OCCI-0700', 'Marvin', 'Directo', 'Bautista', 2, NULL, 'mrvn@gmail.com', '45645', '2023-12-07', 'San Juan, Moncada, Tarlac', 'Phil-Am, Baguio City, Benguet', '2023-12-13', '2023-12-13', NULL, 'Probationary', 'Male', 'Cis', 'Single', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -218,7 +215,7 @@ CREATE TABLE `emp_details` (
 
 CREATE TABLE `emp_salary` (
   `emp_salary_id` int(100) NOT NULL,
-  `emp_id` int(100) NOT NULL,
+  `emp_id` int(255) NOT NULL,
   `emp_rate` enum('MONTHLY','BIMONTHLY') NOT NULL,
   `basic_salary` decimal(16,2) NOT NULL,
   `night_diff` decimal(16,2) DEFAULT NULL,
@@ -239,12 +236,12 @@ CREATE TABLE `emp_salary` (
 CREATE TABLE `leaves` (
   `leave_id` int(11) NOT NULL,
   `requester_id` int(255) NOT NULL,
-  `leave_type` varchar(20) NOT NULL,
+  `leave_type` varchar(100) NOT NULL,
   `leave_reason` varchar(255) NOT NULL,
   `leave_from` date NOT NULL,
   `leave_to` date NOT NULL,
   `leave_status` int(11) NOT NULL,
-  `approver_id` int(11) NOT NULL,
+  `approver_id` int(255) NOT NULL,
   `date_filed` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `is_paid` tinyint(1) DEFAULT NULL,
   `use_pto_points` int(10) DEFAULT NULL
@@ -301,7 +298,7 @@ INSERT INTO `leaves` (`leave_id`, `requester_id`, `leave_type`, `leave_reason`, 
 
 CREATE TABLE `leave_credits` (
   `leave_credits_id` int(100) NOT NULL,
-  `emp_id` int(100) NOT NULL,
+  `emp_id` int(255) NOT NULL,
   `leave_balance` decimal(18,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -329,7 +326,7 @@ INSERT INTO `leave_credits` (`leave_credits_id`, `emp_id`, `leave_balance`) VALU
 
 CREATE TABLE `offset` (
   `offset_id` int(11) NOT NULL,
-  `emp_id` int(11) NOT NULL,
+  `emp_id` int(255) NOT NULL,
   `offset_start` datetime NOT NULL,
   `offset_end` datetime NOT NULL,
   `offset_status` varchar(100) NOT NULL,
@@ -344,7 +341,7 @@ CREATE TABLE `offset` (
 
 CREATE TABLE `payroll` (
   `payroll_id` int(100) NOT NULL,
-  `emp_id` int(100) NOT NULL,
+  `emp_id` int(255) NOT NULL,
   `deductions_id` int(100) NOT NULL,
   `date_of_payout` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -358,7 +355,7 @@ CREATE TABLE `payroll` (
 CREATE TABLE `title` (
   `title_id` int(100) NOT NULL,
   `title` varchar(255) NOT NULL,
-  `emp_id` int(11) NOT NULL,
+  `emp_id` int(255) NOT NULL,
   `from_date` date NOT NULL,
   `to_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -596,19 +593,25 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `dept_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `dept_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `department_employees`
 --
 ALTER TABLE `department_employees`
-  MODIFY `dept_emp_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `dept_emp_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `department_manager`
 --
 ALTER TABLE `department_manager`
-  MODIFY `approver_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `approver_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `emp`
+--
+ALTER TABLE `emp`
+  MODIFY `emp_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `emp_details`
@@ -663,35 +666,10 @@ ALTER TABLE `users`
 --
 
 --
--- Constraints for table `announcements`
---
-ALTER TABLE `announcements`
-  ADD CONSTRAINT `emp_id` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`emp_id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `department`
---
-ALTER TABLE `department`
-  ADD CONSTRAINT `manager_id_fk` FOREIGN KEY (`manager_id`) REFERENCES `emp` (`emp_id`) ON UPDATE CASCADE;
-
---
 -- Constraints for table `department_employees`
 --
 ALTER TABLE `department_employees`
-  ADD CONSTRAINT `dept_emp_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `department` (`dept_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `dept_emp_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`emp_id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `department_manager`
---
-ALTER TABLE `department_manager`
-  ADD CONSTRAINT `approver_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`emp_id`) ON UPDATE CASCADE;
-
---
--- Constraints for table `title`
---
-ALTER TABLE `title`
-  ADD CONSTRAINT `title_emp_id` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`emp_id`);
+  ADD CONSTRAINT `dept_emp_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `department` (`dept_id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
