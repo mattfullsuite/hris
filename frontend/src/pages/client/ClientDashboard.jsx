@@ -98,10 +98,11 @@ const ClientDashboard = () => {
   return (
     <>
       <ClientSideBar></ClientSideBar>
+
       <div className="p-4 sm:ml-64 flex flex-col">
         <DashBGreeting></DashBGreeting>
 
-        <div className="my-2 mx-2 flex flex-col xl:flex-row">
+        <div className="m-4 flex flex-col xl:flex-row">
           <div className="grow">
             <div className="flex flex-col md:flex-row">
                 <div>
@@ -118,9 +119,9 @@ const ClientDashboard = () => {
             </div>
           </div>
 
-          <div className="divider divider-horizontal"></div>
+          <div className="divider divider-horizontal divide-x"></div>
 
-          <div className="flex flex-col md:flex-row xl:flex-col">
+          <div className="flex flex-col justify-start lg:flex-row xl:block">
             <DashBBirthdays></DashBBirthdays>
             <DashBAnniversaries></DashBAnniversaries>
           </div>

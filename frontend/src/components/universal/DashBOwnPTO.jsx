@@ -68,7 +68,7 @@ const DashBOwnPTO = () => {
     <>
       <>
         {/* PTO Notices */}
-        <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 w-full">
+        <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-col justify-center align-middle">
           <h1 className="text-lg font-semibold mb-4">Your PTOs</h1>
 
           <DataTable

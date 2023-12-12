@@ -155,17 +155,8 @@ const DashBButtons = () => {
     <>
       {/* Buttons */}
       <div className="m-2 flex flex-col">
-        {/* <button
-          className="my-2 btn btn-sm btn-active normal-case"
-          onClick={() =>
-            document.getElementById("file_a_leave_btn").showModal()
-          }
-        >
-          File a Leave
-        </button> */}
-
         <div
-          className="border-2 border-dashed border-gray-200 p-4 flex flex-col justify-center items-center gap-2 h-56 w-full rounded-lg md:w-56"
+          className="border-2 border-dashed border-gray-200 p-4 flex flex-col justify-center items-center gap-2 h-56 w-full rounded-lg md:w-56 cursor-pointer"
           onClick={() =>
             document.getElementById("file_a_leave_btn").showModal()
           }

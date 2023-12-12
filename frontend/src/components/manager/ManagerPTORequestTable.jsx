@@ -70,7 +70,7 @@ const ManagerPTORequestTable = () => {
     {
       name: "Actions",
       selector: (row) => (
-        <div className="flex flex-row justify-center flex-nowrap gap-1">
+        <div className="flex flex-row justify-center flex-wrap gap-1">
           <button
             className="btn btn-ghost-active btn-xs normal-case"
             onClick={() =>
@@ -169,7 +169,7 @@ const ManagerPTORequestTable = () => {
   return (
     <>
       {/* PTO Notices */}
-      <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700">
+      <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-col justify-center align-middle">
         <div className="flex flex-row justify-between mb-4 md:mx-7">
           <h1 className="text-lg font-semibold">PTO Requests</h1>
 
