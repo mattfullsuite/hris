@@ -26,7 +26,7 @@ const HRFormAddEmployee = () => {
   });
 
   const handleChange = (event) => {
-    setEmployeeInfo({ ...employeeInfo, [event.target.name]: [event.target.value]  });
+    setEmployeeInfo({ ...employeeInfo, [event.target.name]: [event.target.value] });
   };
 
   const handleSubmit = (event) => {
@@ -35,6 +35,11 @@ const HRFormAddEmployee = () => {
     axios
       .post("http://localhost:6197/addNewEmployee", employeeInfo)
       .then((res) => console.log(JSON.stringify(employeeInfo)))
+      .catch((err) => console.log(err));
+
+    axios
+      .post("http://localhost:6197/createNewEmployee")
+      .then((res) => console.log("Added New Credits for New Employee"))
       .catch((err) => console.log(err));
 
     // document.getElementById("file_a_leave_btn").close();
@@ -339,8 +344,8 @@ const HRFormAddEmployee = () => {
                     <option disabled selected>
                       Select Employment Role
                     </option>
-                    <option value="2">Manager</option>
-                    <option value="3">Regular Employee</option>
+                    <option value="3">Manager</option>
+                    <option value="2">Regular Employee</option>
                     <option value="1">HR</option>
                     <option>Administrator</option>
                   </select>
