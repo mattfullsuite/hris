@@ -65,7 +65,7 @@ const HRSideBar = () => {
           <ul class="space-y-2 font-medium">
 
             <div className="flex flex-col items-center justify-center">
-             <SideBarProfile></SideBarProfile>
+             <SideBarProfile color={"text-white"} fill={"white"} link_to={"/hrProfile"}></SideBarProfile>
             </div>
             <li>
             

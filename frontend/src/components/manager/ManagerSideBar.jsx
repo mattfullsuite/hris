@@ -67,7 +67,7 @@ const navigate = useNavigate()
             <div className="flex flex-col items-center justify-center">
               
             </div>
-              <SideBarProfile></SideBarProfile>
+              <SideBarProfile color={"text-black"} fill={"black"} link_to={"/manProfile"}></SideBarProfile>
             <div className="flex items-center justify-center"></div>
 
             <li></li>

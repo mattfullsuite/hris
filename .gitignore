@@ -1,1 +1,5 @@
-frontend/node_modules/.cache/default-development/0.pack
+node_modules
+.env
+protected.env
+package-lock.json
+.eslintcache

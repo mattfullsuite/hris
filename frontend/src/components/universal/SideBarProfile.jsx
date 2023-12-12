@@ -2,7 +2,7 @@ import Axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const SideBarProfile = (color) => {
+const SideBarProfile = ({color, link_to, fill}) => {
   const [users, setUser] = useState([]);
   const [titles, setTitle] = useState([]);
 
@@ -56,21 +56,21 @@ const SideBarProfile = (color) => {
         ))}
         <div className="flex flex-col items-center justify-center">
           {users.map((user) => (
-            <div className="font-bold text-xl text-white">
+            <div className={`font-bold text-xl existing-class ${color}`}>
               {user.f_name + " " + user.s_name}
             </div>
           ))}
 
           {titles.map((title) => (
-            <div className="mb-1 text-white text-center ">{title.title}</div>
+            <div className={`mb-1 text-center ${color}`}>{title.title}</div>
           ))}
           <div>
-            <Link to="/empProfile">
+            <Link to={`${link_to}`}>
               <a className="mb-12 flex items-center p-1 text-gray-900 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700 group">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
-                  fill="white"
+                  fill={`${fill}`}
                   className="w-5 h-5"
                 >
                   <path
@@ -80,7 +80,7 @@ const SideBarProfile = (color) => {
                   />
                 </svg>
 
-                <span className="ml-3 text-white">Profile</span>
+                <span className={`ml-3 ${color}`}>Profile</span>
               </a>
             </Link>
           </div>
