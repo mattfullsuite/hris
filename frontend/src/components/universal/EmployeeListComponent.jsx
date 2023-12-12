@@ -45,7 +45,7 @@ const EmployeeListComponent = () => {
     {
       name: "",
       selector: (row) => (
-        (row.emp_pic == "") ? <div className="h-20 w-20 bg-gray-500 rounded-full flex justify-center items-center text-3xl text-white font-medium">{row.f_name.charAt(0) + row.s_name.charAt(0)}</div> : <img className="h-20 w-20 rounded-full" 
+        (row.emp_pic == "") ? <div className="h-16 w-16 bg-gray-500 rounded-full flex justify-center items-center text-3xl text-white font-medium m-2">{row.f_name.charAt(0) + row.s_name.charAt(0)}</div> : <img className="h-16 w-16 rounded-full m-2" 
         src={row.emp_pic} />
       ),
     },
