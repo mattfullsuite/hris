@@ -2,7 +2,7 @@ import Axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const SideBarProfile = (color) => {
+const SideBarProfile = ({color, link_to}) => {
   const [users, setUser] = useState([]);
   const [titles, setTitle] = useState([]);
 
