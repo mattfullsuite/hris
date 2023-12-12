@@ -2,38 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 import { Link } from "react-router-dom";
+import SideBarProfile from "../universal/SideBarProfile";
 
 const ClientSideBar = () => {
   const navigate = useNavigate()
-
-  const [users, setUser] = useState([]);
-  const [titles, setTitle] = useState([]);
   
-
-  useEffect(() => {
-    const fetchUserTitles = async () => {
-      try {
-        const res = await Axios.get("http://localhost:6197/showTitles");
-        setTitle(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchUserTitles();
-  }, []);
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const res = await Axios.get("http://localhost:6197/login");
-        setUser(res.data.user);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchUserData();
-  }, []);
-
   const logoutEmployee = () => {
     try { 
       Axios.get("http://localhost:6197/logout");
@@ -90,7 +63,9 @@ setTimeout(function () {
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-[#0097B2] dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
-          { users.map((user) => (
+            <SideBarProfile></SideBarProfile>
+
+          {/* { users.map((user) => (
             <div className="flex justify-center mt-10">
               <img
                 className="h-20 w-20 rounded-full ring-2 ring-white"
@@ -99,9 +74,9 @@ setTimeout(function () {
                 alt=""
               />
             </div>
-            ))}
+            ))} */}
 
-            <div className="flex flex-col items-center justify-center">
+            {/* <div className="flex flex-col items-center justify-center">
              
               { users.map((user) => (
               <div className="font-bold text-xl text-white">
@@ -134,9 +109,7 @@ setTimeout(function () {
                 </a>
                 </Link>
               </div>
-            </div>
-
-            
+            </div> */}
 
             <div className="flex items-center justify-center"></div>
 
