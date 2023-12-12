@@ -26,7 +26,7 @@ const HRFormAddEmployee = () => {
   });
 
   const handleChange = (event) => {
-    setEmployeeInfo({ ...employeeInfo, [event.target.name]: [event.target.value]  });
+    setEmployeeInfo({ ...employeeInfo, [event.target.name]: [event.target.value] });
   };
 
   const handleSubmit = (event) => {
