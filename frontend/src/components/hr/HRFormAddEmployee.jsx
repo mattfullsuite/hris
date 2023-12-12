@@ -32,20 +32,28 @@ const HRFormAddEmployee = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    axios
-      .post("http://localhost:6197/addNewEmployee", employeeInfo)
-      .then((res) => console.log(JSON.stringify(employeeInfo)))
-      .catch((err) => console.log(err));
+    addNewEmployee()
 
-    axios
-      .post("http://localhost:6197/createNewEmployee")
-      .then((res) => console.log("Added New Credits for New Employee"))
-      .catch((err) => console.log(err));
 
     // document.getElementById("file_a_leave_btn").close();
     // document.getElementById("leaveForm").reset();
     // window.location.reload();
   };
+
+  const addNewEmployee = () => {
+    axios
+    .post("http://localhost:6197/addNewEmployee", employeeInfo)
+    .then((res) => console.log(JSON.stringify(employeeInfo)))
+    .catch((err) => console.log(err))
+  }
+
+  // const createCredits = async () => {
+    
+  //   await axios
+  //   .post("http://localhost:6197/createNewLeaveCredit")
+  //   .then((res) => console.log("Added New Credits for New Employee"))
+  //   .catch((err) => console.log(err));
+  // }
 
   return (
     <>

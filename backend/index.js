@@ -117,6 +117,16 @@ app.delete("/employeesList/:user_id", (req, res) => {
     })
 })
 
+app.get("/viewEmployee/:user_id", (req, res) => {
+    const user_id = req.params.user_id;
+    const q = "SELECT * FROM emp WHERE user_id = ?";
+
+    db.query(q, [user_id], (err,data) => {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
 app.post('/addEmployee', (req,res) => {
 
     const q = "INSERT INTO `emp`(`user_id`, `work_email`, `f_name`, `m_name`, `s_name`, `personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `sex`, `created_by`, `updated_by`) VALUES (?)";
@@ -651,7 +661,7 @@ app.get("/getApprover", (req, res) => {
 app.post("/addNewEmployee", (req, res)=> {
     const tempPassword = req.body.emp_num
 
-    const q = "INSERT INTO `emp` (`emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`) VALUES (?)";
+    const q = "INSERT INTO `emp` ( `emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`) VALUES (?)";
     const values = 
         [
         req.body.emp_num,
@@ -679,22 +689,34 @@ app.post("/addNewEmployee", (req, res)=> {
         return res.json(data);
     })
 
+    const q2 = "INSERT INTO `leave_credits` (`emp_id`, `leave_balance`) VALUES ((SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1), 0)"
+    
+
+    db.query(q2, (err, data2) => {
+     if (err) console.log(err);
+     return res.json(data2);
+    })
+
 })
 
-app.post("/createNewLeaveCredit", (req, res)=> {
-    const newID = LAST_INSERT_ID()
-    const q2 = "INSERT INTO `leave_credits` (`emp_id`, `leave_balance`) VALUES (?)"
+app.get("/getRecentID", (req, res) => {
+    const q = "SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1"
 
-    const values2 = [
-        newID,
-        0,
-    ]
+    db.query(q, (err, data) => {
+        if (err) console.log(err)
 
-    db.query(q2, [values2], (err, data2) => {
-    if (err) console.log(err);
-    return res.json(data2);
+        return res.json(data[0].emp_id)
     })
 })
+
+// app.post("/createNewLeaveCredit", (req, res)=> {
+//     const q2 = "INSERT INTO `leave_credits` (`emp_id`, `leave_balance`) VALUES ((SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1), 0)"
+
+//     db.query(q2, (err, data2) => {
+//      if (err) console.log(err);
+//      return res.json(data2);
+//     })
+// })
 
 app.post("/fileLeave", (req, res)=> {
 
