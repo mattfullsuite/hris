@@ -96,7 +96,7 @@ const HRFormAddEmployee = () => {
                     required
                   >
                     <option disabled selected>
-                      Select Employee's Sex
+                      Select Sex
                     </option>
                     <option>Male</option>
                     <option>Female</option>
@@ -153,9 +153,8 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">Personal Email</span>
                   </div>
-                  <input type="text" className="input input-bordered w-full " />
+                  <input type="email" className="input input-bordered w-full " />
                 </label>
-
                 {/* Contact Number */}
                 <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
                   <div className="label">
@@ -204,9 +203,20 @@ const HRFormAddEmployee = () => {
                   <div className="label">
                     <span className="label-text">Employee ID</span>
                   </div>
-                  <input type="text" className="input input-bordered w-full " />
+                  <input type="text" className="input input-bordered w-full " required />
                 </label>
 
+                {/* Work Email */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Work E-mail</span>
+                  </div>
+                  <input type="email" className="input input-bordered w-full " required />
+                </label>
+
+              </div>
+
+              <div className="flex flex-col w-full md:flex-row">
                 {/* Employment Status */}
                 <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
                   <div className="label">
@@ -223,6 +233,25 @@ const HRFormAddEmployee = () => {
                     <option>Probationary</option>
                     <option>Regular</option>
                     <option>Part-time</option>
+                  </select>
+                </label>
+
+                {/* Employee Role */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Employment Role</span>
+                  </div>
+                  <select
+                    name="emp-status"
+                    className="select select-bordered w-full "
+                    required
+                  >
+                    <option disabled selected>
+                      Select Employment Role
+                    </option>
+                    <option>Manager</option>
+                    <option>Employee</option>
+                    <option>Administrator</option>
                   </select>
                 </label>
               </div>
@@ -254,7 +283,6 @@ const HRFormAddEmployee = () => {
               </div>
 
               <div className="divider"></div>
-
 
               <div className="flex flex-col md:flex-row">
                 <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
