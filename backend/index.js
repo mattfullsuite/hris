@@ -649,13 +649,14 @@ app.get("/getApprover", (req, res) => {
 })
 
 app.post("/addNewEmployee", (req, res)=> {
+    const tempPassword = req.body.emp_num
 
     const q = "INSERT INTO `emp`(`emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`) VALUES (?)";
     const values = 
         [
         req.body.emp_num,
         req.body.work_email,
-        req.body.password,
+        tempPassword,
         req.body.f_name,
         req.body.m_name, 
         req.body.s_name,

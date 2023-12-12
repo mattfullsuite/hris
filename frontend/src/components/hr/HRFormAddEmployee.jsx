@@ -6,7 +6,6 @@ const HRFormAddEmployee = () => {
   const [employeeInfo, setEmployeeInfo] = useState({
     emp_num: "",
     work_email: "",
-    password: [document.getElementById("emp_num").value],
     f_name: "",
     m_name: "",
     s_name: "",
@@ -23,12 +22,11 @@ const HRFormAddEmployee = () => {
     sex: "",
     gender: "",
     civil_status: "",
+  
   });
 
   const handleChange = (event) => {
-    setEmployeeInfo({ ...employeeInfo, [event.target.name]: [event.target.value],  });
-
-    console.log(employeeInfo)
+    setEmployeeInfo({ ...employeeInfo, [event.target.name]: [event.target.value]  });
   };
 
   const handleSubmit = (event) => {
