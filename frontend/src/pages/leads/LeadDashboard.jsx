@@ -53,7 +53,7 @@ const LeadDashboard = () => {
             <div className="mt-4">
               <ManagerPTORequestTable></ManagerPTORequestTable>
               <ManagerPTONotices></ManagerPTONotices>
-              <DashBOwnPTO></DashBOwnPTO>
+              <DashBOwnPTO link={"./svgs/lead_empty.svg"} ></DashBOwnPTO>
             </div>
           </div>
 

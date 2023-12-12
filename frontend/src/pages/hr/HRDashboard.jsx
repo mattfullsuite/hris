@@ -11,6 +11,7 @@ import DashBBirthdays from "../../components/universal/DashBBirthdays";
 import DashBAnniversaries from "../../components/universal/DashBAnniversaries";
 import DashBPTONotices from "../../components/universal/DashBPTONotices";
 import HRPTONotices from "../../components/hr/HRPTONotices";
+import DashBOwnPTO from "../../components/universal/DashBOwnPTO";
 
 const HRDashboard = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -71,6 +72,10 @@ const HRDashboard = () => {
 
             <div className="mt-4">
               <HRPTONotices />
+            </div>
+
+            <div>
+              <DashBOwnPTO link={"./hr_empty.svg"}></DashBOwnPTO>
             </div>
           </div>
 
