@@ -50,6 +50,11 @@ const EmployeeListComponent = () => {
       ),
     },
     {
+      name: "Employee Number",
+      selector: (row) => row.emp_num,
+      sortable: true,
+    },
+    {
       name: "Name",
       selector: (row) => row.s_name + ", " + row.f_name + " " + row.m_name,
       sortable: true,
@@ -76,9 +81,11 @@ const EmployeeListComponent = () => {
     {
       name: "Actions",
       selector: (row) => (
-        <a className="btn btn-active btn-xs btn-info" href="#">
+        <Link to="/viewEmployee">
+        <a className="btn btn-active btn-xs btn-info" >
           View
         </a>
+        </Link>
       ),
     },
   ];
