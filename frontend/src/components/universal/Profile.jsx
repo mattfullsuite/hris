@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import moment from "moment";
+import ButtonBack from "./ButtonBack";
 
 const Profile = () => {
   const [profile, setProfile] = useState([]);
@@ -20,9 +21,30 @@ const Profile = () => {
   return (
     <>
       {profile.map((p) => (
+        
+
         <div className="p-4 sm:ml-64 flex flex-col">
-          {/* Name, Primary */}
-          <div className="m-2 p-3">
+                  <ButtonBack></ButtonBack>
+
+          <div className="flex items-center">
+
+          {profile.map((user) => (
+            <div className="flex justify-center mt-5  mb-5">
+              {user.emp_pic == "" || user.emp_pic == null ? (
+                <div className="h-32 w-32 bg-gray-500 rounded-full flex justify-center items-center text-5xl text-white font-medium m-2 ring-2 ring-white">
+                  {user.f_name.charAt(0) + user.s_name.charAt(0)}
+                </div>
+              ) : (
+                <img
+                  className="h-32 w-32 rounded-full m-2 ring-2 ring-white"
+                  src={user.emp_pic}
+                />
+              )}
+            </div>
+          ))}
+
+           {/* Name, Primary */}
+           <div className="m-2 p-3">
             <h1 className="text-4xl font-bold tracking-wide">
               {/* Marco Eliseo Antero */}
               {p.f_name + " " + p.m_name + " " + p.s_name}
@@ -31,6 +53,21 @@ const Profile = () => {
             <h1>{p.title}</h1>
             <h1>{p.emp_num}</h1>
           </div>
+
+
+
+
+
+          </div>
+          
+          
+        
+
+
+         
+
+
+
 
           {/* Contact Information */}
           <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
@@ -181,7 +218,9 @@ const Profile = () => {
 
             <div>
               <h1 className="font-bold text-sm">Date Hired</h1>
-              <h1 className="ml-2 text-sm">{moment(p.date_hired).format("MMMM DD, YYYY")}</h1>
+              <h1 className="ml-2 text-sm">
+                {moment(p.date_hired).format("MMMM DD, YYYY")}
+              </h1>
             </div>
 
             {/* <div className="divider"></div>

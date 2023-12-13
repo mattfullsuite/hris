@@ -2,7 +2,7 @@ import Axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const SideBarProfile = ({color, link_to, fill}) => {
+const SideBarProfile = ({ color, link_to, fill }) => {
   const [users, setUser] = useState([]);
   const [titles, setTitle] = useState([]);
 
@@ -41,13 +41,19 @@ const SideBarProfile = ({color, link_to, fill}) => {
               alt=""
             /> */}
 
-        {(user.emp_pic == "" || user.emp_pic == null ) ? <div className="h-28 w-28 bg-gray-500 rounded-full flex justify-center items-center text-5xl text-white font-medium m-2 ring-2 ring-white">{user.f_name.charAt(0) + user.s_name.charAt(0)}</div> : <img className="h-28 w-28 rounded-full m-2 ring-2 ring-white" 
-                src={user.emp_pic} />}
+            {user.emp_pic == "" || user.emp_pic == null ? (
+              <div className="h-28 w-28 bg-gray-500 rounded-full flex justify-center items-center text-5xl text-white font-medium m-2 ring-2 ring-white">
+                {user.f_name.charAt(0) + user.s_name.charAt(0)}
+              </div>
+            ) : (
+              <img
+                className="h-28 w-28 rounded-full m-2 ring-2 ring-white"
+                src={user.emp_pic}
+              />
+            )}
 
-{/* (row.emp_pic == "") ? <div className="h-28 w-28 bg-gray-500 rounded-full flex justify-center items-center text-4xl text-white font-medium m-2">{row.f_name.charAt(0) + row.s_name.charAt(0)}</div> : <img className="h-16 w-16 rounded-full m-2" 
+            {/* (row.emp_pic == "") ? <div className="h-28 w-28 bg-gray-500 rounded-full flex justify-center items-center text-4xl text-white font-medium m-2">{row.f_name.charAt(0) + row.s_name.charAt(0)}</div> : <img className="h-16 w-16 rounded-full m-2" 
         src={row.emp_pic} /> */}
-
-            
           </div>
         ))}
         <div className="flex flex-col items-center justify-center">
