@@ -12,18 +12,7 @@ const HRNotices = () => {
     return (
         <>
             <div className="grow p-2 flex flex-col">
-                <div className="flex flex-row justify-center items-center">
-                    <DashBremainingPTO></DashBremainingPTO>
-                    <DashBRemainingOffset></DashBRemainingOffset>
-                </div>
-
                 <HRPTONotices></HRPTONotices>
-
-                <div className="flex flex-row">
-                    <DashBBirthdays></DashBBirthdays>
-
-                    <DashBAnniversaries></DashBAnniversaries>
-                </div>
             </div>
         </>
     );

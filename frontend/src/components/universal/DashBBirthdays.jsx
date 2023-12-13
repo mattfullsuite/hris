@@ -21,7 +21,7 @@ const DashBBirthdays = () => {
     return(
         <>
         {/* Birthdays Table */}
-        <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col items-center justify-center">
+        <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col items-center justify-start">
               <h1 className="text-lg font-semibold">Birthdays</h1>
               <div className="overflow-x-auto max-w-full">
                 <table className="table">
@@ -34,15 +34,12 @@ const DashBBirthdays = () => {
                   </thead>
                   <tbody>
                     {/* row 1 */}
-
-
                     { upcomingBdays.map((upcomingBday) => (
                     <tr>
                       <td>{upcomingBday.f_name + " " + upcomingBday.s_name}</td>
                       <td>{moment(upcomingBday.dob).format('MMM DD')}</td>
                     </tr>
-
-                    ))} 
+                    ))}
                   </tbody>
                 </table>
               </div>

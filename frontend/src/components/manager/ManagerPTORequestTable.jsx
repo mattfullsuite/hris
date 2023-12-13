@@ -70,7 +70,7 @@ const ManagerPTORequestTable = () => {
     {
       name: "Actions",
       selector: (row) => (
-        <div className="flex flex-row justify-center flex-nowrap gap-1">
+        <div className="flex flex-row justify-center flex-wrap gap-1">
           <button
             className="btn btn-ghost-active btn-xs normal-case"
             onClick={() =>
@@ -150,14 +150,14 @@ const ManagerPTORequestTable = () => {
 
           <button
             className="btn btn-xs bg-lime-600 text-white hover:bg-green-800 normal-case"
-            onClick={() => handleApproval(leaves.leave_id)}
+            onClick={() => handleApproval(row.leave_id)}
           >
             Approve
           </button>
 
           <button
             className="btn btn-xs bg-red-600 text-white hover:bg-red-800 normal-case"
-            onClick={() => handleRejection(leaves.leave_id)}
+            onClick={() => handleRejection(row.leave_id)}
           >
             Decline
           </button>
@@ -169,7 +169,7 @@ const ManagerPTORequestTable = () => {
   return (
     <>
       {/* PTO Notices */}
-      <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700">
+      <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-col justify-center align-middle">
         <div className="flex flex-row justify-between mb-4 md:mx-7">
           <h1 className="text-lg font-semibold">PTO Requests</h1>
 
@@ -273,7 +273,7 @@ const ManagerPTORequestTable = () => {
                 <td>
                   <div className="flex justify-end">
                     <button 
-                    ççç
+                    onClick={() => handleApproval( leave.leave_id )}
                     className="btn btn-sm bg-green-600 text-white hover:bg-green-800 mr-2 normal-case">
                       Approve
                     </button>

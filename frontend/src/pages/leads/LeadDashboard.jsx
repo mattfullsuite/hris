@@ -10,16 +10,14 @@ import DashBOwnPTO from "../../components/universal/DashBOwnPTO";
 import DashBGreeting from "../../components/universal/DashBGreeting";
 import ManagerPTORequestTable from "../../components/manager/ManagerPTORequestTable";
 
-
 const LeadDashboard = () => {
 
   return (
     <>
       <ManagerSideBar></ManagerSideBar>
-      <div className="p-4 sm:ml-64 flex flex-col">
+      {/* <div className="p-4 sm:ml-64 flex flex-col">
         <DashBGreeting></DashBGreeting>
 
-        {/* Widget Container */}
         <div className="my-2 mx-2">
           <div className="flex">
             <DashBremainingPTO></DashBremainingPTO>
@@ -31,6 +29,37 @@ const LeadDashboard = () => {
           <DashBOwnPTO></DashBOwnPTO>
 
           <div className="flex">
+            <DashBBirthdays></DashBBirthdays>
+            <DashBAnniversaries></DashBAnniversaries>
+          </div>
+        </div>
+      </div> */}
+
+      <div className="p-4 sm:ml-64 flex flex-col">
+        <DashBGreeting></DashBGreeting>
+
+        <div className="m-4 flex flex-col xl:flex-row">
+          <div className="grow">
+            <div className="flex flex-col md:flex-row">
+                <div>
+                  <DashBButtons></DashBButtons>
+                </div>
+
+                <div>
+                  <DashBremainingPTO></DashBremainingPTO>
+                </div>
+            </div>
+
+            <div className="mt-4">
+              <ManagerPTORequestTable></ManagerPTORequestTable>
+              <ManagerPTONotices></ManagerPTONotices>
+              <DashBOwnPTO link={"./svgs/lead_empty.svg"} ></DashBOwnPTO>
+            </div>
+          </div>
+
+          <div className="divider divider-horizontal"></div>
+
+          <div className="flex flex-col justify-start lg:flex-row xl:block">
             <DashBBirthdays></DashBBirthdays>
             <DashBAnniversaries></DashBAnniversaries>
           </div>
