@@ -121,6 +121,7 @@ const HRFormViewEmployee = () => {
                       name="new_pto_balance"
                       type="number"
                       step="0.5"
+                      min="0"
                       className="input input-bordered w-28"
                       placeholder={p.leave_balance}
                       onChange={handleChange}
