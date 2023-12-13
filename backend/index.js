@@ -659,7 +659,19 @@ app.get("/getApprover", (req, res) => {
 })
 
 app.post("/addNewEmployee", (req, res)=> {
-    const tempPassword = req.body.emp_num
+
+    function generateRandomnString(n) {
+        let randomString = '';
+        let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+
+        for(let i = 0; i < n; i++) {
+            randomString += characters.charAt(Math.floor(Math.random()*characters.length));
+        }
+
+        return randomString;
+    }
+
+    const tempPassword = generateRandomnString(10)
 
     const q = "INSERT INTO `emp` ( `emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`) VALUES (?)";
     const values = 
@@ -697,6 +709,30 @@ app.post("/addNewEmployee", (req, res)=> {
      return res.json(data2);
     })
 
+
+    try {
+        let transporter = nodemailer.createTransport({
+            host: "smtp.elasticemail.com",
+            port: 2525,
+            secure: false,
+            auth: {
+              user: 'marvin@fullsuite.ph',
+              pass: '15BC029719F114C8D23A0436E328A510D55E',
+            },
+            tls: {
+                 ciphers: 'SSLv3'
+            }
+       });
+        transporter.sendMail({
+            from: 'marvin@fullsuite.ph', // sender address
+            to: req.body.personal_email, // list of receivers
+            subject: 'Action required: Temporary password | Fullsuite', // Subject line
+            text: tempPassword, // plain text body
+            html: "<h1>This is your temporary password</h1><br><p> " +tempPassword+ "</a>.</p>", // html body
+       });
+    } catch(e) {
+        console.log("----------------" + e + "----------------")
+    }
 })
 
 app.get("/getRecentID", (req, res) => {
