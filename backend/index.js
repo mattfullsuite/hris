@@ -117,13 +117,13 @@ app.delete("/employeesList/:user_id", (req, res) => {
     })
 })
 
-app.get("/viewEmployee/:user_id", (req, res) => {
-    const user_id = req.params.user_id;
-    const q = "SELECT * FROM emp WHERE user_id = ?";
+app.get("/viewEmployee/:emp_id", async (req, res) => {
+    const emp_id = req.params.emp_id;
+    const q = "SELECT * FROM emp WHERE emp_id = ?";
 
-    db.query(q, [user_id], (err,data) => {
+    db.query(q, [emp_id], (err,data) => {
         if(err) return res.json(err)
-        return res.json(data)
+        return res.send(data)
     })
 })
 

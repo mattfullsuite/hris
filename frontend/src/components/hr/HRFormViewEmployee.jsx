@@ -2,14 +2,16 @@ import moment from "moment";
 import Axios from "axios";
 import { React, useEffect, useState } from "react";
 import ButtonBack from "../universal/ButtonBack";
+import {useParams} from "react-router-dom"
 
 const HRFormViewEmployee = () => {
+  const {emp_id} = useParams()
   const [profile, setProfile] = useState([]);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const res = await Axios.get("http://localhost:6197/myProfile");
+        const res = await Axios.get(`http://localhost:6197/viewEmployee/${emp_id}`);
         setProfile(res.data);
       } catch (err) {
         console.log(err);
