@@ -118,7 +118,7 @@ app.delete("/employeesList/:user_id", (req, res) => {
 
 app.get("/viewEmployee/:emp_id", async (req, res) => {
     const emp_id = req.params.emp_id;
-    const q = "SELECT * FROM emp WHERE emp_id = ?";
+    const q = "SELECT * FROM emp AS e INNER JOIN leave_credits AS l ON e.emp_id=l.emp_id WHERE e.emp_id = ?";
 
     db.query(q, [emp_id], (err,data) => {
         if(err) return res.json(err)

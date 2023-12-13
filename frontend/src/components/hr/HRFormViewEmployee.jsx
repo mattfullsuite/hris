@@ -92,13 +92,12 @@ const HRFormViewEmployee = () => {
                 <h3 className="font-bold text-xl mb-2 text-center">PTO Management</h3>
                 <p className="text-md text-center">{p.emp_num}</p>
                 <p className="text-lg font-bold text-center">{p.f_name + " " + p.m_name + " " + p.s_name}</p>
-                <p className="text-sm mb-1 text-center">Current PTO:</p>
+                <p className="text-sm mb-1 text-center">Current PTO: {p.leave_balance}</p>
                   <form action="">
                   <div className="flex flex-col gap-3 items-center">
                     <input
                       type="number"
-                      step="0.01"
-                      placeholder="Type here"
+                      step="0.5"
                       className="input input-bordered w-28"
                     />
                     <button className="btn btn-md max-w-xs">Save</button>
