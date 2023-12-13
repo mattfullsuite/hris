@@ -36,7 +36,7 @@ const DashBPTOApprovedAndOwned = () => {
   function checkStatus(status){
     if(status == 0){ return <div className="badge badge-warning">Pending</div>}
     if(status == 1){ return <div className="badge badge-success">Approved</div>}
-    if(status == 2){ return <div className="badge badge-error">Declined</div>}
+    if(status == 2){ return <div className="badge badge-error text-white">Declined</div>}
   }
 
   const columns = [
