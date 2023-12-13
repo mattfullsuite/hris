@@ -45,6 +45,7 @@ const ManagerPTORequestTable = () => {
     if(status == 1){ return <div className="badge badge-success">Approved</div>}
     if(status == 2){ return <div className="badge badge-error text-white">Declined</div>}
   }
+
   const columns = [
     {
       name: "Date filed",
@@ -79,14 +80,14 @@ const ManagerPTORequestTable = () => {
           <button
             className="btn btn-ghost-active btn-xs normal-case"
             onClick={() =>
-              document.getElementById("emp_pto_details_btn").showModal()
+              document.getElementById(row.emp_id).showModal()
             }
           >
             Details
           </button>
 
           {/* Modal - Details */}
-          <dialog id="emp_pto_details_btn" className="modal text-left">
+          <dialog id={row.emp_id} className="modal text-left">
             <div className="modal-box">
               <form method="dialog">
                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
