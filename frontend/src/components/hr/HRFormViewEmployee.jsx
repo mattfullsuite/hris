@@ -1,388 +1,317 @@
-import React from "react";
+import moment from "moment";
+import Axios from "axios";
+import { React, useEffect, useState } from "react";
+import ButtonBack from "../universal/ButtonBack";
 
 const HRFormViewEmployee = () => {
-    return (
-        <>
-          <>
-            <div className="p-4 sm:ml-64 flex flex-col">
-              <div className="m-2">
-                <h1 className="text-3xl font-bold tracking-wide">
-                  View Employee
-                </h1>
-              </div>
-              <form 
+  const [profile, setProfile] = useState([]);
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const res = await Axios.get("http://localhost:6197/myProfile");
+        setProfile(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUserProfile();
+  }, []);
+
+  return (
+    <>
+      {profile.map((p) => (
+        <div className="p-4 sm:ml-64 flex flex-col">
+          <ButtonBack></ButtonBack>
+
+          {/* Name, Primary */}
+          <div className="m-2 p-3">
+            <h1 className="text-4xl font-bold tracking-wide">
+              {/* Marco Eliseo Antero */}
+              {p.f_name + " " + p.m_name + " " + p.s_name}
+            </h1>
+            <h1>{p.work_email}</h1>
+            <h1>{p.title}</h1>
+            <h1>{p.emp_num}</h1>
+          </div>
+
+          <div className="text-right mr-2">
+            {" "}
+            <button className="btn btn-sm btn-outline normal-case mx-1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
               >
-                {/* Personal Information */}
-                <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
-                  <h1 className="font-bold">Personal Information</h1>
-    
-                  <div className="flex flex-col md:flex-row">
-                    {/* First Name */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">First Name</span>
-                      </div>
-                      <input
-                        name="f_name"
-                        type="text"
-                        className="input input-bordered w-full "
-                        required
-                      />
-                    </label>
-    
-                    {/* Middle Name */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Middle Name</span>
-                      </div>
-                      <input
-                        name="m_name"
-                        type="text"
-                        className="input input-bordered w-full "
-                        required
-                      />
-                    </label>
-    
-                    {/* Surname */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Surname</span>
-                      </div>
-                      <input
-                        name="s_name"
-                        type="text"
-                        className="input input-bordered w-full "
-                        required
-                      />
-                    </label>
-                  </div>
-    
-                  <div className="flex flex-col md:flex-row">
-                    {/* Date of Birth */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Date of Birth</span>
-                      </div>
-                      <input
-                        name="dob"
-                        type="date"
-                        className="input input-bordered w-full"
-                        required
-                      />
-                    </label>
-    
-                    {/* Civil Status */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Civil Status</span>
-                      </div>
-                      <select
-                        name="civil_status"
-                        className="select select-bordered w-full"
-                        required
-                      >
-                        <option disabled selected>
-                          Select Civil Status
-                        </option>
-                        <option>Single</option>
-                        <option>Married</option>
-                        <option>Widowed</option>
-                      </select>
-                    </label>
-    
-                    {/* Sex */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Sex</span>
-                      </div>
-                      <select
-                        name="sex"
-                        className="select select-bordered w-full"
-                        required
-                      >
-                        <option disabled selected>
-                          Select Sex
-                        </option>
-                        <option>Male</option>
-                        <option>Female</option>
-                      </select>
-                    </label>
-    
-                    {/* Gender */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Gender</span>
-                      </div>
-                      <input
-                      name="gender" 
-                      type="text" 
-                      className="input input-bordered w-full" />
-                    </label>
-                  </div>
-    
-                  <div className="flex flex-col md:flex-row">
-                    {/* Permanent Address */}
-                    <label className="form-control w-full max-w-5xl md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Permanent Address</span>
-                      </div>
-                      <input 
-                      name="p_address"
-                      type="text" 
-                      className="input input-bordered w-full" />
-                    </label>
-                  </div>
-    
-                  <div className="flex flex-col md:flex-row">
-                    {/* Current Address */}
-                    <label className="form-control w-full max-w-5xl md:mb-0 md:mr-4">
-                      <div className="label pb-0">
-                        <span className="label-text">Current Address</span>
-                      </div>
-                      <div className="flex items-center ">
-                        {" "}
-                        <label className="label cursor-pointer">
-                          <input 
-                          type="checkbox" 
-                          className="checkbox checkbox-sm" />
-                          <span className="label-text ml-2">
-                            {" "}
-                            Same as Permanent Address
-                          </span>
-                        </label>
-                      </div>
-                      <input 
-                      name="c_address"
-                      type="text" 
-                      className="input input-bordered w-full" />
-                    </label>
-                  </div>
-                </div>
-    
-                {/* Contact Information */}
-                <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
-                  <h1 className="font-bold">Contact Information</h1>
-    
-                  <div className="flex flex-col md:flex-row">
-                    {/* Personal Email */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Personal Email</span>
-                      </div>
-                      <input 
-                      name="personal_email"
-                      type="email" 
-                      className="input input-bordered w-full " />
-                    </label>
-                    {/* Contact Number */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Contact Number</span>
-                      </div>
-                      <input
-                        name="contact_num"
-                        type="number"
-                        className="input input-bordered w-full "
-                      />
-                    </label>
-                    <div></div>
-                  </div>
-                  <div className="divider"></div>
-                  <p className="font-semibold text-red-500 text-sm">
-                    Emergency Contact Information
-                  </p>
-                  <div className="flex flex-col md:flex-row">
-                    {/* Name */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Name</span>
-                      </div>
-                      <input 
-                      name="emergency_contact_name"
-                      type="text" 
-                      className="input input-bordered w-full " />
-                    </label>
-    
-                    {/* Number */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Number</span>
-                      </div>
-                      <input
-                        name="emergency_contact_num"
-                        type="number"
-                        className="input input-bordered w-full "
-                      />
-                    </label>
-                  </div>
-                </div>
-    
-                {/* Employee Information */}
-                <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
-                  <h1 className="font-bold mb-2">Employee Information</h1>
-    
-                  <div className="flex flex-col w-full md:flex-row">
-                    {/* Employee ID */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Employee ID</span>
-                      </div>
-                      <input 
-                      id="emp_num"
-                      name="emp_num"
-                      type="text" 
-                      className="input input-bordered w-full " required />
-                    </label>
-    
-                    {/* Work Email */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Work E-mail</span>
-                      </div>
-                      <input 
-                      name="work_email"
-                      type="email" 
-                      className="input input-bordered w-full " required />
-                    </label>
-    
-                  </div>
-    
-                  <div className="flex flex-col w-full md:flex-row">
-                    {/* Employment Status */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Employment Status</span>
-                      </div>
-                      <select
-                        name="emp_status"
-                        className="select select-bordered w-full "
-                        required
-                      >
-                        <option disabled selected>
-                          Select Employment Status
-                        </option>
-                        <option>Probationary</option>
-                        <option>Regular</option>
-                        <option>Part-time</option>
-                      </select>
-                    </label>
-    
-                    {/* Employee Role */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Employment Role</span>
-                      </div>
-                      <select
-                        name="emp_role"
-                        className="select select-bordered w-full "
-                        required
-                      >
-                        <option disabled selected>
-                          Select Employment Role
-                        </option>
-                        <option value="3">Manager</option>
-                        <option value="2">Regular Employee</option>
-                        <option value="1">HR</option>
-                        <option>Administrator</option>
-                      </select>
-                    </label>
-                  </div>
-    
-                  <div className="flex flex-col md:flex-row">
-                    {/* Date Hired */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Date Hired</span>
-                      </div>
-                      <input 
-                      name="date_hired"
-                      type="date" 
-                      className="input input-bordered w-full " />
-                    </label>
-    
-                    {/* Date of Regularization */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Date of Regularization</span>
-                      </div>
-                      <input 
-                      name="date_regularization"
-                      type="date" 
-                      className="input input-bordered w-full " />
-                    </label>
-    
-                    {/* Date Separated*/}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Date Separated</span>
-                      </div>
-                      <input 
-                      name="date_separated"
-                      type="date" 
-                      className="input input-bordered w-full " />
-                    </label>
-                  </div>
-    
-                  <div className="divider"></div>
-    
-                  <div className="flex flex-col md:flex-row">
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">Upload Profile Picture</span>
-                      </div>
-                      <input 
-                      name="emp_pic"
-                      type="file" 
-                      className="file-input w-full max-w-xs" />
-                    </label>
-                  </div>
-    
-                  <div className="divider"></div>
-    
-                  <div className="flex flex-col md:flex-row">
-                    {/* SSS Number */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">SSS Number</span>
-                      </div>
-                      <input type="text" className="input input-bordered w-full " />
-                    </label>
-    
-                    {/* PHIC Number */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">SSS Number</span>
-                      </div>
-                      <input type="text" className="input input-bordered w-full" />
-                    </label>
-                  </div>
-    
-                  <div className="flex flex-col md:flex-row">
-                    {/* HDMC Number */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">HDMC Number</span>
-                      </div>
-                      <input type="text" className="input input-bordered w-full " />
-                    </label>
-    
-                    {/* TIN Number */}
-                    <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                      <div className="label">
-                        <span className="label-text">TIN Number</span>
-                      </div>
-                      <input type="text" className="input input-bordered w-full " />
-                    </label>
-                  </div>
-                </div>
-                <div className="flex justify-end m-2">
-                  <input type="submit" value="Submit" className="btn" />
-                </div>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                />
+              </svg>
+              Edit
+            </button>
+            <button
+              className="btn btn-sm btn-outline normal-case mx-1"
+              onClick={() => document.getElementById("manage-pto").showModal()}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
+                />
+              </svg>
+              Manage PTO
+            </button>
+          </div>
+
+          <dialog
+            id="manage-pto"
+            className="modal modal-bottom sm:modal-middle"
+          >
+            <div className="modal-box justify-center">
+            <form method="dialog">
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                  ✕
+                </button>
               </form>
+              <div className="flex flex-col justify-center">
+                <h3 className="font-bold text-xl mb-2 text-center">PTO Management</h3>
+                <p className="text-md text-center">Emp Id</p>
+                <p className="text-lg font-bold text-center">Name</p>
+                <p className="text-sm mb-1 text-center">Current PTO:</p>
+                  <form action="">
+                  <div className="flex flex-col gap-3 items-center">
+                    <input
+                      type="number"
+                      step="0.01"
+                      placeholder="Type here"
+                      className="input input-bordered w-28"
+                    />
+                    <button className="btn btn-md max-w-xs">Save</button>
+                    </div>
+                  </form>
+              </div>
             </div>
-          </>
-        </>
-      );
-}
+          </dialog>
+          {/* Contact Information */}
+          <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
+            <h1 className="font-bold">Contact Information</h1>
+
+            <div className="flex flex-col md:flex-row">
+              {/* Personal Email */}
+              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                <div className="label">
+                  <span className="label-text">Personal Email</span>
+                </div>
+                <input
+                  value={p.personal_email}
+                  type="text"
+                  className="input input-bordered w-full max-w-xs"
+                  disabled
+                  readonly
+                />
+              </label>
+
+              {/* Contact Number */}
+              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                <div className="label">
+                  <span className="label-text">Contact Number</span>
+                </div>
+                <input
+                  value={p.contact_num}
+                  type="text"
+                  className="input input-bordered w-full max-w-xs"
+                  disabled
+                />
+              </label>
+              <div></div>
+            </div>
+            <div className="divider"></div>
+            <p className="font-semibold text-red-500 text-sm">
+              Emergency Contact Information
+            </p>
+            <div className="flex flex-col md:flex-row">
+              {/* Name */}
+              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                <div className="label">
+                  <span className="label-text">Name</span>
+                </div>
+                <input
+                  value={p.emergency_contact_name}
+                  type="text"
+                  className="input input-bordered w-full max-w-xs"
+                  disabled
+                />
+              </label>
+
+              {/* Number */}
+              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                <div className="label">
+                  <span className="label-text">Number</span>
+                </div>
+                <input
+                  value={p.emergency_contact_num}
+                  type="text"
+                  className="input input-bordered w-full max-w-xs"
+                  disabled
+                />
+              </label>
+            </div>
+          </div>
+
+          {/* Personal Information */}
+          <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
+            <h1 className="font-bold">Personal Information</h1>
+
+            <div className="flex flex-col md:flex-row">
+              {/* Date of Birth */}
+              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                <div className="label">
+                  <span className="label-text">Date of Birth</span>
+                </div>
+                <input
+                  value={moment(p.dob).format("MMMM DD, YYYY")}
+                  type="text"
+                  className="input input-bordered w-full max-w-xs"
+                  disabled
+                />
+              </label>
+
+              {/* Sex */}
+              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                <div className="label">
+                  <span className="label-text">Sex</span>
+                </div>
+                <input
+                  value={p.sex}
+                  type="text"
+                  className="input input-bordered w-full max-w-xs"
+                  disabled
+                />
+              </label>
+            </div>
+            <div className="flex flex-col md:flex-row">
+              {/* Civil Status */}
+              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                <div className="label">
+                  <span className="label-text">Civil Status</span>
+                </div>
+                <input
+                  value={p.civil_status}
+                  type="text"
+                  className="input input-bordered w-full max-w-xs"
+                  disabled
+                />
+              </label>
+            </div>
+
+            <div className="flex flex-col md:flex-row">
+              {/* Permanent Address */}
+              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                <div className="label">
+                  <span className="label-text">Permanent Address</span>
+                </div>
+                <input
+                  value={p.p_address}
+                  type="text"
+                  className="input input-bordered w-full"
+                  disabled
+                />
+              </label>
+            </div>
+
+            <div className="flex flex-col md:flex-row">
+              {/* Current Address */}
+              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                <div className="label">
+                  <span className="label-text">Current Address</span>
+                </div>
+                <input
+                  value={p.c_address}
+                  type="text"
+                  className="input input-bordered w-full"
+                  disabled
+                />
+              </label>
+            </div>
+          </div>
+
+          {/* Employee Information */}
+          <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
+            <h1 className="font-bold mb-2">Employee Information</h1>
+
+            <div>
+              <h1 className="font-bold text-sm">Date Hired</h1>
+              <h1 className="ml-2 text-sm">
+                {moment(p.date_hired).format("MMMM DD, YYYY")}
+              </h1>
+            </div>
+
+            {/* <div className="divider"></div>
+
+            <div className="flex">
+              <div className="flex-1">
+                <h1 className="font-bold text-sm">SSS Number</h1>
+                <h1 className="text-sm ml-2">00-0000000-0</h1>
+              </div>
+
+              <div className="flex-1">
+                <h1 className="font-bold text-sm">PHIC Number</h1>
+                <h1 className="text-sm ml-2">00-0000000-0</h1>
+              </div>
+
+              <div className="flex-1">
+                <h1 className="font-bold text-sm">TIN Number</h1>
+                <h1 className="text-sm ml-2">00-0000000-0</h1>
+              </div>
+            </div>
+
+            <div className="divider"></div>
+
+            <div className="flex my-1">
+              <div className="flex-1">
+                <h1 className="font-bold text-sm">Rate</h1>
+                <h1 className="text-sm ml-2">00-0000000-0</h1>
+              </div>
+
+              <div className="flex-1">
+                <h1 className="font-bold text-sm">Basic Salary</h1>
+                <h1 className="text-sm ml-2">00-0000000-0</h1>
+              </div>
+
+              <div className="flex-1"></div>
+            </div>
+
+            <div className="flex my-1">
+              <div className="flex-1">
+                <h1 className="font-bold text-sm">Night Differential</h1>
+                <h1 className="text-sm ml-2">00-0000000-0</h1>
+              </div>
+
+              <div className="flex-1">
+                <h1 className="font-bold text-sm">Bonus</h1>
+                <h1 className="text-sm ml-2">00-0000000-0</h1>
+              </div>
+
+              <div className="flex-1"></div> */}
+            {/* </div> */}
+          </div>
+        </div>
+      ))}
+    </>
+  );
+};
 
 export default HRFormViewEmployee;

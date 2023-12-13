@@ -837,4 +837,17 @@ app.get("/getPartTimeEmployees", (req, res) => {
         }
     })
 })
+
+app.get("/isWorkEmailUnique", (req, res) => {
+    const email = req.body.work_email
+    const q = "SELECT * FROM emp WHERE work_email = ?"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
  

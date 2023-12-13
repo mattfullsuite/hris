@@ -19,18 +19,6 @@ const SideBarProfile = ({color, link_to, fill}) => {
   }, []);
 
   useEffect(() => {
-    const fetchUserTitles = async () => {
-      try {
-        const res = await Axios.get("http://localhost:6197/showTitles");
-        setTitle(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchUserTitles();
-  }, []);
-
-  useEffect(() => {
     const fetchUserData = async () => {
       try {
         const res = await Axios.get("http://localhost:6197/login");
@@ -47,11 +35,19 @@ const SideBarProfile = ({color, link_to, fill}) => {
       <div>
         {users.map((user) => (
           <div className="flex justify-center mt-5  mb-5">
-            <img
+            {/* <img
               className="h-28- w-28 rounded-full ring-2 ring-white"
               src={user.emp_pic}
               alt=""
-            />
+            /> */}
+
+        {(user.emp_pic == "" || user.emp_pic == null ) ? <div className="h-28 w-28 bg-gray-500 rounded-full flex justify-center items-center text-5xl text-white font-medium m-2 ring-2 ring-white">{user.f_name.charAt(0) + user.s_name.charAt(0)}</div> : <img className="h-28 w-28 rounded-full m-2 ring-2 ring-white" 
+                src={user.emp_pic} />}
+
+{/* (row.emp_pic == "") ? <div className="h-28 w-28 bg-gray-500 rounded-full flex justify-center items-center text-4xl text-white font-medium m-2">{row.f_name.charAt(0) + row.s_name.charAt(0)}</div> : <img className="h-16 w-16 rounded-full m-2" 
+        src={row.emp_pic} /> */}
+
+            
           </div>
         ))}
         <div className="flex flex-col items-center justify-center">
