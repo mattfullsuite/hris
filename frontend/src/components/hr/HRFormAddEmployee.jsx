@@ -34,7 +34,6 @@ const HRFormAddEmployee = () => {
 
     addNewEmployee()
 
-
     // document.getElementById("file_a_leave_btn").close();
     // document.getElementById("leaveForm").reset();
     // window.location.reload();
@@ -45,15 +44,10 @@ const HRFormAddEmployee = () => {
     .post("http://localhost:6197/addNewEmployee", employeeInfo)
     .then((res) => console.log(JSON.stringify(employeeInfo)))
     .catch((err) => console.log(err))
-  }
 
-  // const createCredits = async () => {
-    
-  //   await axios
-  //   .post("http://localhost:6197/createNewLeaveCredit")
-  //   .then((res) => console.log("Added New Credits for New Employee"))
-  //   .catch((err) => console.log(err));
-  // }
+    window.location.reload();
+    alert("Successfully added new employee: " + employeeInfo.emp_num)
+  }
 
   return (
     <>

@@ -697,16 +697,19 @@ app.post("/addNewEmployee", (req, res)=> {
         ]
 
     db.query(q, [values], (err, data) => {
-        if (err) console.log(err);
-        return res.json(data);
+        if (err) {
+            console.log(err)
+        }
+        res.json(data);
     })
 
     const q2 = "INSERT INTO `leave_credits` (`emp_id`, `leave_balance`) VALUES ((SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1), 0)"
-    
 
     db.query(q2, (err, data2) => {
-     if (err) console.log(err);
-     return res.json(data2);
+    if (err) {
+        console.log(err)
+    };
+        console.log("Inserted leave credits for new employee.")
     })
 
 
@@ -733,16 +736,6 @@ app.post("/addNewEmployee", (req, res)=> {
     } catch(e) {
         console.log("----------------" + e + "----------------")
     }
-})
-
-app.get("/getRecentID", (req, res) => {
-    const q = "SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1"
-
-    db.query(q, (err, data) => {
-        if (err) console.log(err)
-
-        return res.json(data[0].emp_id)
-    })
 })
 
 // app.post("/createNewLeaveCredit", (req, res)=> {
