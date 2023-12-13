@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import EmployeeListComponent from "../../components/universal/EmployeeListComponent";
 import HRSideBar from "../../components/hr/HRSideBar";
+import EmailTemplate from "../../components/universal/EmailTemplate";
 
 const EmployeesList = () => {
   const [employees, setEmployees] = useState([]);
@@ -132,6 +133,8 @@ Add</button>
 
         <div className="p-5">
           <EmployeeListComponent></EmployeeListComponent>
+
+          {/* <EmailTemplate firstName={"Marvin"} tempPassword={"HbTy76Jg5FdC56VgFdr4"}/> */}
         </div>
 
         {/* <div className="overflow-x-auto">

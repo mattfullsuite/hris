@@ -6,7 +6,7 @@ var cookieParser = require("cookie-parser")
 var session = require("express-session")
 var bodyParser = require("body-parser")
 var cron = require('node-cron')
-
+const nodemailer = require('nodemailer')
 var HomeHandler = require("./handlers/authentication/home.js");
 //var LoginHandler = require( "./handlers/authentication/login.js");
 var ProcessLoginHandler = require("./handlers/authentication/process_login.js")
@@ -14,7 +14,6 @@ var LogoutHandler = require("./handlers/authentication/logout.js");
 
 var DailyPTOAccrual = require("./handlers/utilities/cron-daily.js")
 var db = require("./config.js");
-
 
 //dotenv.config({ path: './protected.env' })
 
@@ -659,7 +658,19 @@ app.get("/getApprover", (req, res) => {
 })
 
 app.post("/addNewEmployee", (req, res)=> {
-    const tempPassword = req.body.emp_num
+
+    function generateRandomnString(n) {
+        let randomString = '';
+        let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+
+        for(let i = 0; i < n; i++) {
+            randomString += characters.charAt(Math.floor(Math.random()*characters.length));
+        }
+
+        return randomString;
+    }
+
+    const tempPassword = generateRandomnString(20)
 
     const q = "INSERT INTO `emp` ( `emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`) VALUES (?)";
     const values = 
@@ -700,6 +711,30 @@ app.post("/addNewEmployee", (req, res)=> {
         console.log("Inserted leave credits for new employee.")
     })
 
+
+    try {
+        let transporter = nodemailer.createTransport({
+            host: "smtp.elasticemail.com",
+            port: 2525,
+            secure: false,
+            auth: {
+              user: 'marvin@fullsuite.ph',
+              pass: '15BC029719F114C8D23A0436E328A510D55E',
+            },
+            tls: {
+                 ciphers: 'SSLv3'
+            }
+       });
+        transporter.sendMail({
+            from: 'marvin@fullsuite.ph', // sender address
+            to: req.body.personal_email, // list of receivers
+            subject: 'Action required: Temporary password | Fullsuite', // Subject line
+            text: tempPassword, // plain text body
+            html: '<div style="background-color: #363636; box-sizing: border-box;padding: 16px; display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 20px;"><img src=".../Fs-logo.png" style="height: 56px; width: 56px" /><h1 style="color: white; font-size: 16px">fullsuite.ph</h1></div><p style="margin: 20px; text-align: justify;">Hi, '+ req.body.f_name +'!, we are happy to have you here at Fullsuite! But first things first, you need to change your password to secure your account. The system has already generated a temporary password to access you account.</p><div style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; text-align: center; margin: 80px 20px;"><p>Your temporary password:</p><h2 style="font-weight: semibold; font-size: 18px; color: #0097b2;">'+ tempPassword +'</h2><button style="margin-top: 40px; background-color: #0097b2; outline: none; border: none; padding: 7px 15px; color: white; border-radius: 5px;">Go to portal</button></div>'
+       });
+    } catch(e) {
+        console.log("----------------" + e + "----------------")
+    }
 })
 
 // app.post("/createNewLeaveCredit", (req, res)=> {
