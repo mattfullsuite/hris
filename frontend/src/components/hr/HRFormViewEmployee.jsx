@@ -20,6 +20,26 @@ const HRFormViewEmployee = () => {
     fetchUserProfile();
   }, []);
 
+  const [ptoInfo, setPtoInfo] = useState({
+    new_pto_balance: "",
+  });
+
+  const handleChange = (event) => {
+    setPtoInfo({ ...ptoInfo, [event.target.name]: [event.target.value] });
+
+    console.log(JSON.stringify(ptoInfo))
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    Axios
+      .post(`http://localhost:6197/setPTO/${emp_id}`, ptoInfo)
+      .then((res) => console.log(JSON.stringify(ptoInfo)))
+      .catch((err) => console.log(err));
+  };
+
+  ///setPTO/:emp_id
+
   return (
     <>
       {profile.map((p) => (
@@ -83,24 +103,29 @@ const HRFormViewEmployee = () => {
             className="modal modal-bottom sm:modal-middle"
           >
             <div className="modal-box justify-center">
-            <form method="dialog">
+            <form 
+            method="dialog"
+            >
                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                   ✕
                 </button>
-              </form>
+              </form >
               <div className="flex flex-col justify-center">
                 <h3 className="font-bold text-xl mb-2 text-center">PTO Management</h3>
                 <p className="text-md text-center">{p.emp_num}</p>
                 <p className="text-lg font-bold text-center">{p.f_name + " " + p.m_name + " " + p.s_name}</p>
                 <p className="text-sm mb-1 text-center">Current PTO: {p.leave_balance}</p>
-                  <form action="">
+                  <form onSubmit={handleSubmit} action="">
                   <div className="flex flex-col gap-3 items-center">
                     <input
+                      name="new_pto_balance"
                       type="number"
                       step="0.5"
                       className="input input-bordered w-28"
+                      placeholder={p.leave_balance}
+                      onChange={handleChange}
                     />
-                    <button className="btn btn-md max-w-xs">Save</button>
+                    <button value={p.emp_id} type="submit" className="btn btn-md max-w-xs">Save</button>
                     </div>
                   </form>
               </div>

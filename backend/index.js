@@ -780,6 +780,16 @@ app.post("/subtractPTO", (req,res) => {
     })
 })
 
+app.post("/setPTO/:emp_id", (req,res) => {
+    const uid = req.params.emp_id
+    const q = "UPDATE emp AS e JOIN leave_credits l ON e.emp_id = l.emp_id SET leave_balance = " + req.body.new_pto_balance + " WHERE l.emp_id = ?"
+
+    db.query(q, [uid], (err, data) => {
+        if (err) return res.json(err); 
+        return res.json(data);
+    })
+})
+
 app.get("/getUserAvatar", (req, res) => {
     const uid = req.session.user[0].emp_id
     const q = "SELECT emp_pic FROM emp WHERE emp_id = 4"
