@@ -270,7 +270,7 @@ const DashBButtons = () => {
               <label className="form-control">
                 <div className="label">
                   <h1 className="label-text">
-                    Reason for Leave <span className="text-red-500"> *</span>
+                    Reason for Leave
                   </h1>
                 </div>
                 <textarea
@@ -280,7 +280,6 @@ const DashBButtons = () => {
                   placeholder="Reason for Leave..."
                   onChange={handleChange}
                   maxLength="255"
-                  required
                 ></textarea>
                 <div className="label py-0">
                   <span className="label-text-alt"></span>

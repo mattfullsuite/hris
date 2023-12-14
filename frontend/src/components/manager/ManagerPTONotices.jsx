@@ -4,14 +4,23 @@ import DataTable from "react-data-table-component";
 import moment from "moment";
 
 const ManagerPTONotices = () => {
-  var count = 1;
-  const [deptLeaves, setDeptLeaves] = useState([]);
+  const [data, setData] = useState([]);
+  const [all, setAll] = useState([]);
+  const [approved, setDeptApproved] = useState([]);
+  const [pending, setDeptPending] = useState([]);
+  const [declined, setDeptDeclined] = useState([]);
 
   useEffect(() => {
     const fetchAllDeptLeaves = async () => {
       try {
-        const res = await axios.get("http://localhost:6197/showalldeptleaves");
-        setDeptLeaves(res.data);
+        const all = await axios.get("http://localhost:6197/showalldeptleaves");
+        const approved = await axios.get("http://localhost:6197/showapproveddepartmentleaves")
+        const pending = await axios.get("http://localhost:6197/showpendingdepartmentleaves")
+        const declined = await axios.get("http://localhost:6197/showrejecteddepartmentleaves")
+        setData(all.data);
+        setDeptApproved(approved.data)
+        setDeptPending(pending.data)
+        setDeptDeclined(declined.data)
       } catch (err) {
         console.log(err);
       }
@@ -30,6 +39,18 @@ const ManagerPTONotices = () => {
       return <div className="badge badge-error">Rejected</div>;
     }
   }
+
+  const handleClick = (e) => {
+    if (e.currentTarget.id === "all") {
+      setData(all);
+    } else if (e.currentTarget.id === "approved") {
+      setData(approved);
+    } else if (e.currentTarget.id === "pending") {
+      setData(pending);
+    } else if (e.currentTarget.id === "declined") {
+      setData(declined);
+    }
+  };
 
   const columns = [
     {
@@ -51,10 +72,6 @@ const ManagerPTONotices = () => {
       selector: (row) => row.leave_type,
     },
     {
-      name: "Reason",
-      selector: (row) => row.leave_reason,
-    },
-    {
       name: "Date(s)",
       selector: (row) =>
         row.leave_from === row.leave_to
@@ -67,10 +84,77 @@ const ManagerPTONotices = () => {
       name: "Status",
       selector: (row) => checkStatus(row.leave_status),
     },
+
     {
       name: "Actions",
       selector: (row) => (
-        <button className="btn btn-active btn-xs">Details</button>
+        <div className="flex flex-row justify-center flex-wrap gap-1">
+          <button
+            className="btn btn-ghost-active btn-xs normal-case"
+            onClick={() => document.getElementById(row.leave_id).showModal()}
+          >
+            Details
+          </button>
+
+          {/* Modal - Details */}
+          <dialog id={row.leave_id} className="modal text-left">
+            <div className="modal-box">
+              <form method="dialog">
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                  ✕
+                </button>
+              </form>
+
+              <h3 className="font-bold text-lg mb-5">PTO Details</h3>
+
+              <div className="flex flex-col justify-center items-center">
+                {row.emp_pic == "" || row.emp_pic == null ? (
+                  <div className="h-24 w-24 bg-gray-500 rounded-full flex justify-center items-center text-4xl text-white font-medium m-2">
+                    {row.f_name.charAt(0) + row.s_name.charAt(0)}
+                  </div>
+                ) : (
+                  <img className="h-16 w-16 rounded-full m-2" />
+                )}
+
+                <div className="text-center mb-7">
+                  <h3 className="font-bold text-lg text-center">
+                    {row.s_name + ", " + row.f_name + " " + row.m_name}
+                  </h3>
+                  <span>{row.title}</span>
+                </div>
+
+                <div className="text-center">
+                  <h3 className="font-semibold text-xl">{row.leave_type}</h3>
+                  <h3 className="text-gray-600">
+                    {row.leave_from === row.leave_to
+                      ? moment(row.leave_from).format("MMM. DD, YYYY")
+                      : moment(row.leave_from).format("MMM. DD, YYYY") +
+                        "  to  " +
+                        moment(row.leave_to).format("MMM. DD, YYYY")}
+                  </h3>
+                </div>
+
+                <div className="mt-7 flex flex-col items-center gap-2">
+                  <h3 className="italic text-gray-600">
+                    Filed on {moment(row.date_filed).format("dddd")} •{" "}
+                    {moment(row.date_filed).format("MMMM DD, YYYY")}
+                  </h3>
+                  <div>{checkStatus(row.leave_status)}</div>
+                </div>
+              </div>
+
+              <div>
+                <h1 className="font-semibold mt-5">Reason:</h1>
+
+                <div className="max-h-44 whitespace-normal">
+                  <p className="justify-center text-justify">
+                    {(row.leave_reason == "" || row.leave_reason == null) ? <p className="italic text-gray-600">No reason indicated.</p> : <p>{row.leave_reason}</p>}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </dialog>
+        </div>
       ),
     },
   ];
@@ -85,16 +169,16 @@ const ManagerPTONotices = () => {
           role="tablist"
           className="tabs tabs-lifted tabs-lg flex flex-row justify-center"
         >
-          <a role="tab" className="tab tab-active">
+          <a role="tab" id="all" onClick={handleClick} className="tab tab-active">
             All
           </a>
-          <a role="tab" className="tab">
+          <a role="tab" id="approved" onClick={handleClick} className="tab">
             Approved
           </a>
-          <a role="tab" className="tab">
+          <a role="tab" id="pending" onClick={handleClick} className="tab">
             Pending
           </a>
-          <a role="tab" className="tab">
+          <a role="tab" id="declined" onClick={handleClick} className="tab">
             Declined
           </a>
         </div>
@@ -103,7 +187,7 @@ const ManagerPTONotices = () => {
 
         <DataTable
           columns={columns}
-          data={deptLeaves}
+          data={data}
           highlightOnHover
           pagination
         ></DataTable>

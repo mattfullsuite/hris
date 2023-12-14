@@ -71,6 +71,84 @@ const DashBOwnPTO = ({ link }) => {
       name: "Status",
       selector: (row) => checkStatus(row.leave_status),
     },
+    {
+      name: "Actions",
+      selector: (row) => (
+        <div className="flex flex-row justify-center flex-wrap gap-1">
+          <button
+            className="btn btn-ghost-active btn-xs normal-case"
+            onClick={() => document.getElementById(row.leave_id).showModal()}
+          >
+            Details
+          </button>
+
+          {/* Modal - Details */}
+          <dialog id={row.leave_id} className="modal text-left">
+            <div className="modal-box">
+              <form method="dialog">
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                  ✕
+                </button>
+              </form>
+
+              <h3 className="font-bold text-lg mb-5">PTO Details</h3>
+
+              <div className="flex flex-col justify-center items-center">
+                {row.emp_pic == "" || row.emp_pic == null ? (
+                  <div className="h-24 w-24 bg-gray-500 rounded-full flex justify-center items-center text-4xl text-white font-medium m-2">
+                    {row.f_name.charAt(0) + row.s_name.charAt(0)}
+                  </div>
+                ) : (
+                  <img className="h-16 w-16 rounded-full m-2" />
+                )}
+
+                <div className="text-center mb-7">
+                  <h3 className="font-bold text-lg text-center">
+                    {row.s_name + ", " + row.f_name + " " + row.m_name}
+                  </h3>
+                  <span>{row.title}</span>
+                </div>
+
+                <div className="text-center">
+                  <h3 className="font-semibold text-xl">{row.leave_type}</h3>
+                  <h3 className="text-gray-600">
+                    {row.leave_from === row.leave_to
+                      ? moment(row.leave_from).format("MMM. DD, YYYY")
+                      : moment(row.leave_from).format("MMM. DD, YYYY") +
+                        "  to  " +
+                        moment(row.leave_to).format("MMM. DD, YYYY")}
+                  </h3>
+                </div>
+
+                <div className="mt-7 flex flex-col items-center gap-2">
+                  <h3 className="italic text-gray-600">
+                    Filed on {moment(row.date_filed).format("dddd")} •{" "}
+                    {moment(row.date_filed).format("MMMM DD, YYYY")}
+                  </h3>
+                  <div>{checkStatus(row.leave_status)}</div>
+                </div>
+              </div>
+
+              <div>
+                <h1 className="font-semibold mt-5">Reason:</h1>
+
+                <div className="max-h-44 whitespace-normal">
+                  <p className="justify-center text-justify">
+                    {row.leave_reason == "" || row.leave_reason == null ? (
+                      <p className="italic text-gray-600">
+                        No reason indicated.
+                      </p>
+                    ) : (
+                      <p>{row.leave_reason}</p>
+                    )}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </dialog>
+        </div>
+      ),
+    },
   ];
 
   if (myLeaves.length == 0) {
