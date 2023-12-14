@@ -2,8 +2,26 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 import ButtonBack from "../universal/ButtonBack";
+import {useParams} from "react-router-dom"
 
 const HRFormEditEmployee = () => {
+  const {emp_id} = useParams()
+  const [fetchData, setFetchData] = useState([]);
+  var [oldData] = ([])
+
+  useEffect(() => {
+    const fetchOldData = async () => {
+      try {
+        const res = await axios.get(`http://localhost:6197/viewEmployee/${emp_id}`);
+        setFetchData(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchOldData();
+  }, []);
+
+  
   const [userReference, setUserReferences] = useState([]);
 
   const[companies, setCompanies] = useState([])
@@ -148,15 +166,19 @@ const HRFormEditEmployee = () => {
                       First Name<span className="text-red-500"> *</span>
                     </span>
                   </div>
+                  {fetchData.map((o) => (
                   <input
                     name="f_name"
                     onChange={handleChange}
                     type="text"
                     maxlength="100"
+                    value={o.f_name}
                     className="input input-bordered w-full "
                     required
                   />
+                  ))}
                 </label>
+                
 
                 {/* Middle Name */}
                 <label className="form-control w-full max-w-md md:mb-0 md:mr-4">

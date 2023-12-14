@@ -59,7 +59,7 @@ const HRFormViewEmployee = () => {
 
           <div className="text-right mr-2">
             {" "}
-            <Link to="/editemployee">
+            <Link to={`/editemployee/` + p.emp_id}>
             <button className="btn btn-sm btn-outline normal-case mx-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
