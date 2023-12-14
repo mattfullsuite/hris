@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
+import ButtonBack from "../universal/ButtonBack";
 
 const HRFormAddEmployee = () => {
   const [userReference, setUserReferences] = useState([]);
@@ -128,6 +129,7 @@ const HRFormAddEmployee = () => {
     <>
       <>
         <div className="p-4 sm:ml-64 flex flex-col">
+          <ButtonBack></ButtonBack>
           <div className="m-2">
             <h1 className="text-3xl font-bold tracking-wide">
               Add New Employee

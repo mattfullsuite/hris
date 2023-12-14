@@ -6,11 +6,27 @@ import ButtonBack from "../universal/ButtonBack";
 const HRFormEditEmployee = () => {
   const [userReference, setUserReferences] = useState([]);
 
+  const[companies, setCompanies] = useState([])
+  const[divisions, setDivisions] = useState([])
+  const[departments, setDepartments] = useState([])
+  const[clients, setClients] = useState([])
+  const[positions, setPositions] = useState([])
+
   useEffect(() => {
     const fetchReferences = async () => {
       try {
-        const res = await axios.get("http://localhost:6197/employeeslist");
-        setUserReferences(res.data);
+        const res1 = await axios.get("http://localhost:6197/employeeslist");
+        const res2 = await axios.get("http://localhost:6197/getAllCompanies");
+        const res3 = await axios.get("http://localhost:6197/getAllDivisions");
+        const res4 = await axios.get("http://localhost:6197/getAllDepartments");
+        const res5 = await axios.get("http://localhost:6197/getAllClients");
+        const res6 = await axios.get("http://localhost:6197/getAllPositions");
+        setUserReferences(res1.data);
+        setCompanies(res2.data);
+        setDivisions(res3.data);
+        setDepartments(res4.data);
+        setClients(res5.data);
+        setPositions(res6.data);
       } catch (err) {
         console.log(err);
       }
@@ -36,9 +52,6 @@ const HRFormEditEmployee = () => {
       } else {
         document.getElementById("emp_num_label").innerHTML = " *";
       }
-      //else if (element.work_email != email_box.value){
-      //   document.getElementById("work_email_label").innerHTML = " "
-      // }
     });
   };
 
@@ -61,16 +74,18 @@ const HRFormEditEmployee = () => {
     sex: "",
     gender: "",
     civil_status: "",
+    company_id: "",
+    div_id: "",
+    dept_id: "",
+    client_id: "",
+    position_id: "",
   });
 
   const handleChange = (event) => {
-    setEmployeeInfo({
-      ...employeeInfo,
-      [event.target.name]: [event.target.value],
-    });
-    isFound();
+    setEmployeeInfo({...employeeInfo,[event.target.name]: [event.target.value]});
     console.log(JSON.stringify(employeeInfo));
-  };
+    isFound();
+  }
 
   const disableNext = () => {
     var dateFrom = document.getElementById("date_hired").value;
@@ -109,547 +124,594 @@ const HRFormEditEmployee = () => {
     window.location.reload();
     alert("Successfully added new employee: " + employeeInfo.emp_num);
   };
+
   return (
     <>
-      <div className="p-4 sm:ml-64 flex flex-col">
-        <ButtonBack></ButtonBack>
-        <div className="m-2">
-          <h1 className="text-3xl font-bold tracking-wide">Edit Employee</h1>
-        </div>
-        <form onSubmit={handleSubmit}>
-          {/* Personal Information */}
-          <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
-            <h1 className="font-bold">Personal Information</h1>
-
-            <div className="flex flex-col md:flex-row">
-              {/* First Name */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">
-                    First Name<span className="text-red-500"> *</span>
-                  </span>
-                </div>
-                <input
-                  name="f_name"
-                  onChange={handleChange}
-                  type="text"
-                  maxlength="100"
-                  className="input input-bordered w-full "
-                  required
-                />
-              </label>
-
-              {/* Middle Name */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">
-                    Middle Name<span className="text-red-500"> *</span>
-                  </span>
-                </div>
-                <input
-                  name="m_name"
-                  onChange={handleChange}
-                  type="text"
-                  maxlength="100"
-                  className="input input-bordered w-full "
-                  required
-                />
-              </label>
-
-              {/* Surname */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">
-                    Surname<span className="text-red-500"> *</span>
-                  </span>
-                </div>
-                <input
-                  name="s_name"
-                  onChange={handleChange}
-                  type="text"
-                  maxlength="100"
-                  className="input input-bordered w-full "
-                  required
-                />
-              </label>
-            </div>
-
-            <div className="flex flex-col md:flex-row">
-              {/* Date of Birth */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">
-                    Date of Birth<span className="text-red-500"> *</span>
-                  </span>
-                </div>
-                <input
-                  name="dob"
-                  onChange={handleChange}
-                  type="date"
-                  max={moment().format("YYYY-MM-DD")}
-                  className="input input-bordered w-full"
-                  required
-                />
-              </label>
-
-              {/* Civil Status */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">Civil Status</span>
-                </div>
-                <select
-                  name="civil_status"
-                  onChange={handleChange}
-                  className="select select-bordered w-full"
-                  required
-                >
-                  <option disabled selected>
-                    Select Civil Status
-                  </option>
-                  <option>Single</option>
-                  <option>Married</option>
-                  <option>Widowed</option>
-                </select>
-              </label>
-
-              {/* Sex */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">
-                    Sex<span className="text-red-500"> *</span>
-                  </span>
-                </div>
-                <select
-                  name="sex"
-                  onChange={handleChange}
-                  className="select select-bordered w-full"
-                  required
-                >
-                  <option disabled selected>
-                    Select Sex
-                  </option>
-                  <option>Male</option>
-                  <option>Female</option>
-                </select>
-              </label>
-
-              {/* Gender */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">Gender</span>
-                </div>
-                <input
-                  name="gender"
-                  onChange={handleChange}
-                  type="text"
-                  className="input input-bordered w-full"
-                />
-              </label>
-            </div>
-
-            <div className="flex flex-col md:flex-row">
-              {/* Permanent Address */}
-              <label className="form-control w-full max-w-5xl md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">
-                    Permanent Address<span className="text-red-500"> *</span>
-                  </span>
-                </div>
-                <input
-                  id="p_address"
-                  name="p_address"
-                  onChange={handleChange}
-                  type="text"
-                  className="input input-bordered w-full"
-                />
-              </label>
-            </div>
-
-            <div className="flex flex-col md:flex-row">
-              {/* Current Address */}
-              <label className="form-control w-full max-w-5xl md:mb-0 md:mr-4">
-                <div className="label pb-0">
-                  <span className="label-text">
-                    Current Address<span className="text-red-500"> *</span>
-                  </span>
-                </div>
-                <div className="flex items-center ">
-                  {" "}
-                  <label className="label cursor-pointer">
-                    <input
-                      id="same_address_checkbox"
-                      name="c_address"
-                      type="checkbox"
-                      value=""
-                      className="checkbox checkbox-sm"
-                      onClick={isSameAddress}
-                      onChange={handleChange}
-                    />
-                    <span className="label-text ml-2">
-                      {" "}
-                      Same as Permanent Address
-                    </span>
-                  </label>
-                </div>
-                <input
-                  id="c_address"
-                  name="c_address"
-                  onChange={handleChange}
-                  type="text"
-                  className="input input-bordered w-full"
-                />
-              </label>
-            </div>
+      <>
+        <div className="p-4 sm:ml-64 flex flex-col">
+          <ButtonBack></ButtonBack>
+          <div className="m-2">
+            <h1 className="text-3xl font-bold tracking-wide">
+              Edit Employee
+            </h1>
           </div>
+          <form onSubmit={handleSubmit}>
+            {/* Personal Information */}
+            <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
+              <h1 className="font-bold">Personal Information</h1>
 
-          {/* Contact Information */}
-          <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
-            <h1 className="font-bold">Contact Information</h1>
-
-            <div className="flex flex-col md:flex-row">
-              {/* Personal Email */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">
-                    Personal Email<span className="text-red-500"> *</span>
-                  </span>
-                </div>
-                <input
-                  name="personal_email"
-                  onChange={handleChange}
-                  type="email"
-                  className="input input-bordered w-full "
-                />
-              </label>
-              {/* Contact Number */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">
-                    Contact Number<span className="text-red-500"> *</span>
-                  </span>
-                </div>
-                <input
-                  name="contact_num"
-                  onChange={handleChange}
-                  type="number"
-                  className="input input-bordered w-full "
-                />
-              </label>
-              <div></div>
-            </div>
-            <div className="divider"></div>
-            <p className="font-semibold text-red-500 text-sm">
-              Emergency Contact Information
-            </p>
-            <div className="flex flex-col md:flex-row">
-              {/* Name */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">Name</span>
-                </div>
-                <input
-                  name="emergency_contact_name"
-                  onChange={handleChange}
-                  type="text"
-                  className="input input-bordered w-full "
-                />
-              </label>
-
-              {/* Number */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">Contact Number</span>
-                </div>
-                <input
-                  name="emergency_contact_num"
-                  onChange={handleChange}
-                  type="number"
-                  className="input input-bordered w-full "
-                />
-              </label>
-            </div>
-          </div>
-
-          {/* Employee Information */}
-          <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
-            <h1 className="font-bold mb-2">Employee Information</h1>
-
-            <div className="flex flex-col w-full md:flex-row">
-              {/* Employee ID */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">
-                    Employee ID
-                    <span id="emp_num_label" className="text-red-500">
-                      {" "}
-                      *
+              <div className="flex flex-col md:flex-row">
+                {/* First Name */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      First Name<span className="text-red-500"> *</span>
                     </span>
-                  </span>
-                </div>
-                <div className="flex">
-                  <select className="select select-bordered w-32" required>
-                    <option disabled selected>
-                      Company
-                    </option>
-                    <option value="OCCI">FullSuite</option>
-                    <option value="TEE">TeeTalkPh</option>
-                    <option value="VIA">Viascari</option>
-                    <option value="ENVIE">Envie/Meraki</option>
-                  </select>
+                  </div>
                   <input
-                    id="emp_num"
-                    name="emp_num"
+                    name="f_name"
                     onChange={handleChange}
                     type="text"
                     maxlength="100"
                     className="input input-bordered w-full "
+                    required
                   />
-                </div>
-              </label>
+                </label>
 
-              {/* Work Email */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">
-                    Work E-mail
-                    <span id="work_email_label" className="text-red-500">
-                      {" "}
-                      *
+                {/* Middle Name */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Middle Name<span className="text-red-500"> *</span>
                     </span>
-                  </span>
-                </div>
-                <input
-                  id="work_email"
-                  name="work_email"
-                  maxlength="100"
-                  onChange={handleChange}
-                  type="email"
-                  className="input input-bordered w-full "
-                  required
-                />
-              </label>
+                  </div>
+                  <input
+                    name="m_name"
+                    onChange={handleChange}
+                    type="text"
+                    maxlength="100"
+                    className="input input-bordered w-full "
+                    required
+                  />
+                </label>
+
+                {/* Surname */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Surname<span className="text-red-500"> *</span>
+                    </span>
+                  </div>
+                  <input
+                    name="s_name"
+                    onChange={handleChange}
+                    type="text"
+                    maxlength="100"
+                    className="input input-bordered w-full "
+                    required
+                  />
+                </label>
+              </div>
+
+              <div className="flex flex-col md:flex-row">
+                {/* Date of Birth */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Date of Birth<span className="text-red-500"> *</span>
+                    </span>
+                  </div>
+                  <input
+                    name="dob"
+                    onChange={handleChange}
+                    type="date"
+                    max={moment().format("YYYY-MM-DD")}
+                    className="input input-bordered w-full"
+                    required
+                  />
+                </label>
+
+                {/* Civil Status */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Civil Status</span>
+                  </div>
+                  <select
+                    name="civil_status"
+                    onChange={handleChange}
+                    className="select select-bordered w-full"
+                    required
+                  >
+                    <option disabled selected>
+                      Select Civil Status
+                    </option>
+                    <option>Single</option>
+                    <option>Married</option>
+                    <option>Widowed</option>
+                  </select>
+                </label>
+
+                {/* Sex */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Sex<span className="text-red-500"> *</span>
+                    </span>
+                  </div>
+                  <select
+                    name="sex"
+                    onChange={handleChange}
+                    className="select select-bordered w-full"
+                    required
+                  >
+                    <option disabled selected>
+                      Select Sex
+                    </option>
+                    <option>Male</option>
+                    <option>Female</option>
+                  </select>
+                </label>
+
+                {/* Gender */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Gender</span>
+                  </div>
+                  <input
+                    name="gender"
+                    onChange={handleChange}
+                    type="text"
+                    className="input input-bordered w-full"
+                  />
+                </label>
+              </div>
+
+              <div className="flex flex-col md:flex-row">
+                {/* Permanent Address */}
+                <label className="form-control w-full max-w-5xl md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Permanent Address<span className="text-red-500"> *</span>
+                    </span>
+                  </div>
+                  <input
+                    id="p_address"
+                    name="p_address"
+                    onChange={handleChange}
+                    type="text"
+                    className="input input-bordered w-full"
+                  />
+                </label>
+              </div>
+
+              <div className="flex flex-col md:flex-row">
+                {/* Current Address */}
+                <label className="form-control w-full max-w-5xl md:mb-0 md:mr-4">
+                  <div className="label pb-0">
+                    <span className="label-text">
+                      Current Address<span className="text-red-500"> *</span>
+                    </span>
+                  </div>
+                  <div className="flex items-center ">
+                    {" "}
+                    <label className="label cursor-pointer">
+                      <input
+                        id="same_address_checkbox"
+                        name="c_address"
+                        type="checkbox"
+                        value=""
+                        className="checkbox checkbox-sm"
+                        onClick={isSameAddress}
+                        onChange={handleChange}
+                      />
+                      <span className="label-text ml-2">
+                        {" "}
+                        Same as Permanent Address
+                      </span>
+                    </label>
+                  </div>
+                  <input
+                    id="c_address"
+                    name="c_address"
+                    onChange={handleChange}
+                    type="text"
+                    className="input input-bordered w-full"
+                  />
+                </label>
+              </div>
             </div>
 
-            <div className="flex flex-col w-full md:flex-row">
-              {/* Department */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">
-                    Department/Client
-                    <span id="emp_num_label" className="text-red-500">
-                      {" "}
-                      *
-                    </span>
-                  </span>
-                </div>
-                <select className="select select-bordered w-full " required>
-                  <option disabled selected>
-                    Select Department
-                  </option>
-                  <option disabled selected>
-                    Departments
-                  </option>
-                  <option>Engineering</option>
-                  <option>Finance Operations</option>
-                  <option>Culture and People</option>
-                  <option>Human Resources</option>
-                  <option>Business Development</option>
-                  <option>Compliance</option>
-                  <option>Information Security</option>
-                  <option disabled selected>
-                    Clients
-                  </option>
-                  <option>PikNik</option>
-                  <option>Redica</option>
-                  <option>Implementation</option>
-                  <option>Bracket Capital</option>
-                  <option>Clarivine</option>
-                  <option>Tech GC</option>
-                  <option>Dorm Room</option>
-                  <option disabled selected>
-                    Others
-                  </option>
-                  <option>Food & Beverages</option>
-                </select>
-              </label>
+            {/* Contact Information */}
+            <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
+              <h1 className="font-bold">Contact Information</h1>
 
-              {/* Job Title */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">
-                    Job Title
-                    <span id="work_email_label" className="text-red-500">
-                      {" "}
-                      *
+              <div className="flex flex-col md:flex-row">
+                {/* Personal Email */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Personal Email<span className="text-red-500"> *</span>
                     </span>
-                  </span>
-                </div>
-                <select className="select select-bordered w-full " required>
-                  <option disabled selected>
-                    Select Job Title
-                  </option>
-                  <option>Job Title 1</option>
-                  <option>Job Title 2</option>
-                  <option>Job Title 3</option>
-                </select>
-              </label>
+                  </div>
+                  <input
+                    name="personal_email"
+                    onChange={handleChange}
+                    type="email"
+                    className="input input-bordered w-full "
+                  />
+                </label>
+                {/* Contact Number */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Contact Number<span className="text-red-500"> *</span>
+                    </span>
+                  </div>
+                  <input
+                    name="contact_num"
+                    onChange={handleChange}
+                    type="number"
+                    className="input input-bordered w-full "
+                  />
+                </label>
+                <div></div>
+              </div>
+              <div className="divider"></div>
+              <p className="font-semibold text-red-500 text-sm">
+                Emergency Contact Information
+              </p>
+              <div className="flex flex-col md:flex-row">
+                {/* Name */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Name</span>
+                  </div>
+                  <input
+                    name="emergency_contact_name"
+                    onChange={handleChange}
+                    type="text"
+                    className="input input-bordered w-full "
+                  />
+                </label>
+
+                {/* Number */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Contact Number</span>
+                  </div>
+                  <input
+                    name="emergency_contact_num"
+                    onChange={handleChange}
+                    type="number"
+                    className="input input-bordered w-full "
+                  />
+                </label>
+              </div>
             </div>
 
-            <div className="flex flex-col w-full md:flex-row">
-              {/* Employment Status */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">
-                    Employment Status<span className="text-red-500"> *</span>
-                  </span>
-                </div>
-                <select
-                  name="emp_status"
-                  onChange={handleChange}
+            {/* Employee Information */}
+            <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
+              <h1 className="font-bold mb-2">Employee Information</h1>
+
+              <div className="flex flex-col w-full md:flex-row">
+                {/* Employee ID */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Employee ID
+                      <span id="emp_num_label" className="text-red-500">
+                        {" "}
+                        *
+                      </span>
+                    </span>
+                  </div>
+                  <div className="flex">
+
+                    <select 
+                    id="company_id"
+                    name="company_id"
+                    className="select select-bordered w-32" 
+                    onChange={handleChange}
+                    required>
+                      <option disabled selected>Company</option>
+                      {companies.map((c) => (
+                        <option value={c.company_id}>{c.company_name}</option>
+                      ))}
+                    </select>
+
+                    <input
+                      id="emp_num"
+                      name="emp_num"
+                      onChange={handleChange}
+                      type="text"
+                      maxlength="100"
+                      className="input input-bordered w-full "
+                    />
+                  </div>
+                </label>
+
+                {/* Work Email */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Work E-mail
+                      <span id="work_email_label" className="text-red-500">
+                        {" "}
+                        *
+                      </span>
+                    </span>
+                  </div>
+                  <input
+                    id="work_email"
+                    name="work_email"
+                    maxlength="100"
+                    onChange={handleChange}
+                    type="email"
+                    className="input input-bordered w-full "
+                    required
+                  />
+                </label>
+              </div>
+
+              <div className="flex flex-col w-full md:flex-row">
+                {/* Division */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Division
+                      <span id="division_label" className="text-red-500">
+                        {" "}
+                        *
+                      </span>
+                    </span>
+                  </div>
+                  <select 
+                  id="div_id"
+                  name="div_id"
                   className="select select-bordered w-full "
-                  required
-                >
-                  <option disabled selected>
-                    Select Employment Status
-                  </option>
-                  <option>Probationary</option>
-                  <option>Regular</option>
-                  <option>Part-time</option>
-                </select>
-              </label>
-
-              {/* Employee Role */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">
-                    Employment Role<span className="text-red-500"> *</span>
-                  </span>
-                </div>
-                <select
-                  name="emp_role"
                   onChange={handleChange}
-                  className="select select-bordered w-full "
-                  required
-                >
-                  <option disabled selected>
-                    Select Employment Role
-                  </option>
-                  <option value="3">Manager</option>
-                  <option value="2">Regular Employee</option>
-                  <option value="1">HR</option>
-                  <option>Administrator</option>
-                </select>
-              </label>
+                  required>
+                    <option disabled selected>Select Division</option>
+                    {divisions.map((di) => (
+                      <option value={di.div_id}>{di.div_name}</option>
+                    ))}
+                  </select>
+                </label>
+
+                {/* Department */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Department
+                      <span id="department_label" className="text-red-500">
+                        {" "}
+                        *
+                      </span>
+                    </span>
+                  </div>
+                  <select 
+                  id="dept_id"
+                  name="dept_id"
+                  className="select select-bordered w-full " 
+                  onChange={handleChange}
+                  required>
+                    <option disabled selected>
+                      Select Department
+                    </option>
+                    {departments.map((de) => (
+                    <option value={de.dept_id}>{de.dept_name}</option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+
+              <div className="flex flex-col w-full md:flex-row">
+                {/* Client/Cluster */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Client/Cluster
+                      <span id="emp_num_label" className="text-red-500">
+                        {" "}
+                        *
+                      </span>
+                    </span>
+                  </div>
+                  <select 
+                  id="client_id"
+                  name="client_id"
+                  className="select select-bordered w-full " 
+                  onChange={handleChange}
+                  required>
+                    <option disabled selected>Select Client/Cluster</option>
+                    {clients.map((c) => (
+                      <option value={c.client_id}>{c.client_name}</option>
+                    ))}
+                  </select>
+                </label>
+
+                {/* Positions */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Position
+                      <span id="department_label" className="text-red-500">
+                        {" "}
+                        *
+                      </span>
+                    </span>
+                  </div>
+                  <select
+                  id="position_id"
+                  name="position_id"
+                  className="select select-bordered w-full " 
+                  required>
+                    <option disabled selected>
+                      Select Position
+                    </option>
+                    {positions.map((p) => (
+                    <option value={p.position_id}>{p.position_name}</option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+
+              <div className="flex flex-col w-full md:flex-row">
+                {/* Employment Status */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Employment Status<span className="text-red-500"> *</span>
+                    </span>
+                  </div>
+                  <select
+                    name="emp_status"
+                    onChange={handleChange}
+                    className="select select-bordered w-full "
+                    required
+                  >
+                    <option disabled selected>
+                      Select Employment Status
+                    </option>
+                    <option>Probationary</option>
+                    <option>Regular</option>
+                    <option>Part-time</option>
+                  </select>
+                </label>
+
+                {/* Employee Role */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Employment Role<span className="text-red-500"> *</span>
+                    </span>
+                  </div>
+                  <select
+                    name="emp_role"
+                    onChange={handleChange}
+                    className="select select-bordered w-full "
+                    required
+                  >
+                    <option disabled selected>
+                      Select Employment Role
+                    </option>
+                    <option value="3">Manager</option>
+                    <option value="2">Regular Employee</option>
+                    <option value="1">HR</option>
+                    <option>Administrator</option>
+                  </select>
+                </label>
+              </div>
+
+              <div className="flex flex-col md:flex-row">
+                {/* Date Hired */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Date Hired<span className="text-red-500"> *</span>
+                    </span>
+                  </div>
+                  <input
+                    id="date_hired"
+                    name="date_hired"
+                    onChange={handleChange}
+                    onInput={disableNext}
+                    type="date"
+                    className="input input-bordered w-full "
+                  />
+                </label>
+
+                {/* Date of Regularization */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Date of Regularization
+                      <span className="text-red-500"> *</span>
+                    </span>
+                  </div>
+                  <input
+                    id="date_regularization"
+                    name="date_regularization"
+                    onChange={handleChange}
+                    type="date"
+                    className="input input-bordered w-full "
+                  />
+                </label>
+
+                {/* Date Separated*/}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Date Separated</span>
+                  </div>
+                  <input
+                    name="date_separated"
+                    onChange={handleChange}
+                    type="date"
+                    className="input input-bordered w-full "
+                    disabled
+                  />
+                </label>
+              </div>
+
+              <div className="divider"></div>
+
+              <div className="flex flex-col md:flex-row">
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">Upload Profile Picture</span>
+                  </div>
+                  <input
+                    name="emp_pic"
+                    onChange={handleChange}
+                    type="file"
+                    className="file-input w-full max-w-xs"
+                  />
+                </label>
+              </div>
+
+              <div className="divider"></div>
+
+              {/* <div className="flex flex-col md:flex-row">
+                
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">SSS Number</span>
+                  </div>
+                  <input type="text" className="input input-bordered w-full " />
+                </label>
+
+                
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">SSS Number</span>
+                  </div>
+                  <input type="text" className="input input-bordered w-full" />
+                </label>
+              </div> */}
+
+              {/* <div className="flex flex-col md:flex-row">
+          
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">HDMC Number</span>
+                  </div>
+                  <input type="text" className="input input-bordered w-full " />
+                </label>
+
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">TIN Number</span>
+                  </div>
+                  <input type="text" className="input input-bordered w-full " />
+                </label>
+              </div> */}
             </div>
-
-            <div className="flex flex-col md:flex-row">
-              {/* Date Hired */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">
-                    Date Hired<span className="text-red-500"> *</span>
-                  </span>
-                </div>
-                <input
-                  id="date_hired"
-                  name="date_hired"
-                  onChange={handleChange}
-                  onInput={disableNext}
-                  type="date"
-                  className="input input-bordered w-full "
-                />
-              </label>
-
-              {/* Date of Regularization */}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">
-                    Date of Regularization
-                    <span className="text-red-500"> *</span>
-                  </span>
-                </div>
-                <input
-                  id="date_regularization"
-                  name="date_regularization"
-                  onChange={handleChange}
-                  type="date"
-                  className="input input-bordered w-full "
-                />
-              </label>
-
-              {/* Date Separated*/}
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">Date Separated</span>
-                </div>
-                <input
-                  name="date_separated"
-                  onChange={handleChange}
-                  type="date"
-                  className="input input-bordered w-full "
-                  disabled
-                />
-              </label>
+            <div className="flex justify-end m-2">
+              <input type="submit" value="Submit" className="btn" />
             </div>
-
-            <div className="divider"></div>
-
-            <div className="flex flex-col md:flex-row">
-              <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-                <div className="label">
-                  <span className="label-text">Upload Profile Picture</span>
-                </div>
-                <input
-                  name="emp_pic"
-                  onChange={handleChange}
-                  type="file"
-                  className="file-input w-full max-w-xs"
-                />
-              </label>
-            </div>
-
-            <div className="divider"></div>
-
-            {/* <div className="flex flex-col md:flex-row">
-            
-            <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-              <div className="label">
-                <span className="label-text">SSS Number</span>
-              </div>
-              <input type="text" className="input input-bordered w-full " />
-            </label>
-
-            
-            <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-              <div className="label">
-                <span className="label-text">SSS Number</span>
-              </div>
-              <input type="text" className="input input-bordered w-full" />
-            </label>
-          </div> */}
-
-            {/* <div className="flex flex-col md:flex-row">
-      
-            <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-              <div className="label">
-                <span className="label-text">HDMC Number</span>
-              </div>
-              <input type="text" className="input input-bordered w-full " />
-            </label>
-
-            <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
-              <div className="label">
-                <span className="label-text">TIN Number</span>
-              </div>
-              <input type="text" className="input input-bordered w-full " />
-            </label>
-          </div> */}
-          </div>
-          <div className="flex justify-end m-2">
-            <input type="submit" value="Submit" className="btn" />
-          </div>
-        </form>
-      </div>
+          </form>
+        </div>
+      </>
     </>
   );
 };
