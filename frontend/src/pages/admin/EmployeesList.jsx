@@ -1,33 +1,9 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { Link } from "react-router-dom";
 import EmployeeListComponent from "../../components/universal/EmployeeListComponent";
 import HRSideBar from "../../components/hr/HRSideBar";
-import EmailTemplate from "../../components/universal/EmailTemplate";
 
 const EmployeesList = () => {
-  const [employees, setEmployees] = useState([]);
-
-  useEffect(() => {
-    const fetchAllEmployees = async () => {
-      try {
-        const res = await axios.get("http://localhost:6197/employeeslist");
-        setEmployees(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    fetchAllEmployees();
-  }, []);
-
-  const handleDelete = async (user_id) => {
-    try {
-      await axios.delete("http://localhost:6197/employeeslist/" + user_id);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   return (
     <div>

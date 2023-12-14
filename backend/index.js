@@ -36,11 +36,9 @@ db.connect ( (error) => {
 
 app.use(express.json());
 
-//app.use(cors())
 app.use(cors(
     {
     origin: ["http://localhost:3000"],
-    //origin: "*",
     methods: ["GET", "POST", "DELETE", "OPTIONS"],
     credentials: true
     }
@@ -116,13 +114,13 @@ app.delete("/employeesList/:user_id", (req, res) => {
     })
 })
 
-app.get("/viewEmployee/:user_id", (req, res) => {
-    const user_id = req.params.user_id;
-    const q = "SELECT * FROM emp WHERE user_id = ?";
+app.get("/viewEmployee/:emp_id", async (req, res) => {
+    const emp_id = req.params.emp_id;
+    const q = "SELECT * FROM emp AS e INNER JOIN leave_credits AS l ON e.emp_id=l.emp_id WHERE e.emp_id = ?";
 
-    db.query(q, [user_id], (err,data) => {
+    db.query(q, [emp_id], (err,data) => {
         if(err) return res.json(err)
-        return res.json(data)
+        return res.send(data)
     })
 })
 
@@ -732,6 +730,22 @@ app.post("/addNewEmployee", (req, res)=> {
         console.log("Inserted leave credits for new employee.")
     })
 
+    const designationValues = 
+    [
+        req.body.company_id,
+        req.body.div_id,
+        req.body.dept_id,
+        req.body.client_id,
+        req.body.position_id,
+    ]
+
+    const q3 = "INSERT INTO `emp_designation` (`emp_id`, `company_id`,`div_id`,`dept_id`,`client_id`,`position_id`) VALUES ((SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1), ?)"
+
+    db.query(q3, [designationValues], (err, data3) => {
+        if (err) {console.log(err)};
+        console.log("Inserted new designation for new employee.")
+    })
+
 
     try {
         let transporter = nodemailer.createTransport({
@@ -801,6 +815,16 @@ app.post("/subtractPTO", (req,res) => {
     })
 })
 
+app.post("/setPTO/:emp_id", (req,res) => {
+    const uid = req.params.emp_id
+    const q = "UPDATE emp AS e JOIN leave_credits l ON e.emp_id = l.emp_id SET leave_balance = " + req.body.new_pto_balance + " WHERE l.emp_id = ?"
+
+    db.query(q, [uid], (err, data) => {
+        if (err) return res.json(err); 
+        return res.json(data);
+    })
+})
+
 app.get("/getUserAvatar", (req, res) => {
     const uid = req.session.user[0].emp_id
     const q = "SELECT emp_pic FROM emp WHERE emp_id = 4"
@@ -860,7 +884,7 @@ app.get("/getPartTimeEmployees", (req, res) => {
 })
 
 app.get("/isWorkEmailUnique", (req, res) => {
-    const email = req.body.work_email
+
     const q = "SELECT * FROM emp WHERE work_email = ?"
 
     db.query(q, (err, data) => {
@@ -871,4 +895,72 @@ app.get("/isWorkEmailUnique", (req, res) => {
         }
     })
 })
- 
+
+
+/** -------------------------- */
+
+app.get("/getAllCompanies", (req, res) => {
+
+    const q = "SELECT * FROM company"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+app.get("/getAllDivisions", (req, res) => {
+
+    const q = "SELECT * FROM division"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+
+app.get("/getAllDepartments", (req, res) => {
+
+    const q = "SELECT * FROM department"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+app.get("/getAllClients", (req, res) => {
+
+    const q = "SELECT * FROM client"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+app.get("/getAllPositions", (req, res) => {
+
+    const q = "SELECT * FROM position"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})

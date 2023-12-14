@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Dec 12, 2023 at 06:44 AM
+-- Generation Time: Dec 14, 2023 at 04:02 AM
 -- Server version: 5.7.39
 -- PHP Version: 7.4.33
 
@@ -45,11 +45,44 @@ INSERT INTO `announcements` (`ann_id`, `emp_id`, `ann_title`, `ann_content`, `an
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `client`
+--
+
+CREATE TABLE `client` (
+  `client_id` int(11) NOT NULL,
+  `client_name` varchar(255) NOT NULL,
+  `date_start` date DEFAULT NULL,
+  `date_end` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `client`
+--
+
+INSERT INTO `client` (`client_id`, `client_name`, `date_start`, `date_end`) VALUES
+(1, 'Not Applicable', NULL, NULL),
+(2, 'Clarivine', NULL, NULL),
+(3, 'Dorm Room', NULL, NULL),
+(4, 'Bracket Capital', NULL, NULL),
+(5, 'Cluster B', NULL, NULL),
+(6, 'Pik-Nik', NULL, NULL),
+(7, 'Redica', NULL, NULL),
+(8, 'Viascari', NULL, NULL),
+(9, 'Cluster A', NULL, NULL),
+(10, 'Cluster C', NULL, NULL),
+(11, 'Cluster D', NULL, NULL),
+(12, 'Cluster E', NULL, NULL),
+(13, 'Backup Team', NULL, NULL),
+(14, 'TechGC', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `company`
 --
 
 CREATE TABLE `company` (
-  `company_id` int(100) NOT NULL,
+  `company_id` int(11) NOT NULL,
   `company_name` varchar(255) NOT NULL,
   `company_loc` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -60,7 +93,9 @@ CREATE TABLE `company` (
 
 INSERT INTO `company` (`company_id`, `company_name`, `company_loc`) VALUES
 (1, 'FullSuite', 'Baguio City'),
-(2, 'TeeTalkPH', 'Baguio City');
+(2, 'TeeTalkPH', 'Baguio City'),
+(3, 'Viascari', 'Baguio City'),
+(4, 'Envie', '');
 
 -- --------------------------------------------------------
 
@@ -69,20 +104,32 @@ INSERT INTO `company` (`company_id`, `company_name`, `company_loc`) VALUES
 --
 
 CREATE TABLE `department` (
-  `dept_id` int(255) NOT NULL,
+  `dept_id` int(11) NOT NULL,
   `dept_name` varchar(255) NOT NULL,
-  `manager_id` int(255) NOT NULL
+  `manager_id` int(255) DEFAULT NULL,
+  `div_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `department`
 --
 
-INSERT INTO `department` (`dept_id`, `dept_name`, `manager_id`) VALUES
-(1, 'Engineering', 8),
-(2, 'Human Resources', 3),
-(4, 'Corporate Strategy', 6),
-(10, 'Finance Operations', 10);
+INSERT INTO `department` (`dept_id`, `dept_name`, `manager_id`, `div_id`) VALUES
+(1, 'Engineering', 8, 0),
+(2, 'Human Resources', NULL, 0),
+(4, 'Corporate Strategy', 6, 0),
+(10, 'Finance Operations', 10, 0),
+(11, 'Administrator', NULL, 0),
+(12, 'Business Development', NULL, 0),
+(13, 'Business Operations', NULL, 0),
+(14, 'Compliance', NULL, 0),
+(15, 'Corporate Branding', NULL, 0),
+(17, 'Customer Success', NULL, 0),
+(18, 'Employee Services', NULL, 0),
+(19, 'Talent Acquisition', NULL, 0),
+(20, 'Implementation', NULL, 0),
+(21, 'Vice President, Local Market', NULL, 0),
+(22, 'Information & Security', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -137,6 +184,30 @@ INSERT INTO `department_manager` (`approver_id`, `emp_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `division`
+--
+
+CREATE TABLE `division` (
+  `div_id` int(11) NOT NULL,
+  `div_name` varchar(255) NOT NULL,
+  `div_start_from` date DEFAULT NULL,
+  `div_start_to` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `division`
+--
+
+INSERT INTO `division` (`div_id`, `div_name`, `div_start_from`, `div_start_to`) VALUES
+(1, 'Executive', NULL, NULL),
+(2, 'Operations', NULL, NULL),
+(3, 'Corporate Strategy', NULL, NULL),
+(4, 'Culture & People', NULL, NULL),
+(5, 'Venture Studio', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `emp`
 --
 
@@ -146,8 +217,8 @@ CREATE TABLE `emp` (
   `work_email` varchar(100) NOT NULL,
   `password` varchar(500) NOT NULL,
   `f_name` varchar(100) NOT NULL,
-  `m_name` varchar(30) NOT NULL,
-  `s_name` varchar(30) NOT NULL,
+  `m_name` varchar(100) NOT NULL,
+  `s_name` varchar(100) NOT NULL,
   `emp_role` int(1) NOT NULL,
   `emp_pic` varchar(1000) DEFAULT NULL,
   `personal_email` varchar(100) NOT NULL,
@@ -181,7 +252,37 @@ INSERT INTO `emp` (`emp_id`, `emp_num`, `work_email`, `password`, `f_name`, `m_n
 (8, 'OCCI-0278', 'jhex@fullsuite.ph', 'jhexjhex', 'Jhexer', 'Tiongson', 'Chun', 3, '../photos/jhex.png', 'jhexchun@gmail.com', '09302506992', '1997-06-28', '161-A Lower Pias St. Camp 7, Baguio City, Benguet 2600', '161-A Lower Pias St. Camp 7, Baguio City, Benguet 2600', '2023-05-03', '2023-10-30', NULL, 'REGULAR', 'Male', 'Male', 'Single', 'Juvelyn Chun', '09476002222'),
 (9, 'OCCI-0273', 'alleza@fullsuite.ph', 'zaza', 'Alleza Czarina', 'Nonato', 'Castor', 2, '', 'allezaczarina@gmail.com', '09154353116', '2023-04-09', 'Quezon Hill, Baguio City', 'Quezon Hill, Baguio City', '2023-04-03', '2023-10-03', NULL, 'REGULAR', 'Female', NULL, NULL, NULL, NULL),
 (10, NULL, 'ajessica@fullsuite.ph', 'jessjess', 'Jessica', 'Abarquez', 'Aguirre', 3, '', 'jeszicawongaguirre@gmail.com', '09386339392', '1993-10-05', '39 Military Cutoff Baguio City', '39 Military Cutoff Baguio City', '2022-07-18', '2023-01-18', NULL, 'REGULAR', 'Female', NULL, NULL, NULL, NULL),
-(20, 'OCCI-0700', 'marvin@fullsuite.ph', 'OCCI-0700', 'Marvin', 'Directo', 'Bautista', 2, NULL, 'mrvn@gmail.com', '45645', '2023-12-07', 'San Juan, Moncada, Tarlac', 'Phil-Am, Baguio City, Benguet', '2023-12-13', '2023-12-13', NULL, 'Probationary', 'Male', 'Cis', 'Single', NULL, NULL);
+(81, 'OCCI-0700', 'marvin@fullsuite.ph', 'OCCI-0700', 'Marvin', 'Directo', 'Bautista', 2, NULL, 'mrvn@gmail.com', '57468', '2023-12-07', 'Umingan, Pangasinan', 'Phil-Am, Baguio City, Benguet', '2023-12-14', '2023-12-15', NULL, 'Probationary', 'Male', 'Cis', 'Single', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `emp_designation`
+--
+
+CREATE TABLE `emp_designation` (
+  `emp_id` int(255) NOT NULL,
+  `company_id` int(11) NOT NULL,
+  `dept_id` int(11) NOT NULL,
+  `division_id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `position_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `emp_designation`
+--
+
+INSERT INTO `emp_designation` (`emp_id`, `company_id`, `dept_id`, `division_id`, `client_id`, `position_id`) VALUES
+(1, 1, 1, 5, 1, 30),
+(2, 1, 22, 3, 1, 31),
+(3, 1, 1, 5, 1, 30),
+(4, 1, 1, 5, 1, 30),
+(5, 2, 4, 3, 1, 9),
+(6, 1, 4, 3, 1, 32),
+(7, 1, 19, 4, 1, 11),
+(8, 1, 22, 3, 1, 24),
+(9, 1, 13, 2, 4, 34);
 
 -- --------------------------------------------------------
 
@@ -308,15 +409,16 @@ CREATE TABLE `leave_credits` (
 
 INSERT INTO `leave_credits` (`leave_credits_id`, `emp_id`, `leave_balance`) VALUES
 (6, 8, '0.83'),
-(8, 4, '1.43'),
+(8, 4, '55.00'),
 (12, 3, '0.00'),
-(15, 10, '1.25'),
+(15, 10, '1.00'),
 (16, 5, '16.00'),
 (18, 1, '5.00'),
 (19, 2, '5.00'),
 (20, 6, '3.45'),
 (21, 7, '0.85'),
-(22, 9, '0.56');
+(22, 9, '0.56'),
+(47, 81, '0.00');
 
 -- --------------------------------------------------------
 
@@ -345,6 +447,58 @@ CREATE TABLE `payroll` (
   `deductions_id` int(100) NOT NULL,
   `date_of_payout` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `position`
+--
+
+CREATE TABLE `position` (
+  `position_id` int(11) NOT NULL,
+  `position_name` varchar(255) NOT NULL,
+  `division_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `position`
+--
+
+INSERT INTO `position` (`position_id`, `position_name`, `division_id`) VALUES
+(1, 'Chief Executive Officer', 1),
+(2, 'Payroll Specialist', 2),
+(3, 'Chief Finance Officer', 1),
+(4, 'Vice President, Local Market', 1),
+(5, 'Chief Implementation Officer', 1),
+(6, 'Chief Customer Officer', 1),
+(7, 'Data Operations Associate Manager', 2),
+(8, 'Business Operations Specialist', 2),
+(9, 'Corporate Branding Associate', 3),
+(10, 'Finance Operations Analyst', 2),
+(11, 'Talent Acquisition Associate', 4),
+(12, 'Data Operations Specialist', 2),
+(13, 'Management Accountant Scholar', 2),
+(14, 'Data Operations Lead', 2),
+(15, 'Compliance Analyst', 2),
+(16, 'Compliance Associate', 2),
+(17, 'Finance Operations Manager', 2),
+(18, 'Finance Operations Associate Manager', 2),
+(19, 'Business Operations Analyst', 2),
+(20, 'Finance Operations Team Lead', 2),
+(21, 'Vice President, Finance Operations', 1),
+(22, 'Implementation Strategy Lead', 2),
+(23, 'Data Operations Associate', 2),
+(24, 'InfoSec Associate Manager', 3),
+(25, 'Employee Services Associate', 4),
+(26, 'Corporate Branding Analyst', 2),
+(27, 'Implementation Manager', 2),
+(28, 'Executive Driver', 4),
+(29, 'Finance Operations Associate', 2),
+(30, 'Software Engineer', 5),
+(31, 'InfoSec and Technology Associate', 3),
+(32, 'Business Development Associate', 3),
+(33, 'Business Analyst Associate', 2),
+(34, 'Business Operations Associate', 2);
 
 -- --------------------------------------------------------
 
@@ -484,6 +638,12 @@ ALTER TABLE `announcements`
   ADD KEY `emp_id` (`emp_id`);
 
 --
+-- Indexes for table `client`
+--
+ALTER TABLE `client`
+  ADD PRIMARY KEY (`client_id`);
+
+--
 -- Indexes for table `company`
 --
 ALTER TABLE `company`
@@ -512,10 +672,27 @@ ALTER TABLE `department_manager`
   ADD KEY `approver_emp_id` (`emp_id`);
 
 --
+-- Indexes for table `division`
+--
+ALTER TABLE `division`
+  ADD PRIMARY KEY (`div_id`);
+
+--
 -- Indexes for table `emp`
 --
 ALTER TABLE `emp`
   ADD PRIMARY KEY (`emp_id`);
+
+--
+-- Indexes for table `emp_designation`
+--
+ALTER TABLE `emp_designation`
+  ADD KEY `emp_id_designation` (`emp_id`),
+  ADD KEY `company_id_designation` (`company_id`),
+  ADD KEY `dept_id_designation` (`dept_id`),
+  ADD KEY `division_id_designation` (`division_id`),
+  ADD KEY `client_id_designation` (`client_id`),
+  ADD KEY `position_id_designation` (`position_id`);
 
 --
 -- Indexes for table `emp_details`
@@ -554,6 +731,13 @@ ALTER TABLE `offset`
   ADD KEY `offset_emp_id` (`emp_id`);
 
 --
+-- Indexes for table `position`
+--
+ALTER TABLE `position`
+  ADD PRIMARY KEY (`position_id`),
+  ADD KEY `pos_div_id` (`division_id`);
+
+--
 -- Indexes for table `title`
 --
 ALTER TABLE `title`
@@ -584,16 +768,22 @@ ALTER TABLE `announcements`
   MODIFY `ann_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `client`
+--
+ALTER TABLE `client`
+  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `company_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `company_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `dept_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `dept_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `department_employees`
@@ -608,10 +798,16 @@ ALTER TABLE `department_manager`
   MODIFY `approver_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `division`
+--
+ALTER TABLE `division`
+  MODIFY `div_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `emp`
 --
 ALTER TABLE `emp`
-  MODIFY `emp_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `emp_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
 
 --
 -- AUTO_INCREMENT for table `emp_details`
@@ -635,13 +831,19 @@ ALTER TABLE `leaves`
 -- AUTO_INCREMENT for table `leave_credits`
 --
 ALTER TABLE `leave_credits`
-  MODIFY `leave_credits_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `leave_credits_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT for table `offset`
 --
 ALTER TABLE `offset`
   MODIFY `offset_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `position`
+--
+ALTER TABLE `position`
+  MODIFY `position_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `title`
@@ -670,6 +872,23 @@ ALTER TABLE `users`
 --
 ALTER TABLE `department_employees`
   ADD CONSTRAINT `dept_emp_dept_id` FOREIGN KEY (`dept_id`) REFERENCES `department` (`dept_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `emp_designation`
+--
+ALTER TABLE `emp_designation`
+  ADD CONSTRAINT `client_id_designation` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `company_id_designation` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `dept_id_designation` FOREIGN KEY (`dept_id`) REFERENCES `department` (`dept_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `division_id_designation` FOREIGN KEY (`division_id`) REFERENCES `division` (`div_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `emp_id_designation` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`emp_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `position_id_designation` FOREIGN KEY (`position_id`) REFERENCES `position` (`position_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `position`
+--
+ALTER TABLE `position`
+  ADD CONSTRAINT `pos_div_id` FOREIGN KEY (`division_id`) REFERENCES `division` (`div_id`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import Axios from "axios";
-import { Link } from "react-router-dom";
 import SideBarProfile from "../universal/SideBarProfile";
 
 const ClientSideBar = () => {
@@ -18,7 +17,7 @@ const ClientSideBar = () => {
 
 useEffect(() => {
     Axios.get("http://localhost:6197/login").then((response) => {
-       if (response.data.loggedIn == false) {
+       if (response.data.loggedIn === false) {
         navigate("/login")
         window.location.reload()
        }
@@ -146,7 +145,6 @@ setTimeout(function () {
 
             <li>
               <a
-                href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -170,7 +168,6 @@ setTimeout(function () {
             </li>
             <li>
               <a
-                href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -193,7 +190,7 @@ setTimeout(function () {
             </li>
             <li>
               <a
-                href="#"
+                
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -212,7 +209,6 @@ setTimeout(function () {
             </li>
             <li>
               <a
-                href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700 group"
               >
                 <svg
@@ -236,7 +232,6 @@ setTimeout(function () {
             </li>
             <li>
               <a
-                //href="/" 
                 onClick={ logoutEmployee }
                 className="mt-12 flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700 group"
               >

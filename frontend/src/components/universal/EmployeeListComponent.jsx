@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const EmployeeListComponent = () => {
   // const handleDelete = async (user_id) => {
@@ -12,6 +12,7 @@ const EmployeeListComponent = () => {
   //         console.log(err)
   //     }
   // }
+  const navigate = useNavigate();
 
   const [employees, setEmployees] = useState([]);
   const [records, setRecords] = useState(employees);
@@ -45,7 +46,7 @@ const EmployeeListComponent = () => {
     {
       name: "",
       selector: (row) => (
-        (row.emp_pic == "") ? <div className="h-16 w-16 bg-gray-500 rounded-full flex justify-center items-center text-3xl text-white font-medium m-2">{row.f_name.charAt(0) + row.s_name.charAt(0)}</div> : <img className="h-16 w-16 rounded-full m-2" 
+        (row.emp_pic == "" || row.emp_pic == null) ? <div className="h-16 w-16 bg-gray-500 rounded-full flex justify-center items-center text-3xl text-white font-medium m-2">{row.f_name.charAt(0) + row.s_name.charAt(0)}</div> : <img className="h-16 w-16 rounded-full m-2" 
         src={row.emp_pic} />
       ),
     },
@@ -81,8 +82,9 @@ const EmployeeListComponent = () => {
     {
       name: "Actions",
       selector: (row) => (
-        <Link to="/viewEmployee">
-        <a className="btn btn-active btn-xs btn-info" >
+        <Link to={`/viewEmployee/` + row.emp_id}>
+        <a 
+        className="btn btn-active btn-xs btn-info">
           View
         </a>
         </Link>

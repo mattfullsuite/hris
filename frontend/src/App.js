@@ -27,6 +27,7 @@ import ManagerProfile from "./pages/leads/ManagerProfile.jsx";
 import ViewEmployee from "./pages/hr/ViewEmployee.jsx";
 
 function App() {
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -43,10 +44,10 @@ function App() {
           <Route path="/announcements" element={<Announcements />} />
           <Route path="/addAnnouncements" element={<AddAnnouncements />} />
           <Route path="/addEmployee" element={<AddEmployee />} />
-          <Route path="/viewEmployee" element={<ViewEmployee />} />
+          {/* <Route path="/viewEmployee" element={<ViewEmployee />} /> */}
+          <Route path="/viewEmployee/:emp_id" element={<ViewEmployee />} />
           <Route path="/addCompany" element={<AddCompany />} />
           <Route path="/hrProfile" element={<HRProfile />} />
-
 
 
           {/* Employee Routes */}
