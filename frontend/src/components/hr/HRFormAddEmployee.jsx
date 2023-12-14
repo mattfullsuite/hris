@@ -81,11 +81,10 @@ const HRFormAddEmployee = () => {
   });
 
   const handleChange = (event) => {
-
     setEmployeeInfo({...employeeInfo,[event.target.name]: [event.target.value]});
     console.log(JSON.stringify(employeeInfo));
     isFound();
-  };
+  }
 
   const disableNext = () => {
     var dateFrom = document.getElementById("date_hired").value;
@@ -468,7 +467,7 @@ const HRFormAddEmployee = () => {
                   id="div_id"
                   name="div_id"
                   className="select select-bordered w-full "
-                  onChange={handleChange} 
+                  onChange={handleChange}
                   required>
                     <option disabled selected>Select Division</option>
                     {divisions.map((di) => (
@@ -544,7 +543,6 @@ const HRFormAddEmployee = () => {
                   id="position_id"
                   name="position_id"
                   className="select select-bordered w-full " 
-                  onChange={handleChange}
                   required>
                     <option disabled selected>
                       Select Position

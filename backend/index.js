@@ -880,7 +880,7 @@ app.get("/isWorkEmailUnique", (req, res) => {
 
 app.get("/getAllCompanies", (req, res) => {
 
-    const q = "SELECT * FROM company"
+    const q = "SELECT * FROM company ORDER BY company_name ASC"
 
     db.query(q, (err, data) => {
         if (err){
@@ -893,7 +893,7 @@ app.get("/getAllCompanies", (req, res) => {
 
 app.get("/getAllDivisions", (req, res) => {
 
-    const q = "SELECT * FROM division"
+    const q = "SELECT * FROM division ORDER BY div_name ASC" 
 
     db.query(q, (err, data) => {
         if (err){
@@ -907,7 +907,7 @@ app.get("/getAllDivisions", (req, res) => {
 
 app.get("/getAllDepartments", (req, res) => {
 
-    const q = "SELECT * FROM department"
+    const q = "SELECT * FROM department ORDER BY dept_name ASC"
 
     db.query(q, (err, data) => {
         if (err){
@@ -920,7 +920,7 @@ app.get("/getAllDepartments", (req, res) => {
 
 app.get("/getAllClients", (req, res) => {
 
-    const q = "SELECT * FROM client"
+    const q = "SELECT * FROM client ORDER BY client_name ASC"
 
     db.query(q, (err, data) => {
         if (err){
@@ -933,9 +933,22 @@ app.get("/getAllClients", (req, res) => {
 
 app.get("/getAllPositions", (req, res) => {
 
-    const q = "SELECT * FROM position"
+    const q = "SELECT * FROM position ORDER BY position_name ASC"
 
     db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+app.get("/getAllPositionsInDivision", (req, res) => {
+
+    const q = "SELECT * FROM position WHERE div_id = ? ORDER BY position_name ASC"
+
+    db.query(q, req.body.div_id, (err, data) => {
         if (err){
             console.log(err)
         } else {

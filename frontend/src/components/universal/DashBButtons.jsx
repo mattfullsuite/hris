@@ -132,6 +132,7 @@ const DashBButtons = () => {
     document.getElementById("file_a_leave_btn").close();
     document.getElementById("leaveForm").reset();
     window.location.reload();
+    alert("Successfully filed leave!");
   };
 
   function usePTOpoints() {
