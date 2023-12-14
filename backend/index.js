@@ -709,6 +709,22 @@ app.post("/addNewEmployee", (req, res)=> {
         console.log("Inserted leave credits for new employee.")
     })
 
+    const designationValues = 
+    [
+        req.body.company_id,
+        req.body.div_id,
+        req.body.dept_id,
+        req.body.client_id,
+        req.body.position_id,
+    ]
+
+    const q3 = "INSERT INTO `emp_designation` (`emp_id`, `company_id`,`div_id`,`dept_id`,`client_id`,`position_id`) VALUES ((SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1), ?)"
+
+    db.query(q3, [designationValues], (err, data3) => {
+        if (err) {console.log(err)};
+        console.log("Inserted new designation for new employee.")
+    })
+
 
     try {
         let transporter = nodemailer.createTransport({
@@ -847,7 +863,7 @@ app.get("/getPartTimeEmployees", (req, res) => {
 })
 
 app.get("/isWorkEmailUnique", (req, res) => {
-    const email = req.body.work_email
+
     const q = "SELECT * FROM emp WHERE work_email = ?"
 
     db.query(q, (err, data) => {
@@ -858,4 +874,85 @@ app.get("/isWorkEmailUnique", (req, res) => {
         }
     })
 })
- 
+
+
+/** -------------------------- */
+
+app.get("/getAllCompanies", (req, res) => {
+
+    const q = "SELECT * FROM company ORDER BY company_name ASC"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+app.get("/getAllDivisions", (req, res) => {
+
+    const q = "SELECT * FROM division ORDER BY div_name ASC" 
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+
+app.get("/getAllDepartments", (req, res) => {
+
+    const q = "SELECT * FROM department ORDER BY dept_name ASC"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+app.get("/getAllClients", (req, res) => {
+
+    const q = "SELECT * FROM client ORDER BY client_name ASC"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+app.get("/getAllPositions", (req, res) => {
+
+    const q = "SELECT * FROM position ORDER BY position_name ASC"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+app.get("/getAllPositionsInDivision", (req, res) => {
+
+    const q = "SELECT * FROM position WHERE div_id = ? ORDER BY position_name ASC"
+
+    db.query(q, req.body.div_id, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})

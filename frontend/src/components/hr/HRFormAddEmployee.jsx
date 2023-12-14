@@ -5,11 +5,27 @@ import moment from "moment";
 const HRFormAddEmployee = () => {
   const [userReference, setUserReferences] = useState([]);
 
+  const[companies, setCompanies] = useState([])
+  const[divisions, setDivisions] = useState([])
+  const[departments, setDepartments] = useState([])
+  const[clients, setClients] = useState([])
+  const[positions, setPositions] = useState([])
+
   useEffect(() => {
     const fetchReferences = async () => {
       try {
-        const res = await axios.get("http://localhost:6197/employeeslist");
-        setUserReferences(res.data);
+        const res1 = await axios.get("http://localhost:6197/employeeslist");
+        const res2 = await axios.get("http://localhost:6197/getAllCompanies");
+        const res3 = await axios.get("http://localhost:6197/getAllDivisions");
+        const res4 = await axios.get("http://localhost:6197/getAllDepartments");
+        const res5 = await axios.get("http://localhost:6197/getAllClients");
+        const res6 = await axios.get("http://localhost:6197/getAllPositions");
+        setUserReferences(res1.data);
+        setCompanies(res2.data);
+        setDivisions(res3.data);
+        setDepartments(res4.data);
+        setClients(res5.data);
+        setPositions(res6.data);
       } catch (err) {
         console.log(err);
       }
@@ -35,9 +51,6 @@ const HRFormAddEmployee = () => {
       } else {
         document.getElementById("emp_num_label").innerHTML = " *";
       }
-      //else if (element.work_email != email_box.value){
-      //   document.getElementById("work_email_label").innerHTML = " "
-      // }
     });
   };
 
@@ -60,16 +73,18 @@ const HRFormAddEmployee = () => {
     sex: "",
     gender: "",
     civil_status: "",
+    company_id: "",
+    div_id: "",
+    dept_id: "",
+    client_id: "",
+    position_id: "",
   });
 
   const handleChange = (event) => {
-    setEmployeeInfo({
-      ...employeeInfo,
-      [event.target.name]: [event.target.value],
-    });
-    isFound();
+    setEmployeeInfo({...employeeInfo,[event.target.name]: [event.target.value]});
     console.log(JSON.stringify(employeeInfo));
-  };
+    isFound();
+  }
 
   const disableNext = () => {
     var dateFrom = document.getElementById("date_hired").value;
@@ -389,15 +404,19 @@ const HRFormAddEmployee = () => {
                     </span>
                   </div>
                   <div className="flex">
-                    <select className="select select-bordered w-32" required>
-                      <option disabled selected>
-                        Company
-                      </option>
-                      <option value="OCCI">FullSuite</option>
-                      <option value="TEE">TeeTalkPh</option>
-                      <option value="VIA">Viascari</option>
-                      <option value="ENVIE">Envie/Meraki</option>
+
+                    <select 
+                    id="company_id"
+                    name="company_id"
+                    className="select select-bordered w-32" 
+                    onChange={handleChange}
+                    required>
+                      <option disabled selected>Company</option>
+                      {companies.map((c) => (
+                        <option value={c.company_id}>{c.company_name}</option>
+                      ))}
                     </select>
+
                     <input
                       id="emp_num"
                       name="emp_num"
@@ -433,58 +452,104 @@ const HRFormAddEmployee = () => {
               </div>
 
               <div className="flex flex-col w-full md:flex-row">
+                {/* Division */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Division
+                      <span id="division_label" className="text-red-500">
+                        {" "}
+                        *
+                      </span>
+                    </span>
+                  </div>
+                  <select 
+                  id="div_id"
+                  name="div_id"
+                  className="select select-bordered w-full "
+                  onChange={handleChange}
+                  required>
+                    <option disabled selected>Select Division</option>
+                    {divisions.map((di) => (
+                      <option value={di.div_id}>{di.div_name}</option>
+                    ))}
+                  </select>
+                </label>
+
                 {/* Department */}
                 <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
                   <div className="label">
                     <span className="label-text">
-                      Department/Client
+                      Department
+                      <span id="department_label" className="text-red-500">
+                        {" "}
+                        *
+                      </span>
+                    </span>
+                  </div>
+                  <select 
+                  id="dept_id"
+                  name="dept_id"
+                  className="select select-bordered w-full " 
+                  onChange={handleChange}
+                  required>
+                    <option disabled selected>
+                      Select Department
+                    </option>
+                    {departments.map((de) => (
+                    <option value={de.dept_id}>{de.dept_name}</option>
+                    ))}
+                  </select>
+                </label>
+              </div>
+
+              <div className="flex flex-col w-full md:flex-row">
+                {/* Client/Cluster */}
+                <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
+                  <div className="label">
+                    <span className="label-text">
+                      Client/Cluster
                       <span id="emp_num_label" className="text-red-500">
                         {" "}
                         *
                       </span>
                     </span>
                   </div>
-                  <select className="select select-bordered w-full " required>
-                    <option disabled selected>Select Department</option>
-                    <option disabled selected>Departments</option>
-                    <option>Engineering</option>
-                    <option>Finance Operations</option>
-                    <option>Culture and People</option>
-                    <option>Human Resources</option>
-                    <option>Business Development</option>
-                    <option>Compliance</option>
-                    <option>Information Security</option>
-                    <option disabled selected>Clients</option>
-                    <option>PikNik</option>
-                    <option>Redica</option>
-                    <option>Implementation</option>
-                    <option>Bracket Capital</option>
-                    <option>Clarivine</option>
-                    <option>Tech GC</option>
-                    <option>Dorm Room</option>
-                    <option disabled selected>Others</option>
-                    <option>Food & Beverages</option>
+                  <select 
+                  id="client_id"
+                  name="client_id"
+                  className="select select-bordered w-full " 
+                  onChange={handleChange}
+                  required>
+                    <option disabled selected>Select Client/Cluster</option>
+                    {clients.map((c) => (
+                      <option value={c.client_id}>{c.client_name}</option>
+                    ))}
                   </select>
                 </label>
 
-                {/* Job Title */}
+                {/* Positions */}
                 <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
                   <div className="label">
                     <span className="label-text">
-                      Job Title
-                      <span id="work_email_label" className="text-red-500">
+                      Position
+                      <span id="department_label" className="text-red-500">
                         {" "}
                         *
                       </span>
                     </span>
                   </div>
-                  <select className="select select-bordered w-full " required>
+                  <select
+                  id="position_id"
+                  name="position_id"
+                  className="select select-bordered w-full " 
+                  required>
                     <option disabled selected>
-                      Select Job Title
+                      Select Position
                     </option>
-                    <option>Job Title 1</option>
-                    <option>Job Title 2</option>
-                    <option>Job Title 3</option>
+                    {positions.map((p) => (
+                    <option value={p.position_id}>{p.position_name}</option>
+                    ))}
                   </select>
                 </label>
               </div>

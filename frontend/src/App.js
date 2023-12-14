@@ -28,6 +28,7 @@ import ViewEmployee from "./pages/hr/ViewEmployee.jsx";
 import EditEmployee from "./pages/hr/EditEmployee.jsx";
 
 function App() {
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -52,7 +53,6 @@ function App() {
           <Route path="/viewEmployee/:emp_id" element={<ViewEmployee />} />
           <Route path="/addCompany" element={<AddCompany />} />
           <Route path="/hrProfile" element={<HRProfile />} />
-
 
 
           {/* Employee Routes */}
