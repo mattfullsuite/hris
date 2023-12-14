@@ -40,17 +40,23 @@ const ManagerPTORequestTable = () => {
     }
   };
 
-  function checkStatus(status){
-    if(status == 0){ return <div className="badge badge-warning">Pending</div>}
-    if(status == 1){ return <div className="badge badge-success">Approved</div>}
-    if(status == 2){ return <div className="badge badge-error text-white">Declined</div>}
+  function checkStatus(status) {
+    if (status == 0) {
+      return <div className="badge badge-warning">Pending</div>;
+    }
+    if (status == 1) {
+      return <div className="badge badge-success">Approved</div>;
+    }
+    if (status == 2) {
+      return <div className="badge badge-error text-white">Declined</div>;
+    }
   }
 
   const columns = [
     {
       name: "Date filed",
       selector: (row) => moment(row.date_filed).format("MMMM DD, YYYY"),
-      sortable: true
+      sortable: true,
     },
 
     {
@@ -79,15 +85,13 @@ const ManagerPTORequestTable = () => {
         <div className="flex flex-row justify-center flex-wrap gap-1">
           <button
             className="btn btn-ghost-active btn-xs normal-case"
-            onClick={() =>
-              document.getElementById(row.emp_id).showModal()
-            }
+            onClick={() => document.getElementById(row.leave_id).showModal()}
           >
             Details
           </button>
 
           {/* Modal - Details */}
-          <dialog id={row.emp_id} className="modal text-left">
+          <dialog id={row.leave_id} className="modal text-left">
             <div className="modal-box">
               <form method="dialog">
                 <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
@@ -96,63 +100,48 @@ const ManagerPTORequestTable = () => {
               </form>
 
               <h3 className="font-bold text-lg mb-5">PTO Details</h3>
-              <h3 className="font-bold text-xl mb-2">
-                {row.s_name + ", " + row.f_name + " " + row.m_name}
-              </h3>
-              <div className="flex">
-                <div className="flex-1">
-                  <h3 className="font-base">Date Filed:</h3>
-                  <h3 className="font-semibold mb-2">{moment(row.date_filed).format("MMMM DD, YYYY")}</h3>
+
+              <div className="flex flex-col justify-center items-center">
+                {(row.emp_pic == "" || row.emp_pic == null) ? <div className="h-24 w-24 bg-gray-500 rounded-full flex justify-center items-center text-4xl text-white font-medium m-2">{row.f_name.charAt(0) + row.s_name.charAt(0)}</div> : <img className="h-16 w-16 rounded-full m-2"/>}
+                
+                <div className="text-center mb-7">
+                  <h3 className="font-bold text-lg text-center">{row.s_name + ", " + row.f_name + " " + row.m_name}</h3>
+                  <span>{row.title}</span>
                 </div>
 
-                <div className="flex-1">
-                  <h3 className="font-base">PTO Type:</h3>
-                  <h3 className="font-semibold mb-2">{row.leave_type}</h3>
-                </div>
-              </div>
-
-              <div className="flex">
-                <div className="flex-1">
-                  <h3 className="font-base">Date From:</h3>
-                  <h3 className="font-semibold mb-2">
-                    {moment(row.leave_from).format("MMMM DD, YYYY")}
-                  </h3>
+                <div className="text-center">
+                  <h3 className="font-semibold text-xl">{row.leave_type}</h3>
+                  <h3 className="text-gray-600">{row.leave_from === row.leave_to ? moment(row.leave_from).format("MMM. DD, YYYY") : moment(row.leave_from).format("MMM. DD, YYYY") + "  to  " + moment(row.leave_to).format("MMM. DD, YYYY")}</h3>
                 </div>
 
-                <div className="flex-1">
-                  <h3 className="font-base">Date To:</h3>
-                  <h3 className="font-semibold mb-2">
-                    {moment(row.leave_to).format("MMMM DD, YYYY")}
-                  </h3>
+
+                <div className="mt-7 text-left w-full">
+                  <h3 className="italic text-gray-600">Filed on {moment(row.date_filed).format("dddd")} • {moment(row.date_filed).format("MMMM DD, YYYY")}</h3>
                 </div>
               </div>
 
-              <div>
-                <h1 className="font-base">Reason:</h1>
-                <p className="font-semibold mb-4">{row.leave_reason}</p>
+              <h1 className="font-semibold mt-3">Reason:</h1>
+              <div className="max-h-44 mb-5 whitespace-normal">
+                  <p className="mb-4 justify-center text-justify">{row.leave_reason}</p>
               </div>
-
-              <div className="badge badge-warning gap-1 mb-5">
-                {checkStatus(row.leave_status)}
-              </div>
+              
               <div className="flex justify-end gap-2">
-                <button 
-                className="btn bg-green-600 text-white hover:bg-green-800 normal-case"
-                onClick={() => handleApproval( row.leave_id )}
+                <button
+                  className="btn bg-green-600 text-white hover:bg-green-800 normal-case"
+                  onClick={() => handleApproval(row.leave_id)}
                 >
                   Approve
                 </button>
-                <button 
-                className="btn bg-red-600 text-white hover:bg-red-800 normal-case"
-                onClick={() => handleRejection( row.leave_id )}
+                <button
+                  className="btn bg-red-600 text-white hover:bg-red-800 normal-case"
+                  onClick={() => handleRejection(row.leave_id)}
                 >
                   Decline
                 </button>
               </div>
             </div>
-            
           </dialog>
-          
+
           <button
             className="btn btn-xs bg-lime-600 text-white hover:bg-green-800 normal-case"
             onClick={() => handleApproval(row.leave_id)}
@@ -171,13 +160,10 @@ const ManagerPTORequestTable = () => {
     },
   ];
 
-
   return (
     <>
       {/* PTO Notices */}
       <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-col justify-center align-middle">
-        
-
         <div className="flex flex-row justify-between mb-4 md:mx-7">
           <h1 className="text-lg font-semibold">PTO Requests</h1>
 
@@ -185,8 +171,8 @@ const ManagerPTORequestTable = () => {
         </div>
 
         <div className="overflow-x-auto max-w-full">
-          <DataTable 
-            columns={columns} 
+          <DataTable
+            columns={columns}
             data={leaves}
             highlightOnHover
           ></DataTable>

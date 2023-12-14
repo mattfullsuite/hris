@@ -254,7 +254,7 @@ app.get("/getUserPTO", (req, res) => {
 app.get("/showpendingdepartmentleaves", (req, res) => {
     const uid = req.session.user[0].emp_id
 
-    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE leave_status = 0 AND approver_id = ? ORDER BY date_filed DESC"
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id INNER JOIN title as t ON t.emp_id = e.emp_id WHERE leave_status = 0 AND approver_id = ? ORDER BY date_filed DESC"
     
     db.query(q,
         [uid],
