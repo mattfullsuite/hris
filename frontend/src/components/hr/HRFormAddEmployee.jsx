@@ -393,10 +393,10 @@ const HRFormAddEmployee = () => {
                       <option disabled selected>
                         Company
                       </option>
-                      <option>OCCI</option>
-                      <option>VIA</option>
-                      <option>TEE</option>
-                      <option>MER</option>
+                      <option value="OCCI">FullSuite</option>
+                      <option value="TEE">TeeTalkPh</option>
+                      <option value="VIA">Viascari</option>
+                      <option value="ENVIE">Envie/Meraki</option>
                     </select>
                     <input
                       id="emp_num"
@@ -405,7 +405,6 @@ const HRFormAddEmployee = () => {
                       type="text"
                       maxlength="100"
                       className="input input-bordered w-full "
-                      required
                     />
                   </div>
                 </label>
@@ -438,7 +437,7 @@ const HRFormAddEmployee = () => {
                 <label className="form-control w-full max-w-md md:mb-0 md:mr-4">
                   <div className="label">
                     <span className="label-text">
-                      Department
+                      Department/Client
                       <span id="emp_num_label" className="text-red-500">
                         {" "}
                         *
@@ -446,12 +445,25 @@ const HRFormAddEmployee = () => {
                     </span>
                   </div>
                   <select className="select select-bordered w-full " required>
-                    <option disabled selected>
-                      Select Department
-                    </option>
-                    <option>Department 1</option>
-                    <option>Department 2</option>
-                    <option>Department 3</option>
+                    <option disabled selected>Select Department</option>
+                    <option disabled selected>Departments</option>
+                    <option>Engineering</option>
+                    <option>Finance Operations</option>
+                    <option>Culture and People</option>
+                    <option>Human Resources</option>
+                    <option>Business Development</option>
+                    <option>Compliance</option>
+                    <option>Information Security</option>
+                    <option disabled selected>Clients</option>
+                    <option>PikNik</option>
+                    <option>Redica</option>
+                    <option>Implementation</option>
+                    <option>Bracket Capital</option>
+                    <option>Clarivine</option>
+                    <option>Tech GC</option>
+                    <option>Dorm Room</option>
+                    <option disabled selected>Others</option>
+                    <option>Food & Beverages</option>
                   </select>
                 </label>
 

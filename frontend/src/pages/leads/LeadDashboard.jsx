@@ -1,6 +1,5 @@
 import React from "react";
 import ManagerSideBar from "../../components/manager/ManagerSideBar";
-import DashBRemainingOffset from "../../components/universal/DashBRemainingOffset";
 import DashBremainingPTO from "../../components/universal/DashBRemainingPTO";
 import DashBButtons from "../../components/universal/DashBButtons";
 import ManagerPTONotices from "../../components/manager/ManagerPTONotices";
@@ -15,25 +14,6 @@ const LeadDashboard = () => {
   return (
     <>
       <ManagerSideBar></ManagerSideBar>
-      {/* <div className="p-4 sm:ml-64 flex flex-col">
-        <DashBGreeting></DashBGreeting>
-
-        <div className="my-2 mx-2">
-          <div className="flex">
-            <DashBremainingPTO></DashBremainingPTO>
-            <DashBRemainingOffset></DashBRemainingOffset>
-          </div>
-          <DashBButtons></DashBButtons>
-          <ManagerPTORequestTable></ManagerPTORequestTable>
-          <ManagerPTONotices></ManagerPTONotices>
-          <DashBOwnPTO></DashBOwnPTO>
-
-          <div className="flex">
-            <DashBBirthdays></DashBBirthdays>
-            <DashBAnniversaries></DashBAnniversaries>
-          </div>
-        </div>
-      </div> */}
 
       <div className="p-4 sm:ml-64 flex flex-col">
         <DashBGreeting></DashBGreeting>

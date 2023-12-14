@@ -25,16 +25,16 @@ const Login = () => {
             if(response.data.message){
                 setLoginStatus(response.data.message)
             } else {
-              if (response.data.emp_role == 0){
+              if (response.data.emp_role === 0){
                   navigate("/adminDashboard")
                   console.log("The user is an admin.")
-              } else if (response.data.emp_role == 1){
+              } else if (response.data.emp_role === 1){
                   console.log("The user is an HR.")
                   navigate("/hrDashboard")
-              } else if (response.data.emp_role == 2){
+              } else if (response.data.emp_role === 2){
                   console.log("The user is an employee,")
                   navigate("/clientDashboard")
-              } else if (response.data.emp_role == 3){
+              } else if (response.data.emp_role === 3){
                   console.log("The user is a team lead,")
                   navigate("/leadDashboard")
               } else {
@@ -47,15 +47,15 @@ const Login = () => {
      
     useEffect(() => {
         Axios.get(BASE_URL + ":6197/login").then((response) => {
-            if (response.data.loggedIn == true) {
-              if (response.data.user[0].emp_role == 0){
+            if (response.data.loggedIn === true) {
+              if (response.data.user[0].emp_role === 0){
                 navigate("/adminDashboard")
-              } else if (response.data.user[0].emp_role == 1){
-                navigate("/hrDashboard")
-              } else if (response.data.user[0].emp_role == 2){
+              } else if (response.data.user[0].emp_role === 2){
                 navigate("/clientDashboard")
-              } else if (response.data.user[0].emp_role == 3){
+              } else if (response.data.user[0].emp_role === 3){
                 navigate("/leadDashboard")
+              } else if (response.data.user[0].emp_role === 1){
+                navigate("/hrDashboard")
               } else {
                 console.log("The user is not authorized to log in to the system!")
               }
