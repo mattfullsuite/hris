@@ -25,6 +25,7 @@ import LeadPTORequest from "./pages/leads/LeadPTORequests";
 import HRProfile from "./pages/hr/HRProfile.jsx";
 import ManagerProfile from "./pages/leads/ManagerProfile.jsx";
 import ViewEmployee from "./pages/hr/ViewEmployee.jsx";
+import EditEmployee from "./pages/hr/EditEmployee.jsx";
 
 function App() {
   return (
@@ -43,6 +44,10 @@ function App() {
           <Route path="/announcements" element={<Announcements />} />
           <Route path="/addAnnouncements" element={<AddAnnouncements />} />
           <Route path="/addEmployee" element={<AddEmployee />} />
+          <Route path="/editEmployee" element={<EditEmployee />} />
+
+
+
           {/* <Route path="/viewEmployee" element={<ViewEmployee />} /> */}
           <Route path="/viewEmployee/:emp_id" element={<ViewEmployee />} />
           <Route path="/addCompany" element={<AddCompany />} />

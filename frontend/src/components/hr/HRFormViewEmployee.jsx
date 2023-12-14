@@ -2,7 +2,7 @@ import moment from "moment";
 import Axios from "axios";
 import { React, useEffect, useState } from "react";
 import ButtonBack from "../universal/ButtonBack";
-import {useParams} from "react-router-dom"
+import {useParams, Link} from "react-router-dom"
 
 const HRFormViewEmployee = () => {
   const {emp_id} = useParams()
@@ -59,6 +59,7 @@ const HRFormViewEmployee = () => {
 
           <div className="text-right mr-2">
             {" "}
+            <Link to="/editemployee">
             <button className="btn btn-sm btn-outline normal-case mx-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -76,6 +77,9 @@ const HRFormViewEmployee = () => {
               </svg>
               Edit
             </button>
+
+            </Link>
+            
             <button
               className="btn btn-sm btn-outline normal-case mx-1"
               onClick={() => document.getElementById("manage-pto").showModal()}

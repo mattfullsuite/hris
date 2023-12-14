@@ -4,7 +4,6 @@ import Axios from "axios";
 import HRSideBar from "../../components/hr/HRSideBar";
 import DashBGreeting from "../../components/universal/DashBGreeting";
 import HRNumEmployees from "../../components/hr/HRNumOfEmployees";
-import HRNotices from "../../components/hr/HRNotices";
 import DashBButtons from "../../components/universal/DashBButtons";
 import DashBremainingPTO from "../../components/universal/DashBRemainingPTO";
 import DashBBirthdays from "../../components/universal/DashBBirthdays";
