@@ -33,12 +33,28 @@ const HRPTONotices = () => {
   const handleClick = (e) => {
     if (e.currentTarget.id === "all") {
       setData(all);
+      document.getElementById("all").classList.add("tab-active");
+      document.getElementById("app").classList.remove("tab-active");
+      document.getElementById("pen").classList.remove("tab-active");
+      document.getElementById("dec").classList.remove("tab-active");
     } else if (e.currentTarget.id === "app") {
       setData(approved);
+      document.getElementById("all").classList.remove("tab-active");
+      document.getElementById("app").classList.add("tab-active");
+      document.getElementById("pen").classList.remove("tab-active");
+      document.getElementById("dec").classList.remove("tab-active");
     } else if (e.currentTarget.id === "pen") {
       setData(pending);
+      document.getElementById("all").classList.remove("tab-active");
+      document.getElementById("app").classList.remove("tab-active");
+      document.getElementById("pen").classList.add("tab-active");
+      document.getElementById("dec").classList.remove("tab-active");
     } else if (e.currentTarget.id === "dec") {
       setData(declined);
+      document.getElementById("all").classList.remove("tab-active");
+      document.getElementById("app").classList.remove("tab-active");
+      document.getElementById("pen").classList.remove("tab-active");
+      document.getElementById("dec").classList.add("tab-active");
     }
   };
 
@@ -176,7 +192,7 @@ const HRPTONotices = () => {
           role="tablist"
           className="tabs tabs-lifted tabs-lg flex flex-row justify-center"
         >
-          <button role="tab" id="all" onClick={handleClick} className="tab">
+          <button role="tab" id="all" onClick={handleClick} className="tab tab-active">
             All
           </button>
           <button role="tab" id="app" onClick={handleClick} className="tab">

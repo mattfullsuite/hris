@@ -13,7 +13,7 @@ const ManagerPTONotices = () => {
   useEffect(() => {
     const fetchAllDeptLeaves = async () => {
       try {
-        const all = await axios.get("http://localhost:6197/showalldeptleaves");
+        const all = await axios.get("http://localhost:6197/showalldleaves");
         const approved = await axios.get("http://localhost:6197/showapproveddepartmentleaves")
         const pending = await axios.get("http://localhost:6197/showpendingdepartmentleaves")
         const declined = await axios.get("http://localhost:6197/showrejecteddepartmentleaves")
@@ -21,6 +21,7 @@ const ManagerPTONotices = () => {
         setDeptApproved(approved.data)
         setDeptPending(pending.data)
         setDeptDeclined(declined.data)
+        setAll(all.data)
       } catch (err) {
         console.log(err);
       }
@@ -43,12 +44,28 @@ const ManagerPTONotices = () => {
   const handleClick = (e) => {
     if (e.currentTarget.id === "all") {
       setData(all);
+      document.getElementById("all").classList.add("tab-active");
+      document.getElementById("approved").classList.remove("tab-active");
+      document.getElementById("pending").classList.remove("tab-active");
+      document.getElementById("declined").classList.remove("tab-active");
     } else if (e.currentTarget.id === "approved") {
       setData(approved);
+      document.getElementById("all").classList.remove("tab-active");
+      document.getElementById("approved").classList.add("tab-active");
+      document.getElementById("pending").classList.remove("tab-active");
+      document.getElementById("declined").classList.remove("tab-active");
     } else if (e.currentTarget.id === "pending") {
       setData(pending);
+      document.getElementById("all").classList.remove("tab-active");
+      document.getElementById("approved").classList.remove("tab-active");
+      document.getElementById("pending").classList.add("tab-active");
+      document.getElementById("declined").classList.remove("tab-active");
     } else if (e.currentTarget.id === "declined") {
       setData(declined);
+      document.getElementById("all").classList.remove("tab-active");
+      document.getElementById("approved").classList.remove("tab-active");
+      document.getElementById("pending").classList.remove("tab-active");
+      document.getElementById("declined").classList.add("tab-active");
     }
   };
 
@@ -162,8 +179,8 @@ const ManagerPTONotices = () => {
   return (
     <>
       {/* PTO Notices */}
-      <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-col justify-center align-middle">
-        <h1 className="text-lg font-semibold mb-4">Department PTO Notices</h1>
+      <div className="m-2 p-5 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-col justify-center align-middle">
+        <h1 className="text-lg font-semibold mb-4 text-center">Department PTO Notices</h1>
 
         <div
           role="tablist"
