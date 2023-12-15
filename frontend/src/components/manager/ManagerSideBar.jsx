@@ -105,6 +105,7 @@ const navigate = useNavigate()
             </li>
 
             <li>
+              <Link to="/leadPTORequests">
               <a
                 href="leadPTORequests"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -123,6 +124,7 @@ const navigate = useNavigate()
                   3
                 </span>
               </a>
+              </Link>
             </li>
 
             <li>

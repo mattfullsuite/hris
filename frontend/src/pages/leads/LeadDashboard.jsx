@@ -7,7 +7,7 @@ import DashBBirthdays from "../../components/universal/DashBBirthdays";
 import DashBAnniversaries from "../../components/universal/DashBAnniversaries";
 import DashBOwnPTO from "../../components/universal/DashBOwnPTO";
 import DashBGreeting from "../../components/universal/DashBGreeting";
-import ManagerPTORequestTable from "../../components/manager/ManagerPTORequestTable";
+import ManagerPTORequestTableLimited from "../../components/manager/ManagerPTORequestTableLimited";
 
 const LeadDashboard = () => {
 
@@ -31,7 +31,7 @@ const LeadDashboard = () => {
             </div>
 
             <div className="mt-4">
-              <ManagerPTORequestTable></ManagerPTORequestTable>
+              <ManagerPTORequestTableLimited link={"./svgs/lead_empty.svg"}></ManagerPTORequestTableLimited>
               <ManagerPTONotices></ManagerPTONotices>
               <DashBOwnPTO link={"./svgs/lead_empty.svg"} ></DashBOwnPTO>
             </div>

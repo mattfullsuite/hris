@@ -248,11 +248,56 @@ app.get("/getUserPTO", (req, res) => {
 
 
 //TL
+app.get("/showalldleaves", (req, res) => {
+    const uid = req.session.user[0].emp_id
+
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id INNER JOIN title as t ON t.emp_id = e.emp_id WHERE approver_id = ? ORDER BY date_filed DESC"
+
+    db.query(q,
+        [uid],
+        (err,data)=> {
+        if(err) {
+            return res.json(err)
+        }
+        return res.json(data)
+    })
+})
+
+app.get("/showapproveddepartmentleaves", (req, res) => {
+    const uid = req.session.user[0].emp_id
+
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id INNER JOIN title as t ON t.emp_id = e.emp_id WHERE leave_status = 1 AND approver_id = ? ORDER BY date_filed DESC"
+
+    db.query(q,
+        [uid],
+        (err,data)=> {
+        if(err) {
+            return res.json(err)
+        }
+        return res.json(data)
+    })
+})
+
+app.get("/showpendingdepartmentleaveslimited", (req, res) => {
+    const uid = req.session.user[0].emp_id
+
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id INNER JOIN title as t ON t.emp_id = e.emp_id WHERE leave_status = 0 AND approver_id = ? ORDER BY date_filed DESC LIMIT 3"
+    
+    db.query(q,
+        [uid],
+        (err,data)=> {
+        if(err) {
+            return res.json(err)
+        }
+
+        return res.json(data)
+    })
+})
 
 app.get("/showpendingdepartmentleaves", (req, res) => {
     const uid = req.session.user[0].emp_id
 
-    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE leave_status = 0 AND approver_id = ? ORDER BY date_filed DESC"
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id INNER JOIN title as t ON t.emp_id = e.emp_id WHERE leave_status = 0 AND approver_id = ? ORDER BY date_filed DESC"
     
     db.query(q,
         [uid],
@@ -268,7 +313,7 @@ app.get("/showpendingdepartmentleaves", (req, res) => {
 app.get("/showrejecteddepartmentleaves", (req, res) => {
     const uid = req.session.user[0].emp_id
 
-    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE leave_status = 2 AND approver_id = ?"
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id INNER JOIN title as t ON t.emp_id = e.emp_id WHERE leave_status = 2 AND approver_id = ? ORDER BY date_filed DESC"
     
     db.query(q,
         [uid],
