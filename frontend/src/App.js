@@ -25,7 +25,11 @@ import LeadPTORequest from "./pages/leads/LeadPTORequests";
 import HRProfile from "./pages/hr/HRProfile.jsx";
 import ManagerProfile from "./pages/leads/ManagerProfile.jsx";
 import ViewEmployee from "./pages/hr/ViewEmployee.jsx";
+<<<<<<< HEAD
 import EditEmployee from "./pages/hr/EditEmployee.jsx";
+=======
+import LeadDirectory from "./pages/leads/LeadDirectory.jsx";
+>>>>>>> origin/marvin
 
 function App() {
 
@@ -68,6 +72,7 @@ function App() {
           <Route path="/widgetPending" element={<WidgetPending />} />
           <Route path="/leadPTORequests" element={<LeadPTORequest />} />
           <Route path="/manProfile" element={<ManagerProfile />} />
+          <Route path="/leadDirectory" element={<LeadDirectory />} />
 
 
 
