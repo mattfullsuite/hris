@@ -8,7 +8,6 @@ import DashBButtons from "../../components/universal/DashBButtons";
 import DashBremainingPTO from "../../components/universal/DashBRemainingPTO";
 import DashBBirthdays from "../../components/universal/DashBBirthdays";
 import DashBAnniversaries from "../../components/universal/DashBAnniversaries";
-import DashBPTONotices from "../../components/universal/DashBPTONotices";
 import HRPTONotices from "../../components/hr/HRPTONotices";
 import DashBOwnPTO from "../../components/universal/DashBOwnPTO";
 

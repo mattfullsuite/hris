@@ -21,53 +21,44 @@ const Profile = () => {
   return (
     <>
       {profile.map((p) => (
-        
-
         <div className="p-4 sm:ml-64 flex flex-col">
-                  <ButtonBack></ButtonBack>
+          <ButtonBack></ButtonBack>
 
-          <div className="flex items-center">
+          <div className="flex flex-col items-center xl:flex-row xl:gap-3">
+            {profile.map((user) => (
 
-          {profile.map((user) => (
-            <div className="flex justify-center mt-5  mb-5">
-              {user.emp_pic == "" || user.emp_pic == null ? (
-                <div className="h-32 w-32 bg-gray-500 rounded-full flex justify-center items-center text-5xl text-white font-medium m-2 ring-2 ring-white">
-                  {user.f_name.charAt(0) + user.s_name.charAt(0)}
-                </div>
-              ) : (
-                <img
-                  className="h-32 w-32 rounded-full m-2 ring-2 ring-white"
-                  src={user.emp_pic}
-                />
-              )}
+              <div className="flex justify-center">
+                {user.emp_pic == "" || user.emp_pic == null ? (
+                  
+                  <div className="h-32 w-32 bg-gray-500 rounded-full flex justify-center items-center text-5xl text-white font-medium m-2 ring-2 ring-white">
+                    {user.f_name.charAt(0) + user.s_name.charAt(0)}
+                  </div>
+                ) : (
+                  <img
+                    className="h-32 w-32 rounded-full m-2 ring-2 ring-white"
+                    src={user.emp_pic}
+                  />
+                )}
+              </div>
+
+            ))}
+
+            {/* Name, Primary */}
+            <div className="">
+              <h1 className="text-4xl font-bold tracking-wide text-center">
+                {/* Marco Eliseo Antero */}
+                {p.f_name + " " + p.m_name + " " + p.s_name}
+              </h1>
+                <h1>Company {p.emp_num}</h1> 
+              <h1>{p.work_email}</h1>
+              <h1>Division Department</h1>
+              <h1>{p.title} - Client</h1>
+                {/* Company EmpID
+                work email
+                Division Department
+                Position - Client */}
             </div>
-          ))}
-
-           {/* Name, Primary */}
-           <div className="m-2 p-3">
-            <h1 className="text-4xl font-bold tracking-wide">
-              {/* Marco Eliseo Antero */}
-              {p.f_name + " " + p.m_name + " " + p.s_name}
-            </h1>
-            <h1>{p.work_email}</h1>
-            <h1>{p.title}</h1>
-            <h1>{p.emp_num}</h1>
           </div>
-
-
-
-
-
-          </div>
-          
-          
-        
-
-
-         
-
-
-
 
           {/* Contact Information */}
           <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
