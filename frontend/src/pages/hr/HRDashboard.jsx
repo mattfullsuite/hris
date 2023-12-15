@@ -14,7 +14,7 @@ import DashBOwnPTO from "../../components/universal/DashBOwnPTO";
 const HRDashboard = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-  Axios.defaults.withCredentials = true;
+  // Axios.defaults.withCredentials = true;
 
   const navigate = useNavigate();
 
@@ -41,7 +41,7 @@ const HRDashboard = () => {
     };
     fetchUserData();
   }, []);
-
+  
   return (
     <>
       <HRSideBar></HRSideBar>

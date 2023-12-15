@@ -47,8 +47,6 @@ function App() {
           <Route path="/addEmployee" element={<AddEmployee />} />
           <Route path="/editEmployee" element={<EditEmployee />} />
 
-
-
           {/* <Route path="/viewEmployee" element={<ViewEmployee />} /> */}
           <Route path="/viewEmployee/:emp_id" element={<ViewEmployee />} />
           <Route path="/addCompany" element={<AddCompany />} />
