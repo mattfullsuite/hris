@@ -88,7 +88,7 @@ app.get('/logout', LogoutHandler)
 
 app.get("/myProfile", (req, res) => {
     const uid = req.session.user[0].emp_id
-    const q = "SELECT * FROM emp AS e INNER JOIN title AS t ON e.emp_id = t.emp_id INNER JOIN emp_designation AS ed ON e.emp_id = ed.emp_id WHERE e.emp_id = ?"
+    const q = "SELECT * FROM emp AS e INNER JOIN emp_designation AS ed ON e.emp_id = ed.emp_id INNER JOIN position AS p ON p.position_id = ed.position_id WHERE e.emp_id = ? LIMIT 1"
     db.query(q,[uid],(err,data)=> {
         if(err) return res.json(err)
         return res.json(data)
@@ -352,6 +352,22 @@ app.get("/showpendingdepartmentleaves", (req, res) => {
     const uid = req.session.user[0].emp_id
 
     const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id INNER JOIN title as t ON t.emp_id = e.emp_id WHERE leave_status = 0 AND approver_id = ? ORDER BY date_filed DESC"
+    
+    db.query(q,
+        [uid],
+        (err,data)=> {
+        if(err) {
+            return res.json(err)
+        }
+
+        return res.json(data)
+    })
+})
+
+app.get("/countpendingdepartmentleaves", (req, res) => {
+    const uid = req.session.user[0].emp_id
+
+    const q = "SELECT COUNT(*) FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id INNER JOIN title as t ON t.emp_id = e.emp_id WHERE leave_status = 0 AND approver_id = ?"
     
     db.query(q,
         [uid],

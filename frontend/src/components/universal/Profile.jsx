@@ -50,7 +50,7 @@ const Profile = () => {
               {p.f_name + " " + p.m_name + " " + p.s_name}
             </h1>
             <h1>{p.work_email}</h1>
-            <h1>{p.title}</h1>
+            <h1>{p.position_name}</h1>
             <h1>{p.emp_num}</h1>
           </div>
 

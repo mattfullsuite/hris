@@ -5,6 +5,25 @@ import { Link } from "react-router-dom";
 import SideBarProfile from "../universal/SideBarProfile";
 
 const ManagerSideBar = () => {
+
+  const [count, setCount] = useState({
+    countPending: "",
+  })
+
+  useEffect(() => {
+    const fetchAllPendingLeaves = async () => {
+      try {
+        const res = await Axios.get(
+          "http://localhost:6197/showpendingdepartmentleaves"
+        );
+        setCount({...count, countPending: res.data.length});
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllPendingLeaves();
+  }, []);
+
   const navigate = useNavigate();
 
   const logoutEmployee = () => {
@@ -118,8 +137,9 @@ const ManagerSideBar = () => {
                   <span className="flex-1 ml-3 whitespace-nowrap">
                     PTO Requests
                   </span>
+                  
                   <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-white bg-red-600 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                    3
+                   {count.countPending}
                   </span>
                 </a>
               </Link>

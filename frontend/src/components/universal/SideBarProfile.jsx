@@ -3,37 +3,37 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const SideBarProfile = ({ color, link_to, fill }) => {
-  const [users, setUser] = useState([]);
-  const [titles, setTitle] = useState([]);
+  const [profile, setProfile] = useState([]);
+
 
   useEffect(() => {
-    const fetchUserTitles = async () => {
+    const fetchUserProfile = async () => {
       try {
-        const res = await Axios.get("http://localhost:6197/showTitles");
-        setTitle(res.data);
+        const res = await Axios.get("http://localhost:6197/myProfile");
+        setProfile(res.data);
       } catch (err) {
         console.log(err);
       }
     };
-    fetchUserTitles();
+    fetchUserProfile();
   }, []);
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const res = await Axios.get("http://localhost:6197/login");
-        setUser(res.data.user);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchUserData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchUserData = async () => {
+  //     try {
+  //       const res = await Axios.get("http://localhost:6197/login");
+  //       setUser(res.data.user);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   fetchUserData();
+  // }, []);
 
   return (
     <>
+    {profile.map((user) => (
       <div>
-        {users.map((user) => (
           <div className="flex justify-center mt-5  mb-5">
             {/* <img
               className="h-28- w-28 rounded-full ring-2 ring-white"
@@ -55,17 +55,16 @@ const SideBarProfile = ({ color, link_to, fill }) => {
             {/* (row.emp_pic == "") ? <div className="h-28 w-28 bg-gray-500 rounded-full flex justify-center items-center text-4xl text-white font-medium m-2">{row.f_name.charAt(0) + row.s_name.charAt(0)}</div> : <img className="h-16 w-16 rounded-full m-2" 
         src={row.emp_pic} /> */}
           </div>
-        ))}
+      
         <div className="flex flex-col items-center justify-center">
-          {users.map((user) => (
+          
             <div className={`font-bold text-xl existing-class ${color}`}>
               {user.f_name + " " + user.s_name}
             </div>
-          ))}
+          
 
-          {titles.map((title) => (
-            <div className={`mb-1 text-center ${color}`}>{title.title}</div>
-          ))}
+          
+            <div className={`mb-1 text-center ${color}`}>{user.position_name}</div>
           <div>
             <Link to={`${link_to}`}>
               <a className="mb-12 flex items-center p-1 text-gray-900 rounded-lg dark:text-white hover:bg-gray-800 dark:hover:bg-gray-700 group">
@@ -88,6 +87,7 @@ const SideBarProfile = ({ color, link_to, fill }) => {
           </div>
         </div>
       </div>
+      ))}
     </>
   );
 };
