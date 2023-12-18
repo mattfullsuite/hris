@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Dec 15, 2023 at 08:26 AM
+-- Generation Time: Dec 18, 2023 at 02:30 AM
 -- Server version: 5.7.39
 -- PHP Version: 7.4.33
 
@@ -277,10 +277,10 @@ CREATE TABLE `emp` (
 --
 
 INSERT INTO `emp` (`emp_id`, `f_name`, `m_name`, `s_name`, `emp_num`, `work_email`, `password`, `emp_role`, `emp_pic`, `personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`, `date_separated`, `emp_status`, `sex`, `gender`, `civil_status`, `emergency_contact_name`, `emergency_contact_num`) VALUES
-(1, 'Matt Wilfred', 'Cabunoc', 'Salvador', 'OCCI-0297', 'matt@fullsuite.ph', 'mattmatt', 1, '../photos/matt.png', 'smattwilfred01@gmail.com', '09667528054', '1997-06-01', 'Cabanatuan City, Nueva Ecija', 'Marcos Highway', '2023-09-01', '2024-02-29', NULL, 'PROBATIONARY', 'Male', NULL, NULL, NULL, NULL),
+(1, 'Matt Wilfred', 'Cabunoc', 'Salvador', 'OCCI-0297', 'matt@fullsuite.ph', 'mattmatt', 1, NULL, 'smattwilfred01@gmail.com', '09667528054', '1997-06-01', 'Cabanatuan City, Nueva Ecija', 'Marcos Highway', '2023-09-01', '2024-02-29', NULL, 'PROBATIONARY', 'Male', NULL, NULL, NULL, NULL),
 (2, 'July Anne Rhaemonette', 'Almoite', 'Rosal', 'OCCI-0306', 'july@fullsuite.ph', 'rhaerhae', 0, '../photos/july.png', 'jarhaemonette@gmail.com', '09457552819', '2000-07-14', 'Amagbagan, Pozorrubio, Pangasinan', 'Engineer\'s Hill, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', '', 'Single', NULL, NULL),
-(3, 'Antoinette', 'Garcia', 'Sanchez', 'OCCI-0309', 'antoinette@fullsuite.ph', 'tonton', 3, '../photos/antoinette.png\r\n', 'antoinette.g.sanchez@gmail.com', '09458239638', '2000-05-22', '62 Scout Barrio, Baguio City', '62 Scout Barrio, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', NULL, 'Single', 'Andrea Mae G. Sanchez', '09173456781'),
-(4, 'Marco', 'Eliseo', 'Antero', 'OCCI-0298', 'marco@fullsuite.ph', 'marco@fullsuite.ph', 2, '../photos/marco.png', 'marco.e.antero@gmail.com', '09089624586', '2001-02-02', 'Brookspoint Rd., Baguio City', 'Brookspoint Rd., Baguio City', '2023-09-01', '2024-02-29', NULL, 'REGULAR', 'Male', NULL, 'Single', 'Issa Antero', '09184960347'),
+(3, 'Antoinette', 'Garcia', 'Sanchez', 'OCCI-0309', 'antoinette@fullsuite.ph', 'tonton', 3, NULL, 'antoinette.g.sanchez@gmail.com', '09458239638', '2000-05-22', '62 Scout Barrio, Baguio City', '62 Scout Barrio, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', NULL, 'Single', 'Andrea Mae G. Sanchez', '09173456781'),
+(4, 'Marco', 'Eliseo', 'Antero', 'OCCI-0298', 'marco@fullsuite.ph', 'marco@fullsuite.ph', 2, NULL, 'marco.e.antero@gmail.com', '09089624586', '2001-02-02', 'Brookspoint Rd., Baguio City', 'Brookspoint Rd., Baguio City', '2023-09-01', '2024-02-29', NULL, 'REGULAR', 'Male', NULL, 'Single', 'Issa Antero', '09184960347'),
 (5, 'Hailie Joy', 'Tolentino', 'Bejerano', 'TEE-0026', 'hailie@fullsuite.ph', 'joyjoy0409', 2, '../photos/hailie.png', 'hailiebejerano@gmail.com', '09661786217', '2004-04-09', '119 B. Pinewood Street, Crystal Cave, Baguio City', '119 B. Pinewood Street, Crystal Cave, Baguio City', '2021-06-16', '2023-11-23', NULL, 'PARTTIME', 'Female', NULL, 'Single', 'Maria Cristina Bejerano', '09302930186'),
 (6, 'Amiel Jethro', 'Cabalquinto', 'Cortez', 'OCCI-0307', 'amiel@fullsuite.ph', 'pagmamahal', 2, '../photos/amiel.png', 'amieljethrocortez@gmail.com', '09235974089', '1999-08-30', 'Holy Ghost Extension', 'Holy Ghost Extension', '2023-10-02', '2023-04-02', NULL, 'PROBATIONARY', 'Male', 'Male', 'Single', 'Christine Cortez', '09223440168'),
 (7, 'Diana Nicole', 'De paz', 'Perez', 'OCCI-0192', 'diana@fullsuite.ph', 'staff@password', 1, '', 'diananicole.perez@gmail.com', '09774079280', '2002-09-24', 'blk 2 lot 6, lauan st villa pozorrubio', '47 Paredes St. Middle Quezon Hill', '2021-09-23', NULL, NULL, 'REGULAR', 'Female', NULL, 'Single', 'Brigette Perez', '09162614305'),
@@ -427,7 +427,8 @@ INSERT INTO `leaves` (`leave_id`, `requester_id`, `leave_type`, `leave_reason`, 
 (95, 4, 'Vacation Leave', 'long vacation kineme', '2023-12-25', '2024-01-06', 2, 8, '2023-12-14 08:30:40', NULL, 0),
 (96, 4, 'Vacation Leave', 'EEFEFEF', '2023-12-15', '2023-12-15', 2, 8, '2023-12-15 02:55:57', NULL, 0),
 (97, 8, 'Maternity or Paternity Leave', 'YRTRT', '2023-12-15', '2023-12-30', 0, 10, '2023-12-15 02:56:52', NULL, 0),
-(98, 4, 'Bereavement Leave', 'wdwd', '2023-12-16', '2023-12-29', 2, 8, '2023-12-15 03:11:27', NULL, 0);
+(98, 4, 'Bereavement Leave', 'wdwd', '2023-12-16', '2023-12-29', 2, 8, '2023-12-15 03:11:27', NULL, 0),
+(99, 4, 'Bereavement Leave', '', '2023-12-19', '2023-12-20', 0, 8, '2023-12-18 02:21:28', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -873,7 +874,7 @@ ALTER TABLE `emp_salary`
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
-  MODIFY `leave_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
+  MODIFY `leave_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT for table `leave_credits`
@@ -891,7 +892,7 @@ ALTER TABLE `offset`
 -- AUTO_INCREMENT for table `position`
 --
 ALTER TABLE `position`
-  MODIFY `position_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `position_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `title`
