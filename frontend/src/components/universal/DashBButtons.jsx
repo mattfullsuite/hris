@@ -132,6 +132,7 @@ const DashBButtons = () => {
     document.getElementById("file_a_leave_btn").close();
     document.getElementById("leaveForm").reset();
     window.location.reload();
+    alert("Successfully filed leave!");
   };
 
   function usePTOpoints() {
@@ -270,7 +271,11 @@ const DashBButtons = () => {
               <label className="form-control">
                 <div className="label">
                   <h1 className="label-text">
+<<<<<<< HEAD
                     Reason for Leave
+=======
+                    Reason for Leave <span className="text-red-500"> </span>
+>>>>>>> origin/matt
                   </h1>
                 </div>
                 <textarea

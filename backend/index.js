@@ -88,7 +88,7 @@ app.get('/logout', LogoutHandler)
 
 app.get("/myProfile", (req, res) => {
     const uid = req.session.user[0].emp_id
-    const q = "SELECT * FROM emp AS e INNER JOIN title AS t ON e.emp_id = t.emp_id WHERE e.emp_id = ?"
+    const q = "SELECT * FROM emp AS e INNER JOIN title AS t ON e.emp_id = t.emp_id INNER JOIN emp_designation AS ed ON e.emp_id = ed.emp_id WHERE e.emp_id = ?"
     db.query(q,[uid],(err,data)=> {
         if(err) return res.json(err)
         return res.json(data)
@@ -116,7 +116,7 @@ app.delete("/employeesList/:user_id", (req, res) => {
 
 app.get("/viewEmployee/:emp_id", async (req, res) => {
     const emp_id = req.params.emp_id;
-    const q = "SELECT * FROM emp AS e INNER JOIN leave_credits AS l ON e.emp_id=l.emp_id WHERE e.emp_id = ?";
+    const q = "SELECT * FROM emp AS e INNER JOIN leave_credits AS l ON e.emp_id=l.emp_id INNER JOIN emp_designation AS ed ON e.emp_id=ed.emp_id WHERE e.emp_id = ?";
 
     db.query(q, [emp_id], (err,data) => {
         if(err) return res.json(err)
@@ -211,6 +211,60 @@ app.get("/employeeProfile/:emp_id", (req, res) => {
                 console.log(value[0].s_name)
             }
         })
+})
+
+app.post("/editEmployee/:emp_id", (req, res)=> {
+    const fetchid=req.params.emp_id;
+
+    //const q = "UPDATE `emp` SET (`emp_id`, `emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`) VALUES (?)";
+    const q = "UPDATE emp SET emp_id=?, emp_num=?, work_email=?, f_name=?, m_name=?, s_name=?, emp_role=?,personal_email=?, contact_num=?, dob=?, p_address=?, c_address=?, date_hired=?, date_regularization=?,emp_status=?,sex=?,gender=?,civil_status=?";
+    const values = 
+        [
+        fetchid,
+        req.body.emp_num,
+        req.body.work_email,
+        req.body.f_name,
+        req.body.m_name, 
+        req.body.s_name,
+        req.body.emp_role,
+        req.body.personal_email,
+        req.body.contact_num,
+        req.body.dob,
+        req.body.p_address,
+        req.body.c_address,
+        req.body.date_hired,
+        req.body.date_regularization,
+        req.body.emp_status,
+        req.body.sex,
+        req.body.gender,
+        req.body.civil_status,
+        ]
+
+    db.query(q, [values], (err, data) => {
+        if (err) {
+            console.log(err)
+        }
+        res.json(data);
+    })
+
+    const designationValues = 
+    [
+        fetchid,
+        req.body.company_id,
+        req.body.div_id,
+        req.body.dept_id,
+        req.body.client_id,
+        req.body.position_id,
+    ]
+
+    //const q3 = "UPDATE `emp_designation` SET (`emp_id`, `company_id`,`div_id`,`dept_id`,`client_id`,`position_id`) VALUES (?)"
+    const q3 = "UPDATE emp_designation SET emp_id=?, company_id=?,div_id=?,dept_id=?,client_id=?,position_id=?"
+
+    db.query(q3, [designationValues], (err, data3) => {
+        if (err) {console.log(err)};
+        console.log("Inserted new designation for new employee.")
+    })
+
 })
 
 app.post("/addcompany", (req,res) => {
@@ -745,7 +799,7 @@ app.post("/addNewEmployee", (req, res)=> {
         res.json(data);
     })
 
-    const q2 = "INSERT INTO `leave_credits` (`emp_id`, `leave_balance`) VALUES ((SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1), 0)"
+    const q2 = "INSERT INTO `leave_credits` (`emp_id`, `leave_balance`) VALUES ((SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1)," + 0 + ")"
 
     db.query(q2, (err, data2) => {
     if (err) {
@@ -925,7 +979,7 @@ app.get("/isWorkEmailUnique", (req, res) => {
 
 app.get("/getAllCompanies", (req, res) => {
 
-    const q = "SELECT * FROM company"
+    const q = "SELECT * FROM company ORDER BY company_name ASC"
 
     db.query(q, (err, data) => {
         if (err){
@@ -938,7 +992,7 @@ app.get("/getAllCompanies", (req, res) => {
 
 app.get("/getAllDivisions", (req, res) => {
 
-    const q = "SELECT * FROM division"
+    const q = "SELECT * FROM division ORDER BY div_name ASC" 
 
     db.query(q, (err, data) => {
         if (err){
@@ -952,7 +1006,7 @@ app.get("/getAllDivisions", (req, res) => {
 
 app.get("/getAllDepartments", (req, res) => {
 
-    const q = "SELECT * FROM department"
+    const q = "SELECT * FROM department ORDER BY dept_name ASC"
 
     db.query(q, (err, data) => {
         if (err){
@@ -965,7 +1019,7 @@ app.get("/getAllDepartments", (req, res) => {
 
 app.get("/getAllClients", (req, res) => {
 
-    const q = "SELECT * FROM client"
+    const q = "SELECT * FROM client ORDER BY client_name ASC"
 
     db.query(q, (err, data) => {
         if (err){
@@ -978,7 +1032,87 @@ app.get("/getAllClients", (req, res) => {
 
 app.get("/getAllPositions", (req, res) => {
 
-    const q = "SELECT * FROM position"
+    const q = "SELECT * FROM position ORDER BY position_name ASC"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+app.get("/getAllPositionsInDivision", (req, res) => {
+
+    const q = "SELECT * FROM position WHERE div_id = ? ORDER BY position_name ASC"
+
+    db.query(q, req.body.div_id, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+// -------------------------EMPLOYEE DIRECTORY QUERIES------------------------- //
+
+app.get("/getExecutiveDivision", (req, res) => {
+
+    const q = "SELECT * FROM emp_designation INNER JOIN emp ON emp_designation.emp_id = emp.emp_id INNER JOIN company ON emp_designation.company_id = company.company_id INNER JOIN client ON emp_designation.client_id = CLIENT.client_id INNER JOIN position ON emp_designation.position_id = POSITION.position_id INNER JOIN dept ON position.dept_id = dept.dept_id INNER JOIN division ON dept.div_id = division.div_id WHERE division.div_id = 1"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+app.get("/getOperationsDivision", (req, res) => {
+
+    const q = "SELECT * FROM emp_designation INNER JOIN emp ON emp_designation.emp_id = emp.emp_id INNER JOIN company ON emp_designation.company_id = company.company_id INNER JOIN client ON emp_designation.client_id = CLIENT.client_id INNER JOIN position ON emp_designation.position_id = POSITION.position_id INNER JOIN dept ON position.dept_id = dept.dept_id INNER JOIN division ON dept.div_id = division.div_id WHERE division.div_id = 2"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+app.get("/getCorpStratDivision", (req, res) => {
+
+    const q = "SELECT * FROM emp_designation INNER JOIN emp ON emp_designation.emp_id = emp.emp_id INNER JOIN company ON emp_designation.company_id = company.company_id INNER JOIN client ON emp_designation.client_id = CLIENT.client_id INNER JOIN position ON emp_designation.position_id = POSITION.position_id INNER JOIN dept ON position.dept_id = dept.dept_id INNER JOIN division ON dept.div_id = division.div_id WHERE division.div_id = 3"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+app.get("/getCulturePeopleDivision", (req, res) => {
+
+    const q = "SELECT * FROM emp_designation INNER JOIN emp ON emp_designation.emp_id = emp.emp_id INNER JOIN company ON emp_designation.company_id = company.company_id INNER JOIN client ON emp_designation.client_id = CLIENT.client_id INNER JOIN position ON emp_designation.position_id = POSITION.position_id INNER JOIN dept ON position.dept_id = dept.dept_id INNER JOIN division ON dept.div_id = division.div_id WHERE division.div_id = 4"
+
+    db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+app.get("/getVentureDivision", (req, res) => {
+
+    const q = "SELECT * FROM emp_designation INNER JOIN emp ON emp_designation.emp_id = emp.emp_id INNER JOIN company ON emp_designation.company_id = company.company_id INNER JOIN client ON emp_designation.client_id = CLIENT.client_id INNER JOIN position ON emp_designation.position_id = POSITION.position_id INNER JOIN dept ON position.dept_id = dept.dept_id INNER JOIN division ON dept.div_id = division.div_id WHERE division.div_id = 5"
 
     db.query(q, (err, data) => {
         if (err){
@@ -1050,6 +1184,19 @@ app.get("/getVentureDivision", (req, res) => {
     const q = "SELECT * FROM emp_designation INNER JOIN emp ON emp_designation.emp_id = emp.emp_id INNER JOIN company ON emp_designation.company_id = company.company_id INNER JOIN client ON emp_designation.client_id = CLIENT.client_id INNER JOIN position ON emp_designation.position_id = POSITION.position_id INNER JOIN dept ON position.dept_id = dept.dept_id INNER JOIN division ON dept.div_id = division.div_id WHERE division.div_id = 5"
 
     db.query(q, (err, data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json(data)
+        }
+    })
+})
+
+app.get("/getAllPositionsInDivision", (req, res) => {
+
+    const q = "SELECT * FROM position WHERE div_id = ? ORDER BY position_name ASC"
+
+    db.query(q, req.body.div_id, (err, data) => {
         if (err){
             console.log(err)
         } else {
