@@ -271,11 +271,8 @@ const DashBButtons = () => {
               <label className="form-control">
                 <div className="label">
                   <h1 className="label-text">
-<<<<<<< HEAD
                     Reason for Leave
-=======
                     Reason for Leave <span className="text-red-500"> </span>
->>>>>>> origin/matt
                   </h1>
                 </div>
                 <textarea
