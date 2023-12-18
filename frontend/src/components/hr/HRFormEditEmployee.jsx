@@ -7,13 +7,62 @@ import {useParams} from "react-router-dom"
 const HRFormEditEmployee = () => {
   const {emp_id} = useParams()
   const [fetchData, setFetchData] = useState([]);
-  var [oldData] = ([])
+
+  const [employeeInfo, setEmployeeInfo] = useState({
+    emp_num: "",
+    work_email: "",
+    f_name: "",
+    m_name: "",
+    s_name: "",
+    emp_role: "",
+    emp_pic: "",
+    personal_email: "",
+    contact_num: "",
+    dob: "",
+    p_address: "",
+    c_address: "",
+    date_hired: "",
+    date_regularization: "",
+    emp_status: "",
+    sex: "",
+    gender: "",
+    civil_status: "",
+    company_id: "",
+    div_id: "",
+    dept_id: "",
+    client_id: "",
+    position_id: "",
+  });
 
   useEffect(() => {
     const fetchOldData = async () => {
       try {
         const res = await axios.get(`http://localhost:6197/viewEmployee/${emp_id}`);
         setFetchData(res.data);
+        setEmployeeInfo({...employeeInfo,  
+          emp_num: res.data[0].emp_num,
+          work_email: res.data[0].work_email,
+          f_name: res.data[0].f_name,
+          m_name: res.data[0].m_name,
+          s_name: res.data[0].s_name,
+          emp_role: res.data[0].emp_role,
+          emp_pic: res.data[0].emp_pic,
+          personal_email: res.data[0].personal_email,
+          contact_num: res.data[0].contact_num,
+          dob: res.data[0].dob,
+          p_address: res.data[0].p_address,
+          c_address: res.data[0].c_address,
+          date_hired: res.data[0].date_hired,
+          date_regularization: res.data[0].date_regularization,
+          emp_status: res.data[0].emp_status,
+          sex: res.data[0].sex,
+          gender: res.data[0].gender,
+          civil_status: res.data[0].civil_status,
+          company_id: res.data[0].company_id,
+          div_id: res.data[0].div_id,
+          dept_id: res.data[0].dept_id,
+          client_id: res.data[0].client_id,
+          position_id: res.data[0].position_id,})
       } catch (err) {
         console.log(err);
       }
@@ -73,32 +122,6 @@ const HRFormEditEmployee = () => {
     });
   };
 
-  const [employeeInfo, setEmployeeInfo] = useState({
-    emp_num: "",
-    work_email: "",
-    f_name: "",
-    m_name: "",
-    s_name: "",
-    emp_role: "",
-    emp_pic: "",
-    personal_email: "",
-    contact_num: "",
-    dob: "",
-    p_address: "",
-    c_address: "",
-    date_hired: "",
-    date_regularization: "",
-    emp_status: "",
-    sex: "",
-    gender: "",
-    civil_status: "",
-    company_id: "",
-    div_id: "",
-    dept_id: "",
-    client_id: "",
-    position_id: "",
-  });
-
   const handleChange = (event) => {
     setEmployeeInfo({...employeeInfo,[event.target.name]: [event.target.value]});
     console.log(JSON.stringify(employeeInfo));
@@ -130,17 +153,17 @@ const HRFormEditEmployee = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    addNewEmployee();
+    editEmployee();
   };
 
-  const addNewEmployee = () => {
+  const editEmployee = () => {
     axios
-      .post("http://localhost:6197/addNewEmployee", employeeInfo)
+      .post(`http://localhost:6197/editEmployee/${emp_id}`, employeeInfo)
       .then((res) => console.log(JSON.stringify(employeeInfo)))
       .catch((err) => console.log(err));
 
     window.location.reload();
-    alert("Successfully added new employee: " + employeeInfo.emp_num);
+    alert("Successfully edited employee: " + employeeInfo.emp_num);
   };
 
   return (
@@ -166,17 +189,17 @@ const HRFormEditEmployee = () => {
                       First Name<span className="text-red-500"> *</span>
                     </span>
                   </div>
-                  {fetchData.map((o) => (
+                
                   <input
                     name="f_name"
                     onChange={handleChange}
                     type="text"
                     maxlength="100"
-                    value={o.f_name}
+                    value={employeeInfo.f_name}
                     className="input input-bordered w-full "
                     required
                   />
-                  ))}
+                  
                 </label>
                 
 
@@ -192,6 +215,7 @@ const HRFormEditEmployee = () => {
                     onChange={handleChange}
                     type="text"
                     maxlength="100"
+                    value={employeeInfo.m_name}
                     className="input input-bordered w-full "
                     required
                   />
@@ -209,6 +233,7 @@ const HRFormEditEmployee = () => {
                     onChange={handleChange}
                     type="text"
                     maxlength="100"
+                    value={employeeInfo.s_name}
                     className="input input-bordered w-full "
                     required
                   />
@@ -229,6 +254,7 @@ const HRFormEditEmployee = () => {
                     type="date"
                     max={moment().format("YYYY-MM-DD")}
                     className="input input-bordered w-full"
+                    value={moment(employeeInfo.dob).format("YYYY-MM-DD")}
                     required
                   />
                 </label>
@@ -242,6 +268,7 @@ const HRFormEditEmployee = () => {
                     name="civil_status"
                     onChange={handleChange}
                     className="select select-bordered w-full"
+                    value={employeeInfo.civil_status}
                     required
                   >
                     <option disabled selected>
@@ -264,6 +291,7 @@ const HRFormEditEmployee = () => {
                     name="sex"
                     onChange={handleChange}
                     className="select select-bordered w-full"
+                    value={employeeInfo.sex}
                     required
                   >
                     <option disabled selected>
@@ -283,6 +311,7 @@ const HRFormEditEmployee = () => {
                     name="gender"
                     onChange={handleChange}
                     type="text"
+                    value={employeeInfo.gender}
                     className="input input-bordered w-full"
                   />
                 </label>
@@ -301,6 +330,7 @@ const HRFormEditEmployee = () => {
                     name="p_address"
                     onChange={handleChange}
                     type="text"
+                    value={employeeInfo.p_address}
                     className="input input-bordered w-full"
                   />
                 </label>
@@ -337,6 +367,7 @@ const HRFormEditEmployee = () => {
                     name="c_address"
                     onChange={handleChange}
                     type="text"
+                    value={employeeInfo.c_address}
                     className="input input-bordered w-full"
                   />
                 </label>
@@ -359,6 +390,7 @@ const HRFormEditEmployee = () => {
                     name="personal_email"
                     onChange={handleChange}
                     type="email"
+                    value={employeeInfo.personal_email}
                     className="input input-bordered w-full "
                   />
                 </label>
@@ -373,6 +405,7 @@ const HRFormEditEmployee = () => {
                     name="contact_num"
                     onChange={handleChange}
                     type="number"
+                    value={employeeInfo.contact_num}
                     className="input input-bordered w-full "
                   />
                 </label>
@@ -392,6 +425,7 @@ const HRFormEditEmployee = () => {
                     name="emergency_contact_name"
                     onChange={handleChange}
                     type="text"
+                    value={employeeInfo.emergency_contact_name}
                     className="input input-bordered w-full "
                   />
                 </label>
@@ -405,6 +439,7 @@ const HRFormEditEmployee = () => {
                     name="emergency_contact_num"
                     onChange={handleChange}
                     type="number"
+                    value={employeeInfo.emergency_contact_num}
                     className="input input-bordered w-full "
                   />
                 </label>
@@ -434,6 +469,7 @@ const HRFormEditEmployee = () => {
                     name="company_id"
                     className="select select-bordered w-32" 
                     onChange={handleChange}
+                    value={employeeInfo.company_id}
                     required>
                       <option disabled selected>Company</option>
                       {companies.map((c) => (
@@ -445,6 +481,7 @@ const HRFormEditEmployee = () => {
                       id="emp_num"
                       name="emp_num"
                       onChange={handleChange}
+                      value={employeeInfo.emp_num}
                       type="text"
                       maxlength="100"
                       className="input input-bordered w-full "
@@ -468,6 +505,7 @@ const HRFormEditEmployee = () => {
                     name="work_email"
                     maxlength="100"
                     onChange={handleChange}
+                    value={employeeInfo.work_email}
                     type="email"
                     className="input input-bordered w-full "
                     required
@@ -492,6 +530,7 @@ const HRFormEditEmployee = () => {
                   name="div_id"
                   className="select select-bordered w-full "
                   onChange={handleChange}
+                  value={employeeInfo.div_id}
                   required>
                     <option disabled selected>Select Division</option>
                     {divisions.map((di) => (
@@ -516,6 +555,7 @@ const HRFormEditEmployee = () => {
                   name="dept_id"
                   className="select select-bordered w-full " 
                   onChange={handleChange}
+                  value={employeeInfo.dept_id}
                   required>
                     <option disabled selected>
                       Select Department
@@ -544,6 +584,7 @@ const HRFormEditEmployee = () => {
                   name="client_id"
                   className="select select-bordered w-full " 
                   onChange={handleChange}
+                  value={employeeInfo.client_id}
                   required>
                     <option disabled selected>Select Client/Cluster</option>
                     {clients.map((c) => (
@@ -566,7 +607,9 @@ const HRFormEditEmployee = () => {
                   <select
                   id="position_id"
                   name="position_id"
-                  className="select select-bordered w-full " 
+                  className="select select-bordered w-full "
+                  onChange={handleChange} 
+                  value={employeeInfo.position_id}
                   required>
                     <option disabled selected>
                       Select Position
@@ -589,6 +632,7 @@ const HRFormEditEmployee = () => {
                   <select
                     name="emp_status"
                     onChange={handleChange}
+                    value={employeeInfo.emp_status}
                     className="select select-bordered w-full "
                     required
                   >
@@ -611,6 +655,7 @@ const HRFormEditEmployee = () => {
                   <select
                     name="emp_role"
                     onChange={handleChange}
+                    value={employeeInfo.emp_role}
                     className="select select-bordered w-full "
                     required
                   >
@@ -638,6 +683,7 @@ const HRFormEditEmployee = () => {
                     name="date_hired"
                     onChange={handleChange}
                     onInput={disableNext}
+                    value={moment(employeeInfo.date_hired).format("YYYY-MM-DD")}
                     type="date"
                     className="input input-bordered w-full "
                   />
@@ -655,6 +701,7 @@ const HRFormEditEmployee = () => {
                     id="date_regularization"
                     name="date_regularization"
                     onChange={handleChange}
+                    value={moment(employeeInfo.date_regularization).format("YYYY-MM-DD")}
                     type="date"
                     className="input input-bordered w-full "
                   />
@@ -668,6 +715,7 @@ const HRFormEditEmployee = () => {
                   <input
                     name="date_separated"
                     onChange={handleChange}
+                    value={moment(employeeInfo.date_separated).format("YYYY-MM-DD")}
                     type="date"
                     className="input input-bordered w-full "
                     disabled

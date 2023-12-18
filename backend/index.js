@@ -88,7 +88,7 @@ app.get('/logout', LogoutHandler)
 
 app.get("/myProfile", (req, res) => {
     const uid = req.session.user[0].emp_id
-    const q = "SELECT * FROM emp AS e INNER JOIN title AS t ON e.emp_id = t.emp_id WHERE e.emp_id = ?"
+    const q = "SELECT * FROM emp AS e INNER JOIN title AS t ON e.emp_id = t.emp_id INNER JOIN emp_designation AS ed ON e.emp_id = ed.emp_id WHERE e.emp_id = ?"
     db.query(q,[uid],(err,data)=> {
         if(err) return res.json(err)
         return res.json(data)
@@ -116,7 +116,7 @@ app.delete("/employeesList/:user_id", (req, res) => {
 
 app.get("/viewEmployee/:emp_id", async (req, res) => {
     const emp_id = req.params.emp_id;
-    const q = "SELECT * FROM emp AS e INNER JOIN leave_credits AS l ON e.emp_id=l.emp_id WHERE e.emp_id = ?";
+    const q = "SELECT * FROM emp AS e INNER JOIN leave_credits AS l ON e.emp_id=l.emp_id INNER JOIN emp_designation AS ed ON e.emp_id=ed.emp_id WHERE e.emp_id = ?";
 
     db.query(q, [emp_id], (err,data) => {
         if(err) return res.json(err)
@@ -211,6 +211,60 @@ app.get("/employeeProfile/:emp_id", (req, res) => {
                 console.log(value[0].s_name)
             }
         })
+})
+
+app.post("/editEmployee/:emp_id", (req, res)=> {
+    const fetchid=req.params.emp_id;
+
+    //const q = "UPDATE `emp` SET (`emp_id`, `emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`) VALUES (?)";
+    const q = "UPDATE emp SET emp_id=?, emp_num=?, work_email=?, f_name=?, m_name=?, s_name=?, emp_role=?,personal_email=?, contact_num=?, dob=?, p_address=?, c_address=?, date_hired=?, date_regularization=?,emp_status=?,sex=?,gender=?,civil_status=?";
+    const values = 
+        [
+        fetchid,
+        req.body.emp_num,
+        req.body.work_email,
+        req.body.f_name,
+        req.body.m_name, 
+        req.body.s_name,
+        req.body.emp_role,
+        req.body.personal_email,
+        req.body.contact_num,
+        req.body.dob,
+        req.body.p_address,
+        req.body.c_address,
+        req.body.date_hired,
+        req.body.date_regularization,
+        req.body.emp_status,
+        req.body.sex,
+        req.body.gender,
+        req.body.civil_status,
+        ]
+
+    db.query(q, [values], (err, data) => {
+        if (err) {
+            console.log(err)
+        }
+        res.json(data);
+    })
+
+    const designationValues = 
+    [
+        fetchid,
+        req.body.company_id,
+        req.body.div_id,
+        req.body.dept_id,
+        req.body.client_id,
+        req.body.position_id,
+    ]
+
+    //const q3 = "UPDATE `emp_designation` SET (`emp_id`, `company_id`,`div_id`,`dept_id`,`client_id`,`position_id`) VALUES (?)"
+    const q3 = "UPDATE emp_designation SET emp_id=?, company_id=?,div_id=?,dept_id=?,client_id=?,position_id=?"
+
+    db.query(q3, [designationValues], (err, data3) => {
+        if (err) {console.log(err)};
+        console.log("Inserted new designation for new employee.")
+    })
+
 })
 
 app.post("/addcompany", (req,res) => {
@@ -700,7 +754,7 @@ app.post("/addNewEmployee", (req, res)=> {
         res.json(data);
     })
 
-    const q2 = "INSERT INTO `leave_credits` (`emp_id`, `leave_balance`) VALUES ((SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1), 0)"
+    const q2 = "INSERT INTO `leave_credits` (`emp_id`, `leave_balance`) VALUES ((SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1)," + 0 + ")"
 
     db.query(q2, (err, data2) => {
     if (err) {
