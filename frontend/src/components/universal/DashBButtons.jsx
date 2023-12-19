@@ -3,9 +3,15 @@ import React, { useState, useEffect } from "react";
 //import 'react-confirm-alert/src/react-confirm-alert.css'
 import axios from "axios";
 import moment from "moment";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker-cssmodules.css';
 
 const DashBButtons = () => {
   const [approvers, setApprover] = useState([]);
+  const [leaveFrom, setLeaveFrom] = useState(new Date());
+  const [leaveTo, setLeaveTo] = useState(new Date());
 
   useEffect(() => {
     const fetchApprover = async () => {
@@ -28,6 +34,11 @@ const DashBButtons = () => {
     use_pto_points: "",
   });
 
+  const isWorkday = (date) => {
+    const day = date.getDay();
+    return day !== 0 && day !== 6;
+  };
+
   const [ptos, setPtos] = useState([]);
   let ptoCredits;
 
@@ -45,7 +56,9 @@ const DashBButtons = () => {
   }, []);
 
   const handleChange = (event) => {
-    setLeaveInfo({ ...leaveInfo, [event.target.name]: [event.target.value] });
+    setLeaveInfo({ ...leaveInfo, [event.target.name]: [event.target.value], leave_from: moment(leaveFrom).format("YYYY-MM-DD"), leave_to: moment(leaveTo).format("YYYY-MM-DD") });
+
+    console.log(JSON.stringify(leaveInfo))
 
     ptoLabelChange();
     taLabelChange();
@@ -66,12 +79,8 @@ const DashBButtons = () => {
     });
   };
   const ptoLabelChange = () => {
-    var dateTo = moment(document.getElementById("leave_to").value).format(
-      "YYYY-MM-DD"
-    );
-    var dateFrom = moment(document.getElementById("leave_from").value).format(
-      "YYYY-MM-DD"
-    );
+    var dateTo = moment(leaveTo).format("YYYY-MM-DD");
+    var dateFrom = moment(leaveFrom).format("YYYY-MM-DD");
     var count =
       moment.duration(moment(dateTo).diff(moment(dateFrom))).asDays() + 1;
     document.getElementById("pto_enough_label").innerHTML =
@@ -103,22 +112,6 @@ const DashBButtons = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    /**confirmAlert({
-      title: 'Confirm to submit',
-      message: 'Are you sure to do this.',
-      buttons: [
-        {
-          label: 'Yes',
-        },
-        {
-          label: 'No',
-          //onClick: () => alert('Click No')
-        }
-      ]
-    });**/
-
-    //setLeaveInfo({...leaveInfo, approver_id: appField.current })
-
     axios
       .post("http://localhost:6197/fileLeave", leaveInfo)
       .then((res) => console.log(JSON.stringify(leaveInfo)))
@@ -136,16 +129,17 @@ const DashBButtons = () => {
   };
 
   function usePTOpoints() {
-    var dateTo = moment(document.getElementById("leave_to").value).format(
-      "YYYY-MM-DD"
-    );
-    var dateFrom = moment(document.getElementById("leave_from").value).format(
-      "YYYY-MM-DD"
-    );
+    // var dateTo = moment(document.getElementById("leave_to").value).format(
+    //   "YYYY-MM-DD"
+    // );
+    // var dateFrom = moment(document.getElementById("leave_from").value).format(
+    //   "YYYY-MM-DD"
+    // );
 
     if (document.getElementById("pto_checkbox").checked) {
       var count = 0;
-      count = moment.duration(moment(dateTo).diff(moment(dateFrom))).asDays();
+      count = moment.duration(moment(leaveTo).diff(moment(leaveFrom))).asDays();
+      //count = leaveFrom - leaveTo
       setLeaveInfo({ ...leaveInfo, use_pto_points: [count + 1] });
     } else {
       setLeaveInfo({ ...leaveInfo, use_pto_points: [0] });
@@ -230,7 +224,7 @@ const DashBButtons = () => {
                         Date From <span className="text-red-500"> *</span>
                       </h1>
                     </div>
-                    <input
+                    {/* <input
                       id="leave_from"
                       name="leave_from"
                       type="date"
@@ -240,6 +234,21 @@ const DashBButtons = () => {
                       onInput={disableNext}
                       min={moment().format("YYYY-MM-DD")}
                       required
+                    /> */}
+                    <DatePicker
+                    //id="leave_from"
+                    //name="leave_from"
+                   // type="date"
+                    placeholder="Type here"
+                    className="input input-bordered w-full max-w-xs mb-2"
+                    selected={leaveFrom} 
+                    minDate={new Date(moment())}
+                    onChange={(date) => setLeaveFrom(date)} 
+                    filterDate={isWorkday}
+                    //onSelect={setLeaveInfo({ ...leaveInfo, leave_from: leaveFrom })}
+                    //onInput={disableNext}
+                    //min={moment().format("YYYY-MM-DD")}
+                    required
                     />
                   </label>
                 </div>
@@ -253,7 +262,7 @@ const DashBButtons = () => {
                         Date To <span className="text-red-500"> *</span>
                       </h1>
                     </div>
-                    <input
+                    {/* <input
                       id="leave_to"
                       name="leave_to"
                       type="date"
@@ -261,6 +270,19 @@ const DashBButtons = () => {
                       className="input input-bordered w-full max-w-xs mb-2"
                       min={moment().format("YYYY-MM-DD")}
                       onChange={handleChange}
+                      required
+                    /> */}
+
+                    <DatePicker 
+                      //id="leave_to"
+                      //name="leave_to"
+                      className="input input-bordered w-full max-w-xs mb-2"
+                      //min={moment().format("YYYY-MM-DD")}
+                      selected={leaveTo} 
+                      filterDate={isWorkday}
+                      minDate={leaveFrom}
+                      onChange={(date) => setLeaveTo(date) && setLeaveInfo({ ...leaveInfo, leave_to: moment(leaveTo).format("YYYY-MM-DD") })} 
+                      //onSelect={setLeaveInfo({ ...leaveInfo, leave_to: leaveTo })}
                       required
                     />
                   </label>
@@ -355,7 +377,7 @@ const DashBButtons = () => {
 
                 {/* Cancel Button */}
                 {/* If there is a button in form, it will close the modal */}
-                <button className="btn" onClick={handleCancel}>
+                <button className="btn" type="cancel" onClick={handleCancel}>
                   Cancel
                 </button>
               </div>
