@@ -56,7 +56,7 @@ const HRNumEmployees = () => {
         </Link>
         </div>
 
-        <div className="flex flex-row flex-wrap box-border gap-1.5 mx-2 mb-4 items-center">
+        <div className="flex flex-row flex-wrap box-border gap-3 mx-2 mb-4 items-center">
           <div className="w-full basis-full md:basis-4/12 lg:basis-1/12 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col items-center justify-center text-center box-border h-32">
             <h2 className="text-md font-semibold">Number of Employees</h2>
             <h1 className="text-7xl font-extrabold">{countInfo.cc} </h1>

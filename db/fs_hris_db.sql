@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Dec 18, 2023 at 02:30 AM
+-- Generation Time: Dec 19, 2023 at 09:17 AM
 -- Server version: 5.7.39
 -- PHP Version: 7.4.33
 
@@ -190,6 +190,7 @@ INSERT INTO `department_manager` (`approver_id`, `emp_id`) VALUES
 CREATE TABLE `dept` (
   `dept_id` int(11) NOT NULL,
   `div_id` int(11) DEFAULT NULL,
+  `manager_id` int(11) DEFAULT NULL,
   `dept_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -197,24 +198,24 @@ CREATE TABLE `dept` (
 -- Dumping data for table `dept`
 --
 
-INSERT INTO `dept` (`dept_id`, `div_id`, `dept_name`) VALUES
-(1, 1, 'Not Applicable'),
-(2, 4, 'Administrator'),
-(3, 3, 'Business Development'),
-(4, 2, 'Business Operations'),
-(5, 2, 'Compliance'),
-(6, 3, 'Corporate Branding'),
-(7, 2, 'Corporate Branding'),
-(8, 3, 'Corporate Strategy'),
-(9, 1, 'Customer Success'),
-(10, 4, 'Employee Services'),
-(11, 5, 'Engineering'),
-(12, 2, 'Finance Operations'),
-(13, 1, 'Finance Operations'),
-(14, 1, 'Implementation'),
-(15, 3, 'Information & Security'),
-(16, 4, 'Talent Acquisition'),
-(17, 1, 'Vice President, Local Market');
+INSERT INTO `dept` (`dept_id`, `div_id`, `manager_id`, `dept_name`) VALUES
+(1, 1, NULL, 'Not Applicable'),
+(2, 4, NULL, 'Administrator'),
+(3, 3, NULL, 'Business Development'),
+(4, 2, NULL, 'Business Operations'),
+(5, 2, NULL, 'Compliance'),
+(6, 3, NULL, 'Corporate Branding'),
+(7, 2, NULL, 'Corporate Branding'),
+(8, 3, NULL, 'Corporate Strategy'),
+(9, 1, NULL, 'Customer Success'),
+(10, 4, NULL, 'Employee Services'),
+(11, 5, NULL, 'Engineering'),
+(12, 2, NULL, 'Finance Operations'),
+(13, 1, NULL, 'Finance Operations'),
+(14, 1, NULL, 'Implementation'),
+(15, 3, 8, 'Information & Security'),
+(16, 4, NULL, 'Talent Acquisition'),
+(17, 1, NULL, 'Vice President, Local Market');
 
 -- --------------------------------------------------------
 
@@ -277,10 +278,10 @@ CREATE TABLE `emp` (
 --
 
 INSERT INTO `emp` (`emp_id`, `f_name`, `m_name`, `s_name`, `emp_num`, `work_email`, `password`, `emp_role`, `emp_pic`, `personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`, `date_separated`, `emp_status`, `sex`, `gender`, `civil_status`, `emergency_contact_name`, `emergency_contact_num`) VALUES
-(1, 'Matt Wilfred', 'Cabunoc', 'Salvador', 'OCCI-0297', 'matt@fullsuite.ph', 'mattmatt', 1, NULL, 'smattwilfred01@gmail.com', '09667528054', '1997-06-01', 'Cabanatuan City, Nueva Ecija', 'Marcos Highway', '2023-09-01', '2024-02-29', NULL, 'PROBATIONARY', 'Male', NULL, NULL, NULL, NULL),
+(1, 'Matt Wilfred', 'Cabunoc', 'Salvador', 'OCCI-0297', 'matt@fullsuite.ph', 'mattmatt', 1, '../photos/matt.png', 'smattwilfred01@gmail.com', '09667528054', '1997-06-01', 'Cabanatuan City, Nueva Ecija', 'Marcos Highway', '2023-09-01', '2024-02-29', NULL, 'PROBATIONARY', 'Male', NULL, NULL, NULL, NULL),
 (2, 'July Anne Rhaemonette', 'Almoite', 'Rosal', 'OCCI-0306', 'july@fullsuite.ph', 'rhaerhae', 0, '../photos/july.png', 'jarhaemonette@gmail.com', '09457552819', '2000-07-14', 'Amagbagan, Pozorrubio, Pangasinan', 'Engineer\'s Hill, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', '', 'Single', NULL, NULL),
-(3, 'Antoinette', 'Garcia', 'Sanchez', 'OCCI-0309', 'antoinette@fullsuite.ph', 'tonton', 3, NULL, 'antoinette.g.sanchez@gmail.com', '09458239638', '2000-05-22', '62 Scout Barrio, Baguio City', '62 Scout Barrio, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', NULL, 'Single', 'Andrea Mae G. Sanchez', '09173456781'),
-(4, 'Marco', 'Eliseo', 'Antero', 'OCCI-0298', 'marco@fullsuite.ph', 'marco@fullsuite.ph', 2, NULL, 'marco.e.antero@gmail.com', '09089624586', '2001-02-02', 'Brookspoint Rd., Baguio City', 'Brookspoint Rd., Baguio City', '2023-09-01', '2024-02-29', NULL, 'REGULAR', 'Male', NULL, 'Single', 'Issa Antero', '09184960347'),
+(3, 'Antoinette', 'Garcia', 'Sanchez', 'OCCI-0309', 'antoinette@fullsuite.ph', 'tonton', 3, '../photos/antoinette.png', 'antoinette.g.sanchez@gmail.com', '09458239638', '2000-05-22', '62 Scout Barrio, Baguio City', '62 Scout Barrio, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', NULL, 'Single', 'Andrea Mae G. Sanchez', '09173456781'),
+(4, 'Marco', 'Eliseo', 'Antero', 'OCCI-0298', 'marco@fullsuite.ph', 'marco@fullsuite.ph', 2, '../photos/marco.png', 'marco.e.antero@gmail.com', '09089624586', '2001-02-02', 'Brookspoint Rd., Baguio City', 'Brookspoint Rd., Baguio City', '2023-09-01', '2024-02-29', NULL, 'REGULAR', 'Male', NULL, 'Single', 'Issa Antero', '09184960347'),
 (5, 'Hailie Joy', 'Tolentino', 'Bejerano', 'TEE-0026', 'hailie@fullsuite.ph', 'joyjoy0409', 2, '../photos/hailie.png', 'hailiebejerano@gmail.com', '09661786217', '2004-04-09', '119 B. Pinewood Street, Crystal Cave, Baguio City', '119 B. Pinewood Street, Crystal Cave, Baguio City', '2021-06-16', '2023-11-23', NULL, 'PARTTIME', 'Female', NULL, 'Single', 'Maria Cristina Bejerano', '09302930186'),
 (6, 'Amiel Jethro', 'Cabalquinto', 'Cortez', 'OCCI-0307', 'amiel@fullsuite.ph', 'pagmamahal', 2, '../photos/amiel.png', 'amieljethrocortez@gmail.com', '09235974089', '1999-08-30', 'Holy Ghost Extension', 'Holy Ghost Extension', '2023-10-02', '2023-04-02', NULL, 'PROBATIONARY', 'Male', 'Male', 'Single', 'Christine Cortez', '09223440168'),
 (7, 'Diana Nicole', 'De paz', 'Perez', 'OCCI-0192', 'diana@fullsuite.ph', 'staff@password', 1, '', 'diananicole.perez@gmail.com', '09774079280', '2002-09-24', 'blk 2 lot 6, lauan st villa pozorrubio', '47 Paredes St. Middle Quezon Hill', '2021-09-23', NULL, NULL, 'REGULAR', 'Female', NULL, 'Single', 'Brigette Perez', '09162614305'),
@@ -365,6 +366,29 @@ CREATE TABLE `emp_salary` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `holiday`
+--
+
+CREATE TABLE `holiday` (
+  `h_id` int(11) NOT NULL,
+  `h_name` varchar(255) NOT NULL,
+  `h_date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `holiday`
+--
+
+INSERT INTO `holiday` (`h_id`, `h_name`, `h_date`) VALUES
+(1, 'New Year\'s Day', '2024-01-01'),
+(2, 'Maundy Thursday', '2024-03-28'),
+(3, 'Good Friday', '2024-03-29'),
+(4, 'Araw ng Kagitingan', '2024-04-09'),
+(5, 'Labor Day', '2024-05-01');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `leaves`
 --
 
@@ -428,7 +452,7 @@ INSERT INTO `leaves` (`leave_id`, `requester_id`, `leave_type`, `leave_reason`, 
 (96, 4, 'Vacation Leave', 'EEFEFEF', '2023-12-15', '2023-12-15', 2, 8, '2023-12-15 02:55:57', NULL, 0),
 (97, 8, 'Maternity or Paternity Leave', 'YRTRT', '2023-12-15', '2023-12-30', 0, 10, '2023-12-15 02:56:52', NULL, 0),
 (98, 4, 'Bereavement Leave', 'wdwd', '2023-12-16', '2023-12-29', 2, 8, '2023-12-15 03:11:27', NULL, 0),
-(99, 4, 'Bereavement Leave', '', '2023-12-19', '2023-12-20', 0, 8, '2023-12-18 02:21:28', NULL, 0);
+(99, 4, 'Bereavement Leave', '', '2023-12-19', '2023-12-20', 2, 8, '2023-12-18 02:21:28', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -714,7 +738,8 @@ ALTER TABLE `department_manager`
 --
 ALTER TABLE `dept`
   ADD PRIMARY KEY (`dept_id`),
-  ADD KEY `div_id_fk` (`div_id`);
+  ADD KEY `div_id_fk` (`div_id`),
+  ADD KEY `manager_id_fk` (`manager_id`);
 
 --
 -- Indexes for table `division`
@@ -750,6 +775,12 @@ ALTER TABLE `emp_details`
 ALTER TABLE `emp_salary`
   ADD PRIMARY KEY (`emp_salary_id`),
   ADD KEY `emp_salary_fk` (`emp_id`);
+
+--
+-- Indexes for table `holiday`
+--
+ALTER TABLE `holiday`
+  ADD PRIMARY KEY (`h_id`);
 
 --
 -- Indexes for table `leaves`
@@ -871,6 +902,12 @@ ALTER TABLE `emp_salary`
   MODIFY `emp_salary_id` int(100) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `holiday`
+--
+ALTER TABLE `holiday`
+  MODIFY `h_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `leaves`
 --
 ALTER TABLE `leaves`
@@ -926,7 +963,8 @@ ALTER TABLE `department_employees`
 -- Constraints for table `dept`
 --
 ALTER TABLE `dept`
-  ADD CONSTRAINT `div_id_fk` FOREIGN KEY (`div_id`) REFERENCES `division` (`div_id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `div_id_fk` FOREIGN KEY (`div_id`) REFERENCES `division` (`div_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `manager_id_fk` FOREIGN KEY (`manager_id`) REFERENCES `emp` (`emp_id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `emp_designation`
