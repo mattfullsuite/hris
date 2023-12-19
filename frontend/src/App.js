@@ -27,6 +27,9 @@ import ManagerProfile from "./pages/leads/ManagerProfile.jsx";
 import ViewEmployee from "./pages/hr/ViewEmployee.jsx";
 import LeadDirectory from "./pages/leads/LeadDirectory.jsx";
 import EditEmployee from "./pages/hr/EditEmployee.jsx";
+import ClientEmployeeDirectory from "./pages/client/ClientEmployeeDirectory.jsx";
+import HRDirectory from "./pages/hr/HRDirectory.jsx";
+import HRManage from "./pages/hr/HRManage.jsx";
 
 function App() {
 
@@ -38,23 +41,24 @@ function App() {
           {/* General Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Login />} />
+
           {/* Administrator Routes */}
           <Route path="/userLogs" element={<UserLogs />} /> 
           <Route path="/adminDashboard" element={<AdminDashboard />} /> 
+
           {/* HR Routes */}
           <Route path="/hrDashboard" element={<HRDashboard />} /> 
           <Route path="/announcements" element={<Announcements />} />
           <Route path="/addAnnouncements" element={<AddAnnouncements />} />
           <Route path="/addEmployee" element={<AddEmployee />} />
           <Route path="/editEmployee/:emp_id" element={<EditEmployee />} />
-
-
+          <Route path="/HRDirectory" element={<HRDirectory/>} />
+          <Route path="/HRManage" element={<HRManage/>}/>
 
           {/* <Route path="/viewEmployee" element={<ViewEmployee />} /> */}
           <Route path="/viewEmployee/:emp_id" element={<ViewEmployee />} />
           <Route path="/addCompany" element={<AddCompany />} />
           <Route path="/hrProfile" element={<HRProfile />} />
-
 
           {/* Employee Routes */}
           <Route path="/employees" element={<EmployeesList />} />
@@ -64,7 +68,7 @@ function App() {
           <Route path="/showPendingLeaves" element={<PendingLeaves />} />
           <Route path="/fileLeave" element={<FileLeave />} />
           <Route path="/empProfile" element={<ClientUserProfile />} />
-
+          <Route path="/clientDirectory" element={<ClientEmployeeDirectory />} />
 
           {/* Team Lead Routes */}
           <Route path="/leadDashboard" element={<LeadDashboard />} /> 

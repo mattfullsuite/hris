@@ -439,7 +439,7 @@ app.get("/showapprovedleaves", (req, res) => {
 })
 
 app.get("/showrejectedleaves", (req, res) => {
-    const q = "SELECT * FROM leaves WHERE leave_status = 2 ORDER BY date_filed DESC"
+    const q = "SELECT * FROM leaves INNER JOIN emp ON requester_id=emp_id WHERE leave_status = 2 ORDER BY date_filed DESC"
     db.query(q,(err,data)=> {
         if(err) return res.json(err)
         return res.json(data)
@@ -500,6 +500,17 @@ app.post("/returnTempPTO/:leave_id", (req, res) => {
         } else {
             res.json("Ptos have been returned for " + leave_id + "")
         }
+    })
+})
+
+
+app.get("/holidays", (req, res) => {
+
+    const q = "SELECT * FROM holiday";
+
+    db.query(q,(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
     })
 })
 

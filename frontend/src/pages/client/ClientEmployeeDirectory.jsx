@@ -1,20 +1,21 @@
-import ManagerSideBar from "../../components/manager/ManagerSideBar";
+import React from "react";
+import ClientSideBar from "../../components/client/ClientSideBar";
 import Headings from "../../components/universal/Headings";
 import EmployeeDirectoryComponent from "../../components/universal/EmployeeDirectoryComponent";
 
-const LeadDirectory = () => {
 
+const ClientEmployeeDirectory = () => {
   return (
     <>
-      <ManagerSideBar></ManagerSideBar>
+      <ClientSideBar/>
 
       <div className="p-4 sm:ml-64 flex flex-col">
         <Headings text={"Employee Directory"} />
 
-        <EmployeeDirectoryComponent/>
+        <EmployeeDirectoryComponent />
       </div>
     </>
   );
 };
 
-export default LeadDirectory;
+export default ClientEmployeeDirectory;
