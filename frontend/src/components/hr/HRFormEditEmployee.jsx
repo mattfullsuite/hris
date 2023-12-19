@@ -162,7 +162,7 @@ const HRFormEditEmployee = () => {
       .then((res) => console.log(JSON.stringify(employeeInfo)))
       .catch((err) => console.log(err));
 
-    window.location.reload();
+    //window.location.reload();
     alert("Successfully edited employee: " + employeeInfo.emp_num);
   };
 

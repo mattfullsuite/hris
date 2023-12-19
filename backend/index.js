@@ -14,6 +14,7 @@ var LogoutHandler = require("./handlers/authentication/logout.js");
 
 var DailyPTOAccrual = require("./handlers/utilities/cron-daily.js")
 var db = require("./config.js");
+var moment = require("moment")
 
 //dotenv.config({ path: './protected.env' })
 
@@ -217,53 +218,48 @@ app.post("/editEmployee/:emp_id", (req, res)=> {
     const fetchid=req.params.emp_id;
 
     //const q = "UPDATE `emp` SET (`emp_id`, `emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`) VALUES (?)";
-    const q = "UPDATE emp SET emp_id=?, emp_num=?, work_email=?, f_name=?, m_name=?, s_name=?, emp_role=?,personal_email=?, contact_num=?, dob=?, p_address=?, c_address=?, date_hired=?, date_regularization=?,emp_status=?,sex=?,gender=?,civil_status=?";
-    const values = 
-        [
-        fetchid,
-        req.body.emp_num,
-        req.body.work_email,
-        req.body.f_name,
-        req.body.m_name, 
-        req.body.s_name,
-        req.body.emp_role,
-        req.body.personal_email,
-        req.body.contact_num,
-        req.body.dob,
-        req.body.p_address,
-        req.body.c_address,
-        req.body.date_hired,
-        req.body.date_regularization,
-        req.body.emp_status,
-        req.body.sex,
-        req.body.gender,
-        req.body.civil_status,
-        ]
+    const q = "UPDATE emp SET " + 
+    "`emp_num` = '" + req.body.emp_num +  "'," +
+    "`work_email` = '" + req.body.work_email + "'," +
+    "`f_name` = '" + req.body.f_name + "'," +
+    "`m_name` = '" + req.body.m_name + "'," + 
+    "`s_name` = '" + req.body.s_name + "'," + 
+    "`emp_role` = " + req.body.emp_role + "," + 
+    "`personal_email` = '" + req.body.personal_email + "'," +
+    "`contact_num` =" + req.body.contact_num + "," +
+    "`dob` = '" + moment(req.body.dob).format("YYYY-MM-DD") + "'," +
+    "`p_address`= '" + req.body.p_address + "'," +  
+    "`c_address`= '" +  req.body.c_address + "'," +
+    "`date_hired` = '" + moment(req.body.date_hired).format("YYYY-MM-DD") + "'," +
+    "`date_regularization`='" + moment(req.body.date_regularization).format("YYYY-MM-DD") + "'," +
+    "`emp_status`='" + req.body.emp_status + "'," + 
+    "`sex`='" + req.body.sex + "'," +
+    "`gender`='" + req.body.gender + "'," +
+    "`civil_status`='" + req.body.civil_status + "'" +
+    "WHERE `emp_id` = " + fetchid;
 
-    db.query(q, [values], (err, data) => {
+    db.query(q, (err, data) => {
         if (err) {
             console.log(err)
         }
         res.json(data);
     })
 
-    const designationValues = 
-    [
-        fetchid,
-        req.body.company_id,
-        req.body.div_id,
-        req.body.dept_id,
-        req.body.client_id,
-        req.body.position_id,
-    ]
+    // const designationValues = 
+    // [
+    //     fetchid,
+    //     req.body.company_id,
+    //     req.body.client_id,
+    //     req.body.position_id,
+    // ]
 
-    //const q3 = "UPDATE `emp_designation` SET (`emp_id`, `company_id`,`div_id`,`dept_id`,`client_id`,`position_id`) VALUES (?)"
-    const q3 = "UPDATE emp_designation SET emp_id=?, company_id=?,div_id=?,dept_id=?,client_id=?,position_id=?"
+    // //const q3 = "UPDATE `emp_designation` SET (`emp_id`, `company_id`,`div_id`,`dept_id`,`client_id`,`position_id`) VALUES (?)"
+    // const q3 = "UPDATE emp_designation SET emp_id=?,dept_id=?,client_id=?,position_id=?"
 
-    db.query(q3, [designationValues], (err, data3) => {
-        if (err) {console.log(err)};
-        console.log("Inserted new designation for new employee.")
-    })
+    // db.query(q3, [designationValues], (err, data3) => {
+    //     if (err) {console.log(err)};
+    //     console.log("Inserted new designation for new employee.")
+    // })
 
 })
 
@@ -827,13 +823,11 @@ app.post("/addNewEmployee", (req, res)=> {
     const designationValues = 
     [
         req.body.company_id,
-        req.body.div_id,
-        req.body.dept_id,
         req.body.client_id,
         req.body.position_id,
     ]
 
-    const q3 = "INSERT INTO `emp_designation` (`emp_id`, `company_id`,`div_id`,`dept_id`,`client_id`,`position_id`) VALUES ((SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1), ?)"
+    const q3 = "INSERT INTO `emp_designation` (`emp_id`, `company_id`,`client_id`,`position_id`) VALUES ((SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1), ?)"
 
     db.query(q3, [designationValues], (err, data3) => {
         if (err) {console.log(err)};

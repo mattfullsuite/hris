@@ -42,7 +42,7 @@ const HRFormViewEmployee = () => {
       document.getElementById("manage-pto").close();
       document.getElementById("pto-manage").reset();
 
-      window.location.reload();
+      // window.location.reload();
       alert("Successfully set new PTO to: " + JSON.stringify(ptoInfo));
   };
 
