@@ -4,7 +4,7 @@ import Axios from "axios";
 
 import ClientSideBar from "../../components/client/ClientSideBar";
 import DashBRemainingOffset from "../../components/universal/DashBRemainingOffset";
-import DashBremainingPTO from "../../components/universal/DashBRemainingPTO";
+import DashBremainingPTO from "../../components/universal/DashBremainingPTO";
 import DashBButtons from "../../components/universal/DashBButtons";
 import DashBPTONotices from "../../components/universal/DashBPTONotices";
 import DashBBirthdays from "../../components/universal/DashBBirthdays";

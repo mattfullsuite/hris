@@ -176,6 +176,21 @@ app.delete("/announcements/:ann_id", (req, res) => {
     })
 })
 
+app.delete("/holiday/:h_id", (req, res) => {
+    const h_id = req.params.h_id;
+    const q = "DELETE FROM holiday WHERE h_id = ?";
+
+    db.query(q, 
+        [h_id], 
+        (err,data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json("Holiday #" + h_id + " has been deleted successfully.")
+        }
+    })
+})
+
 app.post('/addEmployee', (req,res) => {
 
     "INSERT INTO `announcements` (`ann_id`, `emp_id`, `ann_title`, `ann_content`, `ann_category`) VALUES (?)";
@@ -261,6 +276,18 @@ app.post("/editEmployee/:emp_id", (req, res)=> {
     //     console.log("Inserted new designation for new employee.")
     // })
 
+})
+
+app.post("/addHoliday", (req,res) => {
+    const q = "INSERT INTO holiday (`h_name`, `h_date`) VALUES (?) "
+    const values = 
+    [req.body.h_name, 
+    req.body.h_date] 
+
+    db.query(q, [values], (err, data)=> { 
+        if (err) return res.json(err)
+        return res.json("Holiday added!")
+    })
 })
 
 app.post("/addcompany", (req,res) => {
@@ -536,6 +563,16 @@ app.post("/returnTempPTO/:leave_id", (req, res) => {
 app.get("/holidays", (req, res) => {
 
     const q = "SELECT * FROM holiday";
+
+    db.query(q,(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+app.get("/getHolidays", (req, res) => {
+
+    const q = "SELECT h_date FROM holiday";
 
     db.query(q,(err,data)=> {
         if(err) return res.json(err)
