@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
 import moment from "moment";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
+
 
 const HRManageHoliday = () => {
 
+   const navigate = useNavigate()
     const [holiday, setHoliday] = useState([]);
     const [newHoliday, setNewHoliday] = useState({
       h_name: "",
@@ -39,7 +42,9 @@ const HRManageHoliday = () => {
     {
       name: "Actions",
       selector: (row) => (
-        <button className="btn btn-xs btn-error normal-case text-white">
+        <button 
+        onClick={() => handleDelete (row.h_id)}
+        className="btn btn-xs btn-error normal-case text-white">
           Delete
         </button>
       ),
@@ -49,6 +54,15 @@ const HRManageHoliday = () => {
   const handleChange = (event) => {
     setNewHoliday({...newHoliday,[event.target.name]: [event.target.value]});
   }
+
+  const handleDelete = async (h_id) => {
+    try {
+        await axios.delete("http://localhost:6197/holiday/" + h_id);
+        window.location.reload()
+    } catch(err){
+        console.log(err)
+    }
+}
 
   const addNewHoliday = () => {
     axios

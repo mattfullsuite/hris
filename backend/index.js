@@ -176,6 +176,21 @@ app.delete("/announcements/:ann_id", (req, res) => {
     })
 })
 
+app.delete("/holiday/:h_id", (req, res) => {
+    const h_id = req.params.h_id;
+    const q = "DELETE FROM holiday WHERE h_id = ?";
+
+    db.query(q, 
+        [h_id], 
+        (err,data) => {
+        if (err){
+            console.log(err)
+        } else {
+            res.json("Holiday #" + h_id + " has been deleted successfully.")
+        }
+    })
+})
+
 app.post('/addEmployee', (req,res) => {
 
     "INSERT INTO `announcements` (`ann_id`, `emp_id`, `ann_title`, `ann_content`, `ann_category`) VALUES (?)";

@@ -43,6 +43,15 @@ const DashBButtons = () => {
     return day !== 0 && day !== 6 && !JSON.stringify(holiday).includes(formattedDate);
   };
 
+  const handlePTOpoints = () => {
+    if (document.getElementById("pto_checkbox").checked) {
+      var count = countRegularDays(leaveFrom, leaveTo);
+      setLeaveInfo({ ...leaveInfo, use_pto_points: [count] });
+    } else {
+      setLeaveInfo({ ...leaveInfo, use_pto_points: [0] });
+    }
+  }
+
 
   const [ptos, setPtos] = useState([]);
   let ptoCredits;
@@ -68,6 +77,7 @@ const DashBButtons = () => {
 
     ptoLabelChange();
     taLabelChange();
+    disableSubmit();
   };
 
   const taLabelChange = () => {
@@ -84,9 +94,16 @@ const DashBButtons = () => {
       }
     });
   };
+
+  const disableSubmit = () => {
+    const sub = document.getElementById("submit-button")
+
+    if (leaveInfo.leave_type != "" && leaveInfo.approver_id != ""){
+      sub.disabled = false;
+    }
+  }
+
   const ptoLabelChange = () => {
-    var dateTo = moment(leaveTo).format("YYYY-MM-DD");
-    var dateFrom = moment(leaveFrom).format("YYYY-MM-DD");
     var count = countRegularDays(leaveFrom, leaveTo)
     document.getElementById("pto_enough_label").innerHTML =
       "Use PTO credit(/s)?";
@@ -106,6 +123,7 @@ const DashBButtons = () => {
   const handleCancel = () => {
     document.getElementById("file_a_leave_btn").close();
     document.getElementById("leaveForm").reset();
+    window.location.reload();
   };
 
   const handleSubmit = (event) => {
@@ -127,14 +145,6 @@ const DashBButtons = () => {
     alert("Successfully filed leave!");
   };
 
-  function usePTOpoints() {
-    if (document.getElementById("pto_checkbox").checked) {
-      var count = countRegularDays(leaveFrom, leaveTo);
-      setLeaveInfo({ ...leaveInfo, use_pto_points: [count] });
-    } else {
-      setLeaveInfo({ ...leaveInfo, use_pto_points: [0] });
-    }
-  }
   const countRegularDays = (date1, date2) => {
 
     var count = 0;
@@ -206,6 +216,7 @@ const DashBButtons = () => {
                   </h1>
                 </div>
                 <select
+                  id="leave_type"
                   name="leave_type"
                   className="select select-bordered w-full max-w-xs mb-2"
                   onChange={handleChange}
@@ -330,6 +341,7 @@ const DashBButtons = () => {
                   </h1>
                 </div>
                 <select
+                  id="approver_id"
                   name="approver_id"
                   className="select select-bordered w-full max-w-xs mb-2"
                   onChange={handleChange}
@@ -378,16 +390,22 @@ const DashBButtons = () => {
               {/* Button Container */}
               <div className="flex justify-end mt-3">
                 <button
-                  onClick={usePTOpoints}
+                  id="submit-button"
                   type="submit"
                   className="btn btn-primary mr-2"
+                  onClick={handlePTOpoints}
+                  disabled
                 >
                   Submit
                 </button>
 
                 {/* Cancel Button */}
                 {/* If there is a button in form, it will close the modal */}
-                <button className="btn" type="cancel" onClick={handleCancel}>
+                <button 
+                className="btn" 
+                type="button" 
+                onClick={handleCancel}
+                >
                   Cancel
                 </button>
               </div>
