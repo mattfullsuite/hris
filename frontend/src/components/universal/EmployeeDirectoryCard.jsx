@@ -14,7 +14,7 @@ const EmployeeDirectoryCard = ({
         <div className="flex flex-col justify-center items-center gap-5">
           {image == "" || image == null ? (
             <div className="h-28 w-28 bg-gray-500 rounded-full flex justify-center items-center text-5xl text-white font-medium">
-              {firstName.charAt(0) + lastName.charAt(0)}
+              {firstName?.charAt(0) + lastName?.charAt(0)}
             </div>
           ) : (
             <img src={image} className="h-28 w-28 rounded-full" />
@@ -29,7 +29,7 @@ const EmployeeDirectoryCard = ({
           </div>
         </div>
 
-        <button className="btn normal-case w-full font-regular">
+        <a className="btn normal-case w-full font-regular" href={`https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=${workEmail}`} target="_blank">
           <div className="flex flex-row flex-nowrap gap-1 items-center justify-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +48,7 @@ const EmployeeDirectoryCard = ({
 
             <span className="text-[13px]">{workEmail}</span>
           </div>
-        </button>
+        </a>
       </div>
     </>
   );

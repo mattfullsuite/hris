@@ -9,8 +9,6 @@ const LeadDirectory = () => {
       <ManagerSideBar></ManagerSideBar>
 
       <div className="p-4 sm:ml-64 flex flex-col">
-        <Headings text={"Employee Directory"} />
-
         <EmployeeDirectoryComponent/>
       </div>
     </>

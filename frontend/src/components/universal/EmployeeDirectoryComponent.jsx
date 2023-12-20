@@ -3,31 +3,20 @@ import axios from "axios";
 import EmployeeDirectoryCard from "./EmployeeDirectoryCard";
 
 const EmployeeDirectoryComponent = () => {
-  const [ventures, setVenture] = useState([]);
-  const [corpStrat, setCorpStrat] = useState([]);
-  const [operation, setOperation] = useState([]);
-  const [executive, setExecutive] = useState([]);
+  const [directory, setDirectory] = useState([]);
+  const [division, setDivision] = useState([]);
+  const [department, setDepartment] = useState([]);
 
   useEffect(() => {
     const setData = async () => {
       try {
-        const venture = await axios.get(
-          "http://localhost:6197/getVentureDivision"
-        );
-        const corp = await axios.get(
-          "http://localhost:6197/getCorpStratDivision"
-        );
-        const ops = await axios.get(
-          "http://localhost:6197/getOperationsDivision"
-        );
-        const exec = await axios.get(
-          "http://localhost:6197/getExecutiveDivision"
-        );
+        const dir = await axios.get("http://localhost:6197/getDirectory");
+        const div = await axios.get("http://localhost:6197/getDivision");
+        const dept = await axios.get("http://localhost:6197/getDepartment");
 
-        setVenture(venture.data);
-        setCorpStrat(corp.data);
-        setOperation(ops.data);
-        setExecutive(exec.data);
+        setDirectory(dir.data);
+        setDivision(div.data);
+        setDepartment(dept.data)
       } catch (e) {
         console.log(e);
       }
@@ -38,75 +27,49 @@ const EmployeeDirectoryComponent = () => {
 
   return (
     <div className="my-24 flex flex-col gap-40">
-        {(executive.length != 0) ?
-      <div>
-        <h1 className="text-3xl font-bold text-center">Executives</h1>
+      {division.map((div) => (
+        <div>
+          <h1 className="text-3xl font-bold text-center mb-2">{div.div_name}</h1>
 
-        <div className="flex flex-row justify-center items-center gap-4 flex-wrap mt-10">
-          {executive.map((e) => (
-            <EmployeeDirectoryCard
-              image={e.emp_pic}
-              firstName={e.f_name}
-              lastName={e.s_name}
-              department={e.dept_name}
-              position={e.position_name}
-              workEmail={e.work_email}
-            />
+          {department.map((dept) => (
+            
+            (dept.div_id == div.div_id) && 
+            <div className="my-10">
+              <h2 className="text-xl font-semibold text-center mb-5">{(dept.dept_name != "Not Applicable" || directory.filter(dir => (dir.dept_id == dept.dept_id) ? true : false).length > 0) && dept.dept_name}</h2>
+
+              <div className="flex flex-row flex-wrap justify-center items-center gap-4 mb-4">
+                {directory.map((d) => (
+                    (dept.manager_id == d.emp_id) && 
+                    <EmployeeDirectoryCard
+                      image={d.emp_pic}
+                      firstName={d.f_name}
+                      lastName={d.s_name}
+                      department={"Manager"}
+                      position={d.position_name}
+                      workEmail={d.work_email}
+                    />
+                  ))}
+              </div>
+
+              <div className="flex flex-row flex-wrap justify-center items-center gap-4">
+                {directory.map((d) => (
+                  (dept.dept_id == d.dept_id && dept.manager_id != d.emp_id) &&
+                  <EmployeeDirectoryCard
+                    image={d.emp_pic}
+                    firstName={d.f_name}
+                    lastName={d.s_name}
+                    position={d.position_name}
+                    workEmail={d.work_email}
+                  />
+                ))}
+              </div>
+            </div>
+
+            
+            
           ))}
         </div>
-      </div> : ''
-        }
-
-      <div>
-        <h1 className="text-3xl font-bold text-center">Operations</h1>
-
-        <div className="flex flex-row justify-center items-center gap-4 flex-wrap mt-10">
-          {operation.map((o) => (
-            <EmployeeDirectoryCard
-              image={o.emp_pic}
-              firstName={o.f_name}
-              lastName={o.s_name}
-              department={o.dept_name}
-              position={o.position_name}
-              workEmail={o.work_email}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <h1 className="text-3xl font-bold text-center">Corporate Strategy</h1>
-
-        <div className="flex flex-row justify-center items-center gap-4 flex-wrap mt-10">
-          {corpStrat.map((c) => (
-            <EmployeeDirectoryCard
-              image={c.emp_pic}
-              firstName={c.f_name}
-              lastName={c.s_name}
-              department={c.dept_name}
-              position={c.position_name}
-              workEmail={c.work_email}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <h1 className="text-3xl font-bold text-center">Venture Capital</h1>
-
-        <div className="flex flex-row justify-center items-center gap-4 flex-wrap mt-10">
-          {ventures.map((v) => (
-            <EmployeeDirectoryCard
-              image={v.emp_pic}
-              firstName={v.f_name}
-              lastName={v.s_name}
-              department={v.dept_name}
-              position={v.position_name}
-              workEmail={v.work_email}
-            />
-          ))}
-        </div>
-      </div>
+      ))}
     </div>
   );
 };
