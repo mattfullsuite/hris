@@ -263,6 +263,18 @@ app.post("/editEmployee/:emp_id", (req, res)=> {
 
 })
 
+app.post("/addHoliday", (req,res) => {
+    const q = "INSERT INTO holiday (`h_name`, `h_date`) VALUES (?) "
+    const values = 
+    [req.body.h_name, 
+    req.body.h_date] 
+
+    db.query(q, [values], (err, data)=> { 
+        if (err) return res.json(err)
+        return res.json("Holiday added!")
+    })
+})
+
 app.post("/addcompany", (req,res) => {
     const q = "INSERT INTO company (`company_id`, `company_name`, `company_loc`) VALUES (?) "
     const values = [2, "TeeTalkPH", "Baguio City"] 
@@ -519,6 +531,16 @@ app.post("/returnTempPTO/:leave_id", (req, res) => {
 app.get("/holidays", (req, res) => {
 
     const q = "SELECT * FROM holiday";
+
+    db.query(q,(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+app.get("/getHolidays", (req, res) => {
+
+    const q = "SELECT h_date FROM holiday";
 
     db.query(q,(err,data)=> {
         if(err) return res.json(err)

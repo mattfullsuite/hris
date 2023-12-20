@@ -6,6 +6,10 @@ import axios from "axios";
 const HRManageHoliday = () => {
 
     const [holiday, setHoliday] = useState([]);
+    const [newHoliday, setNewHoliday] = useState({
+      h_name: "",
+      h_date: "",
+    });
 
     useEffect(() => {
 
@@ -41,6 +45,20 @@ const HRManageHoliday = () => {
       ),
     },
   ];
+
+  const handleChange = (event) => {
+    setNewHoliday({...newHoliday,[event.target.name]: [event.target.value]});
+  }
+
+  const addNewHoliday = () => {
+    axios
+      .post("http://localhost:6197/addHoliday", newHoliday)
+      .then((res) => console.log(JSON.stringify(newHoliday)))
+      .catch((err) => console.log(err));
+
+    window.location.reload();
+    alert("Successfully added new holiday: " + newHoliday.h_name);
+  };
 
   return (
     <>
@@ -87,20 +105,25 @@ const HRManageHoliday = () => {
               <div className="flex flex-col gap-2 mx-5 mt-10 md:mx-10">
                 <input
                   type="text"
-                  name="holidayName"
+                  name="h_name"
                   id="holiday_name"
+                  onChange={handleChange}
                   className="input input-bordered w-full"
                   placeholder="What holiday?"
                 />
 
                 <input
                   type="date"
-                  name="holidayDate"
+                  name="h_date"
                   id="holiday_date"
+                  onChange={handleChange}
                   className="input input-bordered w-full"
                 />
 
-                <button className="btn btn-active normal-case btn-md">Add</button>
+                <button 
+                className="btn btn-active normal-case btn-md"
+                onClick={addNewHoliday}
+                >Add</button>
               </div>
             </div>
           </dialog>

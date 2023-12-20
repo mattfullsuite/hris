@@ -12,12 +12,15 @@ const DashBButtons = () => {
   const [approvers, setApprover] = useState([]);
   const [leaveFrom, setLeaveFrom] = useState(new Date());
   const [leaveTo, setLeaveTo] = useState(new Date());
+  const [holiday, setHoliday] = useState([]);
 
   useEffect(() => {
     const fetchApprover = async () => {
       try {
         const res = await axios.get("http://localhost:6197/getAllApprovers");
+        const hres = await axios.get("http://localhost:6197/holidays")
         setApprover(res.data);
+        setHoliday(hres.data)
       } catch (err) {
         console.log(err);
       }
@@ -35,9 +38,11 @@ const DashBButtons = () => {
   });
 
   const isWorkday = (date) => {
-    const day = date.getDay();
-    return day !== 0 && day !== 6;
+    const formattedDate = date.toISOString().split('T')[0];
+    const day = date.getDay()
+    return day !== 0 && day !== 6 && !JSON.stringify(holiday).includes(formattedDate);
   };
+
 
   const [ptos, setPtos] = useState([]);
   let ptoCredits;
@@ -59,6 +64,7 @@ const DashBButtons = () => {
     setLeaveInfo({ ...leaveInfo, [event.target.name]: [event.target.value], leave_from: moment(leaveFrom).format("YYYY-MM-DD"), leave_to: moment(leaveTo).format("YYYY-MM-DD") });
 
     console.log(JSON.stringify(leaveInfo))
+    countRegularDays(leaveFrom, leaveTo)
 
     ptoLabelChange();
     taLabelChange();
@@ -81,8 +87,7 @@ const DashBButtons = () => {
   const ptoLabelChange = () => {
     var dateTo = moment(leaveTo).format("YYYY-MM-DD");
     var dateFrom = moment(leaveFrom).format("YYYY-MM-DD");
-    var count =
-      moment.duration(moment(dateTo).diff(moment(dateFrom))).asDays() + 1;
+    var count = countRegularDays(leaveFrom, leaveTo)
     document.getElementById("pto_enough_label").innerHTML =
       "Use PTO credit(/s)?";
     document.getElementById("pto_checkbox").disabled = false;
@@ -97,13 +102,7 @@ const DashBButtons = () => {
       document.getElementById("pto_points").style.color = "red";
     }
   };
-
-  const disableNext = () => {
-    var dateFrom = document.getElementById("leave_from").value;
-
-    document.getElementById("leave_to").min =
-      moment(dateFrom).format("YYYY-MM-DD");
-  };
+  
   const handleCancel = () => {
     document.getElementById("file_a_leave_btn").close();
     document.getElementById("leaveForm").reset();
@@ -129,21 +128,32 @@ const DashBButtons = () => {
   };
 
   function usePTOpoints() {
-    // var dateTo = moment(document.getElementById("leave_to").value).format(
-    //   "YYYY-MM-DD"
-    // );
-    // var dateFrom = moment(document.getElementById("leave_from").value).format(
-    //   "YYYY-MM-DD"
-    // );
-
     if (document.getElementById("pto_checkbox").checked) {
-      var count = 0;
-      count = moment.duration(moment(leaveTo).diff(moment(leaveFrom))).asDays();
-      //count = leaveFrom - leaveTo
-      setLeaveInfo({ ...leaveInfo, use_pto_points: [count + 1] });
+      var count = countRegularDays(leaveFrom, leaveTo);
+      setLeaveInfo({ ...leaveInfo, use_pto_points: [count] });
     } else {
       setLeaveInfo({ ...leaveInfo, use_pto_points: [0] });
     }
+  }
+  const countRegularDays = (date1, date2) => {
+
+    var count = 0;
+
+    var startDate = moment(date1).startOf('day');
+    var lastDate = moment(date2).startOf('day'); 
+
+    //moment().format("YYYY-MM-DD")
+
+    for (var current = startDate; current <= lastDate; current.add(1, 'd')) {
+      var day = moment(current).day()
+      const formattedDate = current.toISOString().split('T')[0];
+      if (day !== 0 && day !== 6 && !JSON.stringify(holiday).includes(formattedDate)){
+        count += 1;
+      }
+    }
+    console.log("Count: "+ count)
+
+    return count;
   }
 
   return (
