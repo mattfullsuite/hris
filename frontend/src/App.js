@@ -39,7 +39,8 @@ import HRTraining from "./pages/hr/HRTraining.jsx";
 import LeadAnnouncements from "./pages/leads/LeadAnnouncements.jsx";
 import LeadAttendance from "./pages/leads/LeadAttendance.jsx";
 import LeadTraining from "./pages/leads/LeadTraining.jsx";
-import ForgotPassword from "./pages/widgets/ForgotPassword.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+import ResetPassword from "./pages/ResetPasword.jsx";
 
 function App() {
 
@@ -52,6 +53,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Login />} />
           <Route path="/forgot-password" element={<ForgotPassword/>} />
+          <Route path="/reset-password/:user_key" element={<ResetPassword/>}/>
 
           {/* Administrator Routes */}
           <Route path="/userLogs" element={<UserLogs />} /> 
