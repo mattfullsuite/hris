@@ -13,6 +13,8 @@ const DashBButtons = () => {
   const [leaveFrom, setLeaveFrom] = useState(new Date());
   const [leaveTo, setLeaveTo] = useState(new Date());
   const [holiday, setHoliday] = useState([]);
+  const [ptos, setPtos] = useState([]);
+  let ptoCredits;
 
   useEffect(() => {
     const fetchApprover = async () => {
@@ -52,10 +54,6 @@ const DashBButtons = () => {
     }
   }
 
-
-  const [ptos, setPtos] = useState([]);
-  let ptoCredits;
-
   useEffect(() => {
     const fetchUserPTO = async () => {
       try {
@@ -73,11 +71,10 @@ const DashBButtons = () => {
     setLeaveInfo({ ...leaveInfo, [event.target.name]: [event.target.value], leave_from: moment(leaveFrom).format("YYYY-MM-DD"), leave_to: moment(leaveTo).format("YYYY-MM-DD") });
 
     console.log(JSON.stringify(leaveInfo))
-    countRegularDays(leaveFrom, leaveTo)
+    //countRegularDays(leaveFrom, leaveTo)
 
     ptoLabelChange();
     taLabelChange();
-    disableSubmit();
   };
 
   const taLabelChange = () => {
@@ -94,14 +91,6 @@ const DashBButtons = () => {
       }
     });
   };
-
-  const disableSubmit = () => {
-    const sub = document.getElementById("submit-button")
-
-    if (leaveInfo.leave_type != "" && leaveInfo.approver_id != ""){
-      sub.disabled = false;
-    }
-  }
 
   const ptoLabelChange = () => {
     var count = countRegularDays(leaveFrom, leaveTo)
@@ -201,7 +190,7 @@ const DashBButtons = () => {
 
             <form
               id="leaveForm"
-              action=""
+              action="POST"
               method="dialog"
               onSubmit={handleSubmit}
             >
@@ -314,7 +303,6 @@ const DashBButtons = () => {
               <label className="form-control">
                 <div className="label">
                   <h1 className="label-text">
-                    Reason for Leave
                     Reason for Leave <span className="text-red-500"> </span>
                   </h1>
                 </div>
@@ -391,10 +379,8 @@ const DashBButtons = () => {
               <div className="flex justify-end mt-3">
                 <button
                   id="submit-button"
-                  type="submit"
-                  className="btn btn-primary mr-2"
                   onClick={handlePTOpoints}
-                  disabled
+                  className="btn btn-primary mr-2"
                 >
                   Submit
                 </button>

@@ -20,7 +20,11 @@ const Profile = () => {
 
   const enableFields = (event) => {
     if (event.currentTarget.id === "edit-button"){
+      document.getElementById("personal_email").disabled=false;
+      document.getElementById("contact_num").disabled=false;
       document.getElementById("emergency_contact_name").disabled=false;
+      document.getElementById("emergency_contact_num").disabled=false;
+      document.getElementById("civil_status").disabled=false;
     }
 
   }
@@ -84,6 +88,7 @@ const Profile = () => {
                     dataSlot="icon"
                     className="w-5 h-5"
                   >
+                    
                     <path
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -119,7 +124,7 @@ const Profile = () => {
 
           <div className="ml-1 mt-10">
             <button 
-            id="edit-buttons"
+            id="edit-button"
             className="btn btn-sm btn-outline normal-case mx-1"
             onClick={enableFields}>
               <svg
@@ -151,6 +156,7 @@ const Profile = () => {
                   <span className="label-text">Personal Email</span>
                 </div>
                 <input
+                  id="personal_email"
                   value={p.personal_email}
                   type="text"
                   className="input input-bordered w-full max-w-xs"
@@ -165,6 +171,7 @@ const Profile = () => {
                   <span className="label-text">Contact Number</span>
                 </div>
                 <input
+                  id="contact_num"
                   value={p.contact_num}
                   type="text"
                   className="input input-bordered w-full max-w-xs"
@@ -246,6 +253,7 @@ const Profile = () => {
                   <span className="label-text">Civil Status</span>
                 </div>
                 <input
+                  id="civil_status"
                   value={p.civil_status}
                   type="text"
                   className="input input-bordered w-full max-w-xs"

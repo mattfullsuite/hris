@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import SideBarProfile from "../universal/SideBarProfile";
 
 const HRSideBar = () => {
+
+  // Axios.defaults.withCredentials = true
   const navigate = useNavigate();
 
   const logoutEmployee = () => {

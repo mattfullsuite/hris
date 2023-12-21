@@ -962,7 +962,7 @@ app.post("/fileLeave", (req, res)=> {
     ]
 
     db.query(q, [values], (err, data) => {
-        if (err) return res.json(err);
+        if (err) return console.log(err);
         return res.json(data);
     })
 
