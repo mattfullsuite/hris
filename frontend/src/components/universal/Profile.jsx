@@ -55,18 +55,25 @@ const Profile = () => {
       document.getElementById("emergency_contact_name").disabled=true;
       document.getElementById("emergency_contact_num").disabled=true;
       document.getElementById("civil_status").disabled=true;
+
+      saveProfile()
     }
   }
 
   const handleChange = (event) => {
-    setNewInfo({...newInfo,[event.target.name]: [event.target.value]});
+    setNewInfo({...newInfo, [event.target.name]: [event.target.value]});
     console.log(JSON.stringify(newInfo));
   }
   
-  const saveProfile = (event) => {
-    event.preventDefault()
+  const saveProfile = () => {
 
-    
+    Axios
+        .post(`http://localhost:6197/editMyProfile`, newInfo)
+        .then((res) => console.log(JSON.stringify(newInfo)))
+        .catch((err) => console.log(err));
+  
+      //window.location.reload();
+      alert("Successfully edited your profile!");
   }
 
   return (
@@ -74,7 +81,9 @@ const Profile = () => {
       {profile.map((p) => (
         <div className="p-4 sm:ml-64 flex flex-col">
           <ButtonBack></ButtonBack>
-
+          {/* <form action="POST" 
+          onSubmit={saveProfile}
+          ></form> */}
           <div className="flex items-center">
             {profile.map((user) => (
               <div className="flex justify-center mt-5  mb-5">
@@ -261,6 +270,7 @@ const Profile = () => {
                   <span className="label-text">Name</span>
                 </div>
                 <input
+                  name="emergency_contact_name"
                   id="emergency_contact_name"
                   value={newInfo.emergency_contact_name}
                   onChange={handleChange}
@@ -276,6 +286,7 @@ const Profile = () => {
                   <span className="label-text">Number</span>
                 </div>
                 <input
+                  name="emergency_contact_num"
                   id="emergency_contact_num"
                   value={newInfo.emergency_contact_num}
                   onChange={handleChange}
@@ -326,6 +337,7 @@ const Profile = () => {
                 </div>
                 <input
                   id="civil_status"
+                  name="civil_status"
                   value={newInfo.civil_status}
                   onChange={handleChange}
                   type="text"

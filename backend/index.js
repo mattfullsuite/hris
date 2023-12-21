@@ -968,6 +968,19 @@ app.post("/fileLeave", (req, res)=> {
 
 })
 
+app.post("/editMyProfile", (req, res) => {
+    const uid = req.session.user[0].emp_id
+ 
+    const q = "UPDATE emp SET personal_email = '" + req.body.personal_email + "', contact_num = '" + req.body.contact_num + "', emergency_contact_name = '" + req.body.emergency_contact_name 
+    + "', emergency_contact_num = '" + req.body.emergency_contact_num + "', civil_status = '" + req.body.civil_status + "' WHERE emp_id = " + uid
+
+    db.query(q, (err, data) => {
+        if (err) return console.log(err); 
+        return res.json(data);
+    })
+    
+ })
+
 app.post("/subtractPTO", (req,res) => {
     const uid = req.session.user[0].emp_id
 
