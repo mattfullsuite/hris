@@ -1,6 +1,6 @@
 import React from "react";
 import ManagerSideBar from "../../components/manager/ManagerSideBar";
-import DashBremainingPTO from "../../components/universal/DashBremainingPTO";
+import DashBremainingPTO from "../../components/universal/DashBRemainingPTO";
 import DashBButtons from "../../components/universal/DashBButtons";
 import ManagerPTONotices from "../../components/manager/ManagerPTONotices";
 import DashBBirthdays from "../../components/universal/DashBBirthdays";
