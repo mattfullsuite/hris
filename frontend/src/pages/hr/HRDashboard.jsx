@@ -5,7 +5,7 @@ import HRSideBar from "../../components/hr/HRSideBar";
 import DashBGreeting from "../../components/universal/DashBGreeting";
 import HRNumEmployees from "../../components/hr/HRNumOfEmployees";
 import DashBButtons from "../../components/universal/DashBButtons";
-import DashBremainingPTO from "../../components/universal/DashBremainingPTO";
+import DashBremainingPTO from "../../components/universal/DashBRemainingPTO";
 import DashBBirthdays from "../../components/universal/DashBBirthdays";
 import DashBAnniversaries from "../../components/universal/DashBAnniversaries";
 import DashBPTONotices from "../../components/universal/DashBPTONotices";

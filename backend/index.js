@@ -1197,3 +1197,17 @@ app.get("/getAllPositionsInDivision", (req, res) => {
         }
     })
 })
+
+
+// ----------FORGOT PASSWORD---------- //
+
+app.post("/forgot-password", (req, res) => {
+    const email = req.body.email;
+
+    const q = "SELECT * FROM emp WHERE work_email = ?";
+
+    db.query(q, [email], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    })
+})
