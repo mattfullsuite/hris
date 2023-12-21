@@ -6,7 +6,7 @@ import moment from "moment";
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
-import 'react-datepicker/dist/react-datepicker-cssmodules.css';
+import "react-datepicker/dist/react-datepicker-cssmodules.css";
 //test
 //change
 const DashBButtons = () => {
@@ -21,9 +21,9 @@ const DashBButtons = () => {
     const fetchApprover = async () => {
       try {
         const res = await axios.get("http://localhost:6197/getAllApprovers");
-        const hres = await axios.get("http://localhost:6197/holidays")
+        const hres = await axios.get("http://localhost:6197/holidays");
         setApprover(res.data);
-        setHoliday(hres.data)
+        setHoliday(hres.data);
       } catch (err) {
         console.log(err);
       }
@@ -41,9 +41,11 @@ const DashBButtons = () => {
   });
 
   const isWorkday = (date) => {
-    const formattedDate = date.toISOString().split('T')[0];
-    const day = date.getDay()
-    return day !== 0 && day !== 6 && !JSON.stringify(holiday).includes(formattedDate);
+    const formattedDate = date.toISOString().split("T")[0];
+    const day = date.getDay();
+    return (
+      day !== 0 && day !== 6 && !JSON.stringify(holiday).includes(formattedDate)
+    );
   };
 
   const handlePTOpoints = () => {
@@ -53,7 +55,7 @@ const DashBButtons = () => {
     } else {
       setLeaveInfo({ ...leaveInfo, use_pto_points: [0] });
     }
-  }
+  };
 
   useEffect(() => {
     const fetchUserPTO = async () => {
@@ -69,9 +71,14 @@ const DashBButtons = () => {
   }, []);
 
   const handleChange = (event) => {
-    setLeaveInfo({ ...leaveInfo, [event.target.name]: [event.target.value], leave_from: moment(leaveFrom).format("YYYY-MM-DD"), leave_to: moment(leaveTo).format("YYYY-MM-DD") });
+    setLeaveInfo({
+      ...leaveInfo,
+      [event.target.name]: [event.target.value],
+      leave_from: moment(leaveFrom).format("YYYY-MM-DD"),
+      leave_to: moment(leaveTo).format("YYYY-MM-DD"),
+    });
 
-    console.log(JSON.stringify(leaveInfo))
+    console.log(JSON.stringify(leaveInfo));
     //countRegularDays(leaveFrom, leaveTo)
 
     ptoLabelChange();
@@ -94,7 +101,7 @@ const DashBButtons = () => {
   };
 
   const ptoLabelChange = () => {
-    var count = countRegularDays(leaveFrom, leaveTo)
+    var count = countRegularDays(leaveFrom, leaveTo);
     document.getElementById("pto_enough_label").innerHTML =
       "Use PTO credit(/s)?";
     document.getElementById("pto_checkbox").disabled = false;
@@ -104,12 +111,13 @@ const DashBButtons = () => {
 
     if (count > ptoCredits) {
       document.getElementById("pto_checkbox").disabled = true;
-      document.getElementById("pto_enough_label").innerHTML =
-        "Insufficient PTOs. Considered as Unpaid.";
+      document.getElementById(
+        "pto_enough_label"
+      ).innerHTML = `Insufficient PTOs. Considered as Unpaid.`;
       document.getElementById("pto_points").style.color = "red";
     }
   };
-  
+
   const handleCancel = () => {
     document.getElementById("file_a_leave_btn").close();
     document.getElementById("leaveForm").reset();
@@ -136,25 +144,28 @@ const DashBButtons = () => {
   };
 
   const countRegularDays = (date1, date2) => {
-
     var count = 0;
 
-    var startDate = moment(date1).startOf('day');
-    var lastDate = moment(date2).startOf('day'); 
+    var startDate = moment(date1).startOf("day");
+    var lastDate = moment(date2).startOf("day");
 
     //moment().format("YYYY-MM-DD")
 
-    for (var current = startDate; current <= lastDate; current.add(1, 'd')) {
-      var day = moment(current).day()
-      const formattedDate = current.toISOString().split('T')[0];
-      if (day !== 0 && day !== 6 && !JSON.stringify(holiday).includes(formattedDate)){
+    for (var current = startDate; current <= lastDate; current.add(1, "d")) {
+      var day = moment(current).day();
+      const formattedDate = current.toISOString().split("T")[0];
+      if (
+        day !== 0 &&
+        day !== 6 &&
+        !JSON.stringify(holiday).includes(formattedDate)
+      ) {
         count += 1;
       }
     }
-    console.log("Count: "+ count)
+    console.log("Count: " + count);
 
     return count;
-  }
+  };
 
   return (
     <>
@@ -187,7 +198,7 @@ const DashBButtons = () => {
         {/* Modal - File A Leave   */}
         <dialog id="file_a_leave_btn" className="modal">
           <div className="modal-box">
-            <h3 className="font-bold text-lg">File A Leave</h3>
+            <h3 className="font-bold text-xl text-center">File A Leave</h3>
 
             <form
               id="leaveForm"
@@ -208,7 +219,7 @@ const DashBButtons = () => {
                 <select
                   id="leave_type"
                   name="leave_type"
-                  className="select select-bordered w-full max-w-xs mb-2"
+                  className="select select-bordered w-full mb-2"
                   onChange={handleChange}
                   required
                 >
@@ -247,19 +258,19 @@ const DashBButtons = () => {
                       required
                     /> */}
                     <DatePicker
-                    //id="leave_from"
-                    //name="leave_from"
-                   // type="date"
-                    placeholder="Type here"
-                    className="input input-bordered w-full max-w-xs mb-2"
-                    selected={leaveFrom} 
-                    minDate={new Date(moment())}
-                    onChange={(date) => setLeaveFrom(date)} 
-                    filterDate={isWorkday}
-                    //onSelect={setLeaveInfo({ ...leaveInfo, leave_from: leaveFrom })}
-                    //onInput={disableNext}
-                    //min={moment().format("YYYY-MM-DD")}
-                    required
+                      //id="leave_from"
+                      //name="leave_from"
+                      // type="date"
+                      placeholder="Type here"
+                      className="input input-bordered w-full max-w-xs mb-2"
+                      selected={leaveFrom}
+                      minDate={new Date(moment())}
+                      onChange={(date) => setLeaveFrom(date)}
+                      filterDate={isWorkday}
+                      //onSelect={setLeaveInfo({ ...leaveInfo, leave_from: leaveFrom })}
+                      //onInput={disableNext}
+                      //min={moment().format("YYYY-MM-DD")}
+                      required
                     />
                   </label>
                 </div>
@@ -284,15 +295,21 @@ const DashBButtons = () => {
                       required
                     /> */}
 
-                    <DatePicker 
+                    <DatePicker
                       //id="leave_to"
                       //name="leave_to"
                       className="input input-bordered w-full max-w-xs mb-2"
                       //min={moment().format("YYYY-MM-DD")}
-                      selected={leaveTo} 
+                      selected={leaveTo}
                       filterDate={isWorkday}
                       minDate={leaveFrom}
-                      onChange={(date) => setLeaveTo(date) && setLeaveInfo({ ...leaveInfo, leave_to: moment(leaveTo).format("YYYY-MM-DD") })} 
+                      onChange={(date) =>
+                        setLeaveTo(date) &&
+                        setLeaveInfo({
+                          ...leaveInfo,
+                          leave_to: moment(leaveTo).format("YYYY-MM-DD"),
+                        })
+                      }
                       //onSelect={setLeaveInfo({ ...leaveInfo, leave_to: leaveTo })}
                       required
                     />
@@ -332,7 +349,7 @@ const DashBButtons = () => {
                 <select
                   id="approver_id"
                   name="approver_id"
-                  className="select select-bordered w-full max-w-xs mb-2"
+                  className="select select-bordered w-full mb-2"
                   onChange={handleChange}
                   required
                 >
@@ -354,27 +371,35 @@ const DashBButtons = () => {
               </label>
 
               {/* Current PTO Points */}
-              <h1 className="text-base">Current PTO Points</h1>
+              <div className="divider"></div>
+              <h1 className="text-base text-center">Current PTO Points</h1>
               {ptos.map((pto) => (
-                <h1 id="pto_points" className="text-lg font-bold mb-2">
+                <div
+                  id="pto_points"
+                  className="text-center text-4xl font-bold mb-2"
+                >
                   {pto.leave_balance}
-                </h1>
+                </div>
               ))}
 
               {/* Use PTO Checkbox */}
-              <div className="flex justify-start items-center">
-                <input
-                  id="pto_checkbox"
-                  name="use_pto_points"
-                  type="checkbox"
-                  className="checkbox checkbox-sm mr-3"
-                  onChange={handleChange}
-                  //onClick={checkPTO}
-                />
-                <h1 id="pto_enough_label" class="ptos_labels">
-                  Use PTO credit(/s)?
-                </h1>
+              <div className="flex flex-col justify-start items-center mt-5">
+                <div className="flex flex-row items-center">
+                  <input
+                    id="pto_checkbox"
+                    name="use_pto_points"
+                    type="checkbox"
+                    className="checkbox checkbox-sm mr-3"
+                    onChange={handleChange}
+                    //onClick={checkPTO}
+                  />
+                  <span id="pto_enough_label" class="ptos_labels-">
+                    Use PTO credit(/s)?
+                  </span>
+                </div>
               </div>
+
+              <div className="divider"></div>
 
               {/* Button Container */}
               <div className="flex justify-end mt-3">
@@ -388,11 +413,7 @@ const DashBButtons = () => {
 
                 {/* Cancel Button */}
                 {/* If there is a button in form, it will close the modal */}
-                <button 
-                className="btn" 
-                type="button" 
-                onClick={handleCancel}
-                >
+                <button className="btn" type="button" onClick={handleCancel}>
                   Cancel
                 </button>
               </div>
