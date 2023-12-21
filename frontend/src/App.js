@@ -25,8 +25,21 @@ import LeadPTORequest from "./pages/leads/LeadPTORequests";
 import HRProfile from "./pages/hr/HRProfile.jsx";
 import ManagerProfile from "./pages/leads/ManagerProfile.jsx";
 import ViewEmployee from "./pages/hr/ViewEmployee.jsx";
-import EditEmployee from "./pages/hr/EditEmployee.jsx";
 import LeadDirectory from "./pages/leads/LeadDirectory.jsx";
+import EditEmployee from "./pages/hr/EditEmployee.jsx";
+import ClientEmployeeDirectory from "./pages/client/ClientEmployeeDirectory.jsx";
+import HRDirectory from "./pages/hr/HRDirectory.jsx";
+import HRManage from "./pages/hr/HRManage.jsx";
+import ClientAnnouncement from "./pages/client/ClientAnnouncements.jsx";
+import ClientAttendance from "./pages/client/ClientAttendance.jsx";
+import ClientTraining from "./pages/client/ClientTraining.jsx";
+import HRAnnouncement from "./pages/hr/HRAnnouncements.jsx";
+import HRAttendance from "./pages/hr/HRAttendance.jsx";
+import HRTraining from "./pages/hr/HRTraining.jsx";
+import LeadAnnouncements from "./pages/leads/LeadAnnouncements.jsx";
+import LeadAttendance from "./pages/leads/LeadAttendance.jsx";
+import LeadTraining from "./pages/leads/LeadTraining.jsx";
+import ForgotPassword from "./pages/widgets/ForgotPassword.jsx";
 
 function App() {
 
@@ -38,21 +51,28 @@ function App() {
           {/* General Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword/>} />
+
           {/* Administrator Routes */}
           <Route path="/userLogs" element={<UserLogs />} /> 
           <Route path="/adminDashboard" element={<AdminDashboard />} /> 
+
           {/* HR Routes */}
           <Route path="/hrDashboard" element={<HRDashboard />} /> 
           <Route path="/announcements" element={<Announcements />} />
           <Route path="/addAnnouncements" element={<AddAnnouncements />} />
           <Route path="/addEmployee" element={<AddEmployee />} />
-          <Route path="/editEmployee" element={<EditEmployee />} />
+          <Route path="/editEmployee/:emp_id" element={<EditEmployee />} />
+          <Route path="/HRDirectory" element={<HRDirectory/>} />
+          <Route path="/HRManage" element={<HRManage/>}/>
 
           {/* <Route path="/viewEmployee" element={<ViewEmployee />} /> */}
           <Route path="/viewEmployee/:emp_id" element={<ViewEmployee />} />
           <Route path="/addCompany" element={<AddCompany />} />
           <Route path="/hrProfile" element={<HRProfile />} />
-
+          <Route path="/hrAnnouncements" element={<HRAnnouncement />} />
+          <Route path="/hrAttendance" element={<HRAttendance />} />
+          <Route path="/hrTraining" element={<HRTraining />} />
 
           {/* Employee Routes */}
           <Route path="/employees" element={<EmployeesList />} />
@@ -62,7 +82,10 @@ function App() {
           <Route path="/showPendingLeaves" element={<PendingLeaves />} />
           <Route path="/fileLeave" element={<FileLeave />} />
           <Route path="/empProfile" element={<ClientUserProfile />} />
-
+          <Route path="/clientDirectory" element={<ClientEmployeeDirectory />} />
+          <Route path="/clientAnnouncements" element={<ClientAnnouncement />} />
+          <Route path="/clientAttendance" element={<ClientAttendance />} />
+          <Route path="/clientTraining" element={<ClientTraining/>} />
 
           {/* Team Lead Routes */}
           <Route path="/leadDashboard" element={<LeadDashboard />} /> 
@@ -70,6 +93,9 @@ function App() {
           <Route path="/leadPTORequests" element={<LeadPTORequest />} />
           <Route path="/manProfile" element={<ManagerProfile />} />
           <Route path="/leadDirectory" element={<LeadDirectory />} />
+          <Route path="/leadAnnouncements" element={<LeadAnnouncements/>}/>
+          <Route path="leadAttendance" element={<LeadAttendance/>}  />
+          <Route path="leadTraining" element={<LeadTraining/>}  />
 
 
 

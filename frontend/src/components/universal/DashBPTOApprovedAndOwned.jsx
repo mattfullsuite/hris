@@ -28,8 +28,12 @@ const DashBPTOApprovedAndOwned = () => {
   const handleClick = (e) => {
     if (e.currentTarget.id === "all") {
       setData(all);
+      document.getElementById("all").classList.add("tab-active");
+      document.getElementById("app").classList.remove("tab-active");
     } else if (e.currentTarget.id === "app") {
       setData(approved);
+      document.getElementById("all").classList.remove("tab-active");
+      document.getElementById("app").classList.add("tab-active");
     }
   };
 
@@ -168,7 +172,7 @@ const DashBPTOApprovedAndOwned = () => {
           role="tablist"
           className="tabs tabs-lifted tabs-lg flex flex-row justify-center"
         >
-          <button role="tab" id="all" onClick={handleClick} className="tab">
+          <button role="tab" id="all" onClick={handleClick} className="tab tab-active">
             My PTOs
           </button>
           <button role="tab" id="app" onClick={handleClick} className="tab">

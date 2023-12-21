@@ -545,10 +545,9 @@ const HRFormAddEmployee = () => {
                   id="position_id"
                   name="position_id"
                   className="select select-bordered w-full " 
+                  onChange={handleChange}
                   required>
-                    <option disabled selected>
-                      Select Position
-                    </option>
+                    <option disabled selected>Select Position</option>
                     {positions.map((p) => (
                     <option value={p.position_id}>{p.position_name}</option>
                     ))}
@@ -598,7 +597,7 @@ const HRFormAddEmployee = () => {
                     <option value="3">Manager</option>
                     <option value="2">Regular Employee</option>
                     <option value="1">HR</option>
-                    <option>Administrator</option>
+                    <option value="0">Administrator</option>
                   </select>
                 </label>
               </div>

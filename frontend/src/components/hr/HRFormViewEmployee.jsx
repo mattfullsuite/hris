@@ -8,11 +8,16 @@ const HRFormViewEmployee = () => {
   const {emp_id} = useParams()
   const [profile, setProfile] = useState([]);
 
+  const [ptoInfo, setPtoInfo] = useState({
+    new_pto_balance: "",
+  });
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const res = await Axios.get(`http://localhost:6197/viewEmployee/${emp_id}`);
         setProfile(res.data);
+        setPtoInfo({...ptoInfo, new_pto_balance: res.data[0].leave_balance})
       } catch (err) {
         console.log(err);
       }
@@ -20,9 +25,6 @@ const HRFormViewEmployee = () => {
     fetchUserProfile();
   }, []);
 
-  const [ptoInfo, setPtoInfo] = useState({
-    new_pto_balance: "",
-  });
 
   const handleChange = (event) => {
     setPtoInfo({ ...ptoInfo, [event.target.name]: [event.target.value] });
@@ -36,6 +38,12 @@ const HRFormViewEmployee = () => {
       .post(`http://localhost:6197/setPTO/${emp_id}`, ptoInfo)
       .then((res) => console.log(JSON.stringify(ptoInfo)))
       .catch((err) => console.log(err));
+
+      document.getElementById("manage-pto").close();
+      document.getElementById("pto-manage").reset();
+
+      // window.location.reload();
+      alert("Successfully set new PTO to: " + JSON.stringify(ptoInfo));
   };
 
   ///setPTO/:emp_id
@@ -59,7 +67,7 @@ const HRFormViewEmployee = () => {
 
           <div className="text-right mr-2">
             {" "}
-            <Link to="/editemployee">
+            <Link to={`/editemployee/` + p.emp_id}>
             <button className="btn btn-sm btn-outline normal-case mx-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +118,10 @@ const HRFormViewEmployee = () => {
             <form 
             method="dialog"
             >
-                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                onClick={() => 
+                  document.getElementById("manage-pto").close() && 
+                  document.getElementById("pto-manage").reset()}>
                   ✕
                 </button>
               </form >
@@ -119,15 +130,16 @@ const HRFormViewEmployee = () => {
                 <p className="text-md text-center">{p.emp_num}</p>
                 <p className="text-lg font-bold text-center">{p.f_name + " " + p.m_name + " " + p.s_name}</p>
                 <p className="text-sm mb-1 text-center">Current PTO: {p.leave_balance}</p>
-                  <form onSubmit={handleSubmit} action="">
+                  <form id="pto-manage" onSubmit={handleSubmit} action="">
                   <div className="flex flex-col gap-3 items-center">
                     <input
                       name="new_pto_balance"
                       type="number"
                       step="0.5"
                       min="0"
+                      max="15"
                       className="input input-bordered w-28"
-                      placeholder={p.leave_balance}
+                      value={ptoInfo.new_pto_balance}
                       onChange={handleChange}
                     />
                     <button value={p.emp_id} type="submit" className="btn btn-md max-w-xs">Save</button>
