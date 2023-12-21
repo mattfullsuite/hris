@@ -18,6 +18,13 @@ const Profile = () => {
     fetchUserProfile();
   }, []);
 
+  const enableFields = (event) => {
+    if (event.currentTarget.id === "edit-button"){
+      document.getElementById("emergency_contact_name").disabled=false;
+    }
+
+  }
+
   return (
     <>
       {profile.map((p) => (
@@ -111,7 +118,10 @@ const Profile = () => {
           </div>
 
           <div className="ml-1 mt-10">
-            <button className="btn btn-sm btn-outline normal-case mx-1">
+            <button 
+            id="edit-buttons"
+            className="btn btn-sm btn-outline normal-case mx-1"
+            onClick={enableFields}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -174,6 +184,7 @@ const Profile = () => {
                   <span className="label-text">Name</span>
                 </div>
                 <input
+                  id="emergency_contact_name"
                   value={p.emergency_contact_name}
                   type="text"
                   className="input input-bordered w-full max-w-xs"
@@ -187,6 +198,7 @@ const Profile = () => {
                   <span className="label-text">Number</span>
                 </div>
                 <input
+                  id="emergency_contact_num"
                   value={p.emergency_contact_num}
                   type="text"
                   className="input input-bordered w-full max-w-xs"
