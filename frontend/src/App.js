@@ -25,11 +25,8 @@ import LeadPTORequest from "./pages/leads/LeadPTORequests";
 import HRProfile from "./pages/hr/HRProfile.jsx";
 import ManagerProfile from "./pages/leads/ManagerProfile.jsx";
 import ViewEmployee from "./pages/hr/ViewEmployee.jsx";
-<<<<<<< HEAD
 import EditEmployee from "./pages/hr/EditEmployee.jsx";
-=======
 import LeadDirectory from "./pages/leads/LeadDirectory.jsx";
->>>>>>> origin/marvin
 
 function App() {
 
