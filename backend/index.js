@@ -899,6 +899,17 @@ app.post("/addNewEmployee", (req, res)=> {
         console.log("Inserted new designation for new employee.")
     })
 
+    console.log("EMP ROLE: " + req.body.emp_role)
+
+    const q4 = "UPDATE dept SET manager_id = (SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1), WHERE dept_id = " + req.body.dept_id;
+
+    if (req.body.emp_role === 3){
+        db.query(q4, (err, data4) => {
+            if (err) {console.log(err)};
+            console.log("Successfully set as manager of " + req.body.dept_id)
+        })
+    }
+
 
     try {
         let transporter = nodemailer.createTransport({
@@ -1174,7 +1185,7 @@ app.get("/getDepartment", (req, res) => {
 })
 
 app.get("/getDirectory", (req, res) => {
-    const q = "SELECT * FROM emp INNER JOIN emp_designation ON emp.emp_id = emp_designation.emp_id INNER JOIN position ON emp_designation.position_id = position.position_id INNER JOIN dept ON dept.dept_id = position.dept_id"
+    const q = "SELECT * FROM emp INNER JOIN emp_designation ON emp.emp_id = emp_designation.emp_id INNER JOIN position ON emp_designation.position_id = position.position_id INNER JOIN dept ON dept.dept_id = position.dept_id INNER JOIN division ON division.div_id=dept.div_id"
 
     db.query(q, (err, data) => {
         if (err){
