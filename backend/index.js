@@ -1118,7 +1118,7 @@ app.get("/getAllClients", (req, res) => {
 
 app.get("/getAllPositions", (req, res) => {
 
-    const q = "SELECT * FROM position ORDER BY position_name ASC"
+    const q = "SELECT * FROM position"
 
     db.query(q, (err, data) => {
         if (err){
