@@ -116,7 +116,7 @@ app.delete("/employeesList/:user_id", (req, res) => {
 })
 
 app.get("/viewEmployee/:emp_id", async (req, res) => {
-    const emp_id = req.params.emp_id;
+    const emp_id = req.params.emp_id;    
     const q = "SELECT * FROM emp AS e INNER JOIN leave_credits AS l ON e.emp_id=l.emp_id INNER JOIN emp_designation AS ed ON e.emp_id=ed.emp_id WHERE e.emp_id = ?";
 
     db.query(q, [emp_id], (err,data) => {
@@ -127,7 +127,20 @@ app.get("/viewEmployee/:emp_id", async (req, res) => {
 
 app.post('/addEmployee', (req,res) => {
 
-    const q = "INSERT INTO `emp`(`user_id`, `work_email`, `f_name`, `m_name`, `s_name`, `personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `sex`, `created_by`, `updated_by`) VALUES (?)";
+    function generateRandomnString(n) {
+        let randomString = '';
+        let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+
+        for(let i = 0; i < n; i++) {
+            randomString += characters.charAt(Math.floor(Math.random()*characters.length));
+        }
+
+        return randomString;
+    }
+
+    const emp_key = generateRandomnString(30)
+
+    const q = "INSERT INTO `emp`(`user_id`, `work_email`, `f_name`, `m_name`, `s_name`, `personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `sex`, `created_by`, `updated_by`, `emp_key`) VALUES (?)";
     const values = 
         [req.body.user_id, 
         req.body.work_email,
@@ -142,9 +155,10 @@ app.post('/addEmployee', (req,res) => {
         req.body.date_hired,
         req.body.sex,
         req.body.created_by,
-        req.body.updated_by]
+        req.body.updated_by,
+        ]
 
-    db.query(q, [values], (err, data) => {
+    db.query(q, [values, emp_key], (err, data) => {
         if (err) return res.json(err);
         return res.json("New employee added!")
     })
