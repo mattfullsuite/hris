@@ -715,10 +715,9 @@ const HRFormEditEmployee = () => {
                   <input
                     name="date_separated"
                     onChange={handleChange}
-                    value={moment(employeeInfo.date_separated).format("YYYY-MM-DD")}
+                    value={(employeeInfo.date_separated != null) ? moment(employeeInfo.date_separated).format("YYYY-MM-DD") : null}
                     type="date"
                     className="input input-bordered w-full "
-                    disabled
                   />
                 </label>
               </div>
