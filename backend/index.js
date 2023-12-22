@@ -901,9 +901,9 @@ app.post("/addNewEmployee", (req, res)=> {
 
     console.log("EMP ROLE: " + req.body.emp_role)
 
-    const q4 = "UPDATE dept SET manager_id = (SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1), WHERE dept_id = " + req.body.dept_id;
+    const q4 = "UPDATE dept SET manager_id = (SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1) WHERE dept_id = " + req.body.dept_id;
 
-    if (req.body.emp_role === 3){
+    if (req.body.emp_role == 3){
         db.query(q4, (err, data4) => {
             if (err) {console.log(err)};
             console.log("Successfully set as manager of " + req.body.dept_id)
