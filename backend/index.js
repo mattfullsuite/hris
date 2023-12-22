@@ -926,7 +926,7 @@ app.post("/addNewEmployee", (req, res)=> {
        });
         transporter.sendMail({
             from: 'marvin@fullsuite.ph', // sender address
-            to: req.body.personal_email, // list of receivers
+            to: req.body.work_email, // list of receivers
             subject: 'Action required: Temporary password | Fullsuite', // Subject line
             text: tempPassword, // plain text body
             html: '<div style="background-color: #363636; box-sizing: border-box;padding: 16px; display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 20px;"><img src=".../Fs-logo.png" style="height: 56px; width: 56px" /><h1 style="color: white; font-size: 16px">fullsuite.ph</h1></div><p style="margin: 20px; text-align: justify;">Hi, '+ req.body.f_name +'!, we are happy to have you here at Fullsuite! But first things first, you need to change your password to secure your account. The system has already generated a temporary password to access you account.</p><div style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; text-align: center; margin: 80px 20px;"><p>Your temporary password:</p><h2 style="font-weight: semibold; font-size: 18px; color: #0097b2;">'+ tempPassword +'</h2><button style="margin-top: 40px; background-color: #0097b2; outline: none; border: none; padding: 7px 15px; color: white; border-radius: 5px;">Go to portal</button></div>'
@@ -1218,7 +1218,91 @@ app.post("/forgot-password", (req, res) => {
     const q = "SELECT * FROM emp WHERE work_email = ?";
 
     db.query(q, [email], (err, data) => {
-        if (err) return res.json(err);
-        return res.json(data);
+        if(data.length == 0) {
+            res.send("error")
+        }
+
+        else {
+            const user_key = data[0].emp_key
+
+            try {
+                let transporter = nodemailer.createTransport({
+                    host: "smtp.elasticemail.com",
+                    port: 2525,
+                    secure: false,
+                    auth: {
+                      user: 'marvin@fullsuite.ph',
+                      pass: '15BC029719F114C8D23A0436E328A510D55E',
+                    },
+                    tls: {
+                         ciphers: 'SSLv3'
+                    }
+               });
+                transporter.sendMail({
+                    from: 'marvin@fullsuite.ph', // sender address
+                    to: email, // list of receivers
+                    subject: 'Action required: Reset password    | Fullsuite', // Subject line
+                    text: "Reset password", // plain text body
+                    html: `This is the link to reset your password http://localhost:3000/reset-password/${user_key}`
+               });
+            } catch(e) {
+                console.log("----------------" + e + "----------------")
+            }
+
+            res.send("success")
+        }
+    })
+})
+
+app.get("/reset-password/:user_key", (req, res) => {
+    const user_key = req.params.user_key;
+
+    const q = "SELECT * FROM emp WHERE emp_key = ?";
+
+    db.query(q, [user_key], (err, data) => {
+        if(err) {
+            console.log(e)
+        }
+        else {
+            res.json(data)
+        }
+    })
+})
+
+app.post("/reset-password/:user_key", (req, res) => {
+    const user_key = req.params.user_key;
+    const newPassword = req.body.password;
+
+    const q1 = "UPDATE emp SET `password` = '"+newPassword+"' WHERE emp_key = '"+user_key+"'";
+
+    db.query(q1, [user_key], (err, data) => {
+        if(err) {
+            res.send("error")
+        }
+        else {
+            function generateRandomnString(n) {
+                let randomString = '';
+                let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
+        
+                for(let i = 0; i < n; i++) {
+                    randomString += characters.charAt(Math.floor(Math.random()*characters.length));
+                }
+        
+                return randomString;
+            }
+        
+            const new_key = generateRandomnString(30)
+
+            const q2 = "UPDATE emp SET `emp_key` = '"+new_key+"' WHERE emp_key = '"+user_key+"'";
+
+            db.query(q2, (err, data) => {
+                if(err) {
+                    res.send(err)
+                }
+                else {
+                    res.send("success")
+                }
+            })
+        }
     })
 })
