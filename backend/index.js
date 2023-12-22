@@ -1208,8 +1208,7 @@ app.post("/forgot-password", (req, res) => {
 
     db.query(q, [email], (err, data) => {
         if(data.length == 0) {
-            console.log("This email is not associated with any accoount")
-            res.redirect('/forgot-password')
+            res.send("error")
         }
 
         else {
@@ -1239,8 +1238,7 @@ app.post("/forgot-password", (req, res) => {
                 console.log("----------------" + e + "----------------")
             }
 
-            console.log("email sent!")
-            res.redirect("/login")
+            res.send("success")
         }
     })
 })
@@ -1268,7 +1266,7 @@ app.post("/reset-password/:user_key", (req, res) => {
 
     db.query(q1, [user_key], (err, data) => {
         if(err) {
-            console.log(err)
+            res.send("error")
         }
         else {
             function generateRandomnString(n) {
@@ -1288,10 +1286,10 @@ app.post("/reset-password/:user_key", (req, res) => {
 
             db.query(q2, (err, data) => {
                 if(err) {
-                    console.log(err)
+                    res.send(err)
                 }
                 else {
-                    res.json(data)
+                    res.send("success")
                 }
             })
         }

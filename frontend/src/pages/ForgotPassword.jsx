@@ -1,34 +1,78 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ForgotPassword = () => {
   const [emailInfo, setEmail] = useState({ email: "" });
+  const [notif, setNotif] =  useState([])
 
   const handleChange = (event) => {
     setEmail({ ...emailInfo, [event.target.name]: [event.target.value] });
 
-    console.log(JSON.stringify(emailInfo))
+    console.log(JSON.stringify(emailInfo));
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    forgotPassword()
+    document.getElementById("email_input").disabled = true;
+    document.getElementById("submit_btn").disabled = true;
 
-  }
+    forgotPassword();
+  };
 
-  const forgotPassword = () => {
-    axios
+  const notifySuccess = () => toast.success('Email link sent!', {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    });
+
+  const notifyFailed = () => toast.error('Email is not associated with any account!', {
+    position: "top-right",
+    autoClose: 3000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    });
+
+  const forgotPassword = async () => {
+    await axios
       .post("http://localhost:6197/forgot-password", emailInfo)
-      .then((res) => console.log(JSON.stringify(emailInfo)))
-      .catch((err) => console.log(err));
+      .then(
+        function (response) {
+          if(response.data === "success") {
+            document.getElementById("email_input").disabled = false;
+            document.getElementById("submit_btn").innerText = document.getElementById("submit_btn").textContent = 'RESEND LINK';
+            document.getElementById("submit_btn").disabled = false;
+              notifySuccess();
+          }
 
-    window.location.reload();
-    alert("sample");
+          else if(response.data === "error") {
+              document.getElementById("email_input").disabled = false;
+              document.getElementById("submit_btn").disabled = false;
+              notifyFailed();
+          }
+
+          setNotif(response.data)
+
+      }
+      )
+      .catch((err) => console.log(err));
   };
 
   return (
     <>
+      {notif != "" && notif === "success" && <ToastContainer />}
+      {notif != "" && notif === "error" && <ToastContainer />}
       <div className="h-screen flex flex-col justify-center items-center gap-5">
         <h1 className="text-3xl font-semibold mb-2 text-center">
           Forgot password?
@@ -50,9 +94,10 @@ const ForgotPassword = () => {
               name="email"
               required
               onChange={handleChange}
+              id="email_input"
             />
 
-            <button className="btn" type="submit">
+            <button className="btn" type="submit" id="submit_btn">
               Send Link
             </button>
 
