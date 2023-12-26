@@ -19,7 +19,6 @@ const Login = () => {
         Axios.post(BASE_URL + ":6197/processlogin", {
             work_email: work_email,
             password: password,
-
         }).then((response) => {
 
             if(response.data.message){
@@ -56,6 +55,8 @@ const Login = () => {
                 navigate("/leadDashboard")
               } else if (response.data.user[0].emp_role === 1){
                 navigate("/hrDashboard")
+              } else if(response.data == "err_cred") {
+                console.log(response.data)
               } else {
                 console.log("The user is not authorized to log in to the system!")
               }

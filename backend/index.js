@@ -11,10 +11,22 @@ var HomeHandler = require("./handlers/authentication/home.js");
 //var LoginHandler = require( "./handlers/authentication/login.js");
 var ProcessLoginHandler = require("./handlers/authentication/process_login.js")
 var LogoutHandler = require("./handlers/authentication/logout.js");
-
 var DailyPTOAccrual = require("./handlers/utilities/cron-daily.js")
 var db = require("./config.js");
 var moment = require("moment")
+const path = require("path")
+const bcrypt = require("bcryptjs");
+const multer = require("multer")
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, __dirname + "/" + "../public/uploads")
+    },
+
+    filename: (req, file, cb) => {
+        cb(null, Date.now().toString() + path.extname(file.originalname))
+    }
+})
+const upload = multer({storage: storage})
 
 //dotenv.config({ path: './protected.env' })
 
@@ -845,13 +857,19 @@ app.post("/addNewEmployee", (req, res)=> {
     }
 
     const tempPassword = generateRandomnString(20)
+    
+    const empKey = generateRandomnString(30)
 
-    const q = "INSERT INTO `emp` ( `emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`) VALUES (?)";
+    //----- HASHING ALGO -----//
+    const salt = bcrypt.genSaltSync(10);
+    const hashed = bcrypt.hashSync(tempPassword, salt)
+
+    const q = "INSERT INTO `emp` ( `emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`, `emp_key`) VALUES (?)";
     const values = 
         [
         req.body.emp_num,
         req.body.work_email,
-        tempPassword,
+        hashed,
         req.body.f_name,
         req.body.m_name, 
         req.body.s_name,
@@ -867,6 +885,7 @@ app.post("/addNewEmployee", (req, res)=> {
         req.body.sex,
         req.body.gender,
         req.body.civil_status,
+        empKey
         ]
 
     db.query(q, [values], (err, data) => {
@@ -1262,7 +1281,11 @@ app.post("/reset-password/:user_key", (req, res) => {
     const user_key = req.params.user_key;
     const newPassword = req.body.password;
 
-    const q1 = "UPDATE emp SET `password` = '"+newPassword+"' WHERE emp_key = '"+user_key+"'";
+    //----- HASHING ALGO -----//
+    const salt = bcrypt.genSaltSync(10);
+    const hashed = bcrypt.hashSync(newPassword, salt)
+
+    const q1 = "UPDATE emp SET `password` = '"+hashed+"' WHERE emp_key = '"+user_key+"'";
 
     db.query(q1, [user_key], (err, data) => {
         if(err) {
