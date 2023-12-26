@@ -372,7 +372,7 @@ app.get("/showapproveddepartmentleaves", (req, res) => {
 app.get("/showpendingdepartmentleaveslimited", (req, res) => {
     const uid = req.session.user[0].emp_id
 
-    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id INNER JOIN title as t ON t.emp_id = e.emp_id WHERE leave_status = 0 AND approver_id = ? ORDER BY date_filed DESC LIMIT 3"
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE leave_status = 0 AND approver_id = ? ORDER BY date_filed DESC LIMIT 3"
     
     db.query(q,
         [uid],
@@ -859,8 +859,9 @@ app.post("/addNewEmployee", (req, res)=> {
     }
 
     const tempPassword = generateRandomnString(20)
+    const emp_key = generateRandomnString(30)
 
-    const q = "INSERT INTO `emp` ( `emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`) VALUES (?)";
+    const q = "INSERT INTO `emp` ( `emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`, `emp_key`) VALUES (?)";
     const values = 
         [
         req.body.emp_num,
@@ -881,6 +882,7 @@ app.post("/addNewEmployee", (req, res)=> {
         req.body.sex,
         req.body.gender,
         req.body.civil_status,
+        emp_key,
         ]
 
     db.query(q, [values], (err, data) => {
