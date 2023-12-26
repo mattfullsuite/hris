@@ -68,6 +68,7 @@ const HRSideBar = () => {
                 color={"text-white"}
                 fill={"white"}
                 link_to={"/hrProfile"}
+                hover={"bg-gray-800"}
               ></SideBarProfile>
             </div>
             <li>

@@ -96,6 +96,7 @@ const ManagerSideBar = () => {
               color={"text-black"}
               fill={"black"}
               link_to={"/manProfile"}
+              hover={"bg-gray-100"}
             ></SideBarProfile>
             <div className="flex items-center justify-center"></div>
 
