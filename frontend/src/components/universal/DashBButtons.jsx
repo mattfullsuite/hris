@@ -62,8 +62,8 @@ const DashBButtons = () => {
     }
   };
 
-  const [ptos, setPtos] = useState([]);
-  let ptoCredits;
+  // const [ptos, setPtos] = useState([]);
+  // let ptoCredits;
 
   useEffect(() => {
     const fetchUserPTO = async () => {
