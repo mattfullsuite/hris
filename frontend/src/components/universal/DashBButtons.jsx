@@ -13,14 +13,22 @@ const DashBButtons = () => {
   const [leaveFrom, setLeaveFrom] = useState(new Date());
   const [leaveTo, setLeaveTo] = useState(new Date());
   const [holiday, setHoliday] = useState([]);
+  const [ptos, setPtos] = useState([]);
+  const [myApproved, setMyApproved] = useState([]);
+  const [myPending, setMyPending] = useState([]);
+  let ptoCredits;
 
   useEffect(() => {
     const fetchApprover = async () => {
       try {
         const res = await axios.get("http://localhost:6197/getAllApprovers");
         const hres = await axios.get("http://localhost:6197/holidays");
+        const pres = await axios.get("http://localhost:6197/myPendingLeaves");
+        const ares = await axios.get("http://localhost:6197/myApprovedLeaves");
         setApprover(res.data);
         setHoliday(hres.data);
+        setMyApproved(ares.data);
+        setMyPending(pres.data);
       } catch (err) {
         console.log(err);
       }
@@ -41,7 +49,7 @@ const DashBButtons = () => {
     const formattedDate = date.toISOString().split("T")[0];
     const day = date.getDay();
     return (
-      day !== 0 && day !== 6 && !JSON.stringify(holiday).includes(formattedDate)
+      day !== 0 && day !== 6 && !JSON.stringify(holiday).includes(formattedDate) && !JSON.stringify(myApproved).includes(formattedDate) && !JSON.stringify(myPending).includes(formattedDate)
     );
   };
 
@@ -54,8 +62,8 @@ const DashBButtons = () => {
     }
   };
 
-  const [ptos, setPtos] = useState([]);
-  let ptoCredits;
+  // const [ptos, setPtos] = useState([]);
+  // let ptoCredits;
 
   useEffect(() => {
     const fetchUserPTO = async () => {
@@ -83,7 +91,7 @@ const DashBButtons = () => {
 
     ptoLabelChange();
     taLabelChange();
-    disableSubmit();
+    // disableSubmit();
   };
 
   const taLabelChange = () => {
@@ -140,10 +148,10 @@ const DashBButtons = () => {
       .then((res) => console.log(JSON.stringify(leaveInfo)))
       .catch((err) => console.log(err));
 
-    axios
-      .post("http://localhost:6197/subtractPTO", leaveInfo)
-      .then((res) => console.log("PTO temporary subtracted"))
-      .catch((err) => console.log(err));
+    // axios
+    //   .post("http://localhost:6197/subtractPTO", leaveInfo)
+    //   .then((res) => console.log("PTO temporary subtracted"))
+    //   .catch((err) => console.log(err));
 
     document.getElementById("file_a_leave_btn").close();
     document.getElementById("leaveForm").reset();
@@ -340,6 +348,7 @@ const DashBButtons = () => {
                   placeholder="Reason for Leave..."
                   onChange={handleChange}
                   maxLength="255"
+                  required
                 ></textarea>
                 <div className="label py-0">
                   <span className="label-text-alt"></span>
@@ -409,7 +418,6 @@ const DashBButtons = () => {
                   type="submit"
                   className="btn btn-primary mr-2"
                   onClick={handlePTOpoints}
-                  disabled
                 >
                   Submit
                 </button>
