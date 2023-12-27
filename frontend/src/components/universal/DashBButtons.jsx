@@ -7,8 +7,7 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
-//test
-//change
+
 const DashBButtons = () => {
   const [approvers, setApprover] = useState([]);
   const [leaveFrom, setLeaveFrom] = useState(new Date());
@@ -56,6 +55,10 @@ const DashBButtons = () => {
       setLeaveInfo({ ...leaveInfo, use_pto_points: [0] });
     }
   };
+  };
+
+  const [ptos, setPtos] = useState([]);
+  let ptoCredits;
 
   useEffect(() => {
     const fetchUserPTO = async () => {
@@ -79,7 +82,7 @@ const DashBButtons = () => {
     });
 
     console.log(JSON.stringify(leaveInfo));
-    //countRegularDays(leaveFrom, leaveTo)
+    countRegularDays(leaveFrom, leaveTo);
 
     ptoLabelChange();
     taLabelChange();
@@ -98,6 +101,14 @@ const DashBButtons = () => {
         document.getElementById("textarea-label").style.color = "red";
       }
     });
+  };
+
+  const disableSubmit = () => {
+    const sub = document.getElementById("submit-button");
+
+    if (leaveInfo.leave_type != "" && leaveInfo.approver_id != "") {
+      sub.disabled = false;
+    }
   };
 
   const ptoLabelChange = () => {
@@ -321,7 +332,8 @@ const DashBButtons = () => {
               <label className="form-control">
                 <div className="label">
                   <h1 className="label-text">
-                    Reason for Leave <span className="text-red-500"> </span>
+                    Reason for Leave Reason for Leave{" "}
+                    <span className="text-red-500"> </span>
                   </h1>
                 </div>
                 <textarea
