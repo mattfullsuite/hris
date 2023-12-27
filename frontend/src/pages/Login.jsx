@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -11,11 +11,10 @@ const Login = () => {
 
   const [work_email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [notif, setNotif] =  useState("")
+  const [notif, setNotif] = useState("");
 
   const [loginStatus, setLoginStatus] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
 
   Axios.defaults.withCredentials = true;
 
@@ -25,11 +24,10 @@ const Login = () => {
       password: password,
     }).then((response) => {
       if (response.data.message) {
-        console.log(response.data.message)
+        console.log(response.data.message);
         setLoginStatus(response.data.message);
-      }
-      else if(response.data === "error") {
-        notifyFailed()
+      } else if (response.data === "error") {
+        notifyFailed();
       } else {
         if (response.data.emp_role === 0) {
           navigate("/adminDashboard");
@@ -43,10 +41,9 @@ const Login = () => {
         } else if (response.data.emp_role === 3) {
           console.log("The user is a team lead,");
           navigate("/leadDashboard");
-        } 
+        }
       }
-
-      setNotif(response.data)
+      setNotif(response.data);
     });
   };
 
@@ -77,15 +74,16 @@ const Login = () => {
     }
   };
 
-  const notifyFailed = () => toast.error('Incorrect username/password!', {
-    position: "top-center",
-    autoClose: 3000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "colored",
+  const notifyFailed = () =>
+    toast.error("Incorrect username/password!", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
     });
 
   return (
@@ -165,7 +163,6 @@ const Login = () => {
                 <label className="text-sm" for="check">
                   Show Password
                 </label>
-
               </div>
             </div>
             <a
