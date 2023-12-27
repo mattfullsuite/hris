@@ -14,6 +14,8 @@ const Login = () => {
   const [notif, setNotif] =  useState("")
 
   const [loginStatus, setLoginStatus] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
 
   Axios.defaults.withCredentials = true;
 
