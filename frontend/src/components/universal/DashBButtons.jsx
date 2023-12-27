@@ -15,6 +15,8 @@ const DashBButtons = () => {
   const [leaveTo, setLeaveTo] = useState(new Date());
   const [holiday, setHoliday] = useState([]);
   const [ptos, setPtos] = useState([]);
+  const [myApproved, setMyApproved] = useState([]);
+  const [myPending, setMyPending] = useState([]);
   let ptoCredits;
 
   useEffect(() => {
@@ -22,8 +24,12 @@ const DashBButtons = () => {
       try {
         const res = await axios.get("http://localhost:6197/getAllApprovers");
         const hres = await axios.get("http://localhost:6197/holidays");
+        const pres = await axios.get("http://localhost:6197/myPendingLeaves");
+        const ares = await axios.get("http://localhost:6197/myApprovedLeaves");
         setApprover(res.data);
         setHoliday(hres.data);
+        setMyApproved(ares.data);
+        setMyPending(pres.data);
       } catch (err) {
         console.log(err);
       }
@@ -44,7 +50,7 @@ const DashBButtons = () => {
     const formattedDate = date.toISOString().split("T")[0];
     const day = date.getDay();
     return (
-      day !== 0 && day !== 6 && !JSON.stringify(holiday).includes(formattedDate)
+      day !== 0 && day !== 6 && !JSON.stringify(holiday).includes(formattedDate) && !JSON.stringify(myApproved).includes(formattedDate) && !JSON.stringify(myPending).includes(formattedDate)
     );
   };
 
