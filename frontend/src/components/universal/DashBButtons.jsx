@@ -133,7 +133,7 @@ const DashBButtons = () => {
     if (count > ptoCredits) {
       document.getElementById("pto_checkbox").disabled = true;
       document.getElementById("pto_enough_label").innerHTML =
-        "Insufficient PTOs. Considered as Unpaid.";
+        "Insufficient PTOs. Considered as <b>Unpaid</b>"
       document.getElementById("pto_points").style.color = "red";
     }
   };
@@ -243,7 +243,7 @@ const DashBButtons = () => {
                   onChange={handleChange}
                   required
                 >
-                  <option disabled selected>
+                  <option value="" hidden>
                     Pick a reason for filing a leave
                   </option>
                   <option>Sick Leave</option>
@@ -341,7 +341,7 @@ const DashBButtons = () => {
               <label className="form-control">
                 <div className="label">
                   <h1 className="label-text">
-                    Reason for Leave Reason for Leave{" "}
+                    Reason for Leave <span className="text-red-500"> *</span>{" "}
                     <span className="text-red-500"> </span>
                   </h1>
                 </div>
@@ -375,7 +375,7 @@ const DashBButtons = () => {
                   onChange={handleChange}
                   required
                 >
-                  <option disabled selected>
+                  <option value="" hidden>
                     Choose your approver
                   </option>
 

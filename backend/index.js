@@ -1012,8 +1012,14 @@ app.post("/editMyProfile", (req, res) => {
     + "', emergency_contact_num = '" + req.body.emergency_contact_num + "', civil_status = '" + req.body.civil_status + "' WHERE emp_id = " + uid
 
     db.query(q, (err, data) => {
-        if (err) return console.log(err); 
-        return res.json(data);
+        if(err) {
+            res.send(err)
+        }
+        else {
+            res.send("success")
+        }
+        // if (err) return console.log(err); 
+        // return res.json(data);
     })
     
  })
