@@ -91,7 +91,7 @@ const DashBButtons = () => {
 
     ptoLabelChange();
     taLabelChange();
-    disableSubmit();
+    // disableSubmit();
   };
 
   const taLabelChange = () => {
@@ -148,10 +148,10 @@ const DashBButtons = () => {
       .then((res) => console.log(JSON.stringify(leaveInfo)))
       .catch((err) => console.log(err));
 
-    axios
-      .post("http://localhost:6197/subtractPTO", leaveInfo)
-      .then((res) => console.log("PTO temporary subtracted"))
-      .catch((err) => console.log(err));
+    // axios
+    //   .post("http://localhost:6197/subtractPTO", leaveInfo)
+    //   .then((res) => console.log("PTO temporary subtracted"))
+    //   .catch((err) => console.log(err));
 
     document.getElementById("file_a_leave_btn").close();
     document.getElementById("leaveForm").reset();
@@ -348,6 +348,7 @@ const DashBButtons = () => {
                   placeholder="Reason for Leave..."
                   onChange={handleChange}
                   maxLength="255"
+                  required
                 ></textarea>
                 <div className="label py-0">
                   <span className="label-text-alt"></span>
@@ -417,7 +418,6 @@ const DashBButtons = () => {
                   type="submit"
                   className="btn btn-primary mr-2"
                   onClick={handlePTOpoints}
-                  disabled
                 >
                   Submit
                 </button>

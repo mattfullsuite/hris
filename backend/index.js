@@ -726,36 +726,33 @@ app.get("countAllEmployees", (req, res) => {
 })
 
 app.get("/myDeclinedLeaves", (req, res) => {
+    const uid = req.session.user[0].emp_id
     const q = "SELECT * FROM leaves WHERE leave_status = 2 AND emp_id = ?"
 
-    db.query(q, req.session.user[0].emp_id, (err, data => {
-        if (err) return (json.err)
-        else {
-            return json(data)
-        }
-    }))
+    db.query(q,uid, (err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
 })
 
 app.get("/myPendingLeaves", (req, res) => {
-    const q = "SELECT * FROM leaves WHERE leave_status = 0 AND emp_id = ?"
+    const uid = req.session.user[0].emp_id
+    const q = "SELECT * FROM leaves WHERE leave_status = 0 AND requester_id = ?"
 
-    db.query(q, req.session.user[0].emp_id, (err, data => {
-        if (err) return (json.err)
-        else {
-            return json(data)
-        }
-    }))
+    db.query(q,uid, (err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
 })
 
 app.get("/myApprovedLeaves", (req, res) => {
-    const q = "SELECT * FROM leaves WHERE leave_status = 1 AND emp_id = ?"
+    const uid = req.session.user[0].emp_id
+    const q = "SELECT * FROM leaves WHERE leave_status = 1 AND requester_id = ?"
 
-    db.query(q, req.session.user[0].emp_id, (err, data => {
-        if (err) return (json.err)
-        else {
-            return json(data)
-        }
-    }))
+    db.query(q,uid, (err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
 })
 
 
@@ -997,6 +994,13 @@ app.post("/fileLeave", (req, res)=> {
     db.query(q, [values], (err, data) => {
         if (err) return console.log(err);
         return res.json(data);
+    })
+
+    const q1 = "UPDATE emp AS e JOIN leave_credits l ON e.emp_id = l.emp_id SET leave_balance = leave_balance - " + req.body.use_pto_points + " WHERE l.emp_id = ?"
+
+    db.query(q1, [uid], (err, data) => {
+        if (err) return console.log(err); 
+        return console.log(data);
     })
 
 })
