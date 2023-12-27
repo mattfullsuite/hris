@@ -10,7 +10,7 @@ module.exports = function processLogin(req, res) {
       [work_email],
       (err, result) => {
           if (err) {
-              res.send({err: err});
+              res.send(err);
           }
 
           if (result.length > 0) {
@@ -27,7 +27,7 @@ module.exports = function processLogin(req, res) {
                         res.send(result[0]);
                     }
                     else {
-                        res.send({ message: "Wrong username/password combination"})
+                        res.send("error")
                     }
                 }
             })
