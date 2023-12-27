@@ -49,7 +49,11 @@ const DashBButtons = () => {
     const formattedDate = date.toISOString().split("T")[0];
     const day = date.getDay();
     return (
-      day !== 0 && day !== 6 && !JSON.stringify(holiday).includes(formattedDate) && !JSON.stringify(myApproved).includes(formattedDate) && !JSON.stringify(myPending).includes(formattedDate)
+      day !== 0 &&
+      day !== 6 &&
+      !JSON.stringify(holiday).includes(formattedDate) &&
+      !JSON.stringify(myApproved).includes(formattedDate) &&
+      !JSON.stringify(myPending).includes(formattedDate)
     );
   };
 
@@ -214,7 +218,7 @@ const DashBButtons = () => {
         {/* Modal - File A Leave   */}
         <dialog id="file_a_leave_btn" className="modal">
           <div className="modal-box">
-            <h3 className="font-bold text-lg">File A Leave</h3>
+            <h3 className="font-bold text-xl text-center">File A Leave</h3>
 
             <form
               id="leaveForm"
@@ -235,7 +239,7 @@ const DashBButtons = () => {
                 <select
                   id="leave_type"
                   name="leave_type"
-                  className="select select-bordered w-full max-w-xs mb-2"
+                  className="select select-bordered w-full mb-2"
                   onChange={handleChange}
                   required
                 >
@@ -367,7 +371,7 @@ const DashBButtons = () => {
                 <select
                   id="approver_id"
                   name="approver_id"
-                  className="select select-bordered w-full max-w-xs mb-2"
+                  className="select select-bordered w-full mb-2"
                   onChange={handleChange}
                   required
                 >
@@ -388,28 +392,37 @@ const DashBButtons = () => {
                 </select>
               </label>
 
+              <div className="divider"></div>
+
               {/* Current PTO Points */}
-              <h1 className="text-base">Current PTO Points</h1>
+              <h1 className="text-md text-center mb-2 font-semibold">Current PTO Points</h1>
               {ptos.map((pto) => (
-                <h1 id="pto_points" className="text-lg font-bold mb-2">
+                <h1
+                  id="pto_points"
+                  className="text-4xl font-bold mb-2 text-center"
+                >
                   {pto.leave_balance}
                 </h1>
               ))}
 
               {/* Use PTO Checkbox */}
-              <div className="flex justify-start items-center">
-                <input
-                  id="pto_checkbox"
-                  name="use_pto_points"
-                  type="checkbox"
-                  className="checkbox checkbox-sm mr-3"
-                  onChange={handleChange}
-                  //onClick={checkPTO}
-                />
-                <h1 id="pto_enough_label" class="ptos_labels">
-                  Use PTO credit(/s)?
-                </h1>
+              <div className="flex flex-col justify-center items-center h-full">
+                <div className="flex items-center">
+                  <input
+                    id="pto_checkbox"
+                    name="use_pto_points"
+                    type="checkbox"
+                    className="checkbox checkbox-sm mr-3"
+                    onChange={handleChange}
+                    //onClick={checkPTO}
+                  />
+                  <h1 id="pto_enough_label" className="ptos_labels">
+                    Use PTO credit(/s)?
+                  </h1>
+                </div>
               </div>
+
+              <div className="divider"></div>
 
               {/* Button Container */}
               <div className="flex justify-end mt-3">
