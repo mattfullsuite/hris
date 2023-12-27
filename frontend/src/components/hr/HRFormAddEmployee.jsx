@@ -6,11 +6,11 @@ import ButtonBack from "../universal/ButtonBack";
 const HRFormAddEmployee = () => {
   const [userReference, setUserReferences] = useState([]);
 
-  const[companies, setCompanies] = useState([])
-  const[divisions, setDivisions] = useState([])
-  const[departments, setDepartments] = useState([])
-  const[clients, setClients] = useState([])
-  const[positions, setPositions] = useState([])
+  const [companies, setCompanies] = useState([]);
+  const [divisions, setDivisions] = useState([]);
+  const [departments, setDepartments] = useState([]);
+  const [clients, setClients] = useState([]);
+  const [positions, setPositions] = useState([]);
 
   useEffect(() => {
     const fetchReferences = async () => {
@@ -62,7 +62,6 @@ const HRFormAddEmployee = () => {
     m_name: "",
     s_name: "",
     emp_role: "",
-    emp_pic: "",
     personal_email: "",
     contact_num: "",
     dob: "",
@@ -82,10 +81,13 @@ const HRFormAddEmployee = () => {
   });
 
   const handleChange = (event) => {
-    setEmployeeInfo({...employeeInfo,[event.target.name]: [event.target.value]});
+    setEmployeeInfo({
+      ...employeeInfo,
+      [event.target.name]: [event.target.value],
+    });
     console.log(JSON.stringify(employeeInfo));
     isFound();
-  }
+  };
 
   const disableNext = () => {
     var dateFrom = document.getElementById("date_hired").value;
@@ -115,8 +117,8 @@ const HRFormAddEmployee = () => {
     addNewEmployee();
   };
 
-  const addNewEmployee = () => {
-    axios
+  const addNewEmployee = async () => {
+      await axios
       .post("http://localhost:6197/addNewEmployee", employeeInfo)
       .then((res) => console.log(JSON.stringify(employeeInfo)))
       .catch((err) => console.log(err));
@@ -135,7 +137,7 @@ const HRFormAddEmployee = () => {
               Add New Employee
             </h1>
           </div>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} encType="multipart/form-data">
             {/* Personal Information */}
             <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
               <h1 className="font-bold">Personal Information</h1>
@@ -406,14 +408,16 @@ const HRFormAddEmployee = () => {
                     </span>
                   </div>
                   <div className="flex">
-
-                    <select 
-                    id="company_id"
-                    name="company_id"
-                    className="select select-bordered w-32" 
-                    onChange={handleChange}
-                    required>
-                      <option disabled selected>Company</option>
+                    <select
+                      id="company_id"
+                      name="company_id"
+                      className="select select-bordered w-32"
+                      onChange={handleChange}
+                      required
+                    >
+                      <option disabled selected>
+                        Company
+                      </option>
                       {companies.map((c) => (
                         <option value={c.company_id}>{c.company_name}</option>
                       ))}
@@ -465,13 +469,16 @@ const HRFormAddEmployee = () => {
                       </span>
                     </span>
                   </div>
-                  <select 
-                  id="div_id"
-                  name="div_id"
-                  className="select select-bordered w-full "
-                  onChange={handleChange}
-                  required>
-                    <option disabled selected>Select Division</option>
+                  <select
+                    id="div_id"
+                    name="div_id"
+                    className="select select-bordered w-full "
+                    onChange={handleChange}
+                    required
+                  >
+                    <option disabled selected>
+                      Select Division
+                    </option>
                     {divisions.map((di) => (
                       <option value={di.div_id}>{di.div_name}</option>
                     ))}
@@ -489,17 +496,18 @@ const HRFormAddEmployee = () => {
                       </span>
                     </span>
                   </div>
-                  <select 
-                  id="dept_id"
-                  name="dept_id"
-                  className="select select-bordered w-full " 
-                  onChange={handleChange}
-                  required>
+                  <select
+                    id="dept_id"
+                    name="dept_id"
+                    className="select select-bordered w-full "
+                    onChange={handleChange}
+                    required
+                  >
                     <option disabled selected>
                       Select Department
                     </option>
                     {departments.map((de) => (
-                    <option value={de.dept_id}>{de.dept_name}</option>
+                      <option value={de.dept_id}>{de.dept_name}</option>
                     ))}
                   </select>
                 </label>
@@ -517,13 +525,16 @@ const HRFormAddEmployee = () => {
                       </span>
                     </span>
                   </div>
-                  <select 
-                  id="client_id"
-                  name="client_id"
-                  className="select select-bordered w-full " 
-                  onChange={handleChange}
-                  required>
-                    <option disabled selected>Select Client/Cluster</option>
+                  <select
+                    id="client_id"
+                    name="client_id"
+                    className="select select-bordered w-full "
+                    onChange={handleChange}
+                    required
+                  >
+                    <option disabled selected>
+                      Select Client/Cluster
+                    </option>
                     {clients.map((c) => (
                       <option value={c.client_id}>{c.client_name}</option>
                     ))}
@@ -542,14 +553,17 @@ const HRFormAddEmployee = () => {
                     </span>
                   </div>
                   <select
-                  id="position_id"
-                  name="position_id"
-                  className="select select-bordered w-full " 
-                  onChange={handleChange}
-                  required>
-                    <option disabled selected>Select Position</option>
+                    id="position_id"
+                    name="position_id"
+                    className="select select-bordered w-full "
+                    onChange={handleChange}
+                    required
+                  >
+                    <option disabled selected>
+                      Select Position
+                    </option>
                     {positions.map((p) => (
-                    <option value={p.position_id}>{p.position_name}</option>
+                      <option value={p.position_id}>{p.position_name}</option>
                     ))}
                   </select>
                 </label>
@@ -663,6 +677,7 @@ const HRFormAddEmployee = () => {
                     name="emp_pic"
                     onChange={handleChange}
                     type="file"
+                    accept="image/*"
                     className="file-input w-full max-w-xs"
                   />
                 </label>

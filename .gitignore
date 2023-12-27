@@ -4,3 +4,4 @@ backend/node_modules/*
 protected.env
 package-lock.json
 .eslintcache
+/log

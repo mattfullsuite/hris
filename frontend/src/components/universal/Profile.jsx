@@ -250,6 +250,7 @@ const Profile = () => {
                   id="emergency_contact_name"
                   value={newInfo.emergency_contact_name}
                   onChange={handleChange}
+                  maxLength="255"
                   type="text"
                   className="input input-bordered w-full max-w-xs"
                   disabled
@@ -267,6 +268,7 @@ const Profile = () => {
                   value={newInfo.emergency_contact_num}
                   onChange={handleChange}
                   type="text"
+                  maxLength="22"
                   className="input input-bordered w-full max-w-xs"
                   disabled
                 />

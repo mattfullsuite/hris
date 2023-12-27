@@ -62,7 +62,7 @@ setTimeout(function () {
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-[#0097B2] dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
-            <SideBarProfile color={"text-white"} fill={"white"} link_to={"/empProfile"}></SideBarProfile>
+            <SideBarProfile color={"text-white"} fill={"white"} link_to={"/empProfile"} hover={"bg-gray-800"}></SideBarProfile>
 
           {/* { users.map((user) => (
             <div className="flex justify-center mt-10">

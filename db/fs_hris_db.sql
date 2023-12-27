@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Dec 22, 2023 at 03:10 AM
+-- Generation Time: Dec 26, 2023 at 10:33 AM
 -- Server version: 5.7.39
 -- PHP Version: 7.4.33
 
@@ -279,17 +279,18 @@ CREATE TABLE `emp` (
 --
 
 INSERT INTO `emp` (`emp_id`, `f_name`, `m_name`, `s_name`, `emp_num`, `work_email`, `password`, `emp_role`, `emp_pic`, `personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`, `date_separated`, `emp_status`, `sex`, `gender`, `civil_status`, `emergency_contact_name`, `emergency_contact_num`, `emp_key`) VALUES
-(1, 'Matt Wilfred', 'Cabunoc', 'Salvador', 'OCCI-0297', 'matt@fullsuite.ph', 'mattmatt', 1, '../photos/matt.png', 'smattwilfred01@gmail.com', '09667528054', '1997-06-01', 'Cabanatuan City, Nueva Ecija', 'Marcos Highway', '2023-09-01', '2024-02-29', NULL, 'PROBATIONARY', 'Male', NULL, NULL, NULL, NULL, 'uh9DByt1tkrVoPbHZLoq1xxy3BspYH'),
-(2, 'July Anne Rhaemonette', 'Almoite', 'Rosal', 'OCCI-0306', 'july@fullsuite.ph', 'rhaerhae', 0, '../photos/july.png', 'jarhaemonette@gmail.com', '09457552819', '2000-07-14', 'Amagbagan, Pozorrubio, Pangasinan', 'Engineer\'s Hill, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', '', 'Single', NULL, NULL, 'KJr9UvN4vBPfCYK1oWyhRv7we8OMDG'),
-(3, 'Antoinette', 'Garcia', 'Sanchez', 'OCCI-0309', 'antoinette@fullsuite.ph', 'tonton', 3, '../photos/antoinette.png', 'antoinette.g.sanchez@gmail.com', '09458239638', '2000-05-22', '62 Scout Barrio, Baguio City', '62 Scout Barrio, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', NULL, 'Single', 'Andrea Mae G. Sanchez', '09173456781', 'e0AeF9LmHSUxiGTXY6hnj44rZ42GfR'),
-(4, 'Marco', 'Eliseo', 'Antero', 'OCCI-0298', 'marco@fullsuite.ph', 'marco@fullsuite.ph', 2, '../photos/marco.png', 'marco.e.antero@gmail.com', '09089624586', '2001-02-02', 'Brookspoint Rd., Baguio City', 'Brookspoint Rd., Baguio City', '2023-09-01', '2024-02-29', NULL, 'REGULAR', 'Male', NULL, 'Single', 'Issa Antero', '09184960347', 'yfH295qGUIUGqLhffSQgtw4tpIjRnF'),
-(5, 'Hailie Joy', 'Tolentino', 'Bejerano', 'TEE-0026', 'hailie@fullsuite.ph', 'joyjoy0409', 2, '../photos/hailie.png', 'hailiebejerano@gmail.com', '09661786217', '2004-04-09', '119 B. Pinewood Street, Crystal Cave, Baguio City', '119 B. Pinewood Street, Crystal Cave, Baguio City', '2021-06-16', '2023-11-23', NULL, 'PARTTIME', 'Female', NULL, 'Single', 'Maria Cristina Bejerano', '09302930186', 'JfQR7UU7VAnSFok1xOQhHof9gwhA4b'),
-(6, 'Amiel Jethro', 'Cabalquinto', 'Cortez', 'OCCI-0307', 'amiel@fullsuite.ph', 'pagmamahal', 2, '../photos/amiel.png', 'amieljethrocortez@gmail.com', '09235974089', '1999-08-30', 'Holy Ghost Extension', 'Holy Ghost Extension', '2023-10-02', '2023-04-02', NULL, 'PROBATIONARY', 'Male', 'Male', 'Single', 'Christine Cortez', '09223440168', 'wRJxkD4yc7EdgXdnpO7FQKqEKG9c83'),
-(7, 'Diana Nicole', 'De paz', 'Perez', 'OCCI-0192', 'diana@fullsuite.ph', 'staff@password', 1, '', 'diananicole.perez@gmail.com', '09774079280', '2002-09-24', 'blk 2 lot 6, lauan st villa pozorrubio', '47 Paredes St. Middle Quezon Hill', '2021-09-23', NULL, NULL, 'REGULAR', 'Female', NULL, 'Single', 'Brigette Perez', '09162614305', 'mmF3j0ECJmluCmFD6Q1eHpT7C1W11A'),
-(8, 'Jhexer', 'Tiongson', 'Chun', 'OCCI-0278', 'jhex@fullsuite.ph', 'jhexjhex', 3, '../photos/jhex.png', 'jhexchun@gmail.com', '09302506992', '1997-06-28', '161-A Lower Pias St. Camp 7, Baguio City, Benguet 2600', '161-A Lower Pias St. Camp 7, Baguio City, Benguet 2600', '2023-05-03', '2023-10-30', NULL, 'REGULAR', 'Male', 'Male', 'Single', 'Juvelyn Chun', '09476002222', 'Azr7wKNXpst9r6HCgDA1y2sQQcjrKk'),
-(9, 'Alleza Czarina', 'Nonato', 'Castor', 'OCCI-0273', 'alleza@fullsuite.ph', 'zaza', 2, '', 'allezaczarina@gmail.com', '09154353116', '2023-04-09', 'Quezon Hill, Baguio City', 'Quezon Hill, Baguio City', '2023-04-03', '2023-10-03', NULL, 'REGULAR', 'Female', NULL, NULL, NULL, NULL, 'NoAgh8fVD9Q5h3dCtau9nbHZPjsKYz'),
-(10, 'Jessica', 'Abarquez', 'Aguirre', NULL, 'ajessica@fullsuite.ph', 'jessjess', 3, '', 'jeszicawongaguirre@gmail.com', '09386339392', '1993-10-05', '39 Military Cutoff Baguio City', '39 Military Cutoff Baguio City', '2022-07-18', '2023-01-18', NULL, 'REGULAR', 'Female', NULL, NULL, NULL, NULL, 'xz0OFnu8BRJxPAY8EiWtwMfjOPDGT3'),
-(81, 'Marvin', 'Directo', 'Bautista', 'OCCI-0700', 'marvin@fullsuite.ph', 'marvin123', 2, NULL, 'mrvn@gmail.com', '57468', '2023-12-07', 'Umingan, Pangasinan', 'Phil-Am, Baguio City, Benguet', '2023-12-14', '2023-12-15', NULL, 'Probationary', 'Male', 'Cis', 'Single', NULL, NULL, 'fipKjfrFBLAVSb5nALA4U6s0ylnxCy');
+(1, 'Matt Wilfred', 'Cabunoc', 'Salvador', 'OCCI-0297', 'matt@fullsuite.ph', '$2a$10$Gg7/Kerk5JMSI.ZcF.Zx2uiIFCfPMlbVcOOfjJ9E1IXO2e/xpAFua', 1, '../photos/matt.png', 'smattwilfred01@gmail.com', '09667528054', '1997-06-01', 'Cabanatuan City, Nueva Ecija', 'Marcos Highway', '2023-09-01', '2024-02-29', NULL, 'PROBATIONARY', 'Male', NULL, NULL, NULL, NULL, 'uh9DByt1tkrVoPbHZLoq1xxy3BspYH'),
+(2, 'July Anne Rhaemonette', 'Almoite', 'Rosal', 'OCCI-0306', 'july@fullsuite.ph', '$2a$10$Snmw3qR/h/dwLI2RvoqhK.S9QE56pRPMAXLLEaEtNx1kbrAEVpk4K', 0, '../photos/july.png', 'jarhaemonette@gmail.com', '09457552819', '2000-07-14', 'Amagbagan, Pozorrubio, Pangasinan', 'Engineer\'s Hill, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', '', 'Single', NULL, NULL, 'KJr9UvN4vBPfCYK1oWyhRv7we8OMDG'),
+(3, 'Antoinette', 'Garcia', 'Sanchez', 'OCCI-0309', 'antoinette@fullsuite.ph', '$2a$10$cLKK5DsL4rDFwGl3zX.rA.ubb5zWwUSuXRKG1h2wzK9uJZASUSJKm', 3, '../photos/antoinette.png', 'antoinette.g.sanchez@gmail.com', '09458239638', '2000-05-22', '62 Scout Barrio, Baguio City', '62 Scout Barrio, Baguio City', '2023-10-02', '2024-04-02', NULL, 'PROBATIONARY', 'Female', NULL, 'Single', 'Andrea Mae G. Sanchez', '09173456781', 'e0AeF9LmHSUxiGTXY6hnj44rZ42GfR'),
+(4, 'Marco', 'Eliseo', 'Antero', 'OCCI-0298', 'marco@fullsuite.ph', '$2a$10$oABJU85nbfroT0/KyoNaU.F.ZgCg/hWj1S1pguMIiwZwcnzbFPmkG', 2, '../photos/marco.png', 'marco.e.antero@gmail.com', '09089624586', '2001-02-02', 'Brookspoint Rd., Baguio City', 'Brookspoint Rd., Baguio City', '2023-09-01', '2024-02-29', NULL, 'REGULAR', 'Male', NULL, 'Single', 'Issa Antero', '09184960347', 'yfH295qGUIUGqLhffSQgtw4tpIjRnF'),
+(5, 'Hailie Joy', 'Tolentino', 'Bejerano', 'TEE-0026', 'hailie@fullsuite.ph', '$2a$10$teVjLvXIldNZPF/uph3ZUe5uRDbQGxqzd1EVW2AAo5lm96BzfvDYi', 2, '../photos/hailie.png', 'hailiebejerano@gmail.com', '09661786217', '2004-04-09', '119 B. Pinewood Street, Crystal Cave, Baguio City', '119 B. Pinewood Street, Crystal Cave, Baguio City', '2021-06-16', '2023-11-23', NULL, 'PARTTIME', 'Female', NULL, 'Single', 'Maria Cristina Bejerano', '09302930186', 'JfQR7UU7VAnSFok1xOQhHof9gwhA4b'),
+(6, 'Amiel Jethro', 'Cabalquinto', 'Cortez', 'OCCI-0307', 'amiel@fullsuite.ph', '$2a$10$pNedenN8TCAg3/Vpm18r5.7uLdwGem5IAlZxhp0UfDvLJiaZJwhOq', 2, '../photos/amiel.png', 'amieljethrocortez@gmail.com', '09235974089', '1999-08-30', 'Holy Ghost Extension', 'Holy Ghost Extension', '2023-10-02', '2023-04-02', NULL, 'PROBATIONARY', 'Male', 'Male', 'Single', 'Christine Cortez', '09223440168', 'wRJxkD4yc7EdgXdnpO7FQKqEKG9c83'),
+(7, 'Diana Nicole', 'De paz', 'Perez', 'OCCI-0192', 'diana@fullsuite.ph', '$2a$10$vs9xcttaQpmDyEkit5XqkeXYE5mJLwUjoJR3//KiOWBuJOdkEKIl6', 1, NULL, 'diananicole.perez@gmail.com', '09774079280', '2002-09-24', 'blk 2 lot 6, lauan st villa pozorrubio', '47 Paredes St. Middle Quezon Hill', '2021-09-23', NULL, NULL, 'REGULAR', 'Female', NULL, 'Single', 'Brigette Perez', '09162614305', 'mmF3j0ECJmluCmFD6Q1eHpT7C1W11A'),
+(8, 'Jhexer', 'Tiongson', 'Chun', 'OCCI-0278', 'jhex@fullsuite.ph', '$2a$10$IB/t2l..muBdHP1pbu2xAuvZ1O7NEDvIdf3PezRLgDDq.FNWP50DK', 3, '../photos/jhex.png', 'jhexchun@gmail.com', '09302506992', '1997-06-28', '161-A Lower Pias St. Camp 7, Baguio City, Benguet 2600', '161-A Lower Pias St. Camp 7, Baguio City, Benguet 2600', '2023-05-03', '2023-10-30', NULL, 'REGULAR', 'Male', 'Male', 'Single', 'Juvelyn Chun', '09476002222', 'Azr7wKNXpst9r6HCgDA1y2sQQcjrKk'),
+(9, 'Alleza Czarina', 'Nonato', 'Castor', 'OCCI-0273', 'alleza@fullsuite.ph', '$2a$10$ebugRj7LLEIF1oxYTYhzG.SeqGK1I4FW7OkxyduYu9zwLA7lfX4Wm', 2, '', 'allezaczarina@gmail.com', '09154353116', '2023-04-09', 'Quezon Hill, Baguio City', 'Quezon Hill, Baguio City', '2023-04-03', '2023-10-03', NULL, 'REGULAR', 'Female', NULL, NULL, NULL, NULL, 'NoAgh8fVD9Q5h3dCtau9nbHZPjsKYz'),
+(10, 'Jessica', 'Abarquez', 'Aguirre', NULL, 'ajessica@fullsuite.ph', '$2a$10$3lsrIFFFhdxz81Rl1rFUyOI6ATXcCkx8kybOmyf2u/0Iq3EMag5f2', 3, '', 'jeszicawongaguirre@gmail.com', '09386339392', '1993-10-05', '39 Military Cutoff Baguio City', '39 Military Cutoff Baguio City', '2022-07-18', '2023-01-18', NULL, 'REGULAR', 'Female', NULL, NULL, NULL, NULL, 'xz0OFnu8BRJxPAY8EiWtwMfjOPDGT3'),
+(81, 'Marvin', 'Directo', 'Bautista', 'OCCI-0700', 'marvin@fullsuite.ph', '$2a$10$k5irb3F3rWMBPFirDPAfG.dtmTcRLPUigwKgmDitwDCvpQ1URQSKu', 2, NULL, 'mrvn@gmail.com', '57468', '2023-12-07', 'Umingan, Pangasinan', 'Phil-Am, Baguio City, Benguet', '2023-12-14', '2023-12-15', NULL, 'Probationary', 'Male', 'Cis', 'Single', NULL, NULL, 'fipKjfrFBLAVSb5nALA4U6s0ylnxCy'),
+(89, 'Jan Patrick', 'Dela Cruz', 'Urbano', 'OCCI-820', 'patrick@fullsuite.ph', '$2a$10$GLrrt3Z69WXqfkYELieJHOG4vBtdf6lTH70eCH/PPXR7U7H2YgOce', 2, NULL, 'janpatrickdelacruzurbano@gmail.com', '09878766765', '2001-01-11', 'San Juan, Moncada, Tarlac', 'Phil-Am, Baguio City, Benguet', '2023-12-04', '2024-06-04', NULL, 'Regular', 'Male', 'Male', 'Single', NULL, NULL, 'MmNGNKC0n88wpS951s7paqOcnqZ2Mm');
 
 -- --------------------------------------------------------
 
@@ -318,7 +319,9 @@ INSERT INTO `emp_designation` (`emp_id`, `company_id`, `client_id`, `position_id
 (2, 1, 1, 14),
 (4, 1, 1, 33),
 (81, 1, 1, 33),
-(1, 1, 1, 33);
+(1, 1, 1, 33),
+(81, 1, 7, 18),
+(89, 1, 7, 21);
 
 -- --------------------------------------------------------
 
@@ -483,7 +486,8 @@ INSERT INTO `leave_credits` (`leave_credits_id`, `emp_id`, `leave_balance`) VALU
 (20, 6, '3.45'),
 (21, 7, '0.85'),
 (22, 9, '0.56'),
-(47, 81, '0.00');
+(47, 81, '0.00'),
+(56, 89, '0.00');
 
 -- --------------------------------------------------------
 
@@ -889,7 +893,7 @@ ALTER TABLE `division`
 -- AUTO_INCREMENT for table `emp`
 --
 ALTER TABLE `emp`
-  MODIFY `emp_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=82;
+  MODIFY `emp_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT for table `emp_details`
@@ -919,7 +923,7 @@ ALTER TABLE `leaves`
 -- AUTO_INCREMENT for table `leave_credits`
 --
 ALTER TABLE `leave_credits`
-  MODIFY `leave_credits_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `leave_credits_id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT for table `offset`
@@ -974,8 +978,14 @@ ALTER TABLE `dept`
 ALTER TABLE `emp_designation`
   ADD CONSTRAINT `client_id_fk` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `company_id_fk` FOREIGN KEY (`company_id`) REFERENCES `company` (`company_id`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `emp_id_fk` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`emp_id`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `emp_id_fk` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`emp_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `position_id_fk` FOREIGN KEY (`position_id`) REFERENCES `position` (`position_id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `leave_credits`
+--
+ALTER TABLE `leave_credits`
+  ADD CONSTRAINT `emp_d_fk` FOREIGN KEY (`emp_id`) REFERENCES `emp` (`emp_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `position`

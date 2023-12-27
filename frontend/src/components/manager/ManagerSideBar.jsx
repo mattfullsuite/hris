@@ -49,6 +49,16 @@ const ManagerSideBar = () => {
     window.location.reload();
   }, 60 * 60 * 24 * 1000);
 
+  function showPendingCount(pendingCount) {
+    if (pendingCount == 0) {
+      return <span></span>
+    } else {
+      return <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-white bg-red-600 rounded-full dark:bg-blue-900 dark:text-blue-300">
+      {count.countPending}
+     </span>
+    }
+  }
+
   return (
     <>
       <button
@@ -86,6 +96,7 @@ const ManagerSideBar = () => {
               color={"text-black"}
               fill={"black"}
               link_to={"/manProfile"}
+              hover={"bg-gray-100"}
             ></SideBarProfile>
             <div className="flex items-center justify-center"></div>
 
@@ -137,10 +148,12 @@ const ManagerSideBar = () => {
                   <span className="flex-1 ml-3 whitespace-nowrap">
                     PTO Requests
                   </span>
+
+                  <div>{showPendingCount(count.countPending)}</div>
                   
-                  <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-white bg-red-600 rounded-full dark:bg-blue-900 dark:text-blue-300">
+                  {/* <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-white bg-red-600 rounded-full dark:bg-blue-900 dark:text-blue-300">
                    {count.countPending}
-                  </span>
+                  </span> */}
                 </a>
               </Link>
             </li>
