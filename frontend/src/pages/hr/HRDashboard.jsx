@@ -22,7 +22,7 @@ const HRDashboard = () => {
   const [users, setUser] = useState([]);
 
   useEffect(() => {
-    Axios.get(BASE_URL + ":6197/login").then((response) => {
+    Axios.get(BASE_URL + "/login").then((response) => {
       if (response.data.loggedIn == false) {
         navigate("/login");
       } else {
