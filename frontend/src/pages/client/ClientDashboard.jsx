@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
 
-
 import ClientSideBar from "../../components/client/ClientSideBar";
 import DashBremainingPTO from "../../components/universal/DashBRemainingPTO";
 import DashBButtons from "../../components/universal/DashBButtons";
@@ -14,11 +13,10 @@ import DashBPTOApprovedAndOwned from "../../components/universal/DashBPTOApprove
 
 // import DataTable from 'datatables.net-dt';
 // import 'datatables.net-responsive-dt';
- 
+
 // let table = new DataTable('#myTable', {
 //     responsive: true
 // });
-
 
 // const handleFormSubmit = () => {x
 //   // Date From
@@ -53,46 +51,45 @@ const ClientDashboard = () => {
       })
    }, [])**/
 
-   const [users, setUser] = useState([]);
-   const [emp_id, setID] = useState(0);
-   const [announcements, setAnnouncements] = useState([]);
+  const [users, setUser] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
+  const [pleaves, setPendingLeaves] = useState([]);
+  const uid = users.emp_id;
 
-   const [pleaves, setPendingLeaves] = useState([])
-
-    useEffect(() => {
-        const fetchAllPendingLeaves = async ()=> {
-            try{
-                const res = await Axios.get("http://localhost:6197/showpendingleaves")
-                setPendingLeaves(res.data)
-            } catch(err){
-                console.log(err)
-            }
-        };
-        fetchAllPendingLeaves();
-    }, []);
-
-   useEffect(() => {
-      const fetchAllAnnouncements = async ()=> {
-          try{
-              const res = await Axios.get("http://localhost:6197/announcements")
-              setAnnouncements(res.data);
-          } catch(err){
-              console.log(err)
-          }
+  useEffect(() => {
+    const fetchAllPendingLeaves = async () => {
+      try {
+        const res = await Axios.get("http://localhost:6197/showpendingleaves");
+        setPendingLeaves(res.data);
+      } catch (err) {
+        console.log(err);
       }
-      fetchAllAnnouncements()
-  },[])
+    };
+    fetchAllPendingLeaves();
+  }, []);
 
-   useEffect(() => {
-      const fetchUserData = async ()=> {
-          try{
-              const res = await Axios.get("http://localhost:6197/login")
-              setUser(res.data.user)
-          } catch(err){
-              console.log(err)
-          }
-      };
-      fetchUserData();
+  useEffect(() => {
+    const fetchAllAnnouncements = async () => {
+      try {
+        const res = await Axios.get("http://localhost:6197/announcements");
+        setAnnouncements(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllAnnouncements();
+  }, []);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const res = await Axios.get("http://localhost:6197/login");
+        setUser(res.data.user[0]);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUserData();
   }, []);
 
   return (
@@ -105,19 +102,17 @@ const ClientDashboard = () => {
         <div className="m-4 flex flex-col xl:flex-row">
           <div className="grow">
             <div className="flex flex-col md:flex-row">
-                <div>
-                  <DashBButtons />
-                </div>
+              <div>
+                <DashBButtons />
+              </div>
 
-                <div>
-                  <DashBremainingPTO />
-                </div>
+              <div>
+                <DashBremainingPTO />
+              </div>
             </div>
 
-              <p>{users[0].emp_id}</p>
-
             <div className="mt-4">
-              <DashBPTOApprovedAndOwned />
+              <DashBPTOApprovedAndOwned uid={uid} />
             </div>
           </div>
 

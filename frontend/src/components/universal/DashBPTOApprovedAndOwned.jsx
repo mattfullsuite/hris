@@ -3,7 +3,7 @@ import Axios from "axios";
 import moment from "moment";
 import DataTable from "react-data-table-component";
 
-const DashBPTOApprovedAndOwned = ({emp_id}) => {
+const DashBPTOApprovedAndOwned = ({ uid }) => {
   const [data, setData] = useState([]);
   const [all, setMyLeave] = useState([]);
   const [approved, setApproved] = useState([]);
@@ -12,7 +12,9 @@ const DashBPTOApprovedAndOwned = ({emp_id}) => {
     const fetchAllApproved = async () => {
       try {
         const res = await Axios.get("http://localhost:6197/showallmyleaves");
-        const res1 = await Axios.get("http://localhost:6197/showapprovedleaves");
+        const res1 = await Axios.get(
+          "http://localhost:6197/showapprovedleaves"
+        );
         const res2 = await Axios.get("http://localhost:6197/login");
         // test
         setMyLeave(res.data);
@@ -110,7 +112,10 @@ const DashBPTOApprovedAndOwned = ({emp_id}) => {
                     {row.f_name.charAt(0) + row.s_name.charAt(0)}
                   </div>
                 ) : (
-                  <img src={"../uploads/" + row.emp_pic} className="h-24 w-24 rounded-full m-2" />
+                  <img
+                    src={"../uploads/" + row.emp_pic}
+                    className="h-24 w-24 rounded-full m-2"
+                  />
                 )}
 
                 <div className="text-center mb-7">
@@ -139,22 +144,24 @@ const DashBPTOApprovedAndOwned = ({emp_id}) => {
                   <div>{checkStatus(row.leave_status)}</div>
                 </div>
               </div>
-              
-              <div>
-                <h1 className="font-semibold mt-5">Reason:</h1>
 
-                <div className="max-h-44 whitespace-normal">
-                  <p className="justify-center text-justify">
-                    {row.leave_reason == "" || row.leave_reason == null ? (
-                      <p className="italic text-gray-600">
-                        No reason indicated.
-                      </p>
-                    ) : (
-                      <p>{row.leave_reason}</p>
-                    )}
-                  </p>
+              {uid === row.requester_id && (
+                <div className="flex flex-col items-center">
+                  <h1 className="font-semibold mt-5">Reason:</h1>
+
+                  <div className="max-h-44 whitespace-normal">
+                    <p className="justify-center text-center">
+                      {row.leave_reason == "" || row.leave_reason == null ? (
+                        <p className="italic text-gray-600">
+                          No reason indicated.
+                        </p>
+                      ) : (
+                        <p>{row.leave_reason}</p>
+                      )}
+                    </p>  
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </dialog>
         </div>
@@ -172,7 +179,12 @@ const DashBPTOApprovedAndOwned = ({emp_id}) => {
           role="tablist"
           className="tabs tabs-lifted tabs-lg flex flex-row justify-center"
         >
-          <button role="tab" id="all" onClick={handleClick} className="tab tab-active">
+          <button
+            role="tab"
+            id="all"
+            onClick={handleClick}
+            className="tab tab-active"
+          >
             My PTOs
           </button>
           <button role="tab" id="app" onClick={handleClick} className="tab">
