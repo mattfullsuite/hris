@@ -273,7 +273,7 @@ const HRFormEditEmployee = () => {
                     value={employeeInfo.civil_status}
                     required
                   >
-                    <option disabled selected>
+                    <option value="" hidden>
                       Select Civil Status
                     </option>
                     <option>Single</option>
@@ -296,7 +296,7 @@ const HRFormEditEmployee = () => {
                     value={employeeInfo.sex}
                     required
                   >
-                    <option disabled selected>
+                    <option value="" hidden>
                       Select Sex
                     </option>
                     <option>Male</option>
@@ -473,7 +473,7 @@ const HRFormEditEmployee = () => {
                     onChange={handleChange}
                     value={employeeInfo.company_id}
                     required>
-                      <option disabled selected>Company</option>
+                      <option value="" hidden>Company</option>
                       {companies.map((c) => (
                         <option value={c.company_id}>{c.company_name}</option>
                       ))}
@@ -534,7 +534,7 @@ const HRFormEditEmployee = () => {
                   onChange={handleChange}
                   value={employeeInfo.div_id}
                   required>
-                    <option disabled selected>Select Division</option>
+                    <option value="" hidden>Select Division</option>
                     {divisions.map((di) => (
                       <option value={di.div_id}>{di.div_name}</option>
                     ))}
@@ -559,7 +559,7 @@ const HRFormEditEmployee = () => {
                   onChange={handleChange}
                   value={employeeInfo.dept_id}
                   required>
-                    <option disabled selected>
+                    <option value="" hidden>
                       Select Department
                     </option>
                     {departments.map((de) => (
@@ -588,7 +588,7 @@ const HRFormEditEmployee = () => {
                   onChange={handleChange}
                   value={employeeInfo.client_id}
                   required>
-                    <option disabled selected>Select Client/Cluster</option>
+                    <option value="" hidden>Select Client/Cluster</option>
                     {clients.map((c) => (
                       <option value={c.client_id}>{c.client_name}</option>
                     ))}
@@ -613,7 +613,7 @@ const HRFormEditEmployee = () => {
                   onChange={handleChange} 
                   value={employeeInfo.position_id}
                   required>
-                    <option disabled selected>
+                    <option value="" hidden>
                       Select Position
                     </option>
                     {positions.map((p) => (
@@ -638,7 +638,7 @@ const HRFormEditEmployee = () => {
                     className="select select-bordered w-full "
                     required
                   >
-                    <option disabled selected>
+                    <option value="" hidden>
                       Select Employment Status
                     </option>
                     <option>Probationary</option>
@@ -661,7 +661,7 @@ const HRFormEditEmployee = () => {
                     className="select select-bordered w-full "
                     required
                   >
-                    <option disabled selected>
+                    <option value="" hidden>
                       Select Employment Role
                     </option>
                     <option value="3">Manager</option>

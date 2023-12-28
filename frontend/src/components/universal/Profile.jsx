@@ -135,7 +135,7 @@ const Profile = () => {
                 ) : (
                   <img
                     className="h-32 w-32 rounded-full m-2 ring-2 ring-white"
-                    src={user.emp_pic}
+                    src={"../uploads/" + user.emp_pic}
                   />
                 )}
               </div>
