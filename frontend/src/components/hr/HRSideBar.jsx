@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import SideBarProfile from "../universal/SideBarProfile";
 
 const HRSideBar = () => {
+
+  // Axios.defaults.withCredentials = true
   const navigate = useNavigate();
 
   const logoutEmployee = () => {
@@ -66,6 +68,7 @@ const HRSideBar = () => {
                 color={"text-white"}
                 fill={"white"}
                 link_to={"/hrProfile"}
+                hover={"bg-gray-800"}
               ></SideBarProfile>
             </div>
             <li>

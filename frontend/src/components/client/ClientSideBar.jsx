@@ -5,10 +5,11 @@ import SideBarProfile from "../universal/SideBarProfile";
 
 const ClientSideBar = () => {
   const navigate = useNavigate()
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
   
   const logoutEmployee = () => {
     try { 
-      Axios.get("http://localhost:6197/logout");
+      Axios.get(BASE_URL + "/logout");
       navigate("/")
     } catch(err){
       console.log(err)
@@ -16,7 +17,7 @@ const ClientSideBar = () => {
 };
 
 useEffect(() => {
-    Axios.get("http://localhost:6197/login").then((response) => {
+    Axios.get(BASE_URL +"/login").then((response) => {
        if (response.data.loggedIn === false) {
         navigate("/login")
         window.location.reload()
@@ -62,7 +63,7 @@ setTimeout(function () {
       >
         <div className="h-full px-3 py-4 overflow-y-auto bg-[#0097B2] dark:bg-gray-800">
           <ul className="space-y-2 font-medium">
-            <SideBarProfile color={"text-white"} fill={"white"} link_to={"/empProfile"}></SideBarProfile>
+            <SideBarProfile color={"text-white"} fill={"white"} link_to={"/empProfile"} hover={"bg-gray-800"}></SideBarProfile>
 
           {/* { users.map((user) => (
             <div className="flex justify-center mt-10">

@@ -2,15 +2,34 @@ import React, { useEffect, useState } from "react";
 import Axios from "axios";
 import moment from "moment";
 import ButtonBack from "./ButtonBack";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Profile = () => {
   const [profile, setProfile] = useState([]);
-
+  const [newInfo, setNewInfo] = useState({
+    personal_email: "",
+    contact_num: "",
+    emergency_contact_name: "",
+    emergency_contact_num: "",
+    civil_status: "",
+  });
+  const [visible, setVisible] = useState(false);
+  const [visible2, setVisible2] = useState(true);
+  //test
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const res = await Axios.get("http://localhost:6197/myProfile");
         setProfile(res.data);
+        setNewInfo({
+          ...newInfo,
+          personal_email: res.data[0].personal_email,
+          contact_num: res.data[0].contact_num,
+          emergency_contact_name: res.data[0].emergency_contact_name,
+          emergency_contact_num: res.data[0].emergency_contact_num,
+          civil_status: res.data[0].civil_status,
+        });
       } catch (err) {
         console.log(err);
       }
@@ -18,12 +37,93 @@ const Profile = () => {
     fetchUserProfile();
   }, []);
 
+  const enableFields = (event) => {
+    if (event.currentTarget.id === "edit-button") {
+      setVisible(true);
+      setVisible2(false);
+      document.getElementById("personal_email").disabled = false;
+      document.getElementById("contact_num").disabled = false;
+      document.getElementById("emergency_contact_name").disabled = false;
+      document.getElementById("emergency_contact_num").disabled = false;
+      document.getElementById("civil_status").disabled = false;
+    }
+  };
+
+  const disableFields = (event) => {
+    if (event.currentTarget.id === "save-button") {
+      setVisible(false);
+      setVisible2(true);
+      document.getElementById("personal_email").disabled = true;
+      document.getElementById("contact_num").disabled = true;
+      document.getElementById("emergency_contact_name").disabled = true;
+      document.getElementById("emergency_contact_num").disabled = true;
+      document.getElementById("civil_status").disabled = true;
+
+      saveProfile();
+    }
+  };
+
+  const handleChange = (event) => {
+    setNewInfo({ ...newInfo, [event.target.name]: [event.target.value] });
+    console.log(JSON.stringify(newInfo));
+  };
+
+  const [notif, setNotif] = useState([]);
+
+  const notifySuccess = () =>
+    toast.success("Successfully edited your profile.", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+
+  const notifyFailed = () =>
+    toast.error("Something went wrong.", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+
+  const saveProfile = () => {
+    Axios.post(`http://localhost:6197/editMyProfile`, newInfo)
+      .then((res) => {
+        if (res.data === "success") {
+          notifySuccess();
+        } else if (res.data === "error") {
+          notifyFailed();
+        }
+
+        setNotif(res.data);
+      })
+      .catch((err) => console.log(err));
+
+    // .then((res) => console.log(JSON.stringify(newInfo)))
+
+    //window.location.reload();
+    // alert("Successfully edited your profile!");
+  };
+
   return (
     <>
+      {notif != "" && notif === "success" && <ToastContainer />}
+      {notif != "" && notif === "error" && <ToastContainer />}
+
       {profile.map((p) => (
         <div className="p-4 sm:ml-64 flex flex-col">
           <ButtonBack></ButtonBack>
-
+          {/* <form action="POST" 
+          onSubmit={saveProfile}
+          ></form> */}
           <div className="flex items-center">
             {profile.map((user) => (
               <div className="flex justify-center mt-5  mb-5">
@@ -110,25 +210,31 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="ml-1 mt-10">
-            <button className="btn btn-sm btn-outline normal-case mx-1">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6"
+          {visible2 && (
+            <div className="ml-1 mt-10">
+              <button
+                id="edit-button"
+                className="btn btn-sm btn-outline normal-case mx-1"
+                onClick={enableFields}
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-                />
-              </svg>
-              Edit
-            </button>
-          </div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                  />
+                </svg>
+                Edit
+              </button>
+            </div>
+          )}
 
           {/* Contact Information */}
           <div className="m-2 p-3 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-1 flex-col">
@@ -141,11 +247,13 @@ const Profile = () => {
                   <span className="label-text">Personal Email</span>
                 </div>
                 <input
-                  value={p.personal_email}
+                  id="personal_email"
+                  name="personal_email"
+                  value={newInfo.personal_email}
+                  onChange={handleChange}
                   type="text"
                   className="input input-bordered w-full max-w-xs"
                   disabled
-                  readonly
                 />
               </label>
 
@@ -155,7 +263,10 @@ const Profile = () => {
                   <span className="label-text">Contact Number</span>
                 </div>
                 <input
-                  value={p.contact_num}
+                  id="contact_num"
+                  name="contact_num"
+                  value={newInfo.contact_num}
+                  onChange={handleChange}
                   type="text"
                   className="input input-bordered w-full max-w-xs"
                   disabled
@@ -174,7 +285,11 @@ const Profile = () => {
                   <span className="label-text">Name</span>
                 </div>
                 <input
-                  value={p.emergency_contact_name}
+                  name="emergency_contact_name"
+                  id="emergency_contact_name"
+                  value={newInfo.emergency_contact_name}
+                  onChange={handleChange}
+                  maxLength="255"
                   type="text"
                   className="input input-bordered w-full max-w-xs"
                   disabled
@@ -187,8 +302,12 @@ const Profile = () => {
                   <span className="label-text">Number</span>
                 </div>
                 <input
-                  value={p.emergency_contact_num}
+                  name="emergency_contact_num"
+                  id="emergency_contact_num"
+                  value={newInfo.emergency_contact_num}
+                  onChange={handleChange}
                   type="text"
+                  maxLength="22"
                   className="input input-bordered w-full max-w-xs"
                   disabled
                 />
@@ -234,7 +353,10 @@ const Profile = () => {
                   <span className="label-text">Civil Status</span>
                 </div>
                 <input
-                  value={p.civil_status}
+                  id="civil_status"
+                  name="civil_status"
+                  value={newInfo.civil_status}
+                  onChange={handleChange}
                   type="text"
                   className="input input-bordered w-full max-w-xs"
                   disabled
@@ -333,6 +455,36 @@ const Profile = () => {
               <div className="flex-1"></div> */}
             {/* </div> */}
           </div>
+          {/* //test */}
+
+          {visible && (
+            <div className="mx-1 mt-4 flex justify-end">
+              <div className="">
+                <button
+                  id="save-button"
+                  className="btn btn-sm btn-outline normal-case mx-1"
+                  onClick={disableFields}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    data-slot="icon"
+                    class="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12"
+                    />
+                  </svg>
+                  Save
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       ))}
     </>

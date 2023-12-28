@@ -13,14 +13,22 @@ const DashBButtons = () => {
   const [leaveFrom, setLeaveFrom] = useState(new Date());
   const [leaveTo, setLeaveTo] = useState(new Date());
   const [holiday, setHoliday] = useState([]);
+  const [ptos, setPtos] = useState([]);
+  const [myApproved, setMyApproved] = useState([]);
+  const [myPending, setMyPending] = useState([]);
+  let ptoCredits;
 
   useEffect(() => {
     const fetchApprover = async () => {
       try {
         const res = await axios.get("http://localhost:6197/getAllApprovers");
         const hres = await axios.get("http://localhost:6197/holidays");
+        const pres = await axios.get("http://localhost:6197/myPendingLeaves");
+        const ares = await axios.get("http://localhost:6197/myApprovedLeaves");
         setApprover(res.data);
         setHoliday(hres.data);
+        setMyApproved(ares.data);
+        setMyPending(pres.data);
       } catch (err) {
         console.log(err);
       }
@@ -41,7 +49,11 @@ const DashBButtons = () => {
     const formattedDate = date.toISOString().split("T")[0];
     const day = date.getDay();
     return (
-      day !== 0 && day !== 6 && !JSON.stringify(holiday).includes(formattedDate)
+      day !== 0 &&
+      day !== 6 &&
+      !JSON.stringify(holiday).includes(formattedDate) &&
+      !JSON.stringify(myApproved).includes(formattedDate) &&
+      !JSON.stringify(myPending).includes(formattedDate)
     );
   };
 
@@ -54,8 +66,8 @@ const DashBButtons = () => {
     }
   };
 
-  const [ptos, setPtos] = useState([]);
-  let ptoCredits;
+  // const [ptos, setPtos] = useState([]);
+  // let ptoCredits;
 
   useEffect(() => {
     const fetchUserPTO = async () => {
@@ -83,7 +95,7 @@ const DashBButtons = () => {
 
     ptoLabelChange();
     taLabelChange();
-    disableSubmit();
+    // disableSubmit();
   };
 
   const taLabelChange = () => {
@@ -121,7 +133,7 @@ const DashBButtons = () => {
     if (count > ptoCredits) {
       document.getElementById("pto_checkbox").disabled = true;
       document.getElementById("pto_enough_label").innerHTML =
-        "Insufficient PTOs. Considered as Unpaid.";
+        "Insufficient PTOs. Considered as <b>Unpaid</b>"
       document.getElementById("pto_points").style.color = "red";
     }
   };
@@ -140,10 +152,10 @@ const DashBButtons = () => {
       .then((res) => console.log(JSON.stringify(leaveInfo)))
       .catch((err) => console.log(err));
 
-    axios
-      .post("http://localhost:6197/subtractPTO", leaveInfo)
-      .then((res) => console.log("PTO temporary subtracted"))
-      .catch((err) => console.log(err));
+    // axios
+    //   .post("http://localhost:6197/subtractPTO", leaveInfo)
+    //   .then((res) => console.log("PTO temporary subtracted"))
+    //   .catch((err) => console.log(err));
 
     document.getElementById("file_a_leave_btn").close();
     document.getElementById("leaveForm").reset();
@@ -206,7 +218,7 @@ const DashBButtons = () => {
         {/* Modal - File A Leave   */}
         <dialog id="file_a_leave_btn" className="modal">
           <div className="modal-box">
-            <h3 className="font-bold text-lg">File A Leave</h3>
+            <h3 className="font-bold text-xl text-center">File A Leave</h3>
 
             <form
               id="leaveForm"
@@ -227,11 +239,11 @@ const DashBButtons = () => {
                 <select
                   id="leave_type"
                   name="leave_type"
-                  className="select select-bordered w-full max-w-xs mb-2"
+                  className="select select-bordered w-full mb-2"
                   onChange={handleChange}
                   required
                 >
-                  <option disabled selected>
+                  <option value="" hidden>
                     Pick a reason for filing a leave
                   </option>
                   <option>Sick Leave</option>
@@ -329,7 +341,7 @@ const DashBButtons = () => {
               <label className="form-control">
                 <div className="label">
                   <h1 className="label-text">
-                    Reason for Leave Reason for Leave{" "}
+                    Reason for Leave <span className="text-red-500"> *</span>{" "}
                     <span className="text-red-500"> </span>
                   </h1>
                 </div>
@@ -340,6 +352,7 @@ const DashBButtons = () => {
                   placeholder="Reason for Leave..."
                   onChange={handleChange}
                   maxLength="255"
+                  required
                 ></textarea>
                 <div className="label py-0">
                   <span className="label-text-alt"></span>
@@ -358,11 +371,11 @@ const DashBButtons = () => {
                 <select
                   id="approver_id"
                   name="approver_id"
-                  className="select select-bordered w-full max-w-xs mb-2"
+                  className="select select-bordered w-full mb-2"
                   onChange={handleChange}
                   required
                 >
-                  <option disabled selected>
+                  <option value="" hidden>
                     Choose your approver
                   </option>
 
@@ -379,28 +392,37 @@ const DashBButtons = () => {
                 </select>
               </label>
 
+              <div className="divider"></div>
+
               {/* Current PTO Points */}
-              <h1 className="text-base">Current PTO Points</h1>
+              <h1 className="text-md text-center mb-2 font-semibold">Current PTO Points</h1>
               {ptos.map((pto) => (
-                <h1 id="pto_points" className="text-lg font-bold mb-2">
+                <h1
+                  id="pto_points"
+                  className="text-4xl font-bold mb-2 text-center"
+                >
                   {pto.leave_balance}
                 </h1>
               ))}
 
               {/* Use PTO Checkbox */}
-              <div className="flex justify-start items-center">
-                <input
-                  id="pto_checkbox"
-                  name="use_pto_points"
-                  type="checkbox"
-                  className="checkbox checkbox-sm mr-3"
-                  onChange={handleChange}
-                  //onClick={checkPTO}
-                />
-                <h1 id="pto_enough_label" class="ptos_labels">
-                  Use PTO credit(/s)?
-                </h1>
+              <div className="flex flex-col justify-center items-center h-full">
+                <div className="flex items-center">
+                  <input
+                    id="pto_checkbox"
+                    name="use_pto_points"
+                    type="checkbox"
+                    className="checkbox checkbox-sm mr-3"
+                    onChange={handleChange}
+                    //onClick={checkPTO}
+                  />
+                  <h1 id="pto_enough_label" className="ptos_labels">
+                    Use PTO credit(/s)?
+                  </h1>
+                </div>
               </div>
+
+              <div className="divider"></div>
 
               {/* Button Container */}
               <div className="flex justify-end mt-3">
@@ -409,7 +431,6 @@ const DashBButtons = () => {
                   type="submit"
                   className="btn btn-primary mr-2"
                   onClick={handlePTOpoints}
-                  disabled
                 >
                   Submit
                 </button>

@@ -8,7 +8,6 @@ import DashBButtons from "../../components/universal/DashBButtons";
 import DashBremainingPTO from "../../components/universal/DashBRemainingPTO";
 import DashBBirthdays from "../../components/universal/DashBBirthdays";
 import DashBAnniversaries from "../../components/universal/DashBAnniversaries";
-import DashBPTONotices from "../../components/universal/DashBPTONotices";
 import HRPTONotices from "../../components/hr/HRPTONotices";
 import DashBOwnPTO from "../../components/universal/DashBOwnPTO";
 import DashBNumofLeaveToday from "../../components/universal/DashBNumofLeavesToday";
@@ -16,7 +15,7 @@ import DashBNumofLeaveToday from "../../components/universal/DashBNumofLeavesTod
 const HRDashboard = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-  Axios.defaults.withCredentials = true;
+  // Axios.defaults.withCredentials = true;
 
   const navigate = useNavigate();
 
@@ -43,7 +42,7 @@ const HRDashboard = () => {
     };
     fetchUserData();
   }, []);
-
+  
   return (
     <>
       <HRSideBar></HRSideBar>

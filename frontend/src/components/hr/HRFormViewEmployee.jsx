@@ -137,6 +137,7 @@ const HRFormViewEmployee = () => {
                       type="number"
                       step="0.5"
                       min="0"
+                      max="15"
                       className="input input-bordered w-28"
                       value={ptoInfo.new_pto_balance}
                       onChange={handleChange}

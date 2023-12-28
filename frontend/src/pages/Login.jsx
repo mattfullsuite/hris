@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
   const navigate = useNavigate();
 
   const [work_email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [notif, setNotif] =  useState("")
+  const [notif, setNotif] = useState("");
 
   const [loginStatus, setLoginStatus] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   Axios.defaults.withCredentials = true;
 
   const loginEmployee = () => {
-    Axios.post(BASE_URL + ":6197/processlogin", {
+    Axios.post(BASE_URL + "/processlogin", {
       work_email: work_email,
       password: password,
     }).then((response) => {
       if (response.data.message) {
-        console.log(response.data.message)
+        console.log(response.data.message);
         setLoginStatus(response.data.message);
-      }
-      else if(response.data === "error") {
-        notifyFailed()
+      } else if (response.data === "error") {
+        notifyFailed();
       } else {
         if (response.data.emp_role === 0) {
           navigate("/adminDashboard");
@@ -41,15 +41,14 @@ const Login = () => {
         } else if (response.data.emp_role === 3) {
           console.log("The user is a team lead,");
           navigate("/leadDashboard");
-        } 
+        }
       }
-
-      setNotif(response.data)
+      setNotif(response.data);
     });
   };
 
   useEffect(() => {
-    Axios.get(BASE_URL + ":6197/login").then((response) => {
+    Axios.get(BASE_URL + "/login").then((response) => {
       if (response.data.loggedIn === true) {
         if (response.data.user[0].emp_role === 0) {
           navigate("/adminDashboard");
@@ -75,15 +74,16 @@ const Login = () => {
     }
   };
 
-  const notifyFailed = () => toast.error('Incorrect username/password!', {
-    position: "top-center",
-    autoClose: 3000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "colored",
+  const notifyFailed = () =>
+    toast.error("Incorrect username/password!", {
+      position: "top-center",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
     });
 
   return (
@@ -142,7 +142,8 @@ const Login = () => {
               <input
                 id="password"
                 name="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
+                value={password}
                 autoComplete="current-password"
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -151,10 +152,22 @@ const Login = () => {
                 required
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-[#0097B2] sm:text-sm sm:leading-6 p-2"
               />
+              <div className="flex items-center mt-4 mb-4">
+                <input
+                  className="checkbox checkbox-sm mr-2"
+                  id="check"
+                  type="checkbox"
+                  value={showPassword}
+                  onChange={() => setShowPassword((prev) => !prev)}
+                />
+                <label className="text-sm" for="check">
+                  Show Password
+                </label>
+              </div>
             </div>
             <a
               href="/forgot-password"
-              className="text-sm text-blue-500 hover:underline"
+              className="text-sm text-blue-800 hover:underline"
             >
               Forgot password?
             </a>
@@ -170,6 +183,8 @@ const Login = () => {
               Log in
             </button>
           </div>
+
+          <h1>{loginStatus}</h1>
         </div>
       </div>
     </>
