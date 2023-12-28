@@ -7,15 +7,16 @@ const DashBPTOApprovedAndOwned = ({ uid }) => {
   const [data, setData] = useState([]);
   const [all, setMyLeave] = useState([]);
   const [approved, setApproved] = useState([]);
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
   useEffect(() => {
     const fetchAllApproved = async () => {
       try {
-        const res = await Axios.get("http://localhost:6197/showallmyleaves");
+        const res = await Axios.get(BASE_URL + "/showallmyleaves");
         const res1 = await Axios.get(
-          "http://localhost:6197/showapprovedleaves"
+          BASE_URL + "/showapprovedleaves"
         );
-        const res2 = await Axios.get("http://localhost:6197/login");
+        const res2 = await Axios.get(BASE_URL + "/login");
         // test
         setMyLeave(res.data);
         setApproved(res1.data);

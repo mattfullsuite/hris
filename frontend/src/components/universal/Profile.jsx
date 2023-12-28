@@ -16,11 +16,12 @@ const Profile = () => {
   });
   const [visible, setVisible] = useState(false);
   const [visible2, setVisible2] = useState(true);
-  //test
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
+
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const res = await Axios.get("http://localhost:6197/myProfile");
+        const res = await Axios.get(BASE_URL + "/myProfile");
         setProfile(res.data);
         setNewInfo({
           ...newInfo,
@@ -95,7 +96,7 @@ const Profile = () => {
     });
 
   const saveProfile = () => {
-    Axios.post(`http://localhost:6197/editMyProfile`, newInfo)
+    Axios.post(`${BASE_URL}/editMyProfile`, newInfo)
       .then((res) => {
         if (res.data === "success") {
           notifySuccess();

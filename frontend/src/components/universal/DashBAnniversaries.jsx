@@ -5,11 +5,12 @@ import moment from 'moment'
 
 const DashBAnniversaries = () => {
   const [upcomingAnniv, setUpcomingAnniv] = useState([])
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
   useEffect(() => {
     const fetchAllAnnivs = async ()=> {
         try{
-            const res = await Axios.get("http://localhost:6197/getupcominganniversaries")
+            const res = await Axios.get(BASE_URL + "/getupcominganniversaries")
             setUpcomingAnniv(res.data)
         } catch(err){
             console.log(err)

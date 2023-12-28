@@ -5,11 +5,13 @@ import { Link } from "react-router-dom"
 
 const Announcements = () => {
     const [announcements,setAnnouncements] = useState([])
+    const BASE_URL = process.env.REACT_APP_BASE_URL; //
+
 
     useEffect(() => {
         const fetchAllAnnouncements = async ()=> {
             try{
-                const res = await Axios.get("http://localhost:6197/announcements")
+                const res = await Axios.get(BASE_URL + "/announcements")
                 setAnnouncements(res.data);
             } catch(err){
                 console.log(err)
@@ -20,7 +22,7 @@ const Announcements = () => {
 
     const handleDelete = async (ann_id) => {
         try {
-            await Axios.delete("http://localhost:6197/announcements/" + ann_id);
+            await Axios.delete(BASE_URL + "/announcements/" + ann_id);
             window.location.reload()
         } catch(err){
             console.log(err)

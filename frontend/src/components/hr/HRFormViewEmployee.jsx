@@ -7,7 +7,7 @@ import {useParams, Link} from "react-router-dom"
 const HRFormViewEmployee = () => {
   const {emp_id} = useParams()
   const [profile, setProfile] = useState([]);
-
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
   const [ptoInfo, setPtoInfo] = useState({
     new_pto_balance: "",
   });
@@ -15,7 +15,7 @@ const HRFormViewEmployee = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const res = await Axios.get(`http://localhost:6197/viewEmployee/${emp_id}`);
+        const res = await Axios.get(`${BASE_URL}/viewEmployee/${emp_id}`);
         setProfile(res.data);
         setPtoInfo({...ptoInfo, new_pto_balance: res.data[0].leave_balance})
       } catch (err) {
@@ -35,7 +35,7 @@ const HRFormViewEmployee = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     Axios
-      .post(`http://localhost:6197/setPTO/${emp_id}`, ptoInfo)
+      .post(`${BASE_URL}/setPTO/${emp_id}`, ptoInfo)
       .then((res) => console.log(JSON.stringify(ptoInfo)))
       .catch((err) => console.log(err));
 

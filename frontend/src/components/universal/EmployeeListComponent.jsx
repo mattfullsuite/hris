@@ -18,11 +18,12 @@ const EmployeeListComponent = () => {
   const [records, setRecords] = useState(employees);
   const [filter, setFilter] = useState([]);
   const [query, setQuery] = useState("");
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
   useEffect(() => {
     const fetchAllEmployees = async () => {
       try {
-        const res = await axios.get("http://localhost:6197/employeeslist");
+        const res = await axios.get(BASE_URL + "/employeeslist");
         setEmployees(res.data);
         setFilter(res);
         setRecords(res.data);

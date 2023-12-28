@@ -6,15 +6,15 @@ const EmployeeDirectoryComponent = ({color}) => {
   const [directory, setDirectory] = useState([]);
   const [division, setDivision] = useState([]);
   const [department, setDepartment] = useState([]);
-
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
   var deptArray = [];
 
   useEffect(() => {
     const setData = async () => {
       try {
-        const dir = await axios.get("http://localhost:6197/getDirectory");
-        const div = await axios.get("http://localhost:6197/getDivision");
-        const dept = await axios.get("http://localhost:6197/getDepartment");
+        const dir = await axios.get(BASE_URL + "/getDirectory");
+        const div = await axios.get(BASE_URL + "/getDivision");
+        const dept = await axios.get(BASE_URL + "getDepartment");
         setDirectory(dir.data);
         setDivision(div.data);
         setDepartment(dept.data)

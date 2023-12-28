@@ -9,6 +9,8 @@ import { useNavigate } from "react-router-dom";
 
 const HRFormAddEmployee = () => {
   const [userReference, setUserReferences] = useState([]);
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
+
 
   const [companies, setCompanies] = useState([]);
   const [divisions, setDivisions] = useState([]);
@@ -45,12 +47,12 @@ const HRFormAddEmployee = () => {
   useEffect(() => {
     const fetchReferences = async () => {
       try {
-        const res1 = await axios.get("http://localhost:6197/employeeslist");
-        const res2 = await axios.get("http://localhost:6197/getAllCompanies");
-        const res3 = await axios.get("http://localhost:6197/getAllDivisions");
-        const res4 = await axios.get("http://localhost:6197/getAllDepartments");
-        const res5 = await axios.get("http://localhost:6197/getAllClients");
-        const res6 = await axios.get("http://localhost:6197/getAllPositions");
+        const res1 = await axios.get(BASE_URL + "/employeeslist");
+        const res2 = await axios.get(BASE_URL + "/getAllCompanies");
+        const res3 = await axios.get(BASE_URL + "/getAllDivisions");
+        const res4 = await axios.get(BASE_URL + "/getAllDepartments");
+        const res5 = await axios.get(BASE_URL + "/getAllClients");
+        const res6 = await axios.get(BASE_URL + "/getAllPositions");
         setUserReferences(res1.data);
         setCompanies(res2.data);
         setDivisions(res3.data);
@@ -168,7 +170,7 @@ const HRFormAddEmployee = () => {
     data.append("emp_pic", employeeInfo.emp_pic);
 
     await axios
-      .post("http://localhost:6197/addNewEmployee", data)
+      .post(BASE_URL + "/addNewEmployee", data)
       .then((response) => {
         if (response.data == "success") {
 

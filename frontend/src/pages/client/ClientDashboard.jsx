@@ -53,11 +53,13 @@ const ClientDashboard = () => {
   const [announcements, setAnnouncements] = useState([]);
   const [pleaves, setPendingLeaves] = useState([]);
   const uid = users.emp_id;
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
+
 
   useEffect(() => {
     const fetchAllPendingLeaves = async () => {
       try {
-        const res = await Axios.get("http://localhost:6197/showpendingleaves");
+        const res = await Axios.get(BASE_URL + "/showpendingleaves");
         setPendingLeaves(res.data);
       } catch (err) {
         console.log(err);
@@ -69,7 +71,7 @@ const ClientDashboard = () => {
   useEffect(() => {
     const fetchAllAnnouncements = async () => {
       try {
-        const res = await Axios.get("http://localhost:6197/announcements");
+        const res = await Axios.get(BASE_URL + "/announcements");
         setAnnouncements(res.data);
       } catch (err) {
         console.log(err);
@@ -81,7 +83,7 @@ const ClientDashboard = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const res = await Axios.get("http://localhost:6197/login");
+        const res = await Axios.get(BASE_URL + "/login");
         setUser(res.data.user[0]);
       } catch (err) {
         console.log(err);

@@ -3,11 +3,12 @@ import Axios from "axios";
 
 const DashBremainingPTO = () => {
   const [ptos, setPtos] = useState([]);
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
   useEffect(() => {
     const fetchUserPTO = async () => {
       try {
-        const res = await Axios.get("http://localhost:6197/getUserPTO");
+        const res = await Axios.get(BASE_URL + "/getUserPTO");
         setPtos(res.data);
       } catch (err) {
         console.log(err);

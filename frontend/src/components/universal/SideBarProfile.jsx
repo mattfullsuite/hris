@@ -4,12 +4,13 @@ import { Link } from "react-router-dom";
 
 const SideBarProfile = ({ color, link_to, fill, hover }) => {
   const [profile, setProfile] = useState([]);
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const res = await Axios.get("http://localhost:6197/myProfile");
+        const res = await Axios.get(BASE_URL + "/myProfile");
         setProfile(res.data);
       } catch (err) {
         console.log(err);

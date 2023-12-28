@@ -5,11 +5,12 @@ import moment from "moment";
 const DashBBirthdays = () => {
 
   const [upcomingBdays, setUpcomingBdays] = useState([])
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
   useEffect(() => {
     const fetchAllBdays = async ()=> {
         try{
-            const res = await Axios.get("http://localhost:6197/getupcomingbdays")
+            const res = await Axios.get(BASE_URL + "/getupcomingbdays")
             setUpcomingBdays(res.data)
         } catch(err){
             console.log(err)

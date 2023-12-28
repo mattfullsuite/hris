@@ -7,6 +7,8 @@ import {useParams} from "react-router-dom"
 const HRFormEditEmployee = () => {
   const {emp_id} = useParams()
   const [fetchData, setFetchData] = useState([]);
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
+
 
   const [employeeInfo, setEmployeeInfo] = useState({
     emp_num: "",
@@ -37,7 +39,7 @@ const HRFormEditEmployee = () => {
   useEffect(() => {
     const fetchOldData = async () => {
       try {
-        const res = await axios.get(`http://localhost:6197/viewEmployee/${emp_id}`);
+        const res = await axios.get(`${BASE_URL}/viewEmployee/${emp_id}`);
         setFetchData(res.data);
         setEmployeeInfo({...employeeInfo,  
           emp_num: res.data[0].emp_num,
@@ -82,12 +84,12 @@ const HRFormEditEmployee = () => {
   useEffect(() => {
     const fetchReferences = async () => {
       try {
-        const res1 = await axios.get("http://localhost:6197/employeeslist");
-        const res2 = await axios.get("http://localhost:6197/getAllCompanies");
-        const res3 = await axios.get("http://localhost:6197/getAllDivisions");
-        const res4 = await axios.get("http://localhost:6197/getAllDepartments");
-        const res5 = await axios.get("http://localhost:6197/getAllClients");
-        const res6 = await axios.get("http://localhost:6197/getAllPositions");
+        const res1 = await axios.get(BASE_URL + "/employeeslist");
+        const res2 = await axios.get(BASE_URL + "/getAllCompanies");
+        const res3 = await axios.get(BASE_URL + "/getAllDivisions");
+        const res4 = await axios.get(BASE_URL + "/getAllDepartments");
+        const res5 = await axios.get(BASE_URL + "/getAllClients");
+        const res6 = await axios.get(BASE_URL + "/getAllPositions");
         setUserReferences(res1.data);
         setCompanies(res2.data);
         setDivisions(res3.data);
@@ -158,7 +160,7 @@ const HRFormEditEmployee = () => {
 
   const editEmployee = () => {
     axios
-      .post(`http://localhost:6197/editEmployee/${emp_id}`, employeeInfo)
+      .post(`${BASE_URL}/editEmployee/${emp_id}`, employeeInfo)
       .then((res) => console.log(JSON.stringify(employeeInfo)))
       .catch((err) => console.log(err));
 

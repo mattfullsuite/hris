@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
 
 const DashBButtons = () => {
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
   const [approvers, setApprover] = useState([]);
   const [leaveFrom, setLeaveFrom] = useState(new Date());
   const [leaveTo, setLeaveTo] = useState(new Date());
@@ -21,10 +22,10 @@ const DashBButtons = () => {
   useEffect(() => {
     const fetchApprover = async () => {
       try {
-        const res = await axios.get("http://localhost:6197/getAllApprovers");
-        const hres = await axios.get("http://localhost:6197/holidays");
-        const pres = await axios.get("http://localhost:6197/myPendingLeaves");
-        const ares = await axios.get("http://localhost:6197/myApprovedLeaves");
+        const res = await axios.get(BASE_URL + "/getAllApprovers");
+        const hres = await axios.get(BASE_URL + "/holidays");
+        const pres = await axios.get(BASE_URL + "/myPendingLeaves");
+        const ares = await axios.get(BASE_URL + "/myApprovedLeaves");
         setApprover(res.data);
         setHoliday(hres.data);
         setMyApproved(ares.data);
@@ -72,7 +73,7 @@ const DashBButtons = () => {
   useEffect(() => {
     const fetchUserPTO = async () => {
       try {
-        const res = await axios.get("http://localhost:6197/getUserPTO");
+        const res = await axios.get(BASE_URL + "/getUserPTO");
         setPtos(res.data);
         ptoCredits = res.data[0].leave_balance;
       } catch (err) {
@@ -148,7 +149,7 @@ const DashBButtons = () => {
     event.preventDefault();
 
     axios
-      .post("http://localhost:6197/fileLeave", leaveInfo)
+      .post(BASE_URL + "/fileLeave", leaveInfo)
       .then((res) => console.log(JSON.stringify(leaveInfo)))
       .catch((err) => console.log(err));
 

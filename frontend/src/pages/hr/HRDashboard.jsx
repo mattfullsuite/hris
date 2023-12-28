@@ -34,7 +34,7 @@ const HRDashboard = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const res = await Axios.get(BASE_URL + ":6197/login");
+        const res = await Axios.get(BASE_URL + "/login");
         setUser(res.data.user);
       } catch (err) {
         console.log(err);

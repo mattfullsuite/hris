@@ -6,12 +6,14 @@ import { Link } from "react-router-dom";
 
 const ManagerPTORequestTableLimited = ({link}) => {
   const [leaves, setPendingLeaves] = useState([]);
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
+
 
   useEffect(() => {
     const fetchAllPendingLeaves = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:6197/showpendingdepartmentleaveslimited"
+          BASE_URL + "/showpendingdepartmentleaveslimited"
         );
         setPendingLeaves(res.data);
       } catch (err) {
@@ -23,7 +25,7 @@ const ManagerPTORequestTableLimited = ({link}) => {
 
   const handleApproval = async (leave_id) => {
     try {
-      await axios.post("http://localhost:6197/approveleave/" + leave_id);
+      await axios.post(BASE_URL + "/approveleave/" + leave_id);
       window.location.reload();
     } catch (err) {
       console.log(err);
@@ -32,8 +34,8 @@ const ManagerPTORequestTableLimited = ({link}) => {
 
   const handleRejection = async (leave_id) => {
     try {
-      await axios.post("http://localhost:6197/rejectleave/" + leave_id);
-      await axios.post("http://localhost:6197/returnTempPTO/" + leave_id);
+      await axios.post(BASE_URL + "/rejectleave/" + leave_id);
+      await axios.post(BASE_URL + "/returnTempPTO/" + leave_id);
       window.location.reload();
     } catch (err) {
       console.log(err);

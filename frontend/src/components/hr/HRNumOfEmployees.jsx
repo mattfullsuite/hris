@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 
 const HRNumEmployees = () => {
   const [employees, setEmployees] = useState([]);
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
+
 
   const [countInfo, setCountInfo] = useState({
     cc: "",
@@ -16,16 +18,16 @@ const HRNumEmployees = () => {
     const fetchAllEmployees = async () => {
       try {
         const res1 = await axios.get(
-          "http://localhost:6197/getCurrentEmployees"
+          BASE_URL + "/getCurrentEmployees"
         );
         const res2 = await axios.get(
-          "http://localhost:6197/getRegularEmployees"
+          BASE_URL + "/getRegularEmployees"
         );
         const res3 = await axios.get(
-          "http://localhost:6197/getProbationaryEmployees"
+          BASE_URL + "/getProbationaryEmployees"
         );
         const res4 = await axios.get(
-          "http://localhost:6197/getPartTimeEmployees"
+          BASE_URL + "/getPartTimeEmployees"
         );
         setCountInfo({
           ...countInfo,

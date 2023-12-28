@@ -7,11 +7,13 @@ const DashBPTONotices = () => {
   var count = 1;
 
   const [approved, setApproved] = useState([]);
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
+
 
   useEffect(() => {
     const fetchAllApproved = async () => {
       try {
-        const res = await Axios.get("http://localhost:6197/showapprovedleaves");
+        const res = await Axios.get(BASE_URL + "/showapprovedleaves");
         setApproved(res.data);
       } catch (err) {
         console.log(err);

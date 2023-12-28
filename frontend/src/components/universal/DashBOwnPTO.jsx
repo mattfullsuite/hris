@@ -7,11 +7,12 @@ const DashBOwnPTO = ({ link }) => {
   var count = 1;
 
   const [myLeaves, setMyLeaves] = useState([]);
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
   useEffect(() => {
     const fetchAllMyLeaves = async () => {
       try {
-        const res = await axios.get("http://localhost:6197/showallmyleaves");
+        const res = await axios.get(BASE_URL + "/showallmyleaves");
         setMyLeaves(res.data);
       } catch (err) {
         console.log(err);

@@ -6,6 +6,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const ForgotPassword = () => {
   const [emailInfo, setEmail] = useState({ email: "" });
   const [notif, setNotif] =  useState([])
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
+
 
   const handleChange = (event) => {
     setEmail({ ...emailInfo, [event.target.name]: [event.target.value] });
@@ -46,7 +48,7 @@ const ForgotPassword = () => {
 
   const forgotPassword = async () => {
     await axios
-      .post("http://localhost:6197/forgot-password", emailInfo)
+      .post(BASE_URL + "/forgot-password", emailInfo)
       .then(
         function (response) {
           if(response.data === "success") {

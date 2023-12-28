@@ -7,10 +7,12 @@ const HRSideBar = () => {
 
   // Axios.defaults.withCredentials = true
   const navigate = useNavigate();
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
+
 
   const logoutEmployee = () => {
     try {
-      Axios.get("http://localhost:6197/logout");
+      Axios.get(BASE_URL + "/logout");
       navigate("/");
     } catch (err) {
       console.log(err);
@@ -18,7 +20,7 @@ const HRSideBar = () => {
   };
 
   useEffect(() => {
-    Axios.get("http://localhost:6197/login").then((response) => {
+    Axios.get(BASE_URL + "/login").then((response) => {
       if (response.data.loggedIn === false) {
         navigate("/login");
         window.location.reload();

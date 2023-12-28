@@ -5,6 +5,7 @@ import axios from "axios"
 const AddEmployeeAdmin = () => {
 
     const navigate = useNavigate()
+    const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
     const [employee, setEmployee] = useState({
         user_id: "", 
@@ -30,7 +31,7 @@ const AddEmployeeAdmin = () => {
     const handleClick = async e => {
         e.preventDefault()
         try{
-            await axios.post("http://localhost:6197/addEmployee", employee)
+            await axios.post(BASE_URL + "/addEmployee", employee)
 
         } catch(err){
             console.log(err)

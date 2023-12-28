@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import SideBarProfile from "../universal/SideBarProfile";
 
 const ManagerSideBar = () => {
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
   const [count, setCount] = useState({
     countPending: "",
@@ -14,7 +15,7 @@ const ManagerSideBar = () => {
     const fetchAllPendingLeaves = async () => {
       try {
         const res = await Axios.get(
-          "http://localhost:6197/showpendingdepartmentleaves"
+          BASE_URL + "/showpendingdepartmentleaves"
         );
         setCount({...count, countPending: res.data.length});
       } catch (err) {
@@ -28,7 +29,7 @@ const ManagerSideBar = () => {
 
   const logoutEmployee = () => {
     try {
-      Axios.get("http://localhost:6197/logout");
+      Axios.get(BASE_URL + "/logout");
       navigate("/");
     } catch (err) {
       console.log(err);
@@ -36,7 +37,7 @@ const ManagerSideBar = () => {
   };
 
   useEffect(() => {
-    Axios.get("http://localhost:6197/login").then((response) => {
+    Axios.get(BASE_URL + "/login").then((response) => {
       if (response.data.loggedIn == false) {
         navigate("/login");
         window.location.reload();

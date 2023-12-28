@@ -12,6 +12,8 @@ const ResetPassword = () => {
   const [user, setUser] = useState([]);
   const [notif, setNotif] =  useState([])
   const[passwordInfo, setPassword] = useState({password: ""});
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
+
 
   const handleChange = (event) => {
     setPassword({ ...passwordInfo, [event.target.name]: [event.target.value] });
@@ -51,7 +53,7 @@ const ResetPassword = () => {
     });
 
   const resetPassword = async () => {
-    axios.post(`http://localhost:6197/reset-password/${user_key}`, passwordInfo)
+    axios.post(`${BASE_URL}/reset-password/${user_key}`, passwordInfo)
     .then(
         function (response) {
             if(response.data == "success") {
@@ -81,7 +83,7 @@ const ResetPassword = () => {
     const fetchUser = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:6197/reset-password/${user_key}`
+          `${BASE_URL}/reset-password/${user_key}`
         );
 
         setUser(res.data.length);

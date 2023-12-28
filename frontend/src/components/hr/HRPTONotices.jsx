@@ -9,14 +9,15 @@ const HRPTONotices = () => {
   const [approved, setApproved] = useState([]);
   const [pending, setPending] = useState([]);
   const [declined, setDeclined] = useState([]);
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
   useEffect(() => {
     const fetchAllApproved = async () => {
       try {
-        const res = await Axios.get("http://localhost:6197/showallleaves");
-        const res1 = await Axios.get("http://localhost:6197/showapprovedleaves");
-        const res2 = await Axios.get("http://localhost:6197/showpendingleaves");
-        const res3 = await Axios.get("http://localhost:6197/showrejectedleaves");
+        const res = await Axios.get(BASE_URL + "/showallleaves");
+        const res1 = await Axios.get(BASE_URL + "/showapprovedleaves");
+        const res2 = await Axios.get(BASE_URL + "/showpendingleaves");
+        const res3 = await Axios.get(BASE_URL + "/showrejectedleaves");
         // test
         setAll(res.data);
         setApproved(res1.data);

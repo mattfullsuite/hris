@@ -9,14 +9,15 @@ const ManagerPTONotices = () => {
   const [approved, setDeptApproved] = useState([]);
   const [pending, setDeptPending] = useState([]);
   const [declined, setDeptDeclined] = useState([]);
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
   useEffect(() => {
     const fetchAllDeptLeaves = async () => {
       try {
-        const all = await axios.get("http://localhost:6197/showalldleaves");
-        const approved = await axios.get("http://localhost:6197/showapproveddepartmentleaves")
-        const pending = await axios.get("http://localhost:6197/showpendingdepartmentleaves")
-        const declined = await axios.get("http://localhost:6197/showrejecteddepartmentleaves")
+        const all = await axios.get(BASE_URL  + "/showalldleaves");
+        const approved = await axios.get(BASE_URL + "/showapproveddepartmentleaves")
+        const pending = await axios.get(BASE_URL + "/showpendingdepartmentleaves")
+        const declined = await axios.get(BASE_URL + "/showrejecteddepartmentleaves")
         setData(all.data);
         setDeptApproved(approved.data)
         setDeptPending(pending.data)

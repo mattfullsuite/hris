@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 
 
 const HRManageHoliday = () => {
-
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
    const navigate = useNavigate()
     const [holiday, setHoliday] = useState([]);
     const [newHoliday, setNewHoliday] = useState({
@@ -18,7 +18,7 @@ const HRManageHoliday = () => {
 
         const fetchAllHolidays = async () => {
             try {
-                const res = await axios.get("http://localhost:6197/holidays")
+                const res = await axios.get(BASE_URL + "/holidays")
 
                 setHoliday(res.data)
             } catch(e) {
@@ -57,7 +57,7 @@ const HRManageHoliday = () => {
 
   const handleDelete = async (h_id) => {
     try {
-        await axios.delete("http://localhost:6197/holiday/" + h_id);
+        await axios.delete(BASE_URL + "/holiday/" + h_id);
         window.location.reload()
     } catch(err){
         console.log(err)
@@ -66,7 +66,7 @@ const HRManageHoliday = () => {
 
   const addNewHoliday = () => {
     axios
-      .post("http://localhost:6197/addHoliday", newHoliday)
+      .post(BASE_URL + "/addHoliday", newHoliday)
       .then((res) => console.log(JSON.stringify(newHoliday)))
       .catch((err) => console.log(err));
 
