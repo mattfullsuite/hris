@@ -5,7 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-  const BASE_URL = process.env.REACT_APP_BASE_URL;
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
   const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ const Login = () => {
   Axios.defaults.withCredentials = true;
 
   const loginEmployee = () => {
-    Axios.post(BASE_URL + ":6197/processlogin", {
+    Axios.post(BASE_URL + "/processlogin", {
       work_email: work_email,
       password: password,
     }).then((response) => {
@@ -48,7 +48,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    Axios.get(BASE_URL + ":6197/login").then((response) => {
+    Axios.get(BASE_URL + "/login").then((response) => {
       if (response.data.loggedIn === true) {
         if (response.data.user[0].emp_role === 0) {
           navigate("/adminDashboard");
