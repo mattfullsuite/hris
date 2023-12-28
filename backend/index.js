@@ -985,8 +985,14 @@ app.post("/fileLeave", (req, res)=> {
     ]
 
     db.query(q, [values], (err, data) => {
-        if (err) return console.log(err);
-        return res.json(data);
+        if(err) {
+            res.send(err)
+        }
+        else {
+            res.send("success")
+        }
+        // if (err) return console.log(err);
+        // return res.json(data);
     })
 
     const q1 = "UPDATE emp AS e JOIN leave_credits l ON e.emp_id = l.emp_id SET leave_balance = leave_balance - " + req.body.use_pto_points + " WHERE l.emp_id = ?"

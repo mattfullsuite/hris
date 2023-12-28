@@ -323,7 +323,7 @@ const HRFormAddEmployee = () => {
                     className="select select-bordered w-full"
                     required
                   >
-                    <option disabled selected>
+                    <option value="" hidden>
                       Select Civil Status
                     </option>
                     <option>Single</option>
@@ -347,7 +347,7 @@ const HRFormAddEmployee = () => {
                     className="select select-bordered w-full"
                     required
                   >
-                    <option disabled selected>
+                    <option value="" hidden>
                       Select Sex
                     </option>
                     <option>Male</option>
@@ -551,7 +551,7 @@ const HRFormAddEmployee = () => {
                       }
                       required
                     >
-                      <option disabled selected>
+                      <option value="" hidden>
                         Company
                       </option>
                       {companies.map((c) => (
@@ -627,7 +627,7 @@ const HRFormAddEmployee = () => {
                     }
                     required
                   >
-                    <option disabled selected>
+                    <option value="" hidden>
                       Select Division
                     </option>
                     {divisions.map((di) => (
@@ -659,7 +659,7 @@ const HRFormAddEmployee = () => {
                     }
                     required
                   >
-                    <option disabled selected>
+                    <option value="" hidden>
                       Select Department
                     </option>
                     {departments.map((de) => (
@@ -693,7 +693,7 @@ const HRFormAddEmployee = () => {
                     }
                     required
                   >
-                    <option disabled selected>
+                    <option value="" hidden>
                       Select Client/Cluster
                     </option>
                     {clients.map((c) => (
@@ -725,7 +725,7 @@ const HRFormAddEmployee = () => {
                     }
                     required
                   >
-                    <option disabled selected>
+                    <option value="" hidden>
                       Select Position
                     </option>
                     {positions.map((p) => (
@@ -754,7 +754,7 @@ const HRFormAddEmployee = () => {
                     className="select select-bordered w-full "
                     required
                   >
-                    <option disabled selected>
+                    <option value="" hidden>
                       Select Employment Status
                     </option>
                     <option>Probationary</option>
@@ -781,7 +781,7 @@ const HRFormAddEmployee = () => {
                     className="select select-bordered w-full "
                     required
                   >
-                    <option disabled selected>
+                    <option value="" hidden>
                       Select Employment Role
                     </option>
                     <option value="3">Manager</option>
@@ -812,6 +812,7 @@ const HRFormAddEmployee = () => {
                     onInput={disableNext}
                     type="date"
                     className="input input-bordered w-full "
+                    required
                   />
                 </label>
 
@@ -834,6 +835,7 @@ const HRFormAddEmployee = () => {
                     }
                     type="date"
                     className="input input-bordered w-full "
+                    required
                   />
                 </label>
 

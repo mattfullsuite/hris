@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 import DatePicker from "react-datepicker";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "react-datepicker/dist/react-datepicker.css";
 import "react-datepicker/dist/react-datepicker-cssmodules.css";
@@ -150,7 +152,29 @@ const DashBButtons = () => {
 
     axios
       .post(BASE_URL + "/fileLeave", leaveInfo)
-      .then((res) => console.log(JSON.stringify(leaveInfo)))
+      .then((res) => {
+        if (res.data === "success") {
+          console.log("tite")
+    document.getElementById("file_a_leave_btn").close();
+        document.getElementById("leaveForm").reset();
+
+
+          notifySuccess();
+
+          setTimeout(() => {
+            window.location.reload();
+          }, 3500)
+              // window.location.reload();
+
+
+        } else if (res.data === "error") {
+          notifyFailed();
+        }
+
+        setNotif(res.data);
+      })
+      
+      // .then((res) => console.log(JSON.stringify(leaveInfo)))
       .catch((err) => console.log(err));
 
     // axios
@@ -158,10 +182,10 @@ const DashBButtons = () => {
     //   .then((res) => console.log("PTO temporary subtracted"))
     //   .catch((err) => console.log(err));
 
-    document.getElementById("file_a_leave_btn").close();
-    document.getElementById("leaveForm").reset();
-    window.location.reload();
-    alert("Successfully filed leave!");
+    // document.getElementById("file_a_leave_btn").close();
+    // document.getElementById("leaveForm").reset();
+    // window.location.reload();
+    // alert("Successfully filed leave!");
   };
 
   const countRegularDays = (date1, date2) => {
@@ -188,8 +212,36 @@ const DashBButtons = () => {
     return count;
   };
 
+  const [notif, setNotif] = useState([]);
+
+  const notifySuccess = () =>
+    toast.success("Successfully filed a leave.", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+
+  const notifyFailed = () =>
+    toast.error("Something went wrong.", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+
   return (
     <>
+    {notif != "" && notif === "success" && <ToastContainer />}
+      {notif != "" && notif === "error" && <ToastContainer />}
       {/* Buttons */}
       <div className="m-2 flex flex-col">
         <div
