@@ -3,7 +3,7 @@ import Axios from "axios";
 import moment from "moment";
 import DataTable from "react-data-table-component";
 
-const DashBPTOApprovedAndOwned = () => {
+const DashBPTOApprovedAndOwned = ({emp_id}) => {
   const [data, setData] = useState([]);
   const [all, setMyLeave] = useState([]);
   const [approved, setApproved] = useState([]);
@@ -110,7 +110,7 @@ const DashBPTOApprovedAndOwned = () => {
                     {row.f_name.charAt(0) + row.s_name.charAt(0)}
                   </div>
                 ) : (
-                  <img className="h-16 w-16 rounded-full m-2" />
+                  <img src={"../uploads/" + row.emp_pic} className="h-24 w-24 rounded-full m-2" />
                 )}
 
                 <div className="text-center mb-7">

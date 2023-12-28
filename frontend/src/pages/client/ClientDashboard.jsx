@@ -54,6 +54,7 @@ const ClientDashboard = () => {
    }, [])**/
 
    const [users, setUser] = useState([]);
+   const [emp_id, setID] = useState(0);
    const [announcements, setAnnouncements] = useState([]);
 
    const [pleaves, setPendingLeaves] = useState([])
@@ -105,24 +106,26 @@ const ClientDashboard = () => {
           <div className="grow">
             <div className="flex flex-col md:flex-row">
                 <div>
-                  <DashBButtons></DashBButtons>
+                  <DashBButtons />
                 </div>
 
                 <div>
-                  <DashBremainingPTO></DashBremainingPTO>
+                  <DashBremainingPTO />
                 </div>
             </div>
 
+              <p>{users[0].emp_id}</p>
+
             <div className="mt-4">
-              <DashBPTOApprovedAndOwned></DashBPTOApprovedAndOwned>
+              <DashBPTOApprovedAndOwned />
             </div>
           </div>
 
           <div className="divider divider-horizontal divide-x"></div>
 
           <div className="flex flex-col justify-start lg:flex-row xl:block">
-            <DashBBirthdays></DashBBirthdays>
-            <DashBAnniversaries></DashBAnniversaries>
+            <DashBBirthdays />
+            <DashBAnniversaries />
           </div>
         </div>
       </div>

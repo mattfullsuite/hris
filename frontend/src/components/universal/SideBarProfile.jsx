@@ -48,7 +48,7 @@ const SideBarProfile = ({ color, link_to, fill }) => {
             ) : (
               <img
                 className="h-28 w-28 rounded-full m-2 ring-2 ring-white"
-                src={user.emp_pic}
+                src={"../uploads/" + user.emp_pic}
               />
             )}
 

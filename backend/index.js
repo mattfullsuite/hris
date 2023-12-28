@@ -19,7 +19,7 @@ const bcrypt = require("bcryptjs");
 const multer = require("multer")
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, __dirname + "/" + "../public/uploads")
+        cb(null, __dirname + "/" + "../frontend/public/uploads")
     },
 
     filename: (req, file, cb) => {
@@ -843,7 +843,7 @@ app.get("/getApprover", (req, res) => {
     })
 })
 
-app.post("/addNewEmployee", (req, res)=> {
+app.post("/addNewEmployee", upload.single("emp_pic"), (req, res)=> {
 
     function generateRandomnString(n) {
         let randomString = '';
@@ -864,7 +864,7 @@ app.post("/addNewEmployee", (req, res)=> {
     const salt = bcrypt.genSaltSync(10);
     const hashed = bcrypt.hashSync(tempPassword, salt)
 
-    const q = "INSERT INTO `emp` ( `emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`, `emp_key`) VALUES (?)";
+    const q = "INSERT INTO `emp` ( `emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`, `emp_key`, `emp_pic`) VALUES (?)";
     const values = 
         [
         req.body.emp_num,
@@ -885,63 +885,67 @@ app.post("/addNewEmployee", (req, res)=> {
         req.body.sex,
         req.body.gender,
         req.body.civil_status,
-        empKey
+        empKey,
+        req.file.filename
         ]
 
     db.query(q, [values], (err, data) => {
         if (err) {
-            console.log(err)
+            res.send("error")
         }
-        res.json(data);
-    })
+        else {
+            const q2 = "INSERT INTO `leave_credits` (`emp_id`, `leave_balance`) VALUES ((SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1)," + 0 + ")"
 
-    const q2 = "INSERT INTO `leave_credits` (`emp_id`, `leave_balance`) VALUES ((SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1)," + 0 + ")"
+            db.query(q2, (err, data2) => {
+            if (err) {
+                console.log(err)
+            };
+                console.log("Inserted leave credits for new employee.")
+            })
+        
+            const designationValues = 
+            [
+                req.body.company_id,
+                req.body.client_id,
+                req.body.position_id,
+            ]
+        
+            const q3 = "INSERT INTO `emp_designation` (`emp_id`, `company_id`,`client_id`,`position_id`) VALUES ((SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1), ?)"
+        
+            db.query(q3, [designationValues], (err, data3) => {
+                if (err) {console.log(err)};
+            })
 
-    db.query(q2, (err, data2) => {
-    if (err) {
-        console.log(err)
-    };
-        console.log("Inserted leave credits for new employee.")
-    })
-
-    const designationValues = 
-    [
-        req.body.company_id,
-        req.body.client_id,
-        req.body.position_id,
-    ]
-
-    const q3 = "INSERT INTO `emp_designation` (`emp_id`, `company_id`,`client_id`,`position_id`) VALUES ((SELECT `emp_id` FROM `emp` ORDER BY emp_id DESC LIMIT 1), ?)"
-
-    db.query(q3, [designationValues], (err, data3) => {
-        if (err) {console.log(err)};
-        console.log("Inserted new designation for new employee.")
-    })
-
-
-    try {
-        let transporter = nodemailer.createTransport({
-            host: "smtp.elasticemail.com",
-            port: 2525,
-            secure: false,
-            auth: {
-              user: 'marvin@fullsuite.ph',
-              pass: '15BC029719F114C8D23A0436E328A510D55E',
-            },
-            tls: {
-                 ciphers: 'SSLv3'
+            res.send("success")
+        
+        
+            try {
+                let transporter = nodemailer.createTransport({
+                    host: "smtp.elasticemail.com",
+                    port: 2525,
+                    secure: false,
+                    auth: {
+                      user: 'marvin@fullsuite.ph',
+                      pass: '15BC029719F114C8D23A0436E328A510D55E',
+                    },
+                    tls: {
+                         ciphers: 'SSLv3'
+                    }
+               });
+                transporter.sendMail({
+                    from: 'marvin@fullsuite.ph', // sender address
+                    to: req.body.work_email, // list of receivers
+                    subject: 'Action required: Temporary password | Fullsuite', // Subject line
+                    text: tempPassword, // plain text body
+                    html: '<div style="background-color: #363636; box-sizing: border-box;padding: 16px; display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 20px;"><img src=".../Fs-logo.png" style="height: 56px; width: 56px" /><h1 style="color: white; font-size: 16px">fullsuite.ph</h1></div><p style="margin: 20px; text-align: justify;">Hi, '+ req.body.f_name +'!, we are happy to have you here at Fullsuite! But first things first, you need to change your password to secure your account. The system has already generated a temporary password to access you account.</p><div style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; text-align: center; margin: 80px 20px;"><p>Your temporary password:</p><h2 style="font-weight: semibold; font-size: 18px; color: #0097b2;">'+ tempPassword +'</h2><button style="margin-top: 40px; background-color: #0097b2; outline: none; border: none; padding: 7px 15px; color: white; border-radius: 5px;">Go to portal</button></div>'
+               });
+            } catch(e) {
+                console.log("----------------" + e + "----------------")
             }
-       });
-        transporter.sendMail({
-            from: 'marvin@fullsuite.ph', // sender address
-            to: req.body.work_email, // list of receivers
-            subject: 'Action required: Temporary password | Fullsuite', // Subject line
-            text: tempPassword, // plain text body
-            html: '<div style="background-color: #363636; box-sizing: border-box;padding: 16px; display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 20px;"><img src=".../Fs-logo.png" style="height: 56px; width: 56px" /><h1 style="color: white; font-size: 16px">fullsuite.ph</h1></div><p style="margin: 20px; text-align: justify;">Hi, '+ req.body.f_name +'!, we are happy to have you here at Fullsuite! But first things first, you need to change your password to secure your account. The system has already generated a temporary password to access you account.</p><div style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; text-align: center; margin: 80px 20px;"><p>Your temporary password:</p><h2 style="font-weight: semibold; font-size: 18px; color: #0097b2;">'+ tempPassword +'</h2><button style="margin-top: 40px; background-color: #0097b2; outline: none; border: none; padding: 7px 15px; color: white; border-radius: 5px;">Go to portal</button></div>'
-       });
-    } catch(e) {
-        console.log("----------------" + e + "----------------")
-    }
+        }
+    })
+
+
 })
 
 // app.post("/createNewLeaveCredit", (req, res)=> {

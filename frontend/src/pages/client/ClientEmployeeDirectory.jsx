@@ -10,7 +10,7 @@ const ClientEmployeeDirectory = () => {
 
       <div className="p-4 sm:ml-64 flex flex-col">
 
-        <EmployeeDirectoryComponent />
+        <EmployeeDirectoryComponent color={"#0097B2"} />
       </div>
     </>
   );

@@ -9,7 +9,7 @@ const LeadDirectory = () => {
       <ManagerSideBar></ManagerSideBar>
 
       <div className="p-4 sm:ml-64 flex flex-col">
-        <EmployeeDirectoryComponent/>
+        <EmployeeDirectoryComponent color={"#BFD1A0"} />
       </div>
     </>
   );

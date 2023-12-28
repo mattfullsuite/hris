@@ -17,7 +17,7 @@ const EmployeeDirectoryCard = ({
               {firstName?.charAt(0) + lastName?.charAt(0)}
             </div>
           ) : (
-            <img src={image} className="h-28 w-28 rounded-full" />
+            <img src={"../uploads/" + image} className="h-28 w-28 rounded-full object-cover" />
           )}
 
           <div className="flex flex-col gap-0">

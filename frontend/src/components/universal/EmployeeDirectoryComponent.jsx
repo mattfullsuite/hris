@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EmployeeDirectoryCard from "./EmployeeDirectoryCard";
 
-const EmployeeDirectoryComponent = () => {
+const EmployeeDirectoryComponent = ({color}) => {
   const [directory, setDirectory] = useState([]);
   const [division, setDivision] = useState([]);
   const [department, setDepartment] = useState([]);
@@ -29,7 +29,11 @@ const EmployeeDirectoryComponent = () => {
     <div className="my-24 flex flex-col gap-40">
       {division.map((div) => (
         <div>
-          <h1 className="text-3xl font-bold text-center mb-2">{div.div_name}</h1>
+          <div className="flex flex-col items-center">
+            <h1 className="text-3xl font-bold text-center mb-2">{div.div_name}</h1>
+
+            <div className={"h-2 w-20 bg-["+color+"]"}></div>
+          </div>
 
           {department.map((dept) => (
             

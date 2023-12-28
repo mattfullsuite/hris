@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 import ButtonBack from "../universal/ButtonBack";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+
 
 const HRFormAddEmployee = () => {
   const [userReference, setUserReferences] = useState([]);
@@ -11,6 +15,32 @@ const HRFormAddEmployee = () => {
   const [departments, setDepartments] = useState([]);
   const [clients, setClients] = useState([]);
   const [positions, setPositions] = useState([]);
+  const [notif, setNotif] = useState([]);
+  const navigate = useNavigate();
+
+  const notifySuccess = () =>
+    toast.success("Successfully added!", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+
+  const notifyFailed = () =>
+    toast.error("Something went wrong!", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
 
   useEffect(() => {
     const fetchReferences = async () => {
@@ -78,13 +108,11 @@ const HRFormAddEmployee = () => {
     dept_id: "",
     client_id: "",
     position_id: "",
+    emp_pic: null,
   });
 
   const handleChange = (event) => {
-    setEmployeeInfo({
-      ...employeeInfo,
-      [event.target.name]: [event.target.value],
-    });
+    setEmployeeInfo({ ...employeeInfo, emp_pic: event.target.files[0] });
     console.log(JSON.stringify(employeeInfo));
     isFound();
   };
@@ -111,25 +139,72 @@ const HRFormAddEmployee = () => {
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    addNewEmployee();
-  };
+    const data = new FormData();
 
-  const addNewEmployee = async () => {
-      await axios
-      .post("http://localhost:6197/addNewEmployee", employeeInfo)
-      .then((res) => console.log(JSON.stringify(employeeInfo)))
+    data.append("emp_num", employeeInfo.emp_num);
+    data.append("work_email", employeeInfo.work_email);
+    data.append("f_name", employeeInfo.f_name);
+    data.append("m_name", employeeInfo.m_name);
+    data.append("s_name", employeeInfo.s_name);
+    data.append("emp_role", employeeInfo.emp_role);
+    data.append("personal_email", employeeInfo.personal_email);
+    data.append("contact_num", employeeInfo.contact_num);
+    data.append("dob", employeeInfo.dob);
+    data.append("p_address", employeeInfo.p_address);
+    data.append("c_address", employeeInfo.c_address);
+    data.append("date_hired", employeeInfo.date_hired);
+    data.append("date_regularization", employeeInfo.date_regularization);
+    data.append("emp_status", employeeInfo.emp_status);
+    data.append("sex", employeeInfo.sex);
+    data.append("gender", employeeInfo.gender);
+    data.append("civil_status", employeeInfo.civil_status);
+    data.append("company_id", employeeInfo.company_id);
+    data.append("div_id", employeeInfo.div_id);
+    data.append("client_id", employeeInfo.client_id);
+    data.append("position_id", employeeInfo.position_id);
+    data.append("emp_pic", employeeInfo.emp_pic);
+
+    await axios
+      .post("http://localhost:6197/addNewEmployee", data)
+      .then((response) => {
+        if (response.data == "success") {
+
+          notifySuccess();
+
+
+          setTimeout(function () {
+            navigate("/hrDashboard")
+          }, 3500);
+        } else if (response.data == "error") {
+          notifyFailed();
+        }
+
+        setNotif(response.data);
+      })
       .catch((err) => console.log(err));
-
-    window.location.reload();
-    alert("Successfully added new employee: " + employeeInfo.emp_num);
   };
+
+  // const addNewEmployee = async () => {
+  //   const config = {
+  //     headers: { "content-type": "multipart/form-data" },
+  //   };
+  //   await axios
+  //     .post("http://localhost:6197/addNewEmployee", employeeInfo, config)
+  //     .then((res) => console.log(JSON.stringify(employeeInfo)))
+  //     .catch((err) => console.log(err));
+
+  //   window.location.reload();
+  //   alert("Successfully added new employee: " + employeeInfo.emp_num);
+  // };
 
   return (
     <>
       <>
+        {notif != "" && notif === "success" && <ToastContainer />}
+        {notif != "" && notif === "error" && <ToastContainer />}
         <div className="p-4 sm:ml-64 flex flex-col">
           <ButtonBack></ButtonBack>
           <div className="m-2">
@@ -152,7 +227,12 @@ const HRFormAddEmployee = () => {
                   </div>
                   <input
                     name="f_name"
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        f_name: e.target.value,
+                      })
+                    }
                     type="text"
                     maxlength="100"
                     className="input input-bordered w-full "
@@ -169,7 +249,12 @@ const HRFormAddEmployee = () => {
                   </div>
                   <input
                     name="m_name"
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        m_name: e.target.value,
+                      })
+                    }
                     type="text"
                     maxlength="100"
                     className="input input-bordered w-full "
@@ -186,7 +271,12 @@ const HRFormAddEmployee = () => {
                   </div>
                   <input
                     name="s_name"
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        s_name: e.target.value,
+                      })
+                    }
                     type="text"
                     maxlength="100"
                     className="input input-bordered w-full "
@@ -205,7 +295,9 @@ const HRFormAddEmployee = () => {
                   </div>
                   <input
                     name="dob"
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({ ...employeeInfo, dob: e.target.value })
+                    }
                     type="date"
                     max={moment().format("YYYY-MM-DD")}
                     className="input input-bordered w-full"
@@ -220,7 +312,12 @@ const HRFormAddEmployee = () => {
                   </div>
                   <select
                     name="civil_status"
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        civil_status: e.target.value,
+                      })
+                    }
                     className="select select-bordered w-full"
                     required
                   >
@@ -242,7 +339,9 @@ const HRFormAddEmployee = () => {
                   </div>
                   <select
                     name="sex"
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({ ...employeeInfo, sex: e.target.value })
+                    }
                     className="select select-bordered w-full"
                     required
                   >
@@ -261,7 +360,12 @@ const HRFormAddEmployee = () => {
                   </div>
                   <input
                     name="gender"
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        gender: e.target.value,
+                      })
+                    }
                     type="text"
                     className="input input-bordered w-full"
                   />
@@ -279,7 +383,12 @@ const HRFormAddEmployee = () => {
                   <input
                     id="p_address"
                     name="p_address"
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        p_address: e.target.value,
+                      })
+                    }
                     type="text"
                     className="input input-bordered w-full"
                   />
@@ -304,7 +413,12 @@ const HRFormAddEmployee = () => {
                         value=""
                         className="checkbox checkbox-sm"
                         onClick={isSameAddress}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                          setEmployeeInfo({
+                            ...employeeInfo,
+                            c_address: e.target.value,
+                          })
+                        }
                       />
                       <span className="label-text ml-2">
                         {" "}
@@ -315,7 +429,12 @@ const HRFormAddEmployee = () => {
                   <input
                     id="c_address"
                     name="c_address"
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        c_address: e.target.value,
+                      })
+                    }
                     type="text"
                     className="input input-bordered w-full"
                   />
@@ -337,7 +456,12 @@ const HRFormAddEmployee = () => {
                   </div>
                   <input
                     name="personal_email"
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        personal_email: e.target.value,
+                      })
+                    }
                     type="email"
                     className="input input-bordered w-full "
                   />
@@ -351,7 +475,12 @@ const HRFormAddEmployee = () => {
                   </div>
                   <input
                     name="contact_num"
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        contact_num: e.target.value,
+                      })
+                    }
                     type="number"
                     className="input input-bordered w-full "
                   />
@@ -370,7 +499,7 @@ const HRFormAddEmployee = () => {
                   </div>
                   <input
                     name="emergency_contact_name"
-                    onChange={handleChange}
+                    // onChange={handleChange}
                     type="text"
                     className="input input-bordered w-full "
                   />
@@ -383,7 +512,7 @@ const HRFormAddEmployee = () => {
                   </div>
                   <input
                     name="emergency_contact_num"
-                    onChange={handleChange}
+                    // onChange={handleChange}
                     type="number"
                     className="input input-bordered w-full "
                   />
@@ -412,7 +541,12 @@ const HRFormAddEmployee = () => {
                       id="company_id"
                       name="company_id"
                       className="select select-bordered w-32"
-                      onChange={handleChange}
+                      onChange={(e) =>
+                        setEmployeeInfo({
+                          ...employeeInfo,
+                          company_id: e.target.value,
+                        })
+                      }
                       required
                     >
                       <option disabled selected>
@@ -426,7 +560,12 @@ const HRFormAddEmployee = () => {
                     <input
                       id="emp_num"
                       name="emp_num"
-                      onChange={handleChange}
+                      onChange={(e) =>
+                        setEmployeeInfo({
+                          ...employeeInfo,
+                          emp_num: e.target.value,
+                        })
+                      }
                       type="text"
                       maxlength="100"
                       className="input input-bordered w-full "
@@ -449,7 +588,12 @@ const HRFormAddEmployee = () => {
                     id="work_email"
                     name="work_email"
                     maxlength="100"
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        work_email: e.target.value,
+                      })
+                    }
                     type="email"
                     className="input input-bordered w-full "
                     required
@@ -473,7 +617,12 @@ const HRFormAddEmployee = () => {
                     id="div_id"
                     name="div_id"
                     className="select select-bordered w-full "
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        div_id: e.target.value,
+                      })
+                    }
                     required
                   >
                     <option disabled selected>
@@ -500,7 +649,12 @@ const HRFormAddEmployee = () => {
                     id="dept_id"
                     name="dept_id"
                     className="select select-bordered w-full "
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        dept_id: e.target.value,
+                      })
+                    }
                     required
                   >
                     <option disabled selected>
@@ -529,7 +683,12 @@ const HRFormAddEmployee = () => {
                     id="client_id"
                     name="client_id"
                     className="select select-bordered w-full "
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        client_id: e.target.value,
+                      })
+                    }
                     required
                   >
                     <option disabled selected>
@@ -556,7 +715,12 @@ const HRFormAddEmployee = () => {
                     id="position_id"
                     name="position_id"
                     className="select select-bordered w-full "
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        position_id: e.target.value,
+                      })
+                    }
                     required
                   >
                     <option disabled selected>
@@ -579,7 +743,12 @@ const HRFormAddEmployee = () => {
                   </div>
                   <select
                     name="emp_status"
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        emp_status: e.target.value,
+                      })
+                    }
                     className="select select-bordered w-full "
                     required
                   >
@@ -601,7 +770,12 @@ const HRFormAddEmployee = () => {
                   </div>
                   <select
                     name="emp_role"
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        emp_role: e.target.value,
+                      })
+                    }
                     className="select select-bordered w-full "
                     required
                   >
@@ -627,7 +801,12 @@ const HRFormAddEmployee = () => {
                   <input
                     id="date_hired"
                     name="date_hired"
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        date_hired: e.target.value,
+                      })
+                    }
                     onInput={disableNext}
                     type="date"
                     className="input input-bordered w-full "
@@ -645,7 +824,12 @@ const HRFormAddEmployee = () => {
                   <input
                     id="date_regularization"
                     name="date_regularization"
-                    onChange={handleChange}
+                    onChange={(e) =>
+                      setEmployeeInfo({
+                        ...employeeInfo,
+                        date_regularization: e.target.value,
+                      })
+                    }
                     type="date"
                     className="input input-bordered w-full "
                   />
