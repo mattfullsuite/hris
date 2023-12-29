@@ -1323,7 +1323,7 @@ app.post("/forgot-password", (req, res) => {
 app.get("/reset-password/:user_key", (req, res) => {
     const user_key = req.params.user_key;
 
-    const q = "SELECT * FROM emp WHERE emp_key = ?";
+    const q = "SELECT emp_key FROM emp WHERE emp_key = ?";
 
     db.query(q, [user_key], (err, data) => {
         if(err) {
@@ -1337,7 +1337,7 @@ app.get("/reset-password/:user_key", (req, res) => {
 
 app.post("/reset-password/:user_key", (req, res) => {
     const user_key = req.params.user_key;
-    const newPassword = req.body.password;
+    const newPassword = String(req.body.password);
 
     //----- HASHING ALGO -----//
     const salt = bcrypt.genSaltSync(10);
