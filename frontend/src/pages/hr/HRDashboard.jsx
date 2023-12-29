@@ -10,7 +10,6 @@ import DashBBirthdays from "../../components/universal/DashBBirthdays";
 import DashBAnniversaries from "../../components/universal/DashBAnniversaries";
 import HRPTONotices from "../../components/hr/HRPTONotices";
 import DashBOwnPTO from "../../components/universal/DashBOwnPTO";
-import DashBNumofLeaveToday from "../../components/universal/DashBNumofLeavesToday";
 
 const HRDashboard = () => {
   const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -20,6 +19,7 @@ const HRDashboard = () => {
   const navigate = useNavigate();
 
   const [users, setUser] = useState([]);
+  const uid = users.emp_id;
 
   useEffect(() => {
     Axios.get(BASE_URL + "/login").then((response) => {
@@ -70,7 +70,7 @@ const HRDashboard = () => {
             </div>
 
             <div className="mt-4">
-              <HRPTONotices />
+              <HRPTONotices uid={uid} />
             </div>
 
             <div>
