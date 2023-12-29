@@ -14,7 +14,7 @@ const EmployeeDirectoryComponent = ({color}) => {
       try {
         const dir = await axios.get(BASE_URL + "/getDirectory");
         const div = await axios.get(BASE_URL + "/getDivision");
-        const dept = await axios.get(BASE_URL + "getDepartment");
+        const dept = await axios.get(BASE_URL + "/getDepartment");
         setDirectory(dir.data);
         setDivision(div.data);
         setDepartment(dept.data)
