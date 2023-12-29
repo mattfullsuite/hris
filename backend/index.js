@@ -490,6 +490,16 @@ app.get("/showallmyleaves", (req, res) => {
     })
 })
 
+app.get("/getApproverDetails", (req, res) => {
+    const uid = req.session.user[0].emp_id
+    const q = "SELECT * FROM emp WHERE emp_role = 3"
+    
+    db.query(q,[uid],(err,data)=> {
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
 app.get("/showalldeptleaves", (req, res) => {
     const uid = req.session.user[0].emp_id
     const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE approver_id = ? AND leave_status != 0 ORDER BY date_filed DESC"
@@ -513,7 +523,7 @@ app.get("showselectedleave/:leave_id", (req, res) => {
 })
 
 app.get("/showapprovedleaves", (req, res) => {
-    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id=e.emp_id WHERE leave_status = 1 ORDER BY date_filed DESC"
+    const q = "SELECT * FROM leaves AS l INNER JOIN emp AS e ON l.requester_id = e.emp_id WHERE leave_status = 1 ORDER BY date_filed DESC"
     db.query(q,(err,data)=> {
         if(err) return res.json(err)
         return res.json(data)
