@@ -75,7 +75,9 @@ const ResetPassword = () => {
 
         }
     )
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      setNotif("error")
+    });
   };
 
 

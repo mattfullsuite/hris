@@ -51,7 +51,7 @@ app.use(express.json());
 
 app.use(cors(
     {
-    origin: ["http://localhost:3000"],
+    origin: [process.env.ORIGIN_URL],
     methods: ["GET", "POST", "DELETE", "OPTIONS"],
     credentials: true
     }
@@ -62,7 +62,7 @@ app.use(bodyParser.urlencoded({ extended: true}));
 
 app.use(session({
     key: "userId",
-    secret: "kahitanomalagaydito",
+    secret: process.env.SECRET_KEY,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -71,7 +71,7 @@ app.use(session({
 }))
 
 
-app.listen(6197, ()=>{
+app.listen(process.env.DATABASE_PORT, ()=>{
     console.log("Connected to backend mysql database!");
 })
 
@@ -1299,7 +1299,7 @@ app.post("/forgot-password", (req, res) => {
                     to: email, // list of receivers
                     subject: 'Action required: Reset password    | Fullsuite', // Subject line
                     text: "Reset password", // plain text body
-                    html: `This is the link to reset your password http://localhost:3000/reset-password/${user_key}`
+                    html: `This is the link to reset your password ${process.env.ORIGIN_URL}/reset-password/${user_key}`
                });
             } catch(e) {
                 console.log("----------------" + e + "----------------")
