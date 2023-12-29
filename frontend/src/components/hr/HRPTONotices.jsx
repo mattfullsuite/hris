@@ -3,12 +3,13 @@ import Axios from "axios";
 import moment from "moment";
 import DataTable from "react-data-table-component";
 
-const HRPTONotices = ({uid}) => {
+const HRPTONotices = () => {
   const [data, setData] = useState([]);
   const [all, setAll] = useState([]);
   const [approved, setApproved] = useState([]);
   const [pending, setPending] = useState([]);
   const [declined, setDeclined] = useState([]);
+  const [approver, setApprover] = useState([]);
   const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
   useEffect(() => {
@@ -18,12 +19,14 @@ const HRPTONotices = ({uid}) => {
         const res1 = await Axios.get(BASE_URL + "/showapprovedleaves");
         const res2 = await Axios.get(BASE_URL + "/showpendingleaves");
         const res3 = await Axios.get(BASE_URL + "/showrejectedleaves");
+        const res4 = await Axios.get(BASE_URL + "/getApproverDetails");
         // test
         setAll(res.data);
         setApproved(res1.data);
         setPending(res2.data);
         setDeclined(res3.data);
         setData(res.data); //initialize database
+        setApprover(res4.data);
       } catch (err) {
         console.log(err);
       }
@@ -124,14 +127,16 @@ const HRPTONotices = ({uid}) => {
               </form>
 
               <h3 className="font-bold text-lg mb-5">PTO Details</h3>
-
               <div className="flex flex-col justify-center items-center">
                 {row.emp_pic == "" || row.emp_pic == null ? (
                   <div className="h-24 w-24 bg-gray-500 rounded-full flex justify-center items-center text-4xl text-white font-medium m-2">
                     {row.f_name.charAt(0) + row.s_name.charAt(0)}
                   </div>
                 ) : (
-                  <img className="h-16 w-16 rounded-full m-2" />
+                  <img
+                    src={"../uploads/" + row.emp_pic}
+                    className="h-24 w-24 rounded-full m-2"
+                  />
                 )}
 
                 <div className="text-center mb-7">
@@ -157,15 +162,33 @@ const HRPTONotices = ({uid}) => {
                     Filed on {moment(row.date_filed).format("dddd")} •{" "}
                     {moment(row.date_filed).format("MMMM DD, YYYY")}
                   </h3>
-                  <div>{checkStatus(row.leave_status)}</div>
+
+                  {row.leave_status === 1 || row.leave_status == 2 ? (
+                    <div className="flex flex-col gap-1 items-center mt-5">
+                      {checkStatus(row.leave_status)}
+
+                      {approver.map(
+                        (app) =>
+                          app.emp_id === row.approver_id && (
+                            <div>
+                              <span className="italic text-gray-600">by </span>
+                              <span>{app.f_name + " " + app.s_name}</span>
+                            </div>
+                          )
+                      )}
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center mt-5">
+                      {checkStatus(row.leave_status)}
+                    </div>
+                  )}
                 </div>
               </div>
 
-              <div>
+              <div className="flex flex-col items-center">
                 <h1 className="font-semibold mt-5">Reason:</h1>
-
                 <div className="max-h-44 whitespace-normal">
-                  <p className="justify-center text-justify">
+                  <p className="justify-center text-center">
                     {row.leave_reason == "" || row.leave_reason == null ? (
                       <p className="italic text-gray-600">
                         No reason indicated.
@@ -193,7 +216,12 @@ const HRPTONotices = ({uid}) => {
           role="tablist"
           className="tabs tabs-lifted tabs-lg flex flex-row justify-center"
         >
-          <button role="tab" id="all" onClick={handleClick} className="tab tab-active">
+          <button
+            role="tab"
+            id="all"
+            onClick={handleClick}
+            className="tab tab-active"
+          >
             All
           </button>
           <button role="tab" id="app" onClick={handleClick} className="tab">

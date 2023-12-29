@@ -70,7 +70,7 @@ const HRDashboard = () => {
             </div>
 
             <div className="mt-4">
-              <HRPTONotices uid={uid} />
+              <HRPTONotices />
             </div>
 
             <div>

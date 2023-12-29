@@ -3,7 +3,7 @@ import axios from "axios";
 import DataTable from "react-data-table-component";
 import moment from "moment";
 
-const ManagerPTONotices = () => {
+const ManagerPTONotices = ({ uid }) => {
   const [data, setData] = useState([]);
   const [all, setAll] = useState([]);
   const [approved, setDeptApproved] = useState([]);
@@ -14,15 +14,21 @@ const ManagerPTONotices = () => {
   useEffect(() => {
     const fetchAllDeptLeaves = async () => {
       try {
-        const all = await axios.get(BASE_URL  + "/showalldleaves");
-        const approved = await axios.get(BASE_URL + "/showapproveddepartmentleaves")
-        const pending = await axios.get(BASE_URL + "/showpendingdepartmentleaves")
-        const declined = await axios.get(BASE_URL + "/showrejecteddepartmentleaves")
+        const all = await axios.get(BASE_URL + "/showalldleaves");
+        const approved = await axios.get(
+          BASE_URL + "/showapproveddepartmentleaves"
+        );
+        const pending = await axios.get(
+          BASE_URL + "/showpendingdepartmentleaves"
+        );
+        const declined = await axios.get(
+          BASE_URL + "/showrejecteddepartmentleaves"
+        );
         setData(all.data);
-        setDeptApproved(approved.data)
-        setDeptPending(pending.data)
-        setDeptDeclined(declined.data)
-        setAll(all.data)
+        setDeptApproved(approved.data);
+        setDeptPending(pending.data);
+        setDeptDeclined(declined.data);
+        setAll(all.data);
       } catch (err) {
         console.log(err);
       }
@@ -124,14 +130,16 @@ const ManagerPTONotices = () => {
               </form>
 
               <h3 className="font-bold text-lg mb-5">PTO Details</h3>
-
               <div className="flex flex-col justify-center items-center">
                 {row.emp_pic == "" || row.emp_pic == null ? (
                   <div className="h-24 w-24 bg-gray-500 rounded-full flex justify-center items-center text-4xl text-white font-medium m-2">
                     {row.f_name.charAt(0) + row.s_name.charAt(0)}
                   </div>
                 ) : (
-                  <img className="h-16 w-16 rounded-full m-2" />
+                  <img
+                    src={"../uploads/" + row.emp_pic}
+                    className="h-24 w-24 rounded-full m-2"
+                  />
                 )}
 
                 <div className="text-center mb-7">
@@ -161,12 +169,17 @@ const ManagerPTONotices = () => {
                 </div>
               </div>
 
-              <div>
+              <div className="flex flex-col items-center">
                 <h1 className="font-semibold mt-5">Reason:</h1>
-
                 <div className="max-h-44 whitespace-normal">
-                  <p className="justify-center text-justify">
-                    {(row.leave_reason == "" || row.leave_reason == null) ? <p className="italic text-gray-600">No reason indicated.</p> : <p>{row.leave_reason}</p>}
+                  <p className="justify-center text-center">
+                    {row.leave_reason == "" || row.leave_reason == null ? (
+                      <p className="italic text-gray-600">
+                        No reason indicated.
+                      </p>
+                    ) : (
+                      <p>{row.leave_reason}</p>
+                    )}
                   </p>
                 </div>
               </div>
@@ -181,13 +194,20 @@ const ManagerPTONotices = () => {
     <>
       {/* PTO Notices */}
       <div className="m-2 p-5 border-2 border-gray-200 border-solid rounded-lg dark:border-gray-700 flex flex-col justify-center align-middle">
-        <h1 className="text-lg font-semibold mb-4 text-center">Department PTO Notices</h1>
+        <h1 className="text-lg font-semibold mb-4 text-center">
+          Department PTO Notices
+        </h1>
 
         <div
           role="tablist"
           className="tabs tabs-lifted tabs-lg flex flex-row justify-center"
         >
-          <a role="tab" id="all" onClick={handleClick} className="tab tab-active">
+          <a
+            role="tab"
+            id="all"
+            onClick={handleClick}
+            className="tab tab-active"
+          >
             All
           </a>
           <a role="tab" id="approved" onClick={handleClick} className="tab">

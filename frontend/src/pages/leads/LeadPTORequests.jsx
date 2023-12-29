@@ -110,7 +110,10 @@ const LeadPTORequests = () => {
                     {row.f_name.charAt(0) + row.s_name.charAt(0)}
                   </div>
                 ) : (
-                  <img className="h-16 w-16 rounded-full m-2" />
+                  <img
+                    src={"../uploads/" + row.emp_pic}
+                    className="h-24 w-24 rounded-full m-2"
+                  />
                 )}
 
                 <div className="text-center mb-7">
@@ -140,21 +143,20 @@ const LeadPTORequests = () => {
                 </div>
               </div>
 
-              <div>
-                <h1 className="font-semibold mt-5">Reason:</h1>
-
-                <div className="max-h-44 whitespace-normal">
-                  <p className="justify-center text-justify">
-                    {row.leave_reason == "" || row.leave_reason == null ? (
-                      <p className="italic text-gray-600">
-                        No reason indicated.
-                      </p>
-                    ) : (
-                      <p>{row.leave_reason}</p>
-                    )}
-                  </p>
+              <div className="flex flex-col items-center">
+                  <h1 className="font-semibold mt-5">Reason:</h1>
+                  <div className="max-h-44 whitespace-normal">
+                    <p className="justify-center text-center">
+                      {row.leave_reason == "" || row.leave_reason == null ? (
+                        <p className="italic text-gray-600">
+                          No reason indicated.
+                        </p>
+                      ) : (
+                        <p>{row.leave_reason}</p>
+                      )}
+                    </p>
+                  </div>
                 </div>
-              </div>
 
               <div className="flex justify-end gap-2 mt-5">
                 <button

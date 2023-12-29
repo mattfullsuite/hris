@@ -7,7 +7,8 @@ const DashBPTOApprovedAndOwned = ({ uid }) => {
   const [all, setMyLeave] = useState([]);
   const [approved, setApproved] = useState([]);
   const [approver, setApprover] = useState([]);
-  const BASE_URL = process.env.REACT_APP_BASE_URL; //
+  const BASE_URL = process.env.REACT_APP_BASE_URL;
+
   useEffect(() => {
     const fetchAllApproved = async () => {
       try {
@@ -112,6 +113,7 @@ const DashBPTOApprovedAndOwned = ({ uid }) => {
                   </h3>
                   <span>{row.title}</span>
                 </div>
+                
                 <div className="text-center">
                   <h3 className="font-semibold text-xl">{row.leave_type}</h3>
                   <h3 className="text-gray-600">

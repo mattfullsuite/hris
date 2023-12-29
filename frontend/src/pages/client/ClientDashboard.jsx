@@ -55,7 +55,6 @@ const ClientDashboard = () => {
   const uid = users.emp_id;
   const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
-
   useEffect(() => {
     const fetchAllPendingLeaves = async () => {
       try {
