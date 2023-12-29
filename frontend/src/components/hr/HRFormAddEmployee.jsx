@@ -186,7 +186,12 @@ const HRFormAddEmployee = () => {
 
         setNotif(response.data);
       })
-      .catch((err) => console.log(err));
+      .catch(
+        function(err) {
+          notifyFailed();
+          setNotif("error");
+        }
+      );
   };
 
   // const addNewEmployee = async () => {

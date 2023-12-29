@@ -47,7 +47,7 @@ const EmployeeListComponent = () => {
     {
       name: "",
       selector: (row) => (
-        (row.emp_pic == "" || row.emp_pic == null) ? <div className="h-16 w-16 bg-gray-500 rounded-full flex justify-center items-center text-3xl text-white font-medium m-2">{row.f_name.charAt(0) + row.s_name.charAt(0)}</div> : <img className="h-16 w-16 rounded-full m-2" 
+        (row.emp_pic == "" || row.emp_pic == null) ? <div className="h-16 w-16 bg-gray-500 rounded-full flex justify-center items-center text-3xl text-white font-medium m-2">{row.f_name.charAt(0) + row.s_name.charAt(0)}</div> : <img className="h-16 w-16 rounded-full m-2 object-cover" 
         src = {"./uploads/" + row.emp_pic} />
       ),
     },

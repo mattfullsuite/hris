@@ -874,6 +874,7 @@ app.post("/addNewEmployee", upload.single("emp_pic"), (req, res)=> {
     //----- HASHING ALGO -----//
     const salt = bcrypt.genSaltSync(10);
     const hashed = bcrypt.hashSync(tempPassword, salt)
+    const filename =  (req.file === undefined) ? null : req.file.filename;
 
     const q = "INSERT INTO `emp` ( `emp_num`, `work_email`, `password`, `f_name`, `m_name`, `s_name`, `emp_role`,`personal_email`, `contact_num`, `dob`, `p_address`, `c_address`, `date_hired`, `date_regularization`,`emp_status`,`sex`,`gender`,`civil_status`, `emp_key`, `emp_pic`) VALUES (?)";
     const values = 
@@ -897,7 +898,7 @@ app.post("/addNewEmployee", upload.single("emp_pic"), (req, res)=> {
         req.body.gender,
         req.body.civil_status,
         empKey,
-        req.file.filename
+        filename
         ]
 
     db.query(q, [values], (err, data) => {
