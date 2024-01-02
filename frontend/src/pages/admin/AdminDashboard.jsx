@@ -4,9 +4,10 @@ import Axios from "axios"
 
 const AdminDashboard = () => {
     const navigate = useNavigate()
+    const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
    useEffect(() => {
-      Axios.get("http://localhost:6197/login").then((response) => {
+      Axios.get(BASE_URL + "/login").then((response) => {
          if (response.data.loggedIn == false) {
             navigate("/login")
          }
@@ -14,7 +15,7 @@ const AdminDashboard = () => {
    }, [])
 
    const logoutEmployee = () => {
-        Axios({method: "post", url: "http://localhost:6197/logout", withcredentials: true}).then((response) => {
+        Axios({method: "post", url: BASE_URL + "/logout", withcredentials: true}).then((response) => {
         console.log("response status", response)
 
         if (response.status === 200) {

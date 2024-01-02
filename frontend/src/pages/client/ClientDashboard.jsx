@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Axios from "axios";
 
 import ClientSideBar from "../../components/client/ClientSideBar";
-import DashBRemainingOffset from "../../components/universal/DashBRemainingOffset";
 import DashBremainingPTO from "../../components/universal/DashBRemainingPTO";
 import DashBButtons from "../../components/universal/DashBButtons";
-import DashBPTONotices from "../../components/universal/DashBPTONotices";
 import DashBBirthdays from "../../components/universal/DashBBirthdays";
 import DashBAnniversaries from "../../components/universal/DashBAnniversaries";
+import DashBGreeting from "../../components/universal/DashBGreeting";
+import DashBPTOApprovedAndOwned from "../../components/universal/DashBPTOApprovedAndOwned";
 
+// import DataTable from 'datatables.net-dt';
+// import 'datatables.net-responsive-dt';
+
+// let table = new DataTable('#myTable', {
+//     responsive: true
+// });
 
 // const handleFormSubmit = () => {x
 //   // Date From
@@ -44,74 +49,77 @@ const ClientDashboard = () => {
       })
    }, [])**/
 
-   const [users, setUser] = useState([]);
-   const [announcements, setAnnouncements] = useState([]);
+  const [users, setUser] = useState([]);
+  const [announcements, setAnnouncements] = useState([]);
+  const [pleaves, setPendingLeaves] = useState([]);
+  const uid = users.emp_id;
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
-   const [pleaves, setPendingLeaves] = useState([])
-
-    useEffect(() => {
-        const fetchAllPendingLeaves = async ()=> {
-            try{
-                const res = await Axios.get("http://localhost:6197/showpendingleaves")
-                setPendingLeaves(res.data)
-            } catch(err){
-                console.log(err)
-            }
-        };
-        fetchAllPendingLeaves();
-    }, []);
-
-   useEffect(() => {
-      const fetchAllAnnouncements = async ()=> {
-          try{
-              const res = await Axios.get("http://localhost:6197/announcements")
-              setAnnouncements(res.data);
-          } catch(err){
-              console.log(err)
-          }
+  useEffect(() => {
+    const fetchAllPendingLeaves = async () => {
+      try {
+        const res = await Axios.get(BASE_URL + "/showpendingleaves");
+        setPendingLeaves(res.data);
+      } catch (err) {
+        console.log(err);
       }
-      fetchAllAnnouncements()
-  },[])
+    };
+    fetchAllPendingLeaves();
+  }, []);
 
-   useEffect(() => {
-      const fetchUserData = async ()=> {
-          try{
-              const res = await Axios.get("http://localhost:6197/login")
-              setUser(res.data.user)
-          } catch(err){
-              console.log(err)
-          }
-      };
-      fetchUserData();
+  useEffect(() => {
+    const fetchAllAnnouncements = async () => {
+      try {
+        const res = await Axios.get(BASE_URL + "/announcements");
+        setAnnouncements(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchAllAnnouncements();
+  }, []);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const res = await Axios.get(BASE_URL + "/login");
+        setUser(res.data.user[0]);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchUserData();
   }, []);
 
   return (
     <>
       <ClientSideBar></ClientSideBar>
+
       <div className="p-4 sm:ml-64 flex flex-col">
-        {/* Date */}
-        <div className="mb-1 text-xl">
-          <p>Friday, November 03, 2023</p>
-        </div>
+        <DashBGreeting></DashBGreeting>
 
-        {/* Greeting */}
-        <div className="m-2 text-3xl font-bold">
-          <p>Good Morning User!</p>
-        </div>
+        <div className="m-4 flex flex-col xl:flex-row">
+          <div className="grow">
+            <div className="flex flex-col md:flex-row">
+              <div>
+                <DashBButtons />
+              </div>
 
-        {/* Widget Container */}
-        <div className="my-2 mx-2">
+              <div>
+                <DashBremainingPTO />
+              </div>
+            </div>
 
-          <div className="flex">
-            <DashBremainingPTO></DashBremainingPTO>
-            <DashBRemainingOffset></DashBRemainingOffset>
+            <div className="mt-4">
+              <DashBPTOApprovedAndOwned uid={uid} />
+            </div>
           </div>
-          <DashBButtons></DashBButtons>
-          <DashBPTONotices></DashBPTONotices>
 
-          <div className="flex">
-            <DashBBirthdays></DashBBirthdays>
-            <DashBAnniversaries></DashBAnniversaries>
+          <div className="divider divider-horizontal divide-x"></div>
+
+          <div className="flex flex-col justify-start lg:flex-row xl:block">
+            <DashBBirthdays />
+            <DashBAnniversaries />
           </div>
         </div>
       </div>
