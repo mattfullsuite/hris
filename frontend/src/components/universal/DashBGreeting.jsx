@@ -4,11 +4,12 @@ import moment from 'moment';
 
 const DashBGreeting = () => {
   const [users, setUser] = useState([]);
+  const BASE_URL = process.env.REACT_APP_BASE_URL; //
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const res = await Axios.get("http://localhost:6197/login");
+        const res = await Axios.get(BASE_URL + "/login");
         setUser(res.data.user);
       } catch (err) {
         console.log(err);
